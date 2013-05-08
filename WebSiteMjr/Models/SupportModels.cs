@@ -14,7 +14,7 @@ namespace WebSiteMjr.Models
         }
     }
 
-    [Table("TIcket")]
+    [Table("Ticket")]
     public class SupportTicket
     {
         [Key]
