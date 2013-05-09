@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Globalization;
-using System.Web.Security;
 
 namespace WebSiteMjr.Models
 {
@@ -29,8 +25,8 @@ namespace WebSiteMjr.Models
 
     public class RegisterExternalLoginModel
     {
-        [Required]
-        [Display(Name = "User name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite seu nome de usuário")]
+        [Display(Name = "Nome de usuário")]
         public string UserName { get; set; }
 
         public string ExternalLoginData { get; set; }
@@ -38,53 +34,53 @@ namespace WebSiteMjr.Models
 
     public class LocalPasswordModel
     {
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite sua senha antiga")]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Senha atual")]
         public string OldPassword { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite sua nova senha")]
+        [StringLength(100, ErrorMessage = "A {0} precisa conter no mínimo {2} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Nova senha")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Confirme sua nova senha")]
+        [Compare("NewPassword", ErrorMessage = "Sua nova senha e a confirmação de senha, são diferentes.")]
         public string ConfirmPassword { get; set; }
     }
 
     public class LoginModel
     {
-        [Required]
-        [Display(Name = "User name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite seu nome de usuário")]
+        [Display(Name = "Nome de usuário")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite sua senha")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Senha")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Mantenha-me conectado")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterModel
     {
-        [Required]
-        [Display(Name = "User name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite seu nome de usuário")]
+        [Display(Name = "Nome de usuário")]
         public string UserName { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite sua senha")]
+        [StringLength(100, ErrorMessage = "A {0} precisa conter no mínimo {2} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Senha")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirme sua senha")]
+        [Compare("Password", ErrorMessage = "Sua senha e a confirmação de senha, são diferentes.")]
         public string ConfirmPassword { get; set; }
     }
 
