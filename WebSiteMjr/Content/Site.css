@@ -32,7 +32,7 @@ a {
     }
 
     .content-wrapper p a:hover {
-        background-color: #d0f4f0;
+        background-color: transparent;
     }
 
 header, footer, hgroup,
@@ -313,8 +313,12 @@ ol.round {
 
 /* content */
 
-.one img {
+ol li img {
     float: left;
+}
+
+ol li h5 {
+    margin-bottom: 10px;
 }
 
 article {
