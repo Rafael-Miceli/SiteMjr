@@ -262,6 +262,7 @@
     <Content Include="Images\178H.png" />
     <Content Include="Images\178HCA.png" />
     <Content Include="Images\500H.png" />
+    <Content Include="Images\PABX178H.jpg" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

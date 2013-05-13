@@ -270,7 +270,8 @@ ol.round {
     }
 
         ol.round li.zero {
-            background: url("../Images/orderedList0.png") no-repeat;
+            list-style-type: none;
+            overflow: hidden;
         }
 
         ol.round li.one {
