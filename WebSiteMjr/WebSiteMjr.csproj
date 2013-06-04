@@ -249,9 +249,11 @@
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\mjr - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - FTP %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\mjr - FTP %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - Web Deploy %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\mjr - Web Deploy %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\178H.png" />
