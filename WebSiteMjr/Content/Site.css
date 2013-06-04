@@ -316,6 +316,7 @@ ol.round {
 
 ol li img {
     float: left;
+    margin-right: 20px;
 }
 
 ol li h5 {
