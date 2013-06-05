@@ -255,6 +255,7 @@
     <None Include="Properties\PublishProfiles\mjr - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - Web Deploy %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\mjr.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\178H.png" />
     <Content Include="Images\178HCA.png" />
