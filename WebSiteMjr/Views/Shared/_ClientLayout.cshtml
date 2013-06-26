@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Gerenciador do cliente";
+}
+
+<nav>
+    <ul id="menu">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("Empresa", "About", "Home")</li>
+        <li>@Html.ActionLink("Contatos", "Contact", "Home")</li>
+    </ul>
+</nav>
+
+@RenderSection("ClientContent")
