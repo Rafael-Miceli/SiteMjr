@@ -11,16 +11,15 @@
 
 <p>Você está logado como <strong>@User.Identity.Name</strong>.</p>
 
-@Html.Partial("_ClientLayout")
+<nav>
+    <ul id="menu">
+       <li>@Html.ActionLink("Home", "Index", "ClientHome")</li>
+       <li>@Html.ActionLink("Chamados", "Index", "Task")</li>
+        <li>@Html.ActionLink("Meu Perfil", "About", "Home")</li>
+    </ul>
+</nav>
 
-@*@(ViewBag.HasLocalPassword ? Html.Partial("_ChangePasswordPartial") : Html.Partial("_SetPasswordPartial"))*@
-
-@*<section id="externalLogins">
-    @Html.Action("RemoveExternalLogins")
-
-    <h3>Add an external login</h3>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>*@
+@*@Html.Partial("ClientHomeIndex")*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

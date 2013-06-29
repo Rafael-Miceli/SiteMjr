@@ -17,6 +17,12 @@ namespace WebSiteMjr.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        [HttpPost]
+        public ActionResult _ClientLayout()
+        {
+            return View();
+        }
+
         //
         // GET: /Account/Login
 
