@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.MasterTitle = "Gerencie sua conta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.MasterTitle.</h1>
+</hgroup>
+
+<p class="message-success">@ViewBag.StatusMessage</p>
+
+<p>Você está logado como <strong>@User.Identity.Name</strong>.</p>
+
+<nav>
+    <ul id="menuleft">
+        <li>@Html.ActionLink("Home", "Index", "ClientHome")</li>
+        <li>@Html.ActionLink("Chamados", "Index", "Task")</li>
+        <li>@Html.ActionLink("Meu Perfil", "About", "Home")</li>
+    </ul>
+</nav>
+<section class="content-wrapper main-content clear-fix">
+    @RenderBody()
+</section>

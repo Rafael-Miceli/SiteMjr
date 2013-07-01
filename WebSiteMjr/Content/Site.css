@@ -182,6 +182,33 @@ footer {
         list-style: none;
     }
 
+/* menu left
+----------------------------------------------------------*/
+
+ul#menuleft {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 0 0 5px;
+    padding: 0;
+    text-align: left;
+}
+
+    ul#menuleft li {
+        display: inline;
+        list-style: none;
+        padding-left: 15px;
+    }
+
+        ul#menuleft li a {
+            background: none;
+            color: #999;
+            text-decoration: none;
+        }
+
+        ul#menuleft li a:hover {
+            color: #333;
+            text-decoration: none;
+        }
 
 /* menu
 ----------------------------------------------------------*/

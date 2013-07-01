@@ -1,26 +1,5 @@
 ﻿@model WebSiteMjr.Models.LocalPasswordModel
 @{
-    ViewBag.Title = "Gerencie sua conta";
+    Layout = "~/Views/Shared/ClientLayout.cshtml";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
-
-<p class="message-success">@ViewBag.StatusMessage</p>
-
-<p>Você está logado como <strong>@User.Identity.Name</strong>.</p>
-
-<nav>
-    <ul id="menu">
-       <li>@Html.ActionLink("Home", "Index", "ClientHome")</li>
-       <li>@Html.ActionLink("Chamados", "Index", "Task")</li>
-        <li>@Html.ActionLink("Meu Perfil", "About", "Home")</li>
-    </ul>
-</nav>
-
-@*@Html.Partial("ClientHomeIndex")*@
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
