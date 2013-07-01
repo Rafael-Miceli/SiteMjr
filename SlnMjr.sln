@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr", "WebSiteMjr\We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr.Tests", "WebSiteMjr.Tests\WebSiteMjr.Tests.csproj", "{D6D27CDA-62F2-44C2-9D11-390F97458B26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr.Domain", "WebSiteMjr.Domain\WebSiteMjr.Domain.csproj", "{2FF17DE1-A85E-45A8-B047-FB13B14A2BE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr.EfData", "WebSiteMjr.EfData\WebSiteMjr.EfData.csproj", "{2A28B3C5-7D2B-457C-A92F-4BC87C351883}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,14 @@ Global
 		{D6D27CDA-62F2-44C2-9D11-390F97458B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6D27CDA-62F2-44C2-9D11-390F97458B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6D27CDA-62F2-44C2-9D11-390F97458B26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FF17DE1-A85E-45A8-B047-FB13B14A2BE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FF17DE1-A85E-45A8-B047-FB13B14A2BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FF17DE1-A85E-45A8-B047-FB13B14A2BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FF17DE1-A85E-45A8-B047-FB13B14A2BE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A28B3C5-7D2B-457C-A92F-4BC87C351883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A28B3C5-7D2B-457C-A92F-4BC87C351883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A28B3C5-7D2B-457C-A92F-4BC87C351883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A28B3C5-7D2B-457C-A92F-4BC87C351883}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
