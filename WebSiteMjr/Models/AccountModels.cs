@@ -21,6 +21,17 @@ namespace WebSiteMjr.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public StatusUser StatusUser { get; set; }
+    }
+
+    public enum StatusUser
+    {
+        Active,
+        Blocked,
+        Unactive
     }
 
     public class RegisterExternalLoginModel
@@ -53,8 +64,8 @@ namespace WebSiteMjr.Models
 
     public class LoginModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite seu nome de usuário")]
-        [Display(Name = "Nome de usuário")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite seu Login")]
+        [Display(Name = "Login")]
         public string UserName { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Digite sua senha")]
@@ -68,9 +79,21 @@ namespace WebSiteMjr.Models
 
     public class RegisterModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite seu nome de usuário")]
-        [Display(Name = "Nome de usuário")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite seu login de usuário")]
+        [Display(Name = "Login")]
         public string UserName { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite o nome deste usuário")]
+        [Display(Name = "Nome")]
+        public string Name { get; set; }
+
+        [Display(Name = "Sobrenome")]
+        public string LastName { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Digite o E-mail deste usuário")]
+        [Display(Name = "E-mail")]
+        [RegularExpression("", ErrorMessage = "E-mail não válido")]
+        public string Email { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Digite sua senha")]
         [StringLength(100, ErrorMessage = "A {0} precisa conter no mínimo {2} caracteres.", MinimumLength = 6)]

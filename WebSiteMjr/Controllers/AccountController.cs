@@ -41,7 +41,7 @@ namespace WebSiteMjr.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "O nome de usuário ou senha estão incorretos.");
             return View(model);
         }
 
@@ -372,7 +372,7 @@ namespace WebSiteMjr.Controllers
             switch (createStatus)
             {
                 case MembershipCreateStatus.DuplicateUserName:
-                    return "User name already exists. Please enter a different user name.";
+                    return "Usuário já existente. por favor entre com um usuário diferente.";
 
                 case MembershipCreateStatus.DuplicateEmail:
                     return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
