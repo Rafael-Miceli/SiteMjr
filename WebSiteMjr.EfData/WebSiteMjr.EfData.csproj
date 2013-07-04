@@ -76,10 +76,11 @@
   <ItemGroup>
     <Compile Include="Context\BaseContext.cs" />
     <Compile Include="Context\PersonsContext.cs" />
-    <Compile Include="DataRepository\GenericDtoRepository.cs" />
+    <Compile Include="DataRepository\GenericRepositorys\GenericDtoRepository.cs" />
     <Compile Include="DataRepository\MembershipRepository.cs" />
-    <Compile Include="DataRepository\PersonsRepository.cs" />
+    <Compile Include="DataRepository\GenericRepositorys\GenericRepository.cs" />
     <Compile Include="DataRepository\RoleRepository.cs" />
+    <Compile Include="DataRepository\UserRepository.cs" />
     <Compile Include="Helpers\ContextHelper.cs" />
     <Compile Include="Helpers\StateHelpers.cs" />
     <Compile Include="Migrations\Configuration.cs" />

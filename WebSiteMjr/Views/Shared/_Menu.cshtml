@@ -1,0 +1,11 @@
+﻿@model WebSiteMjr.Domain.Model.Roles.Role
+
+<ul id="menu">
+    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+    <li>@Html.ActionLink("Empresa", "About", "Home")</li>
+    <li>@Html.ActionLink("Contatos", "Contact", "Home")</li>
+    @if (Model.Name == "MjrAdmin")
+    {
+        <li>@Html.ActionLink("Administrar", "Contact", "Home")</li>
+    }
+</ul>

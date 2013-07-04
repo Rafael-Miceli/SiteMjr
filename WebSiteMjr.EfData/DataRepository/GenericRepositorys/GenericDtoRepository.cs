@@ -8,22 +8,22 @@ using AutoMapper;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.EfData.Context;
 
-namespace WebSiteMjr.EfData.DataRepository
+namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys
 {
-    public class GenericDtoRepository<TEntity, TUEntity> : IRepository<TUEntity>, IDisposable where TUEntity : class where TEntity: class 
+    public class GenericDtoGenericRepository<TEntity, TUEntity> : IGenericRepository<TUEntity>, IDisposable where TUEntity : class where TEntity: class 
     {
 
         private readonly PersonsContext _context;        
         private readonly DbSet<TEntity> _dbSet;
         private TEntity _entity;
 
-        public GenericDtoRepository(PersonsContext context)
+        public GenericDtoGenericRepository(PersonsContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
         }
 
-        public GenericDtoRepository()
+        public GenericDtoGenericRepository()
         {
             _context = new PersonsContext();
         }
@@ -35,6 +35,11 @@ namespace WebSiteMjr.EfData.DataRepository
             var mapper = Mapper.CreateMapExpression<TEntity, TUEntity>().Compile();
             Expression<Func<TEntity, bool>> mappedSelector = entity => filter(mapper(entity));
             return Mapper.Map<IEnumerable<TEntity>, IEnumerable<TUEntity>>(_context.Set<TEntity>().Where(mappedSelector));
+        }
+
+        public TUEntity Get(Expression<Func<TUEntity, bool>> filter)
+        {
+            throw new NotImplementedException();
         }
 
         public void Save()

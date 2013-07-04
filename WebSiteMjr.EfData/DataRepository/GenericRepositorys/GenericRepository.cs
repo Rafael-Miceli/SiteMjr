@@ -7,21 +7,21 @@ using WebSiteMjr.Domain.Model.Person;
 using WebSiteMjr.EfData.Context;
 using WebSiteMjr.EfData.UnitOfWork;
 
-namespace WebSiteMjr.EfData.DataRepository
+namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys
 {
-    public abstract class GenericRepository<TEntity>: IRepository<TEntity>, IDisposable where TEntity:IntId
+    public abstract class GenericRepository<TEntity>: IGenericRepository<TEntity>, IDisposable where TEntity:IntId
     {
-        public readonly PersonsContext Context;
+        private readonly PersonsContext _context;
 
         protected GenericRepository()
         {
-            Context = new PersonsUow().Context;
+            _context = new PersonsUow().Context;
         }
 
 
         protected GenericRepository(IUnitOfWork<PersonsContext> uow)
         {
-            Context = uow.Context;
+            _context = uow.Context;
         }     
 
         public void Add(TEntity entitie)
@@ -30,13 +30,13 @@ namespace WebSiteMjr.EfData.DataRepository
             //_context.Set<TEntity>().Add(entitie);
 
             //But in the Entry() it only changes the first entitie 
-            Context.Entry(entitie).State = EntityState.Added;
+            _context.Entry(entitie).State = EntityState.Added;
         }
 
         public void Remove(object entitie)
         {
-            var entitieToRemove = Context.Set<TEntity>().Find(entitie);
-            Context.Set<TEntity>().Remove(entitieToRemove);
+            var entitieToRemove = _context.Set<TEntity>().Find(entitie);
+            _context.Set<TEntity>().Remove(entitieToRemove);
         }
 
         public void Update(TEntity entitie)
@@ -45,44 +45,44 @@ namespace WebSiteMjr.EfData.DataRepository
 
             //if (entry.State == EntityState.Detached) return;
 
-            var attachedEntity = Context.Set<TEntity>().Find(entitie.Id);
+            var attachedEntity = _context.Set<TEntity>().Find(entitie.Id);
 
             if (attachedEntity != null)
-                Context.Entry(attachedEntity).CurrentValues.SetValues(entitie);
+                _context.Entry(attachedEntity).CurrentValues.SetValues(entitie);
             else
-                Context.Entry(entitie).State = EntityState.Modified;
+                _context.Entry(entitie).State = EntityState.Modified;
 
             //_context.ApplyStateChanges();
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            return Context.Set<TEntity>();
+            return _context.Set<TEntity>();
         }
 
         public IEnumerable<TEntity> Query(Func<TEntity, bool> filter)
         {
-            return Context.Set<TEntity>().Where(filter);
+            return _context.Set<TEntity>().Where(filter);
         }
 
         public TEntity GetById(object idEntitie)
         {
-            return Context.Set<TEntity>().Find(idEntitie);
+            return _context.Set<TEntity>().Find(idEntitie);
         }
 
         public void Save()
         {
-            Context.SaveChanges();
+            _context.SaveChanges();
         }
 
         public TEntity Get(System.Linq.Expressions.Expression<Func<TEntity, bool>> filter)
         {
-            throw new NotImplementedException();
+            return _context.Set<TEntity>().SingleOrDefault(filter);
         }
 
         public void Dispose()
         {
-            Context.Dispose();
+            _context.Dispose();
         }
         
     }

@@ -337,6 +337,7 @@
     <Content Include="Views\ClientHome\ClientHomeIndex.cshtml" />
     <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\Shared\ClientLayout.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

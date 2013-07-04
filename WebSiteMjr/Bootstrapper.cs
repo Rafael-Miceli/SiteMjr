@@ -6,6 +6,7 @@ using Unity.Mvc3;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.EfData.DataRepository;
+using WebSiteMjr.EfData.DataRepository.GenericRepositorys;
 
 namespace WebSiteMjr
 {
@@ -35,7 +36,7 @@ namespace WebSiteMjr
             //container.RegisterType<IRepository<User>, UserDtoRepository>();
             //container.RegisterType<IRepository<Employee>, EmployeeDtoRepository>();
 
-            container.RegisterInstance(new UserService(new PersonsRepository<User>()));
+            container.RegisterInstance(new UserService(new UserRepository()));
             container.RegisterInstance(new MembershipService(new FlexMembershipProvider(new MembershipRepository<User>(), new AspnetEnvironment())));
 
             return container;

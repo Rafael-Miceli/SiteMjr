@@ -8,9 +8,9 @@ namespace WebSiteMjr.Domain.services.Membership
 {
     public class UserService
     {
-        private readonly IRepository<User> _user;
+        private readonly IUserRepository _user;
 
-        public UserService(IRepository<User> user)
+        public UserService(IUserRepository user)
         {
             _user = user;
         }
@@ -51,13 +51,6 @@ namespace WebSiteMjr.Domain.services.Membership
         public User FindUser(object iduser)
         {
             return _user.GetById(iduser);
-        }
-
-
-
-        public bool AuthUser(string login, string password)
-        {
-            return false; //return _user.GetAll().FirstOrDefault(ass => ass.UserName == login && ass.Password == password) != null;
         }
     }
 }
