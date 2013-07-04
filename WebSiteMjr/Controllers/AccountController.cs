@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
+using WebSiteMjr.Domain.Model.Membership;
+using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.Filters;
 using WebSiteMjr.Models;
 
@@ -17,6 +17,29 @@ namespace WebSiteMjr.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+
+        private readonly MembershipService _membershipProvider;
+        private readonly UserService _user;
+
+        public AccountController(MembershipService membership, UserService user)
+        {
+            _membershipProvider = membership;
+            _user = user;
+        }
+
+        public ActionResult UserInformations()
+        {
+            var user = _user.GetLoggedUser(User.Identity.Name);
+            return PartialView("_LoginPartial", user);
+        }
+
+        public ActionResult Menu()
+        {
+            var role = _user.GetUserRole(User.Identity.Name);
+
+            return PartialView("_Menu", role);
+        }
+
         //
         // GET: /Account/Login
 
@@ -35,7 +58,7 @@ namespace WebSiteMjr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            if (ModelState.IsValid && _membershipProvider.Login(model.UserName, model.Password, model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
             }
@@ -52,7 +75,7 @@ namespace WebSiteMjr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            WebSecurity.Logout();
+            _membershipProvider.Logout();
 
             return RedirectToAction("Index", "Home");
         }
@@ -79,8 +102,8 @@ namespace WebSiteMjr.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
+                    _membershipProvider.CreateAccount(new User { Username = model.UserName, Password = model.Password });
+                    //_membershipProvider.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -128,11 +151,11 @@ namespace WebSiteMjr.Controllers
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Sua senha foi modifcada."
+                : message == ManageMessageId.SetPasswordSuccess ? "Sua senha foi enviada."
+                : message == ManageMessageId.RemoveLoginSuccess ? "O login externo foi removido."
                 : "";
-            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            ViewBag.HasLocalPassword = true;// OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
@@ -144,7 +167,7 @@ namespace WebSiteMjr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
         {
-            bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            var hasLocalAccount = _membershipProvider.HasLocalAccount(User.Identity.Name);
             ViewBag.HasLocalPassword = hasLocalAccount;
             ViewBag.ReturnUrl = Url.Action("Manage");
             if (hasLocalAccount)
@@ -155,7 +178,7 @@ namespace WebSiteMjr.Controllers
                     bool changePasswordSucceeded;
                     try
                     {
-                        changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+                        changePasswordSucceeded = _membershipProvider.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
                     }
                     catch (Exception)
                     {
@@ -166,17 +189,15 @@ namespace WebSiteMjr.Controllers
                     {
                         return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
-                    }
+
+                    ModelState.AddModelError("", "A senha atual está incorreta ou a nova senha é invalida.");
                 }
             }
             else
             {
                 // User does not have a local password so remove any validation errors caused by a missing
                 // OldPassword field
-                ModelState state = ModelState["OldPassword"];
+                var state = ModelState["OldPassword"];
                 if (state != null)
                 {
                     state.Errors.Clear();
@@ -186,12 +207,12 @@ namespace WebSiteMjr.Controllers
                 {
                     try
                     {
-                        WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);
+                        _membershipProvider.SetLocalPassword(User.Identity.Name, model.NewPassword);
                         return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
                     }
                     catch (Exception)
                     {
-                        ModelState.AddModelError("", String.Format("Unable to create local account. An account with the name \"{0}\" may already exist.", User.Identity.Name));
+                        ModelState.AddModelError("", String.Format("Não foi possivel criar a conta. Uma conta com este login \"{0}\" já existe.", User.Identity.Name));
                     }
                 }
             }
@@ -234,14 +255,12 @@ namespace WebSiteMjr.Controllers
                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);
                 return RedirectToLocal(returnUrl);
             }
-            else
-            {
-                // User is new, ask for their desired membership name
-                string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
-                ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
-                ViewBag.ReturnUrl = returnUrl;
-                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });
-            }
+
+            // User is new, ask for their desired membership name
+            var loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
+            ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
+            ViewBag.ReturnUrl = returnUrl;
+            return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });
         }
 
         //
@@ -252,8 +271,8 @@ namespace WebSiteMjr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
         {
-            string provider = null;
-            string providerUserId = null;
+            string provider;
+            string providerUserId;
 
             if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
             {
@@ -263,7 +282,7 @@ namespace WebSiteMjr.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                using (var db = new UsersContext())
                 {
                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists
@@ -278,10 +297,8 @@ namespace WebSiteMjr.Controllers
 
                         return RedirectToLocal(returnUrl);
                     }
-                    else
-                    {
-                        ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
-                    }
+
+                    ModelState.AddModelError("UserName", "Este login já existe. por favor verifique se este login não ja está vinculado a outra empresa.");
                 }
             }
 
@@ -310,19 +327,13 @@ namespace WebSiteMjr.Controllers
         [ChildActionOnly]
         public ActionResult RemoveExternalLogins()
         {
-            ICollection<OAuthAccount> accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);
-            List<ExternalLogin> externalLogins = new List<ExternalLogin>();
-            foreach (OAuthAccount account in accounts)
-            {
-                AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);
-
-                externalLogins.Add(new ExternalLogin
-                {
-                    Provider = account.Provider,
-                    ProviderDisplayName = clientData.DisplayName,
-                    ProviderUserId = account.ProviderUserId,
-                });
-            }
+            var accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);
+            var externalLogins = (from account in accounts
+                                  let clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider)
+                                  select new ExternalLogin
+                                      {
+                                          Provider = account.Provider, ProviderDisplayName = clientData.DisplayName, ProviderUserId = account.ProviderUserId,
+                                      }).ToList();
 
             ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
@@ -335,10 +346,8 @@ namespace WebSiteMjr.Controllers
             {
                 return Redirect(returnUrl);
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         public enum ManageMessageId

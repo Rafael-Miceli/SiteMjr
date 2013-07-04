@@ -23,15 +23,7 @@ namespace WebSiteMjr.Models
         public string UserName { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
-        public StatusUser StatusUser { get; set; }
-    }
-
-    public enum StatusUser
-    {
-        Active,
-        Blocked,
-        Unactive
+        public string Email { get; set; }   
     }
 
     public class RegisterExternalLoginModel

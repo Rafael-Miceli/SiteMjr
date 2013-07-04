@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WebSiteMjr.EfData")]
+[assembly: AssemblyTitle("ClubManager.Data")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WebSiteMjr.EfData")]
+[assembly: AssemblyProduct("ClubManager.Data")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("23eabd96-56c4-4862-8ab7-0bc88dc0c577")]
+[assembly: Guid("932c2353-ee7a-4e11-a49d-84190756ddfb")]
 
 // Version information for an assembly consists of the following four values:
 //
