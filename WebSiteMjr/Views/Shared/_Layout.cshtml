@@ -17,18 +17,11 @@
                 </div>
                 <div class="float-right">
                     <section id="login">
-                        @Html.Partial("_LoginPartial", WebSiteMjr.Domain.Model.Membership.User)
+                        @Html.Action("UserInformations", "Account")
+                        @*@Html.Partial("_LoginPartial", WebSiteMjr.Domain.Model.Membership.User)*@
                     </section>
                     <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Empresa", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contatos", "Contact", "Home")</li>
-                            @if (User.Identity.Name == "mjrtelecom@hotmail.com")
-                            {
-                                <li>@Html.ActionLink("Administrar", "Contact", "Home")</li>
-                            }
-                        </ul>
+                        @Html.Action("Menu", "Account")
                     </nav>
                 </div>
             </div>

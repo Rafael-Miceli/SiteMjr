@@ -27,12 +27,14 @@ namespace WebSiteMjr.Controllers
             _user = user;
         }
 
+        [ChildActionOnly]
         public ActionResult UserInformations()
         {
             var user = _user.GetLoggedUser(User.Identity.Name);
             return PartialView("_LoginPartial", user);
         }
 
+        [ChildActionOnly]
         public ActionResult Menu()
         {
             var role = _user.GetUserRole(User.Identity.Name);
