@@ -45,7 +45,8 @@ namespace WebSiteMjr.Domain.services.Membership
 
         public Role GetUserRole(string userName)
         {
-            return _user.GetByUserName(userName).Roles.FirstOrDefault();
+            var user = _user.GetByUserName(userName);
+            return user != null ? user.Roles.FirstOrDefault() : null;
         }
 
         public User FindUser(object iduser)

@@ -28,6 +28,7 @@ namespace WebSiteMjr.Controllers
         }
 
         [ChildActionOnly]
+        [AllowAnonymous]
         public ActionResult UserInformations()
         {
             var user = _user.GetLoggedUser(User.Identity.Name);
@@ -35,6 +36,7 @@ namespace WebSiteMjr.Controllers
         }
 
         [ChildActionOnly]
+        [AllowAnonymous]
         public ActionResult Menu()
         {
             var role = _user.GetUserRole(User.Identity.Name);

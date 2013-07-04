@@ -4,7 +4,7 @@
     <li>@Html.ActionLink("Home", "Index", "Home")</li>
     <li>@Html.ActionLink("Empresa", "About", "Home")</li>
     <li>@Html.ActionLink("Contatos", "Contact", "Home")</li>
-    @if (Model.Name == "MjrAdmin")
+    @if (Model != null && Model.Name == "MjrAdmin")
     {
         <li>@Html.ActionLink("Administrar", "Contact", "Home")</li>
     }
