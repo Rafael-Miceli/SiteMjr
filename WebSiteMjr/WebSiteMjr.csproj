@@ -191,6 +191,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientHomeController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -336,8 +337,10 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\ClientHome\ClientHomeIndex.cshtml" />
     <Content Include="Views\Task\Index.cshtml" />
-    <Content Include="Views\Shared\ClientLayout.cshtml" />
+    <Content Include="Views\Shared\_ClientLayout.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
+    <Content Include="Views\Company\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
