@@ -1,14 +1,15 @@
 using System.Web.Mvc;
-using System.Web.Security;
 using FlexProviders.Aspnet;
 using FlexProviders.Membership;
+using FlexProviders.Roles;
 using Microsoft.Practices.Unity;
 using Unity.Mvc3;
 using WebSiteMjr.Domain.Interfaces.Role;
 using WebSiteMjr.Domain.Model.Membership;
+using WebSiteMjr.Domain.Model.Roles;
+using WebSiteMjr.Domain.services;
 using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.EfData.DataRepository;
-using WebSiteMjr.EfData.DataRepository.GenericRepositorys;
 
 namespace WebSiteMjr
 {
@@ -38,9 +39,11 @@ namespace WebSiteMjr
             //container.RegisterType<IRepository<User>, UserDtoRepository>();
             //container.RegisterType<IRepository<Employee>, EmployeeDtoRepository>();
 
+            container.RegisterType<IFlexRoleProvider, FlexRoleProvider>();
             container.RegisterInstance(new UserService(new UserRepository()));
+            container.RegisterInstance(new CompanyService(new CompanyRepository()));
+            container.RegisterInstance(new FlexRoleProvider(new RoleRepository<Role, User>()));
             container.RegisterInstance(new MembershipService(new FlexMembershipProvider(new MembershipRepository<User>(), new AspnetEnvironment())));
-            container.RegisterType<IFlexRoleProvider>()
 
             return container;
         }

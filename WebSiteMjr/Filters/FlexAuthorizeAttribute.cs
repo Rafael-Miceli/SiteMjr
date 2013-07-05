@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using FlexProviders.Roles;
 using WebSiteMjr.Domain.Interfaces.Role;
+using WebSiteMjr.Domain.Model.Membership;
+using WebSiteMjr.Domain.Model.Roles;
+using WebSiteMjr.EfData.DataRepository;
 
 namespace WebSiteMjr.Filters
 {
     public class FlexAuthorizeAttribute : ActionFilterAttribute, IAuthorizationFilter
     {
-        public IFlexRoleProvider RoleProvider { get; set; }
+        public FlexRoleProvider RoleProvider;
 
         public string Roles
         {
@@ -69,6 +73,7 @@ namespace WebSiteMjr.Filters
 
             if (_rolesSplit.Length > 0)
             {
+                RoleProvider = new FlexRoleProvider(new RoleRepository<Role, User>());
                 if (_rolesSplit.Any(role => RoleProvider.IsUserInRole(user.Identity.Name, role)))
                 {
                     return;

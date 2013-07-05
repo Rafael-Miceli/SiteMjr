@@ -1,17 +1,24 @@
 ﻿using System.Web.Mvc;
+using WebSiteMjr.Domain.services;
 using WebSiteMjr.Filters;
 
 namespace WebSiteMjr.Controllers
 {
-    [FlexAuthorize(Roles = "Admin")]
     public class CompanyController : Controller
     {
+        private readonly CompanyService _companyService;
+
+        public CompanyController(CompanyService companyService)
+        {
+            _companyService = companyService;
+        }
+
         //
         // GET: /Company/
-        //[FlexAuthorize(Roles = "Admin")]
+        [FlexAuthorize(Roles = "MjrAdmin")]
         public ActionResult Index()
         {
-            return View();
+            return View(_companyService.ListCompany());
         }
 
         //
