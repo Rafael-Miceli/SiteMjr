@@ -19,8 +19,8 @@ namespace WebSiteMjr.Domain.Model.Membership
         public virtual StatusUser StatusUser { get; set; }
         public virtual int IdCompany { get; set; }
 
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public virtual string Username { get; set; }
+        public virtual string Password { get; set; }
         public string Salt { get; set; }
         public string PasswordResetToken { get; set; }
         public DateTime PasswordResetTokenExpiration { get; set; }
