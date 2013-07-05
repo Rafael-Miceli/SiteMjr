@@ -199,6 +199,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\CompanyModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\TaskController.cs" />
   </ItemGroup>
@@ -342,6 +343,9 @@
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Company\Index.cshtml" />
+    <Content Include="Views\Company\Details.cshtml" />
+    <Content Include="Views\Company\Create.cshtml" />
+    <Content Include="Views\Company\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
