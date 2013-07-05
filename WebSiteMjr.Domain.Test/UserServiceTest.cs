@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using WebSiteMjr.Domain.Interfaces.Repository;
+using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
 using WebSiteMjr.Domain.services;
+using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.EfData.DataRepository;
 
 namespace WebSiteMjr.Domain.Test
@@ -12,9 +16,10 @@ namespace WebSiteMjr.Domain.Test
     public class UserServiceTest
     {
         [TestMethod]
-        public void ShouldReturnUserCompany()
+        public void Should_Return_User_Company()
         {
-            //Create fake user
+            var userRepository = new Mock<IUserRepository>();
+            var companyRepository = new Mock<ICompanyRepository>();
             var fakeUser = new User
                 {
                     Id = 1,
@@ -35,12 +40,19 @@ namespace WebSiteMjr.Domain.Test
                                 }
                         }
                 };
-            var fakeCompanyService = new CompanyService(new CompanyRepository());
-            var fakeCompanyId = fakeUser.IdCompany;
+            var fakeCompany = new Company
+                {
+                    Id = 1,
+                    Name = "Rafael Company",
+                    Email = "rafael.miceli@outlook.com"
+                };
+            userRepository.Setup(s => s.GetByUserName(fakeUser.Username)).Returns(fakeUser);
+            companyRepository.Setup(s => s.GetById(fakeUser.IdCompany)).Returns(fakeCompany);
+            var userService = new UserService(userRepository.Object, companyRepository.Object);
 
-            var fakeCompanyReturned = fakeCompanyService.FindCompany(fakeCompanyId);
+            var fakeCompanyReturned = userService.GetUserCompany(fakeUser.Username);
 
-            Assert.IsTrue(fakeCompanyReturned.Id == fakeCompanyId);
+            Assert.IsTrue(fakeCompanyReturned == fakeCompany);
         }
     }
 }
