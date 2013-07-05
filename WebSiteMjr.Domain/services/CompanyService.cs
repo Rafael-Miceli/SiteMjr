@@ -36,7 +36,7 @@ namespace WebSiteMjr.Domain.services
             return _companyRepository.GetAll();
         }
 
-        public Company FindCompany(object idcompany)
+        public virtual Company FindCompany(object idcompany)
         {
             return _companyRepository.GetById(idcompany);
         }
