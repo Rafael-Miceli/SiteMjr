@@ -13,21 +13,21 @@ namespace WebSiteMjr.Domain.services
             _companyRepository = companyRepository;
         }
 
-        public void CreateCompany(Company user)
+        public void CreateCompany(Company company)
         {
-            _companyRepository.Add(user);
+            _companyRepository.Add(company);
             _companyRepository.Save();
         }
 
-        public void UpdateCompany(Company user)
+        public void UpdateCompany(Company company)
         {
-            _companyRepository.Update(user);
+            _companyRepository.Update(company);
             _companyRepository.Save();
         }
 
-        public void DeleteCompany(object user)
+        public void DeleteCompany(object company)
         {
-            _companyRepository.Remove(user);
+            _companyRepository.Remove(company);
             _companyRepository.Save();
         }
 
@@ -36,9 +36,10 @@ namespace WebSiteMjr.Domain.services
             return _companyRepository.GetAll();
         }
 
-        public Company FindCompany(object iduser)
+        public Company FindCompany(object idcompany)
         {
-            return _companyRepository.GetById(iduser);
+            return _companyRepository.GetById(idcompany);
         }
+
     }
 }
