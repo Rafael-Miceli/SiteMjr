@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Repository;
+using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
 
@@ -51,12 +52,13 @@ namespace WebSiteMjr.Domain.services.Membership
             return user != null ? user.Roles.FirstOrDefault() : null;
         }
 
-        public int GetUserCompany(string userName)
+        public Company GetUserCompany(string userName)
         {
             var user = _user.GetByUserName(userName);
             var idCompany = user != null ? user.IdCompany : 0;
 
             var company = new CompanyService(_company);
+            return company.FindCompany(idCompany);
         }
 
         public User FindUser(object iduser)
