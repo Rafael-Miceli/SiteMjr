@@ -40,7 +40,7 @@ namespace WebSiteMjr
             //container.RegisterType<IRepository<Employee>, EmployeeDtoRepository>();
 
             container.RegisterType<IFlexRoleProvider, FlexRoleProvider>();
-            container.RegisterInstance(new UserService(new UserRepository()));
+            container.RegisterInstance(new UserService(new UserRepository(), new CompanyRepository()));
             container.RegisterInstance(new CompanyService(new CompanyRepository()));
             container.RegisterInstance(new FlexRoleProvider(new RoleRepository<Role, User>()));
             container.RegisterInstance(new MembershipService(new FlexMembershipProvider(new MembershipRepository<User>(), new AspnetEnvironment())));
