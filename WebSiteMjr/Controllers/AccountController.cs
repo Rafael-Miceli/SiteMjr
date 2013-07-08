@@ -37,11 +37,22 @@ namespace WebSiteMjr.Controllers
 
         [ChildActionOnly]
         [AllowAnonymous]
+        //[OutputCache(VaryByParam = "role", Duration = 86400)]
         public ActionResult Menu()
         {
             var role = _user.GetUserRole(User.Identity.Name);
 
             return PartialView("_Menu", role);
+        }
+
+        [ChildActionOnly]
+        [AllowAnonymous]
+        //[OutputCache(VaryByParam = "role", Duration = 86400)]
+        public ActionResult ClientMenu()
+        {
+            var role = _user.GetUserRole(User.Identity.Name);
+
+            return PartialView("_ClientMenu", role);
         }
 
         //

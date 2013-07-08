@@ -26,7 +26,8 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Details(int id)
         {
-            return View();
+            var company = _companyService.FindCompany(id);
+            return View(company);
         }
 
         //

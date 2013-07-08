@@ -346,6 +346,7 @@
     <Content Include="Views\Company\Details.cshtml" />
     <Content Include="Views\Company\Create.cshtml" />
     <Content Include="Views\Company\Edit.cshtml" />
+    <Content Include="Views\Shared\_ClientMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
