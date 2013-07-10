@@ -1,12 +1,13 @@
 ﻿@model WebSiteMjr.Domain.Model.Company
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
-<h2>Details</h2>    
+<h2>Delete</h2>
 
+<h3>Tem certeza que deseja deletar a empresa @Model.Name?</h3>
 <fieldset>
     <legend>Company</legend>
 
@@ -23,26 +24,32 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.Email)
     </div>
+
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Address)
+         @Html.DisplayNameFor(model => model.Address)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Address)
     </div>
+
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.City)
+         @Html.DisplayNameFor(model => model.City)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.City)
     </div>
+
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Phone)
+         @Html.DisplayNameFor(model => model.Phone)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Phone)
     </div>
 </fieldset>
-<p>
-    @Html.ActionLink("Editar", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Voltar a listagem", "Index")
-</p>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Voltar a listagem", "Index")
+    </p>
+}

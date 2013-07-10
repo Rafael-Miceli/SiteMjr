@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.services;
 using WebSiteMjr.Filters;
 
@@ -42,7 +43,26 @@ namespace WebSiteMjr.Controllers
         // POST: /Company/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Company company)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _companyService.CreateCompany(company);
+
+                    return RedirectToAction("Index");
+                }
+
+                return View(company);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult SendLogin(int idCompany)
         {
             try
             {
@@ -61,20 +81,26 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View();
+            var company = _companyService.FindCompany(id);
+            return View(company);
         }
 
         //
         // POST: /Company/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Company company)
         {
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    _companyService.UpdateCompany(company);
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");    
+                }
+
+                return View(company);
             }
             catch
             {
@@ -87,18 +113,19 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Delete(int id)
         {
-            return View();
+            var company = _companyService.FindCompany(id);
+            return View(company);
         }
 
         //
         // POST: /Company/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Company company)
         {
             try
             {
-                // TODO: Add delete logic here
+                _companyService.DeleteCompany(company.Id);
 
                 return RedirectToAction("Index");
             }

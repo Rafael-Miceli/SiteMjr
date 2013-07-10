@@ -59,6 +59,7 @@
     <Compile Include="Interfaces\Role\IFlexRoleStore.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Company.cs" />
+    <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Membership\FlexMembershipStatus.cs" />
     <Compile Include="Model\Person\IIntId.cs" />
     <Compile Include="Model\IObjectWithState.cs" />

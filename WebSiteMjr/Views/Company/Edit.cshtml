@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
 <h2>Edit</h2>
@@ -29,18 +30,45 @@
             @Html.ValidationMessageFor(model => model.Email)
         </div>
 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address)
+            </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address)
+            @Html.ValidationMessageFor(model => model.Address)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.City)
+            </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.City)
+            @Html.ValidationMessageFor(model => model.City)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Phone)
+            </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Phone)
+            @Html.ValidationMessageFor(model => model.Phone)
+        </div>
         @Html.HiddenFor(model => model.Id)
 
         <p>
             <input type="submit" value="Save" />
         </p>
+        
+        <p>
+            @Html.ActionLink("Enviar Login", "SendLogin", new { idCompany = Model.Id })
+        </p>        
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Voltar a listagem", "Index")
 </div>
 
-@section Scripts {
+@*@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+}*@
