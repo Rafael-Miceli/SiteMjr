@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Context\BaseContext.cs" />
     <Compile Include="Context\PersonsContext.cs" />
+    <Compile Include="Context\StuffContext.cs" />
     <Compile Include="DataRepository\CompanyRepository.cs" />
     <Compile Include="DataRepository\GenericRepositorys\GenericDtoRepository.cs" />
     <Compile Include="DataRepository\MembershipRepository.cs" />
