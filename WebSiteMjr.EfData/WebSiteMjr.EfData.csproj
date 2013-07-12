@@ -76,8 +76,10 @@
     <Compile Include="Context\StuffContext.cs" />
     <Compile Include="DataRepository\CompanyRepository.cs" />
     <Compile Include="DataRepository\GenericRepositorys\GenericDtoRepository.cs" />
-    <Compile Include="DataRepository\MembershipRepository.cs" />
     <Compile Include="DataRepository\GenericRepositorys\GenericRepository.cs" />
+    <Compile Include="DataRepository\GenericRepositorys\GenericStuffRepository.cs" />
+    <Compile Include="DataRepository\MembershipRepository.cs" />
+    <Compile Include="DataRepository\GenericRepositorys\GenericPersonRepository.cs" />
     <Compile Include="DataRepository\RoleRepository.cs" />
     <Compile Include="DataRepository\UserRepository.cs" />
     <Compile Include="Helpers\ContextHelper.cs" />

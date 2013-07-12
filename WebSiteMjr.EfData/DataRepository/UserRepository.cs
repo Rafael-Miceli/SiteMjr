@@ -4,7 +4,7 @@ using WebSiteMjr.EfData.DataRepository.GenericRepositorys;
 
 namespace WebSiteMjr.EfData.DataRepository
 {
-    public class UserRepository: GenericRepository<User>, IUserRepository
+    public class UserRepository: GenericPersonRepository<User>, IUserRepository
     {
         public User GetByUserName(string userName)
         {
