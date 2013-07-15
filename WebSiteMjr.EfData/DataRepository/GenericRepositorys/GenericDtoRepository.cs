@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using WebSiteMjr.Domain.Interfaces.Repository;
+using WebSiteMjr.Domain.Interfaces.Repository.GenericRepository;
 using WebSiteMjr.EfData.Context;
 
 namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys

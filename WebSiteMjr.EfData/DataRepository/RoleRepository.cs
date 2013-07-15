@@ -12,12 +12,7 @@ namespace WebSiteMjr.EfData.DataRepository
         where TUser : class, IFlexMembershipUser
     {
         private readonly PersonsContext _context;
-
-        public RoleRepository()
-        {
-            _context = new PersonsContext();
-        }
-
+        
         public RoleRepository(PersonsContext context)
         {
             _context = context;

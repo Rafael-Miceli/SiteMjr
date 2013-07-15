@@ -3,26 +3,17 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Repository;
+using WebSiteMjr.Domain.Interfaces.Repository.GenericRepository;
 using WebSiteMjr.Domain.Model.Person;
 using WebSiteMjr.EfData.Context;
-using WebSiteMjr.EfData.UnitOfWork;
 
 namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys
 {
-    public abstract class GenericRepository<TEntity, TContext> : IGenericRepository<TEntity>, IDisposable where TEntity : IntId where TContext: BaseContext<TContext>
+    public abstract class GenericRepository<TEntity, TContext> : IGenericRepository<TEntity>, IDisposable
+        where TEntity : IntId
+        where TContext : BaseContext<TContext>
     {
         protected TContext Context;
-
-        //protected GenericRepository()
-        //{
-        //    //_context = new PersonsUow().Context;
-        //}
-
-
-        //protected GenericRepository(IUnitOfWork<TContext> uow)
-        //{
-        //    _context = uow.Context;
-        //}
 
         public void Add(TEntity entitie)
         {
@@ -70,10 +61,10 @@ namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys
             return Context.Set<TEntity>().Find(idEntitie);
         }
 
-        public void Save()
-        {
-            Context.SaveChanges();
-        }
+        //public void Save()
+        //{
+        //    Context.SaveChanges();
+        //}
 
         public TEntity Get(System.Linq.Expressions.Expression<Func<TEntity, bool>> filter)
         {

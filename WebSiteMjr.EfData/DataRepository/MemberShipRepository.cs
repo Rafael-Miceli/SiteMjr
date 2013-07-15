@@ -8,13 +8,8 @@ namespace WebSiteMjr.EfData.DataRepository
 {
     public class MembershipRepository<TUser> : IFlexUserStore where TUser : class, IFlexMembershipUser, new() 
     {
-        private readonly DbContext _context;
-
-        public MembershipRepository()
-        {
-            _context = new PersonsContext();
-        }
-
+        private readonly PersonsContext _context;
+        
         public MembershipRepository(PersonsContext context)
         {
             _context = context;

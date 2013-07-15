@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Web.Mvc;
 using FlexProviders.Roles;
-using WebSiteMjr.Domain.Interfaces.Role;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
+using WebSiteMjr.EfData.Context;
 using WebSiteMjr.EfData.DataRepository;
 
 namespace WebSiteMjr.Filters
@@ -73,7 +73,7 @@ namespace WebSiteMjr.Filters
 
             if (_rolesSplit.Length > 0)
             {
-                RoleProvider = new FlexRoleProvider(new RoleRepository<Role, User>());
+                RoleProvider = new FlexRoleProvider(new RoleRepository<Role, User>(new PersonsContext()));
                 if (_rolesSplit.Any(role => RoleProvider.IsUserInRole(user.Identity.Name, role)))
                 {
                     return;

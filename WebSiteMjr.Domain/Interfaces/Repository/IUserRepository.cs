@@ -1,4 +1,5 @@
-﻿using WebSiteMjr.Domain.Model.Membership;
+﻿using WebSiteMjr.Domain.Interfaces.Repository.GenericRepository;
+using WebSiteMjr.Domain.Model.Membership;
 
 namespace WebSiteMjr.Domain.Interfaces.Repository
 {

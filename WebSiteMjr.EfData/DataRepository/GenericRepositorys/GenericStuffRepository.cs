@@ -1,6 +1,15 @@
-﻿namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys
+﻿using WebSiteMjr.Domain.Model;
+using WebSiteMjr.Domain.Model.Person;
+using WebSiteMjr.EfData.Context;
+using WebSiteMjr.EfData.UnitOfWork;
+
+namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys
 {
-    public class GenericStuffRepository
+    public abstract class GenericStuffRepository<TEntity>: GenericRepository<TEntity, StuffContext> where TEntity: IntId 
     {
+        protected GenericStuffRepository(IUnitOfWork<StuffContext> uow)
+        {
+            Context = uow.Context;
+        }     
     }
 }

@@ -9,7 +9,9 @@ using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
 using WebSiteMjr.Domain.services;
 using WebSiteMjr.Domain.services.Membership;
+using WebSiteMjr.EfData.Context;
 using WebSiteMjr.EfData.DataRepository;
+using WebSiteMjr.EfData.UnitOfWork;
 
 namespace WebSiteMjr
 {
@@ -40,10 +42,11 @@ namespace WebSiteMjr
             //container.RegisterType<IRepository<Employee>, EmployeeDtoRepository>();
 
             container.RegisterType<IFlexRoleProvider, FlexRoleProvider>();
-            container.RegisterInstance(new UserService(new UserRepository(), new CompanyRepository()));
-            container.RegisterInstance(new CompanyService(new CompanyRepository()));
-            container.RegisterInstance(new FlexRoleProvider(new RoleRepository<Role, User>()));
-            container.RegisterInstance(new MembershipService(new FlexMembershipProvider(new MembershipRepository<User>(), new AspnetEnvironment())));
+            container.RegisterInstance(new PersonsUow());
+            container.RegisterInstance(new UserService(new UserRepository(new PersonsUow()), new CompanyRepository(new PersonsUow())));
+            container.RegisterInstance(new CompanyService(new CompanyRepository(new PersonsUow())));
+            container.RegisterInstance(new FlexRoleProvider(new RoleRepository<Role, User>(new PersonsContext())));
+            container.RegisterInstance(new MembershipService(new FlexMembershipProvider(new MembershipRepository<User>(new PersonsContext()), new AspnetEnvironment())));
 
             return container;
         }
