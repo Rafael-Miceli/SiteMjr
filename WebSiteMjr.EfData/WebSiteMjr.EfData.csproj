@@ -86,9 +86,9 @@
     <Compile Include="Helpers\StateHelpers.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\PersonsUow.cs" />
     <Compile Include="UnitOfWork\StuffUow.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlexProviders\FlexProviders.csproj">

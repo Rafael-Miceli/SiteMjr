@@ -2,33 +2,12 @@
 
 namespace WebSiteMjr.EfData.UnitOfWork
 {
-    public class PersonsUow:IUnitOfWork<PersonsContext>
+    public class PersonsUow : UnitOfWork<PersonsContext>
     {
-        private readonly PersonsContext _context;
-
         public PersonsUow()
-        {
-            _context = new PersonsContext();
-        }
+        {}
 
-        public PersonsUow(PersonsContext context)
-        {
-            _context = context;
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
-
-        public int Save()
-        {
-            return _context.SaveChanges();
-        }
-
-        public PersonsContext Context 
-        { 
-            get { return _context; } 
-        }
+        public PersonsUow(PersonsContext context): base(context)
+        {}
     }
 }

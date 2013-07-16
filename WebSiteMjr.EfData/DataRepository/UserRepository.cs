@@ -8,7 +8,7 @@ namespace WebSiteMjr.EfData.DataRepository
 {
     public class UserRepository: GenericPersonRepository<User>, IUserRepository
     {
-        public UserRepository(IUnitOfWork<PersonsContext> uow ) : base(uow)
+        public UserRepository(UnitOfWork<PersonsContext> uow ) : base(uow)
         {}
 
         public User GetByUserName(string userName)

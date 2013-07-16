@@ -8,7 +8,7 @@ namespace WebSiteMjr.EfData.DataRepository
 {
     public class CompanyRepository: GenericPersonRepository<Company>, ICompanyRepository
     {
-        public CompanyRepository(IUnitOfWork<PersonsContext> uow) : base(uow)
+        public CompanyRepository(UnitOfWork<PersonsContext> uow) : base(uow)
         {}
     }
 }

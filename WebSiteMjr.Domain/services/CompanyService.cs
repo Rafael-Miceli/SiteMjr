@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using WebSiteMjr.Domain.Interfaces.Repository;
+using WebSiteMjr.Domain.Interfaces.Uow;
 using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.Domain.services
@@ -7,28 +8,30 @@ namespace WebSiteMjr.Domain.services
     public class CompanyService
     {
         private readonly ICompanyRepository _companyRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CompanyService(ICompanyRepository companyRepository)
+        public CompanyService(ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
         {
             _companyRepository = companyRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public void CreateCompany(Company company)
         {
             _companyRepository.Add(company);
-            _companyRepository.Save();
+            _unitOfWork.Save();
         }
 
         public void UpdateCompany(Company company)
         {
             _companyRepository.Update(company);
-            _companyRepository.Save();
+            _unitOfWork.Save();
         }
 
         public void DeleteCompany(object company)
         {
             _companyRepository.Remove(company);
-            _companyRepository.Save();
+            _unitOfWork.Save();
         }
 
         public IEnumerable<Company> ListCompany()

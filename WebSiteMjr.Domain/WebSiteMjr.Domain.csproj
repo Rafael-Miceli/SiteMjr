@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\Role\IFlexRole.cs" />
     <Compile Include="Interfaces\Role\IFlexRoleProvider.cs" />
     <Compile Include="Interfaces\Role\IFlexRoleStore.cs" />
+    <Compile Include="Interfaces\Uow\IUnitOfWork.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\Employee.cs" />

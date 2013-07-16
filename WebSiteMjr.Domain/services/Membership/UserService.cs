@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Repository;
+using WebSiteMjr.Domain.Interfaces.Uow;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
@@ -11,29 +12,31 @@ namespace WebSiteMjr.Domain.services.Membership
     {
         private readonly IUserRepository _user;
         private readonly ICompanyRepository _company;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository user, ICompanyRepository company)
+        public UserService(IUserRepository user, ICompanyRepository company, IUnitOfWork unitOfWork)
         {
             _user = user;
             _company = company;
+            _unitOfWork = unitOfWork;
         }
 
         public void CreateUser(User user)
         {
             _user.Add(user);
-            _user.Save();
+            _unitOfWork.Save();
         }
 
         public void UpdateUser(User user)
         {
             _user.Update(user);
-            _user.Save();
+            _unitOfWork.Save();
         }
 
         public void DeleteUser(object user)
         {
             _user.Remove(user);
-            _user.Save();
+            _unitOfWork.Save();
         }
 
         public IEnumerable<User> ListUser()
@@ -57,7 +60,7 @@ namespace WebSiteMjr.Domain.services.Membership
             var user = _user.GetByUserName(userName);
             var idCompany = user != null ? user.IdCompany : 0;
 
-            var company = new CompanyService(_company);
+            var company = new CompanyService(_company, _unitOfWork);
             return company.FindCompany(idCompany);
         }
 

@@ -7,7 +7,7 @@ namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys
 {
     public abstract class GenericStuffRepository<TEntity>: GenericRepository<TEntity, StuffContext> where TEntity: IntId 
     {
-        protected GenericStuffRepository(IUnitOfWork<StuffContext> uow)
+        protected GenericStuffRepository(UnitOfWork<StuffContext> uow)
         {
             Context = uow.Context;
         }     
