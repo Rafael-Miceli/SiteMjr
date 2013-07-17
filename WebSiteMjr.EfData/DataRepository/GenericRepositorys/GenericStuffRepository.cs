@@ -1,5 +1,4 @@
-﻿using WebSiteMjr.Domain.Model;
-using WebSiteMjr.Domain.Model.Person;
+﻿using WebSiteMjr.Domain.Model.Person;
 using WebSiteMjr.EfData.Context;
 using WebSiteMjr.EfData.UnitOfWork;
 

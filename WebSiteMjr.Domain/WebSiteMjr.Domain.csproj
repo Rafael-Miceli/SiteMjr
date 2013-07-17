@@ -53,6 +53,7 @@
     <Compile Include="Interfaces\Membership\IFlexMembershipUser.cs" />
     <Compile Include="Interfaces\Membership\IFlexUserStore.cs" />
     <Compile Include="Interfaces\Membership\ISecurityEncoder.cs" />
+    <Compile Include="Interfaces\Repository\IStuffRepository.cs" />
     <Compile Include="Interfaces\Repository\IUserRepository.cs" />
     <Compile Include="Interfaces\Role\IFlexRole.cs" />
     <Compile Include="Interfaces\Role\IFlexRoleProvider.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\Employee.cs" />
+    <Compile Include="Model\IHolder.cs" />
     <Compile Include="Model\Stuff.cs" />
     <Compile Include="Model\Membership\FlexMembershipStatus.cs" />
     <Compile Include="Model\Person\IIntId.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="services\Membership\MembershipService.cs" />
     <Compile Include="services\Membership\UserService.cs" />
     <Compile Include="services\Roles\RoleService.cs" />
+    <Compile Include="services\StuffService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

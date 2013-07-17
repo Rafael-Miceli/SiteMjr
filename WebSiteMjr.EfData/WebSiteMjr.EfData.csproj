@@ -81,6 +81,7 @@
     <Compile Include="DataRepository\MembershipRepository.cs" />
     <Compile Include="DataRepository\GenericRepositorys\GenericPersonRepository.cs" />
     <Compile Include="DataRepository\RoleRepository.cs" />
+    <Compile Include="DataRepository\StuffRepository.cs" />
     <Compile Include="DataRepository\UserRepository.cs" />
     <Compile Include="Helpers\ContextHelper.cs" />
     <Compile Include="Helpers\StateHelpers.cs" />

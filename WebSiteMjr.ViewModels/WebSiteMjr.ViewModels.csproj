@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StuffsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebSiteMjr.Domain\WebSiteMjr.Domain.csproj">

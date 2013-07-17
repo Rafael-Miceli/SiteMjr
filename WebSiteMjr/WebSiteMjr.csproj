@@ -195,6 +195,7 @@
     <Compile Include="Controllers\ClientHomeController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StuffController.cs" />
     <Compile Include="Filters\FlexAuthorizeAttribute.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -350,6 +351,11 @@
     <Content Include="Views\Company\Edit.cshtml" />
     <Content Include="Views\Shared\_ClientMenu.cshtml" />
     <Content Include="Views\Company\Delete.cshtml" />
+    <Content Include="Views\Stuff\Index.cshtml" />
+    <Content Include="Views\Stuff\Create.cshtml" />
+    <Content Include="Views\Stuff\Delete.cshtml" />
+    <Content Include="Views\Stuff\Details.cshtml" />
+    <Content Include="Views\Stuff\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -369,6 +375,10 @@
     <ProjectReference Include="..\WebSiteMjr.EfData\WebSiteMjr.EfData.csproj">
       <Project>{1D5058F1-5CA9-4978-AC8C-A508C430E7B0}</Project>
       <Name>WebSiteMjr.EfData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebSiteMjr.ViewModels\WebSiteMjr.ViewModels.csproj">
+      <Project>{e9694197-221b-4013-8b69-9d2943fd9513}</Project>
+      <Name>WebSiteMjr.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

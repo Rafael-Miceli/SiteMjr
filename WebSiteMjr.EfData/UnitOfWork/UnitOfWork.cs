@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using WebSiteMjr.Domain.Interfaces.Uow;
 
 namespace WebSiteMjr.EfData.UnitOfWork

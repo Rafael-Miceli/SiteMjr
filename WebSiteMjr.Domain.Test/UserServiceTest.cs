@@ -6,8 +6,6 @@ using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
-using WebSiteMjr.Domain.services.Membership;
-using WebSiteMjr.EfData.UnitOfWork;
 
 namespace WebSiteMjr.Domain.Test
 {
