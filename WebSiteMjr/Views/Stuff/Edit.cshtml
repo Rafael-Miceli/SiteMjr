@@ -12,7 +12,7 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Company</legend>
+        <legend>Material</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
@@ -31,19 +31,19 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Address)
+            @Html.LabelFor(model => model.StuffManufactures)
             </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Address)
-            @Html.ValidationMessageFor(model => model.Address)
+            @Html.DropDownListFor(model => model.StuffManufactureId, Model.StuffManufactures)
+            @Html.ValidationMessageFor(model => model.StuffManufactureId)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.City)
+            @Html.LabelFor(model => model.StuffCategories)
             </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.StuffCategories, Model.StuffCategories )
-            @Html.ValidationMessageFor(model => model.City)
+            @Html.DropDownListFor(model => model.StuffCategorieId, Model.StuffCategories )
+            @Html.ValidationMessageFor(model => model.StuffCategorieId)
         </div>
 
         @Html.HiddenFor(model => model.Id)
@@ -52,9 +52,6 @@
             <input type="submit" value="Save" />
         </p>
         
-        <p>
-            @Html.ActionLink("Enviar Login", "SendLogin", new { idCompany = Model.Id })
-        </p>        
     </fieldset>
 }
 

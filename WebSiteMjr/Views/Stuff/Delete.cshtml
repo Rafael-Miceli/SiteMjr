@@ -1,4 +1,4 @@
-﻿@model WebSiteMjr.Domain.Model.Company
+﻿@model WebSiteMjr.ViewModels.StuffsViewModel
 
 @{
     ViewBag.Title = "Delete";
@@ -7,9 +7,9 @@
 
 <h2>Delete</h2>
 
-<h3>Tem certeza que deseja deletar a empresa @Model.Name?</h3>
+<h3>Tem certeza que deseja deletar o material @Model.Name?</h3>
 <fieldset>
-    <legend>Company</legend>
+    <legend>Material</legend>
 
     <div class="display-label">
          @Html.DisplayNameFor(model => model.Name)
@@ -19,31 +19,26 @@
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Email)
+         @Html.DisplayNameFor(model => model.Description)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Email)
+        @Html.DisplayFor(model => model.Description)
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Address)
+    <div class="editor-label">
+        @Html.LabelFor(model => model.StuffManufactures)
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Address)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.City)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.City)
+    <div class="editor-field">
+        @Html.DropDownListFor(model => model.StuffManufactureId, Model.StuffManufactures)
+        @Html.ValidationMessageFor(model => model.StuffManufactureId)
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Phone)
+    <div class="editor-label">
+        @Html.LabelFor(model => model.StuffCategories)
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Phone)
+    <div class="editor-field">
+        @Html.DropDownListFor(model => model.StuffCategorieId, Model.StuffCategories)
+        @Html.ValidationMessageFor(model => model.StuffCategorieId)
     </div>
 </fieldset>
 @using (Html.BeginForm()) {

@@ -12,13 +12,8 @@ using WebSiteMjr.EfData.DataRepository;
 
 namespace WebSiteMjr.EfData.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<PersonsContext>
+    internal sealed class PersonConfiguration : GenericConfiguration<PersonsContext>
     {
-        public Configuration()
-        {
-            AutomaticMigrationsEnabled = true;
-        }
-
         protected override void Seed(PersonsContext context)
         {
             //  This method will be called after migrating to the latest version.

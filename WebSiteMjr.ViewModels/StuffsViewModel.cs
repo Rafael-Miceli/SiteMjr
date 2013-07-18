@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.ViewModels
@@ -8,9 +9,9 @@ namespace WebSiteMjr.ViewModels
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public StuffCategorie StuffCategorieId { get; set; }
-        public StuffManufacture StuffManufactureId { get; set; }
-        public IEnumerable<StuffCategorie> StuffCategories { get; set; }
-        public IEnumerable<StuffManufacture> StuffManufactures { get; set; }
+        public IEnumerable<StuffCategorie> StuffCategorieId { get; set; }
+        public IEnumerable<StuffManufacture> StuffManufactureId { get; set; }
+        public IEnumerable<SelectListItem> StuffCategories { get; set; }
+        public IEnumerable<SelectListItem> StuffManufactures { get; set; }
     }
 }

@@ -85,7 +85,9 @@
     <Compile Include="DataRepository\UserRepository.cs" />
     <Compile Include="Helpers\ContextHelper.cs" />
     <Compile Include="Helpers\StateHelpers.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\PersonConfiguration.cs" />
+    <Compile Include="Migrations\GenericConfiguration.cs" />
+    <Compile Include="Migrations\StuffConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\PersonsUow.cs" />
     <Compile Include="UnitOfWork\StuffUow.cs" />
