@@ -299,6 +299,7 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Stuff\_ChooseStuffCategory.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -356,6 +357,8 @@
     <Content Include="Views\Stuff\Delete.cshtml" />
     <Content Include="Views\Stuff\Details.cshtml" />
     <Content Include="Views\Stuff\Edit.cshtml" />
+    <Content Include="Views\Stuff\_ChooseStuffCategory.cshtml" />
+    <Content Include="Views\Stuff\_ChooseStuffManufacturer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -368,13 +371,29 @@
       <Project>{9C987907-BD64-4100-89D4-F4BCFB77768B}</Project>
       <Name>FlexProviders</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebSiteMjr.Assembler\WebSiteMjr.Assembler.csproj">
+      <Project>{F1165A12-1F75-4644-8336-A9BDBEBBAF6C}</Project>
+      <Name>WebSiteMjr.Assembler</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr.Domain\WebSiteMjr.Domain.csproj">
       <Project>{1219ECD0-3C8E-435F-88E1-01DE06D01E74}</Project>
       <Name>WebSiteMjr.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebSiteMjr.EfData\WebSiteMjr.EfData.csproj">
+    <ProjectReference Include="..\WebSiteMjr.EfBaseData\WebSiteMjr.EfBaseData.csproj">
+      <Project>{A7595876-2BE8-4AF2-A81F-12A0B7727D14}</Project>
+      <Name>WebSiteMjr.EfBaseData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebSiteMjr.EfConfigurationMigrationData\WebSiteMjr.EfConfigurationMigrationData.csproj">
+      <Project>{c5310985-aa81-4397-97d7-f6cdbcca54b8}</Project>
+      <Name>WebSiteMjr.EfConfigurationMigrationData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebSiteMjr.EfData\WebSiteMjr.EfPersonData.csproj">
       <Project>{1D5058F1-5CA9-4978-AC8C-A508C430E7B0}</Project>
-      <Name>WebSiteMjr.EfData</Name>
+      <Name>WebSiteMjr.EfPersonData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebSiteMjr.EfStuffData\WebSiteMjr.EfStuffData.csproj">
+      <Project>{0C8D47BC-32EC-4073-89B3-2D3888593401}</Project>
+      <Name>WebSiteMjr.EfStuffData</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr.ViewModels\WebSiteMjr.ViewModels.csproj">
       <Project>{e9694197-221b-4013-8b69-9d2943fd9513}</Project>

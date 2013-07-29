@@ -1,18 +1,18 @@
 ﻿using System.Data.Entity;
 
-namespace WebSiteMjr.EfData.Context
+namespace WebSiteMjr.EfBaseData.Context
 {
-    public class BaseContext<TContext>: DbContext where TContext: DbContext
+    public class BaseContext<TContext> : DbContext where TContext : DbContext
     {
         static BaseContext()
         {
             Database.SetInitializer<TContext>(null);
         }
 
-        protected BaseContext():
+        protected BaseContext() :
             base("DefaultConnection")
         {
-                
+
         }
     }
 }

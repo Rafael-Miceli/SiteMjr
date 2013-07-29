@@ -4,9 +4,9 @@ using System.Data;
 using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Repository.GenericRepository;
 using WebSiteMjr.Domain.Model.Person;
-using WebSiteMjr.EfData.Context;
+using WebSiteMjr.EfBaseData.Context;
 
-namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys
+namespace WebSiteMjr.EfBaseData.DataRepository
 {
     public abstract class GenericRepository<TEntity, TContext> : IGenericRepository<TEntity>, IDisposable
         where TEntity : IntId

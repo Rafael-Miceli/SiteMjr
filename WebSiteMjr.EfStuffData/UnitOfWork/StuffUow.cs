@@ -1,6 +1,7 @@
-﻿using WebSiteMjr.EfData.Context;
+﻿using WebSiteMjr.EfBaseData.UnitOfWork;
+using WebSiteMjr.EfStuffData.Context;
 
-namespace WebSiteMjr.EfData.UnitOfWork
+namespace WebSiteMjr.EfStuffData.UnitOfWork
 {
     public class StuffUow : UnitOfWork<StuffContext>
     {

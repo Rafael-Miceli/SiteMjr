@@ -53,6 +53,8 @@
     <Compile Include="Interfaces\Membership\IFlexMembershipUser.cs" />
     <Compile Include="Interfaces\Membership\IFlexUserStore.cs" />
     <Compile Include="Interfaces\Membership\ISecurityEncoder.cs" />
+    <Compile Include="Interfaces\Repository\IStuffCategoryRepository.cs" />
+    <Compile Include="Interfaces\Repository\IStuffManufactureRepository.cs" />
     <Compile Include="Interfaces\Repository\IStuffRepository.cs" />
     <Compile Include="Interfaces\Repository\IUserRepository.cs" />
     <Compile Include="Interfaces\Role\IFlexRole.cs" />
@@ -72,7 +74,7 @@
     <Compile Include="Exceptions\ExpenseNotFoundException.cs" />
     <Compile Include="Interfaces\Repository\GenericRepository\IGenericRepository.cs" />
     <Compile Include="Model\Roles\Role.cs" />
-    <Compile Include="Model\StuffCategorie.cs" />
+    <Compile Include="Model\StuffCategory.cs" />
     <Compile Include="Model\StuffManufacture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\CompanyService.cs" />

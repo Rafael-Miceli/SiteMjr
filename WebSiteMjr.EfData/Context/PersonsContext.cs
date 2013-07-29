@@ -2,6 +2,7 @@
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
+using WebSiteMjr.EfBaseData.Context;
 
 namespace WebSiteMjr.EfData.Context
 {

@@ -11,9 +11,9 @@ namespace WebSiteMjr.EfData.DataRepository
         where TRole : class, IFlexRole<TUser>, new()
         where TUser : class, IFlexMembershipUser
     {
-        private readonly PersonsContext _context;
+        private readonly DbContext _context;
         
-        public RoleRepository(PersonsContext context)
+        public RoleRepository(DbContext context)
         {
             _context = context;
         }

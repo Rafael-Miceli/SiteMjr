@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Membership;
 using WebSiteMjr.EfData.Context;
@@ -7,9 +8,9 @@ namespace WebSiteMjr.EfData.DataRepository
 {
     public class MembershipRepository<TUser> : IFlexUserStore where TUser : class, IFlexMembershipUser, new() 
     {
-        private readonly PersonsContext _context;
+        private readonly DbContext _context;
         
-        public MembershipRepository(PersonsContext context)
+        public MembershipRepository(DbContext context)
         {
             _context = context;
         }

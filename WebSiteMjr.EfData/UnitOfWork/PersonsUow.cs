@@ -1,4 +1,5 @@
-﻿using WebSiteMjr.EfData.Context;
+﻿using WebSiteMjr.EfBaseData.UnitOfWork;
+using WebSiteMjr.EfData.Context;
 
 namespace WebSiteMjr.EfData.UnitOfWork
 {

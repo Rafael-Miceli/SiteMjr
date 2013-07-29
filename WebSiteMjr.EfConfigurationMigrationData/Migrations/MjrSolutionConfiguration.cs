@@ -1,3 +1,4 @@
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using FlexProviders.Aspnet;
 using FlexProviders.Membership;
@@ -7,14 +8,17 @@ using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
 using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.Domain.services.Roles;
-using WebSiteMjr.EfData.Context;
 using WebSiteMjr.EfData.DataRepository;
 
-namespace WebSiteMjr.EfData.Migrations
+namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
 {
-    internal sealed class PersonConfiguration : GenericConfiguration<PersonsContext>
+    internal sealed class MjrSolutionConfiguration : DbMigrationsConfiguration<MjrSolutionContext>
     {
-        protected override void Seed(PersonsContext context)
+        public MjrSolutionConfiguration()
+        {
+            AutomaticMigrationsEnabled = true;
+        }
+        protected override void Seed(MjrSolutionContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -36,7 +40,7 @@ namespace WebSiteMjr.EfData.Migrations
             base.Seed(context);
         }
 
-        private static void SeedCompany(PersonsContext context)
+        private static void SeedCompany(MjrSolutionContext context)
         {
 
             context.Company.AddOrUpdate(co => co.Name, new Company
@@ -46,7 +50,7 @@ namespace WebSiteMjr.EfData.Migrations
                 });
         }
 
-        private static void SeedMembership(PersonsContext context)
+        private static void SeedMembership(DbContext context)
         {
             //Roles.Enabled = true;
 

@@ -2,7 +2,7 @@
 
 namespace WebSiteMjr.Domain.Model
 {
-    public class StuffCategorie: IntId
+    public class StuffCategory: IntId
     {
         public string Name { get; set; }
     }

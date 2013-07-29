@@ -12,6 +12,8 @@ using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.EfData.Context;
 using WebSiteMjr.EfData.DataRepository;
 using WebSiteMjr.EfData.UnitOfWork;
+using WebSiteMjr.EfStuffData.DataRepository;
+using WebSiteMjr.EfStuffData.UnitOfWork;
 
 namespace WebSiteMjr
 {
@@ -40,12 +42,14 @@ namespace WebSiteMjr
             //container.RegisterType<IRepository<Associate>, AssociateDtoRepository>();
             //container.RegisterType<IRepository<User>, UserDtoRepository>();
             //container.RegisterType<IRepository<Employee>, EmployeeDtoRepository>();
+            var personUow = new PersonsUow();
+            var stuffUnow = new StuffUow();
 
             container.RegisterType<IFlexRoleProvider, FlexRoleProvider>();
-            container.RegisterInstance(new PersonsUow());
-            container.RegisterInstance(new UserService(new UserRepository(new PersonsUow()), new CompanyRepository(new PersonsUow()), new PersonsUow()));
-            container.RegisterInstance(new StuffService(new StuffRepository(new StuffUow()), new StuffUow()));
-            container.RegisterInstance(new CompanyService(new CompanyRepository(new PersonsUow()), new PersonsUow()));
+            //container.RegisterInstance(new PersonsUow());
+            container.RegisterInstance(new UserService(new UserRepository(personUow), new CompanyRepository(personUow), personUow));
+            container.RegisterInstance(new StuffService(new StuffRepository(stuffUnow), new StuffCategoryRepository(stuffUnow), new StuffManufactureRepository(stuffUnow), stuffUnow));
+            container.RegisterInstance(new CompanyService(new CompanyRepository(personUow), personUow));
             container.RegisterInstance(new FlexRoleProvider(new RoleRepository<Role, User>(new PersonsContext())));
             container.RegisterInstance(new MembershipService(new FlexMembershipProvider(new MembershipRepository<User>(new PersonsContext()), new AspnetEnvironment())));
 

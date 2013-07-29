@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using WebSiteMjr.Domain.Interfaces.Uow;
 
-namespace WebSiteMjr.EfData.UnitOfWork
+namespace WebSiteMjr.EfBaseData.UnitOfWork
 {
     public class UnitOfWork<TContext> : IUnitOfWork where TContext: DbContext, new()
     {

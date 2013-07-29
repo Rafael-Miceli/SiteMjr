@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using WebSiteMjr.Domain.Model;
 
-namespace WebSiteMjr.EfData.Helpers
+namespace WebSiteMjr.EfBaseData.Helpers
 {
     public static class StateHelpers
     {

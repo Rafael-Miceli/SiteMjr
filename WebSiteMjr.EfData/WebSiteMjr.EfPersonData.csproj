@@ -71,27 +71,15 @@
     <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Context\BaseContext.cs" />
     <Compile Include="Context\PersonsContext.cs" />
-    <Compile Include="Context\StuffContext.cs" />
     <Compile Include="DataRepository\CompanyRepository.cs" />
     <Compile Include="DataRepository\GenericRepositorys\GenericDtoRepository.cs" />
-    <Compile Include="DataRepository\GenericRepositorys\GenericRepository.cs" />
-    <Compile Include="DataRepository\GenericRepositorys\GenericStuffRepository.cs" />
     <Compile Include="DataRepository\MembershipRepository.cs" />
     <Compile Include="DataRepository\GenericRepositorys\GenericPersonRepository.cs" />
     <Compile Include="DataRepository\RoleRepository.cs" />
-    <Compile Include="DataRepository\StuffRepository.cs" />
     <Compile Include="DataRepository\UserRepository.cs" />
-    <Compile Include="Helpers\ContextHelper.cs" />
-    <Compile Include="Helpers\StateHelpers.cs" />
-    <Compile Include="Migrations\PersonConfiguration.cs" />
-    <Compile Include="Migrations\GenericConfiguration.cs" />
-    <Compile Include="Migrations\StuffConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\PersonsUow.cs" />
-    <Compile Include="UnitOfWork\StuffUow.cs" />
-    <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlexProviders\FlexProviders.csproj">
@@ -101,6 +89,10 @@
     <ProjectReference Include="..\WebSiteMjr.Domain\WebSiteMjr.Domain.csproj">
       <Project>{1219ECD0-3C8E-435F-88E1-01DE06D01E74}</Project>
       <Name>WebSiteMjr.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebSiteMjr.EfBaseData\WebSiteMjr.EfBaseData.csproj">
+      <Project>{A7595876-2BE8-4AF2-A81F-12A0B7727D14}</Project>
+      <Name>WebSiteMjr.EfBaseData</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

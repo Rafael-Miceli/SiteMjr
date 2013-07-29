@@ -1,6 +1,7 @@
 ﻿using WebSiteMjr.Domain.Model.Person;
+using WebSiteMjr.EfBaseData.DataRepository;
+using WebSiteMjr.EfBaseData.UnitOfWork;
 using WebSiteMjr.EfData.Context;
-using WebSiteMjr.EfData.UnitOfWork;
 
 namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys
 {

@@ -1,10 +1,9 @@
-﻿using WebSiteMjr.EfData.UnitOfWork;
-using WebSiteMjr.Domain.Interfaces.Repository;
+﻿using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Model;
-using WebSiteMjr.EfData.Context;
-using WebSiteMjr.EfData.DataRepository.GenericRepositorys;
+using WebSiteMjr.EfBaseData.UnitOfWork;
+using WebSiteMjr.EfStuffData.Context;
 
-namespace WebSiteMjr.EfData.DataRepository
+namespace WebSiteMjr.EfStuffData.DataRepository
 {
     public class StuffRepository: GenericStuffRepository<Stuff>, IStuffRepository
     {

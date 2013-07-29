@@ -63,9 +63,9 @@
       <Project>{1219ECD0-3C8E-435F-88E1-01DE06D01E74}</Project>
       <Name>WebSiteMjr.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebSiteMjr.EfData\WebSiteMjr.EfData.csproj">
+    <ProjectReference Include="..\WebSiteMjr.EfData\WebSiteMjr.EfPersonData.csproj">
       <Project>{1D5058F1-5CA9-4978-AC8C-A508C430E7B0}</Project>
-      <Name>WebSiteMjr.EfData</Name>
+      <Name>WebSiteMjr.EfPersonData</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
