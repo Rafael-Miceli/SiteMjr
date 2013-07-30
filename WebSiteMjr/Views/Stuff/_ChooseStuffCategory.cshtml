@@ -8,6 +8,12 @@
    id="stuffCategoryAddLink">Add Nova Categoria</a>
 @Html.ValidationMessageFor(model => model.SelectedStuffCategoryId)
 <div id="StuffCategoryDialog" class="hidden">
+    <div>
+        <span>Nome</span>
+    </div>
+    <div>
+        <input type="text" />
+    </div>
 </div>
 
-<script src="@Url.Content("~/Scripts/Stuff/_chooseStuffCategory.js")"></script>
+@*<script src="@Url.Content("~/Scripts/Stuff/_chooseStuffCategory.js")"></script>*@

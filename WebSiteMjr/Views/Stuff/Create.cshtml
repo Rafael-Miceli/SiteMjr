@@ -34,7 +34,7 @@
         </div>
         <div class="editor-field">
             @Html.Partial("_ChooseStuffCategory")
-        </div>L
+        </div>
         <div class="editor-field">
             @Html.Partial("_ChooseStuffManufacturer")
             </div>
@@ -65,4 +65,8 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Stuff/_chooseStuffCategory.js")"></script>
+}
 
