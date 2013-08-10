@@ -1,0 +1,9 @@
+﻿@model WebSiteMjr.Domain.Model.StuffCategory
+
+@using ( Html.BeginForm("CreateStuffCategory", "Stuff", FormMethod.Post, new { id = "createStuffCategoryForm"}))
+{
+  @Html.ValidationSummary(true)
+    {
+        
+    }
+}

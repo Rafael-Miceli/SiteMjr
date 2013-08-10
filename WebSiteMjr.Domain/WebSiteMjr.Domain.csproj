@@ -82,7 +82,7 @@
     <Compile Include="services\Membership\MembershipService.cs" />
     <Compile Include="services\Membership\UserService.cs" />
     <Compile Include="services\Roles\RoleService.cs" />
-    <Compile Include="services\StuffService.cs" />
+    <Compile Include="services\Stuffs\StuffService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

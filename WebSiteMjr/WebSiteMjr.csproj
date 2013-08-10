@@ -359,6 +359,8 @@
     <Content Include="Views\Stuff\Edit.cshtml" />
     <Content Include="Views\Stuff\_ChooseStuffCategory.cshtml" />
     <Content Include="Views\Stuff\_ChooseStuffManufacturer.cshtml" />
+    <Content Include="Views\Stuff\_CreateStuffCategory.cshtml" />
+    <Content Include="Views\Stuff\_CreateSuffManufacturer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
