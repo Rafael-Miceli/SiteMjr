@@ -4,14 +4,14 @@
     @Html.LabelFor(model => model.SelectedStuffCategoryId, "Categoria")
 </div>
 @Html.DropDownList("StuffCategoryId", ViewBag.StuffCategory as SelectList, String.Empty)
-<a class="button" href="@Url.Content("~/Stuff/CreateCategory" )"
+<a class="button" href="@Url.Content("~/Stuff/CreateStuffCategory" )"
    id="stuffCategoryAddLink">Add Nova Categoria</a>
 @Html.ValidationMessageFor(model => model.SelectedStuffCategoryId)
 <div id="StuffCategoryDialog" class="hidden">
-    <div id="createStuffCategoryForm">
+    @*<div id="createStuffCategoryForm">
         <span>Nome</span>
         <input type="text" />
-    </div>
+    </div>*@
 </div>
 
 @*<script src="@Url.Content("~/Scripts/Stuff/_chooseStuffCategory.js")"></script>*@

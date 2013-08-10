@@ -77,6 +77,16 @@ namespace WebSiteMjr.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult CreateStuffCategory()
+        {
+            // Don't allow this method to be called directly.
+            if (HttpContext.Request.IsAjaxRequest() != true)
+                return RedirectToAction("Index", "Stuff");
+
+            return PartialView("_CreateStuffCategory");
+        }
+
         [HttpPost]
         public ActionResult CreateStuffCategory(StuffCategory stuffCategory)
         {
