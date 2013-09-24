@@ -10,24 +10,34 @@ namespace WebSiteMjr.Domain.services.Stuffs
     {
         private readonly IStuffCategoryRepository _stuffCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
+        
+        public StuffCategoryService(IStuffCategoryRepository stuffCategoryRepository, IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+            _stuffCategoryRepository = stuffCategoryRepository;
+        }
+        
         public void CreateStuffCategory(StuffCategory stuffCategory)
         {
-            throw new System.NotImplementedException();
+            _stuffCategoryRepository.Add(stuffCategory);
+            _unitOfWork.Save();
         }
 
         public void UpdateStuffCategory(StuffCategory stuffCategory)
         {
-            throw new System.NotImplementedException();
+            _stuffCategoryRepository.Update(stuffCategory);
+            _unitOfWork.Save();
         }
 
         public void DeleteStuffCategory(object stuffCategory)
         {
-            throw new System.NotImplementedException();
+            _stuffCategoryRepository.Remove(stuffCategory);
+            _unitOfWork.Save();
         }
 
         public IEnumerable<StuffCategory> ListStuffCategory()
         {
-            throw new System.NotImplementedException();
+            return _stuffCategoryRepository.GetAll();
         }
 
         public StuffCategory FindStuffCategory(object idStuffCategory)
