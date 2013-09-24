@@ -42,7 +42,12 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public StuffManufacture FindStuffManufacture(object idStuffManufacture)
         {
-            throw new System.NotImplementedException();
+            return _stuffManufactureRepository.GetById(idStuffManufacture);
+        }
+        
+        public StuffManufacture FindStuffManufactureByName(string name)
+        {
+            return _stuffManufactureRepository.GetStuffManufacturerByName(name);
         }
     }
 }
