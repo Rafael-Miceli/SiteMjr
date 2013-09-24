@@ -50,6 +50,8 @@ namespace WebSiteMjr
             //container.RegisterInstance(new PersonsUow());
             container.RegisterInstance(new UserService(new UserRepository(personUow), new CompanyRepository(personUow), personUow));
             container.RegisterInstance(new StuffService(new StuffRepository(stuffUnow), new StuffCategoryRepository(stuffUnow), new StuffManufactureRepository(stuffUnow), stuffUnow));
+            container.RegisterInstance(new StuffCategoryService(new StuffCategoryRepository(stuffUnow), stuffUnow));
+            container.RegisterInstance(new StuffManufactureService(new StuffManufactureRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(new CompanyService(new CompanyRepository(personUow), personUow));
             container.RegisterInstance(new FlexRoleProvider(new RoleRepository<Role, User>(new PersonsContext())));
             container.RegisterInstance(new MembershipService(new FlexMembershipProvider(new MembershipRepository<User>(new PersonsContext()), new AspnetEnvironment())));
