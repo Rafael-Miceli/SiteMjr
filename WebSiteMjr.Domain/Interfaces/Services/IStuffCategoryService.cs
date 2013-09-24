@@ -10,5 +10,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         void DeleteStuffCategory(object stuffCategory);
         IEnumerable<StuffCategory> ListStuffCategory();
         StuffCategory FindStuffCategory(object idStuffCategory)
+        StuffCategory FindStuffCategoryByName(string name);
     }
 }
