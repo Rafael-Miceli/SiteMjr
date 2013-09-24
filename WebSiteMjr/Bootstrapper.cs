@@ -9,6 +9,7 @@ using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
 using WebSiteMjr.Domain.services;
 using WebSiteMjr.Domain.services.Membership;
+using WebSiteMjr.Domain.services.Stuffs;
 using WebSiteMjr.EfData.Context;
 using WebSiteMjr.EfData.DataRepository;
 using WebSiteMjr.EfData.UnitOfWork;

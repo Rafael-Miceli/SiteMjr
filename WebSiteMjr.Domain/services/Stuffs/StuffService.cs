@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using WebSiteMjr.Domain.Interfaces.Repository;
+using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
 using WebSiteMjr.Domain.Model;
 
-namespace WebSiteMjr.Domain.services
+namespace WebSiteMjr.Domain.services.Stuffs
 {
-    public class StuffService
+    public class StuffService: IStuffService
     {
         private readonly IStuffRepository _stuffRepository;
         private readonly IStuffCategoryRepository _stuffCategoryRepository;

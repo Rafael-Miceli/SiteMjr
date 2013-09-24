@@ -82,6 +82,8 @@
     <Compile Include="services\Membership\MembershipService.cs" />
     <Compile Include="services\Membership\UserService.cs" />
     <Compile Include="services\Roles\RoleService.cs" />
+    <Compile Include="Interfaces\Services\IStuffService.cs" />
+    <Compile Include="services\Stuffs\StuffCategoryService.cs" />
     <Compile Include="services\Stuffs\StuffService.cs" />
   </ItemGroup>
   <ItemGroup>
