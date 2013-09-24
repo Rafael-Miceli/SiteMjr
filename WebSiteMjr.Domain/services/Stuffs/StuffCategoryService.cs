@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -42,7 +42,12 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public StuffCategory FindStuffCategory(object idStuffCategory)
         {
-            throw new System.NotImplementedException();
+            return _stuffCategoryRepository.GetById(idStuffCategory);
+        }
+        
+        public StuffCategory FindStuffCategoryByName(string name)
+        {
+            return _stuffCategoryRepository.GetStuffCategoryByName(name);
         }
     }
 }
