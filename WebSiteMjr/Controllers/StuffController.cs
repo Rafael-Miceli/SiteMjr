@@ -14,22 +14,26 @@ namespace WebSiteMjr.Controllers
     {
         private readonly StuffService _stuffService;
         private readonly StuffMapper _stuffMapper;
+        private readonly StuffCategoryService _stuffCategoryService;
+        private readonly StuffManufactureService _stuffManufactureService; 
 
-        public StuffController(StuffService stuffService)
+        public StuffController(StuffService stuffService, StuffCategoryService stuffCategoryService, StuffManufactureService stuffManufactureService)
         {
             _stuffService = stuffService;
+            _stuffCategoryService = stuffCategoryService;
+            _stuffManufactureService = stuffManufactureService;
             _stuffMapper = new StuffMapper();
         }
 
         private void SetCategory_ManufactureViewBag(int? stuffCategoryId = null, int? stuffManufactureId = null)
         {
             ViewBag.StuffCategory = stuffCategoryId == null ?
-                ViewBag.StuffCategory =  new SelectList(_stuffService.ListStuffCategories(), "Id", "Name") :
-                ViewBag.StuffCategory =  new SelectList(_stuffService.ListStuffCategories().ToArray(), "Id", "Name", stuffCategoryId);
+                ViewBag.StuffCategory =  new SelectList(_stuffCategoryService.ListStuffCategories(), "Id", "Name") :
+                ViewBag.StuffCategory =  new SelectList(_stuffCategoryService.ListStuffCategories().ToArray(), "Id", "Name", stuffCategoryId);
 
             ViewBag.StuffManufacture = stuffManufactureId == null ?
-                ViewBag.StuffManufacture =  new SelectList(_stuffService.ListStuffManufacures(), "Id", "Name") :
-                ViewBag.StuffManufacture =  new SelectList(_stuffService.ListStuffManufacures().ToArray(), "Id", "Name", stuffManufactureId);
+                ViewBag.StuffManufacture =  new SelectList(_stuffManufactureService.ListStuffManufacures(), "Id", "Name") :
+                ViewBag.StuffManufacture =  new SelectList(_stuffManufactureService.ListStuffManufacures().ToArray(), "Id", "Name", stuffManufactureId);
         }
 
         //
@@ -91,16 +95,16 @@ namespace WebSiteMjr.Controllers
         [HttpPost]
         public ActionResult CreateStuffCategory(StuffCategory stuffCategory)
         {
-            _stuffService.CreateStuffCategory(stuffCategory);
-            var stuffCateg = _stuffService.FindStuffCategoryByName(stuffCategory.Name);
+            _stuffCategoryService.CreateStuffCategory(stuffCategory);
+            var stuffCateg = _stuffCategoryService.FindStuffCategoryByName(stuffCategory.Name);
             return Json(new {StuffCategory = stuffCateg});
         }
 
         [HttpPost]
         public ActionResult CreateStuffManufacture(StuffManufacture stuffManufacture)
         {
-            _stuffService.CreateStuffManufacture(stuffManufacture);
-            var stuffManu = _stuffService.FindStuffManufactureByName(stuffManufacture.Name);
+            _stuffManufactureService.CreateStuffManufacture(stuffManufacture);
+            var stuffManu = _stuffManufactureService.FindStuffManufactureByName(stuffManufacture.Name);
             return Json(new { StuffManufacture = stuffManu });
         }
 
