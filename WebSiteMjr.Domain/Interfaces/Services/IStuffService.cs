@@ -9,6 +9,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         void UpdateStuff(Stuff stuff);
         void DeleteStuff(object stuff);
         IEnumerable<Stuff> ListStuff();
-        Stuff FindStuff(object idStuff)
+        Stuff FindStuff(object idStuff);
     }
 }

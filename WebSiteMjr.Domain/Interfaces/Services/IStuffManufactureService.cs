@@ -9,7 +9,7 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         void UpdateStuffManufacture(StuffManufacture stuffManufacture);
         void DeleteStuffManufacture(object stuffManufacture);
         IEnumerable<StuffManufacture> ListStuffManufacture();
-        StuffManufacture FindStuffManufacture(object idStuffManufacture)
+        StuffManufacture FindStuffManufacture(object idStuffManufacture);
         StuffManufacture FindStuffManufactureByName(string name);
     }
 }

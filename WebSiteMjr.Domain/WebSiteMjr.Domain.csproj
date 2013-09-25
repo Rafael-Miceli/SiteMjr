@@ -60,6 +60,8 @@
     <Compile Include="Interfaces\Role\IFlexRole.cs" />
     <Compile Include="Interfaces\Role\IFlexRoleProvider.cs" />
     <Compile Include="Interfaces\Role\IFlexRoleStore.cs" />
+    <Compile Include="Interfaces\Services\IStuffCategoryService.cs" />
+    <Compile Include="Interfaces\Services\IStuffManufactureService.cs" />
     <Compile Include="Interfaces\Uow\IUnitOfWork.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Company.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="services\Roles\RoleService.cs" />
     <Compile Include="Interfaces\Services\IStuffService.cs" />
     <Compile Include="services\Stuffs\StuffCategoryService.cs" />
+    <Compile Include="services\Stuffs\StuffManufactureService.cs" />
     <Compile Include="services\Stuffs\StuffService.cs" />
   </ItemGroup>
   <ItemGroup>

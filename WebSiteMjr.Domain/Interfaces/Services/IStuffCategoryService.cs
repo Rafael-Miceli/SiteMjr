@@ -9,7 +9,7 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         void UpdateStuffCategory(StuffCategory stuffCategory);
         void DeleteStuffCategory(object stuffCategory);
         IEnumerable<StuffCategory> ListStuffCategory();
-        StuffCategory FindStuffCategory(object idStuffCategory)
+        StuffCategory FindStuffCategory(object idStuffCategory);
         StuffCategory FindStuffCategoryByName(string name);
     }
 }

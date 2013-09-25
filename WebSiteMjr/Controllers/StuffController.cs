@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Model;
-using WebSiteMjr.Domain.services;
 using WebSiteMjr.Domain.services.Stuffs;
 using WebSiteMjr.Filters;
 using WebSiteMjr.ViewModels;
@@ -28,12 +27,12 @@ namespace WebSiteMjr.Controllers
         private void SetCategory_ManufactureViewBag(int? stuffCategoryId = null, int? stuffManufactureId = null)
         {
             ViewBag.StuffCategory = stuffCategoryId == null ?
-                ViewBag.StuffCategory =  new SelectList(_stuffCategoryService.ListStuffCategories(), "Id", "Name") :
-                ViewBag.StuffCategory =  new SelectList(_stuffCategoryService.ListStuffCategories().ToArray(), "Id", "Name", stuffCategoryId);
+                ViewBag.StuffCategory =  new SelectList(_stuffCategoryService.ListStuffCategory(), "Id", "Name") :
+                ViewBag.StuffCategory =  new SelectList(_stuffCategoryService.ListStuffCategory().ToArray(), "Id", "Name", stuffCategoryId);
 
             ViewBag.StuffManufacture = stuffManufactureId == null ?
-                ViewBag.StuffManufacture =  new SelectList(_stuffManufactureService.ListStuffManufacures(), "Id", "Name") :
-                ViewBag.StuffManufacture =  new SelectList(_stuffManufactureService.ListStuffManufacures().ToArray(), "Id", "Name", stuffManufactureId);
+                ViewBag.StuffManufacture =  new SelectList(_stuffManufactureService.ListStuffManufacture(), "Id", "Name") :
+                ViewBag.StuffManufacture =  new SelectList(_stuffManufactureService.ListStuffManufacture().ToArray(), "Id", "Name", stuffManufactureId);
         }
 
         //
