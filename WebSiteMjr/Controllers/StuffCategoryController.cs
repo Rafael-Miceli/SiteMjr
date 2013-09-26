@@ -9,11 +9,11 @@ using WebSiteMjr.ViewModels;
 namespace WebSiteMjr.Controllers
 {
     [FlexAuthorize(Roles = "MjrAdmin")] 
-    public class StuffController : Controller
+    public class StuffCategoryController : Controller
     {
         private readonly StuffCategoryService _stuffCategoryService;
 
-        public StuffController(StuffCategoryService stuffCategoryService)
+        public StuffCategoryController(StuffCategoryService stuffCategoryService)
         {
             _stuffCategoryService = stuffCategoryService;
         }
