@@ -1,10 +1,7 @@
-using System.Linq;
 using System.Web.Mvc;
-using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.services.Stuffs;
 using WebSiteMjr.Filters;
-using WebSiteMjr.ViewModels;
 
 namespace WebSiteMjr.Controllers
 {
