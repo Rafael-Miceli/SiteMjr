@@ -77,7 +77,7 @@ namespace WebSiteMjr.Controllers
             {
                 if (!ModelState.IsValid) return View(stuffManufacture);
 
-                _stuffManufactureService.UpdateStuffManufacture(_stuffMapper.StuffViewModelToStuff(stuff));
+                _stuffManufactureService.UpdateStuffManufacture(stuffManufacture);
 
                 return RedirectToAction("Index");
             }
@@ -92,7 +92,6 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Delete(int id)
         {
-            
             return View(_stuffManufactureService.FindStuffManufacture(id));
         }
 
