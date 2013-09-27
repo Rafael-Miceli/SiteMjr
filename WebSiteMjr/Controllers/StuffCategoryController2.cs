@@ -1,11 +1,14 @@
-﻿using System.Web.Mvc;
+using System.Linq;
+using System.Web.Mvc;
+using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.services.Stuffs;
 using WebSiteMjr.Filters;
+using WebSiteMjr.ViewModels;
 
 namespace WebSiteMjr.Controllers
 {
-    [FlexAuthorize(Roles = "MjrAdmin")]
+    [FlexAuthorize(Roles = "MjrAdmin")] 
     public class StuffCategoryController : Controller
     {
         private readonly StuffCategoryService _stuffCategoryService;
@@ -26,7 +29,7 @@ namespace WebSiteMjr.Controllers
         // GET: /StuffCategory/Details/5
 
         public ActionResult Details(int id)
-        {
+        {            
             return View(_stuffCategoryService.FindStuffCategory(id));
         }
 
@@ -58,12 +61,12 @@ namespace WebSiteMjr.Controllers
                 return View();
             }
         }
-
+		
         //
         // GET: /StuffCategory/Edit/5
 
         public ActionResult Edit(int id)
-        {
+        {            
             return View(_stuffCategoryService.FindStuffCategory(id));
         }
 
@@ -92,7 +95,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Delete(int id)
         {
-
+            
             return View(_stuffCategoryService.FindStuffCategory(id));
         }
 
