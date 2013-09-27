@@ -195,6 +195,7 @@
     <Compile Include="Controllers\ClientHomeController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StuffCategoryController.cs" />
     <Compile Include="Controllers\StuffController.cs" />
     <Compile Include="Filters\FlexAuthorizeAttribute.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -361,6 +362,11 @@
     <Content Include="Views\Stuff\_ChooseStuffManufacturer.cshtml" />
     <Content Include="Views\Stuff\_CreateStuffCategory.cshtml" />
     <Content Include="Views\Stuff\_CreateSuffManufacturer.cshtml" />
+    <Content Include="Views\StuffCategory\Create.cshtml" />
+    <Content Include="Views\StuffCategory\Edit.cshtml" />
+    <Content Include="Views\StuffCategory\Delete.cshtml" />
+    <Content Include="Views\StuffCategory\Index.cshtml" />
+    <Content Include="Views\StuffCategory\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

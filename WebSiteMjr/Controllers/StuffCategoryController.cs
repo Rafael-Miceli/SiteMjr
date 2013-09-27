@@ -77,7 +77,7 @@ namespace WebSiteMjr.Controllers
             {
                 if (!ModelState.IsValid) return View(stuffCategory);
 
-                _stuffCategoryService.UpdateStuffCategory(_stuffMapper.StuffViewModelToStuff(stuff));
+                _stuffCategoryService.UpdateStuffCategory(stuffCategory);
 
                 return RedirectToAction("Index");
             }
