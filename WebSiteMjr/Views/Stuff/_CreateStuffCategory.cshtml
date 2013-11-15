@@ -5,12 +5,12 @@
   @Html.ValidationSummary(true)
     {
         <div class="editor-label">
-        @Html.LabelFor(model => model.Name, "Nome")
+        @Html.LabelFor(model => model.Name, "Name")
         <br /> 
         @Html.ValidationMessageFor(model => model.Name)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Name)
-    </div>
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+        </div>
     }
 }

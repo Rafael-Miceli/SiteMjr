@@ -5,6 +5,7 @@ using FlexProviders.Roles;
 using Microsoft.Practices.Unity;
 using Unity.Mvc3;
 using WebSiteMjr.Domain.Interfaces.Role;
+using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
 using WebSiteMjr.Domain.services;
@@ -47,6 +48,10 @@ namespace WebSiteMjr
             var stuffUnow = new StuffUow();
 
             container.RegisterType<IFlexRoleProvider, FlexRoleProvider>();
+            container.RegisterType<IStuffCategoryService, StuffCategoryService>();
+            container.RegisterType<IStuffService, StuffService>();
+            container.RegisterType<IStuffManufactureService, StuffManufactureService>();
+
             //container.RegisterInstance(new PersonsUow());
             container.RegisterInstance(new UserService(new UserRepository(personUow), new CompanyRepository(personUow), personUow));
             container.RegisterInstance(new StuffService(new StuffRepository(stuffUnow), stuffUnow));

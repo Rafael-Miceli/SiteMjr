@@ -10,12 +10,14 @@
                 var createStuffCategoryForm = $('#createStuffCategoryForm');
                 if (createStuffCategoryForm.valid()) {
                     $.post(createStuffCategoryForm.attr('action'), createStuffCategoryForm.serialize(), function (data) {
-                        if (data.Error != '') {
-                            alert(data.Error);
+                        if (data.Error != undefined) {
+                            if (data.Error != '') {
+                                alert(data.Error);
+                            }
                         }
                         else {
                             // Add the new stuff category to the dropdown list and select it
-                            $('#SelectedStuffCategoryId').append(
+                            $('#StuffCategoryId').append(
                                     $('<option></option>')
                                         .val(data.StuffCategory.Id)
                                         .html(data.StuffCategory.Name)

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using WebSiteMjr.Assembler;
+using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.services.Stuffs;
 using WebSiteMjr.Filters;
@@ -11,12 +12,12 @@ namespace WebSiteMjr.Controllers
     [FlexAuthorize(Roles = "MjrAdmin")] 
     public class StuffController : Controller
     {
-        private readonly StuffService _stuffService;
+        private readonly IStuffService _stuffService;
         private readonly StuffMapper _stuffMapper;
-        private readonly StuffCategoryService _stuffCategoryService;
-        private readonly StuffManufactureService _stuffManufactureService; 
+        private readonly IStuffCategoryService _stuffCategoryService;
+        private readonly IStuffManufactureService _stuffManufactureService; 
 
-        public StuffController(StuffService stuffService, StuffCategoryService stuffCategoryService, StuffManufactureService stuffManufactureService)
+        public StuffController(IStuffService stuffService, IStuffCategoryService stuffCategoryService, IStuffManufactureService stuffManufactureService)
         {
             _stuffService = stuffService;
             _stuffCategoryService = stuffCategoryService;
@@ -92,7 +93,7 @@ namespace WebSiteMjr.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateStuffCategory(StuffCategory stuffCategory)
+        public JsonResult CreateStuffCategory(StuffCategory stuffCategory)
         {
             _stuffCategoryService.CreateStuffCategory(stuffCategory);
             var stuffCateg = _stuffCategoryService.FindStuffCategoryByName(stuffCategory.Name);
