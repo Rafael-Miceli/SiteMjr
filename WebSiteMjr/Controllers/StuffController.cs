@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using WebSiteMjr.Assembler;
+using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.services.Stuffs;
@@ -95,9 +97,16 @@ namespace WebSiteMjr.Controllers
         [HttpPost]
         public JsonResult CreateStuffCategory(StuffCategory stuffCategory)
         {
-            _stuffCategoryService.CreateStuffCategory(stuffCategory);
-            var stuffCateg = _stuffCategoryService.FindStuffCategoryByName(stuffCategory.Name);
-            return Json(new {StuffCategory = stuffCateg});
+            try
+            {
+                _stuffCategoryService.CreateStuffCategory(stuffCategory);
+                var stuffCateg = _stuffCategoryService.FindStuffCategoryByName(stuffCategory.Name);
+                return Json(new { StuffCategory = stuffCateg });
+            }
+            catch (ObjectExistsException<StuffCategory> ex)
+            {
+                return Json(new {Error = ex.Message});
+            }
         }
 
         [HttpPost]

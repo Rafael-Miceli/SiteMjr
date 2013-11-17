@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ObjectExistsException.cs" />
     <Compile Include="Interfaces\Membership\IApplicationEnvironment.cs" />
     <Compile Include="Interfaces\Membership\IFlexMembershipProvider.cs" />
     <Compile Include="Interfaces\Membership\IFlexMembershipUser.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Interfaces\Services\IStuffManufactureService.cs" />
     <Compile Include="Interfaces\Uow\IUnitOfWork.cs" />
     <Compile Include="Model\Address.cs" />
+    <Compile Include="Model\IMjrException.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\IHolder.cs" />

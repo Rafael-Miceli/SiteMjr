@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -19,8 +20,16 @@ namespace WebSiteMjr.Domain.services.Stuffs
         
         public void CreateStuffCategory(StuffCategory stuffCategory)
         {
+            if (CategoryExists(stuffCategory))
+                throw new ObjectExistsException<StuffCategory>();
+
             _stuffCategoryRepository.Add(stuffCategory);
             _unitOfWork.Save();
+        }
+
+        private bool CategoryExists(StuffCategory stuffCategory)
+        {
+            return FindStuffCategoryByName(stuffCategory.Name) != null;
         }
 
         public void UpdateStuffCategory(StuffCategory stuffCategory)
