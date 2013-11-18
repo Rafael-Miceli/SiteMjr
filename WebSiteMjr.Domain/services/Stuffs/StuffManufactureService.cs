@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -19,8 +20,16 @@ namespace WebSiteMjr.Domain.services.Stuffs
         
         public void CreateStuffManufacture(StuffManufacture stuffManufacture)
         {
+            if (ManufactureExists(stuffManufacture))
+                throw new ObjectExistsException<StuffManufacture>();
+
             _stuffManufactureRepository.Add(stuffManufacture);
             _unitOfWork.Save();
+        }
+
+        private bool ManufactureExists(StuffManufacture stuffManufacture)
+        {
+            return FindStuffManufactureByName(stuffManufacture.Name) != null;
         }
 
         public void UpdateStuffManufacture(StuffManufacture stuffManufacture)

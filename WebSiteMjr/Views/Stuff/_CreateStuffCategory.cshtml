@@ -1,13 +1,13 @@
 ﻿@model WebSiteMjr.Domain.Model.StuffCategory
 
-@using ( Html.BeginForm("CreateStuffCategory", "Stuff", FormMethod.Post, new { id = "createStuffCategoryForm"}))
+@using (Html.BeginForm("CreateStuffCategory", "Stuff", FormMethod.Post, new { id = "createStuffCategoryForm" }))
 {
-  @Html.ValidationSummary(true)
+    @Html.ValidationSummary(true)
     {
         <div class="editor-label">
-        @Html.LabelFor(model => model.Name, "Name")
-        <br /> 
-        @Html.ValidationMessageFor(model => model.Name)
+            @Html.LabelFor(model => model.Name, "Name")
+            <br />
+            @Html.ValidationMessageFor(model => model.Name)
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Name)

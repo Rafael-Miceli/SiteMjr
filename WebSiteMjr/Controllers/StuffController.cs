@@ -112,9 +112,17 @@ namespace WebSiteMjr.Controllers
         [HttpPost]
         public ActionResult CreateStuffManufacture(StuffManufacture stuffManufacture)
         {
-            _stuffManufactureService.CreateStuffManufacture(stuffManufacture);
-            var stuffManu = _stuffManufactureService.FindStuffManufactureByName(stuffManufacture.Name);
-            return Json(new { StuffManufacture = stuffManu });
+            try
+            {
+                _stuffManufactureService.CreateStuffManufacture(stuffManufacture);
+                var stuffManu = _stuffManufactureService.FindStuffManufactureByName(stuffManufacture.Name);
+                return Json(new { StuffManufacture = stuffManu });
+            }
+            catch (ObjectExistsException<StuffManufacture> ex)
+            {
+                return Json(new {Error = ex.Message});
+            }
+            
         }
 
         //

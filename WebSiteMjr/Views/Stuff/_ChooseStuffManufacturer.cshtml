@@ -5,7 +5,7 @@
 </div>
 @Html.DropDownList("StuffManufactureId", ViewBag.StuffManufacture as SelectList, String.Empty)
 <a class="button" href="@Url.Content("~/Stuff/CreateStuffManufacture")"
-   id="artistAddLink">Add Novo Fabricante</a>
+   id="stuffManufactureAddLink">Add Novo Fabricante</a>
 @Html.ValidationMessageFor(model => model.SelectedStuffManufactureId)
 <div id="StuffManufactureDialog" class="hidden">
 </div>
