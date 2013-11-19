@@ -94,6 +94,16 @@ namespace WebSiteMjr.Controllers
             return PartialView("_CreateStuffCategory");
         }
 
+        [HttpGet]
+        public ActionResult CreateStuffManufacture()
+        {
+            // Don't allow this method to be called directly.
+            if (HttpContext.Request.IsAjaxRequest() != true)
+                return RedirectToAction("Index", "Stuff");
+
+            return PartialView("_CreateSuffManufacture");
+        }
+
         [HttpPost]
         public JsonResult CreateStuffCategory(StuffCategory stuffCategory)
         {

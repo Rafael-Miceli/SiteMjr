@@ -361,9 +361,9 @@
     <Content Include="Views\Stuff\Details.cshtml" />
     <Content Include="Views\Stuff\Edit.cshtml" />
     <Content Include="Views\Stuff\_ChooseStuffCategory.cshtml" />
-    <Content Include="Views\Stuff\_ChooseStuffManufacturer.cshtml" />
+    <Content Include="Views\Stuff\_ChooseStuffManufacture.cshtml" />
     <Content Include="Views\Stuff\_CreateStuffCategory.cshtml" />
-    <Content Include="Views\Stuff\_CreateSuffManufacturer.cshtml" />
+    <Content Include="Views\Stuff\_CreateSuffManufacture.cshtml" />
     <Content Include="Views\StuffCategory\Create.cshtml" />
     <Content Include="Views\StuffCategory\Edit.cshtml" />
     <Content Include="Views\StuffCategory\Delete.cshtml" />
