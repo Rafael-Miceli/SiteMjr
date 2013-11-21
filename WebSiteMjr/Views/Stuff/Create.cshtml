@@ -3,11 +3,11 @@
 
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Cadastrar Material";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
 {
@@ -37,28 +37,11 @@
         </div>
         <div class="editor-field">
             @Html.Partial("_ChooseStuffManufacture")
-            </div>
-
-            @*<div class="editor-label">
-                @Html.LabelFor(model => model.StuffManufactures)
-            </div>
-            <div class="editor-field">
-                @Html.DropDownListFor(model => model.)
-                @Html.ValidationMessageFor(model => model.StuffManufactureId)
-            </div>
-
-            <div class="editor-label">
-                @Html.LabelFor(model => model.StuffCategories)
-            </div>
-            <div class="editor-field">
-                @Html.DropDownListFor(model => model.StuffCategorieId, Model.StuffCategories)
-                @Html.ValidationMessageFor(model => model.StuffCategorieId)
-            </div>*@
-
-
-                <p>
-                    <input type="submit" value="Cadastrar" />
-                </p>
+        </div>
+            
+        <p>
+            <input type="submit" value="Cadastrar" />
+        </p>
 </fieldset>
 }
 

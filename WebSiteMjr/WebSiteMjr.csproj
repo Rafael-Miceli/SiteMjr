@@ -386,6 +386,10 @@
       <Project>{9C987907-BD64-4100-89D4-F4BCFB77768B}</Project>
       <Name>FlexProviders</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mjr.Extensions\Mjr.Extensions.csproj">
+      <Project>{29947E45-7425-4CCE-90C1-2F2D7EF802E1}</Project>
+      <Name>Mjr.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr.Assembler\WebSiteMjr.Assembler.csproj">
       <Project>{F1165A12-1F75-4644-8336-A9BDBEBBAF6C}</Project>
       <Name>WebSiteMjr.Assembler</Name>

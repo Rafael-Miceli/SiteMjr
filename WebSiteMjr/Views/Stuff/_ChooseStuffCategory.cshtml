@@ -1,12 +1,12 @@
 ﻿@model WebSiteMjr.ViewModels.EditStuffsViewModel
     
 <div class="editor-label">
-    @Html.LabelFor(model => model.SelectedStuffCategoryId, "Categoria")
+    @Html.LabelFor(model => model.StuffCategory, "Categoria")
 </div>
-@Html.DropDownList("StuffCategoryId", ViewBag.StuffCategory as SelectList, String.Empty)
+@Html.DropDownList("StuffCategoryId", ViewBag.StuffCategory as SelectList, "Selecione...")
 <a class="button" href="@Url.Content("~/Stuff/CreateStuffCategory" )"
    id="stuffCategoryAddLink">Add Nova Categoria</a>
-@Html.ValidationMessageFor(model => model.SelectedStuffCategoryId)
+@Html.ValidationMessageFor(model => model.StuffCategory)
 <div id="StuffCategoryDialog" class="hidden">
 </div>
 

@@ -12,7 +12,7 @@ namespace WebSiteMjr.EfStuffData.DataRepository
 
         public StuffCategory GetStuffCategoryByName(string name)
         {
-            return Get(n => n.Name == name);
+            return Get(n => n.Name.ToLower() == name.ToLower());
         }
     }
 }

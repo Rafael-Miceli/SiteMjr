@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
+using Mjr.Extensions;
 using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
-using WebSiteMjr.Domain.services.Stuffs;
+using WebSiteMjr.Domain.Model.Person;
 using WebSiteMjr.Filters;
 using WebSiteMjr.ViewModels;
 
@@ -24,7 +24,7 @@ namespace WebSiteMjr.Controllers
             _stuffService = stuffService;
             _stuffCategoryService = stuffCategoryService;
             _stuffManufactureService = stuffManufactureService;
-            _stuffMapper = new StuffMapper();
+            _stuffMapper = new StuffMapper(_stuffCategoryService, _stuffManufactureService);
         }
 
         private void SetCategory_ManufactureViewBag(int? stuffCategoryId = null, int? stuffManufactureId = null)
@@ -141,8 +141,12 @@ namespace WebSiteMjr.Controllers
         public ActionResult Edit(int id)
         {
             var stuff = _stuffService.FindStuff(id);
+
+            SetCategory_ManufactureViewBag(stuff.StuffCategory.IfEntitieIsNotNullReturnId(), stuff.StuffManufacture.IfEntitieIsNotNullReturnId());    
+            
             return View(_stuffMapper.StuffToStuffViewModel(stuff));
-        }
+        }   
+        
 
         //
         // POST: /Stuff/Edit/5

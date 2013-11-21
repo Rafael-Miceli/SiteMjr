@@ -6,7 +6,7 @@ namespace WebSiteMjr.Domain.Model
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public StuffCategory StuffCategory { get; set; }
-        public StuffManufacture StuffManufacture { get; set; }
+        public virtual StuffCategory StuffCategory { get; set; }
+        public virtual StuffManufacture StuffManufacture { get; set; }
     }
 }

@@ -24,21 +24,11 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.Description)
     </div>
-
-    <div class="editor-label">
-        @Html.LabelFor(model => model.StuffManufactures)
+    <div class="editor-field">
+        @Html.Partial("_ChooseStuffCategory")
     </div>
     <div class="editor-field">
-        @Html.DropDownListFor(model => model.StuffManufactureId, Model.StuffManufactures)
-        @Html.ValidationMessageFor(model => model.StuffManufactureId)
-    </div>
-
-    <div class="editor-label">
-        @Html.LabelFor(model => model.StuffCategories)
-    </div>
-    <div class="editor-field">
-        @Html.DropDownListFor(model => model.StuffCategorieId, Model.StuffCategories)
-        @Html.ValidationMessageFor(model => model.StuffCategorieId)
+        @Html.Partial("_ChooseStuffManufacture")
     </div>
 </fieldset>
 @using (Html.BeginForm()) {
