@@ -20,13 +20,17 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public void CreateStuff(Stuff stuff)
         {
-            _stuffRepository.AddGraph(stuff);
+            _stuffRepository.AddOrUpdateGraph(stuff);
             _unitOfWork.Save();
         }
 
         public void UpdateStuff(Stuff stuff)
         {
-            _stuffRepository.Update(stuff);
+            stuff.State = State.Modified;
+            stuff.StuffCategory.State = State.Modified;
+            stuff.StuffManufacture.State = State.Modified;
+
+            _stuffRepository.AddOrUpdateGraph(stuff);
             _unitOfWork.Save();
         }
 

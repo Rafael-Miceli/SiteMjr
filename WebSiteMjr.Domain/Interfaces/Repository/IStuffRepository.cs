@@ -5,6 +5,7 @@ namespace WebSiteMjr.Domain.Interfaces.Repository
 {
     public interface IStuffRepository: IGenericRepository<Stuff>
     {
-        void AddGraph(Stuff stuff);
+        void AddOrUpdateGraph(Stuff stuff);
+        void UpdateGraph(Stuff stuff);
     }
 }
