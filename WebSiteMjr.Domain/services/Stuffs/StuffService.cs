@@ -34,7 +34,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
             if (stuff.StuffManufacture != null)
                 stuff.StuffManufacture.State = State.Modified;
 
-            _stuffRepository.AddOrUpdateGraph(stuff);
+            _stuffRepository.Update(stuff);
             _unitOfWork.Save();
         }
 

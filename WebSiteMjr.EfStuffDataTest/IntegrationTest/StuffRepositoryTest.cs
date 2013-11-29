@@ -23,7 +23,8 @@ namespace WebSiteMjr.EfStuffDataTest
             stuff.StuffCategory = stuffCategoryRepository.GetById(1);
             stuff.StuffCategory.State = State.Modified;
 
-            stuffRepository.AddOrUpdateGraph(stuff);
+            stuffRepository.Update(stuff);
+            stuffUow.Save();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace WebSiteMjr.Controllers
             _stuffService = stuffService;
             _stuffCategoryService = stuffCategoryService;
             _stuffManufactureService = stuffManufactureService;
-            _stuffMapper = new StuffMapper(_stuffCategoryService, _stuffManufactureService);
+            _stuffMapper = new StuffMapper(_stuffCategoryService, _stuffManufactureService, _stuffService);
         }
 
         private void SetCategory_ManufactureViewBag(int? stuffCategoryId = null, int? stuffManufactureId = null)

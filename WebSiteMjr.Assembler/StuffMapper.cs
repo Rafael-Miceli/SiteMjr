@@ -8,11 +8,13 @@ namespace WebSiteMjr.Assembler
     {
         private readonly IStuffCategoryService _stuffCategoryService;
         private readonly IStuffManufactureService _stuffManufactureService;
+        private readonly IStuffService _stuffService;
 
-        public StuffMapper(IStuffCategoryService stuffCategoryService, IStuffManufactureService stuffManufactureService)
+        public StuffMapper(IStuffCategoryService stuffCategoryService, IStuffManufactureService stuffManufactureService, IStuffService stuffService)
         {
             _stuffCategoryService = stuffCategoryService;
             _stuffManufactureService = stuffManufactureService;
+            _stuffService = stuffService;
         }
 
         public EditStuffsViewModel StuffToStuffViewModel(Stuff stuff)
@@ -28,6 +30,11 @@ namespace WebSiteMjr.Assembler
 
         public Stuff StuffViewModelToStuff(EditStuffsViewModel stuffViewModel)
         {
+            return stuffViewModel.Id > 0 ? MapStuffViewModelToUpdate(stuffViewModel) : MapStuffViewModelToCreate(stuffViewModel);
+        }
+
+        private Stuff MapStuffViewModelToCreate(EditStuffsViewModel stuffViewModel)
+        {
             var stuff = new Stuff
             {
                 Id = stuffViewModel.Id,
@@ -36,6 +43,17 @@ namespace WebSiteMjr.Assembler
                 StuffCategory = _stuffCategoryService.FindStuffCategory(stuffViewModel.StuffCategoryId),
                 StuffManufacture = _stuffManufactureService.FindStuffManufacture(stuffViewModel.StuffManufactureId)
             };
+            return stuff;
+        }
+
+        private Stuff MapStuffViewModelToUpdate(EditStuffsViewModel stuffViewModel)
+        {
+            var stuff = _stuffService.FindStuff(stuffViewModel.Id);
+
+            stuff.Name = stuffViewModel.Name;
+            stuff.Description = stuffViewModel.Description;
+            stuff.StuffCategory = _stuffCategoryService.FindStuffCategory(stuffViewModel.StuffCategoryId);
+            stuff.StuffManufacture = _stuffManufactureService.FindStuffManufacture(stuffViewModel.StuffManufactureId);
 
             return stuff;
         }
