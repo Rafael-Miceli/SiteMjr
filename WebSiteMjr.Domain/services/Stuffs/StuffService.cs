@@ -27,8 +27,12 @@ namespace WebSiteMjr.Domain.services.Stuffs
         public void UpdateStuff(Stuff stuff)
         {
             stuff.State = State.Modified;
-            stuff.StuffCategory.State = State.Modified;
-            stuff.StuffManufacture.State = State.Modified;
+
+            if (stuff.StuffCategory != null)
+                stuff.StuffCategory.State = State.Modified;
+
+            if (stuff.StuffManufacture != null)
+                stuff.StuffManufacture.State = State.Modified;
 
             _stuffRepository.AddOrUpdateGraph(stuff);
             _unitOfWork.Save();

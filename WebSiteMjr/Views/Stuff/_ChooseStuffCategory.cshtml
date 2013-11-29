@@ -1,7 +1,7 @@
 ﻿@model WebSiteMjr.ViewModels.EditStuffsViewModel
     
 <div class="editor-label">
-    @Html.LabelFor(model => model.StuffCategory, "Categoria")
+    @Html.LabelFor(model => model.StuffCategoryId, "Categoria")
 </div>
 @Html.DropDownList("StuffCategoryId", ViewBag.StuffCategory as SelectList, "Selecione...")
 <a class="button" href="@Url.Content("~/Stuff/CreateStuffCategory" )"

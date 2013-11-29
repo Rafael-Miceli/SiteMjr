@@ -156,7 +156,8 @@ namespace WebSiteMjr.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) return View(stuff);
+                if (!ModelState.IsValid) 
+                    return View(stuff);
                 
                 _stuffService.UpdateStuff(_stuffMapper.StuffViewModelToStuff(stuff));
 
