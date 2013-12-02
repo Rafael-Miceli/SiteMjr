@@ -15,6 +15,8 @@ namespace WebSiteMjr
     {
         protected void Application_Start()
         {
+            Database.SetInitializer(new CreateDatabaseIfNotExists<MjrSolutionContext>());
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
