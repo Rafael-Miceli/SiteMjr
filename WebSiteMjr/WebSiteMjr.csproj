@@ -274,6 +274,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\mjr %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\mjr - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\mjr - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\mjr.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\178H.png" />

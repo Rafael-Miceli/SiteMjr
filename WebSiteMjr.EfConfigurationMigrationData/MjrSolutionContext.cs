@@ -17,7 +17,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData
 
         static MjrSolutionContext()
         {
-            Database.SetInitializer<MjrSolutionContext>(null);   
+            Database.SetInitializer<MjrSolutionContext>(null);
         }
 
         public MjrSolutionContext() : base("DefaultConnection")

@@ -1,4 +1,3 @@
-using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using FlexProviders.Aspnet;
 using FlexProviders.Membership;
@@ -12,10 +11,11 @@ using WebSiteMjr.EfData.DataRepository;
 
 namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
 {
-    internal sealed class MjrSolutionConfiguration : DbMigrationsConfiguration<MjrSolutionContext>
+    public class MjrSolutionConfiguration : DbMigrationsConfiguration<MjrSolutionContext>
     {
         public MjrSolutionConfiguration()
         {
+            //TODO For sake to publish the site in production because it's off, REMEBER to CHANGE THIS!
             AutomaticMigrationsEnabled = true;
         }
         protected override void Seed(MjrSolutionContext context)
@@ -50,7 +50,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                 });
         }
 
-        private static void SeedMembership(DbContext context)
+        private static void SeedMembership(MjrSolutionContext context)
         {
             //Roles.Enabled = true;
 
