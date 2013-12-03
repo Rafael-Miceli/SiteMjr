@@ -1,6 +1,23 @@
-﻿@{
-    ViewBag.Title = "Create";
+﻿@model WebSiteMjr.Domain.Model.StuffCategory
+    
+@{
+    ViewBag.Title = "Cadastrar Categoria Do Material";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("CreateStuffCategory", "Stuff", FormMethod.Post, new { id = "createStuffCategoryForm" }))
+{
+    @Html.ValidationSummary(true)
+    {
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name, "Name")
+            <br />
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+        </div>
+    }
+}

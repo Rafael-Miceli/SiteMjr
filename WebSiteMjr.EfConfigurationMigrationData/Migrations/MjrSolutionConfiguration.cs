@@ -1,3 +1,4 @@
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using FlexProviders.Aspnet;
 using FlexProviders.Membership;
@@ -11,13 +12,13 @@ using WebSiteMjr.EfData.DataRepository;
 
 namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
 {
-    public class MjrSolutionConfiguration : DbMigrationsConfiguration<MjrSolutionContext>
+    public class MjrSolutionConfiguration : CreateDatabaseIfNotExists<MjrSolutionContext> //DbMigrationsConfiguration<MjrSolutionContext>
     {
-        public MjrSolutionConfiguration()
-        {
-            //TODO For sake to publish the site in production because it's off, REMEBER to CHANGE THIS!
-            AutomaticMigrationsEnabled = true;
-        }
+        //public MjrSolutionConfiguration()
+        //{
+        //    //TODO For sake to publish the site in production because it's off, REMEBER to CHANGE THIS!
+        //    AutomaticMigrationsEnabled = true;
+        //}
         protected override void Seed(MjrSolutionContext context)
         {
             //  This method will be called after migrating to the latest version.
