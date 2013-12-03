@@ -5,7 +5,6 @@ using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
-using WebSiteMjr.Domain.Model.Person;
 using WebSiteMjr.Filters;
 using WebSiteMjr.ViewModels;
 
