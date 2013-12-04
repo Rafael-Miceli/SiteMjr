@@ -16,11 +16,8 @@ namespace WebSiteMjr
     {
         protected void Application_Start()
         {
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<MjrSolutionContext, MjrSolutionConfiguration>());
-            Database.SetInitializer(new MjrSolutionConfiguration());
             var context = new MjrSolutionContext();
             context.Database.Initialize(true);
-            //context.Database.CreateIfNotExists();
 
             AreaRegistration.RegisterAllAreas();
 

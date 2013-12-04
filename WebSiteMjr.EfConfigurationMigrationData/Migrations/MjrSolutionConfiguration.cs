@@ -12,13 +12,14 @@ using WebSiteMjr.EfData.DataRepository;
 
 namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
 {
-    public class MjrSolutionConfiguration : CreateDatabaseIfNotExists<MjrSolutionContext> //DbMigrationsConfiguration<MjrSolutionContext>
+    public class MjrSolutionConfiguration : DbMigrationsConfiguration<MjrSolutionContext> // CreateDatabaseIfNotExists<MjrSolutionContext>
     {
-        //public MjrSolutionConfiguration()
-        //{
-        //    //TODO For sake to publish the site in production because it's off, REMEBER to CHANGE THIS!
-        //    AutomaticMigrationsEnabled = true;
-        //}
+        public MjrSolutionConfiguration()
+        {
+            //TODO For sake to publish the site in production because it's off, REMEBER to CHANGE THIS!
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
+        }
         protected override void Seed(MjrSolutionContext context)
         {
             //  This method will be called after migrating to the latest version.
