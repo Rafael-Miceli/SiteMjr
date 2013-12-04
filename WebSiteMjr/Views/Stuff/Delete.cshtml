@@ -1,7 +1,7 @@
 ﻿@model WebSiteMjr.ViewModels.EditStuffsViewModel
 
 @{
-    ViewBag.Title = "Deletar";
+    ViewBag.Title = "Deletar Material";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
@@ -40,7 +40,8 @@
         @Html.DisplayFor(model => model.StuffManufacture.Name)
     </div>
 </fieldset>
-@using (Html.BeginForm()) {
+@using (Html.BeginForm()) 
+{
     @Html.AntiForgeryToken()
     <p>
         <input type="submit" value="Delete" /> |

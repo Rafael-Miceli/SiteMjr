@@ -1,6 +1,37 @@
-﻿@{
-    ViewBag.Title = "Edit";
+﻿@model WebSiteMjr.Domain.Model.StuffCategory
+
+@{
+    ViewBag.Title = "Editar categoria de Materiais";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    <fieldset>
+        <legend>Categoria</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name, "Nome")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        
+        @Html.HiddenFor(model => model.Id)
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+
+}
+
+<div>
+    @Html.ActionLink("Voltar a listagem", "Index")
+</div>

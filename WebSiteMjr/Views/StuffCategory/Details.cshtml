@@ -1,6 +1,24 @@
-﻿@{
-    ViewBag.Title = "Details";
+﻿@model WebSiteMjr.Domain.Model.StuffCategory
+
+@{
+    ViewBag.Title = "Detalhes da categoria de Materiais";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>Categoria</legend>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Name, "Nome")
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+</fieldset>
+
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Voltar a listagem", "Index")
+</p>

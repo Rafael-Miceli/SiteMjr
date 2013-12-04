@@ -1,23 +1,34 @@
 ﻿@model WebSiteMjr.Domain.Model.StuffCategory
     
 @{
-    ViewBag.Title = "Cadastrar Categoria Do Material";
+    ViewBag.Title = "Cadastrar categoria de Materiais";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("CreateStuffCategory", "Stuff", FormMethod.Post, new { id = "createStuffCategoryForm" }))
+@using (Html.BeginForm("Create", "StuffCategory", FormMethod.Post, new { id = "createStuffCategoryForm" }))
 {
+    @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-    {
+
+    <fieldset>
+        <legend>Categoria</legend>
+
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name, "Name")
-            <br />
-            @Html.ValidationMessageFor(model => model.Name)
+            @Html.LabelFor(model => model.Name, "Nome")
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
         </div>
-    }
+
+        <p>
+            <input type="submit" value="Cadastrar" />
+        </p>
+    </fieldset>
 }
+
+<div>
+    @Html.ActionLink("Voltar a listagem", "Index")
+</div>
