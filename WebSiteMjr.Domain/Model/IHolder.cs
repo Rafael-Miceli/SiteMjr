@@ -4,6 +4,7 @@ namespace WebSiteMjr.Domain.Model
 {
     public interface IHolder
     {
-        IEnumerator<Stuff> Stuff { get; set; }
+        string Name { get; set; }
+        IEnumerable<Stuff> Stuff { get; set; }
     }
 }

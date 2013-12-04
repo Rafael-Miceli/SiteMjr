@@ -1,55 +1,56 @@
 ﻿@model WebSiteMjr.Domain.Model.Company
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Deletar Condominio/Empresa";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>@ViewBag.Title</h2>
 
-<h3>Tem certeza que deseja deletar a empresa @Model.Name?</h3>
+<h3>Tem certeza que deseja deletar o Condiminio/Empresa: @Model.Name?</h3>
 <fieldset>
-    <legend>Company</legend>
+    <legend>Condominio/Empresa</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
+         @Html.LabelFor(model => model.Name, "Nome")
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Name)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Email)
+         @Html.LabelFor(model => model.Email, "E-Mail")
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Email)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Address)
+         @Html.LabelFor(model => model.Address, "Endereço")
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Address)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.City)
+         @Html.LabelFor(model => model.City, "Cidade")
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.City)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Phone)
+         @Html.LabelFor(model => model.Phone, "Telefone")
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Phone)
     </div>
 </fieldset>
-@using (Html.BeginForm()) {
+@using (Html.BeginForm()) 
+{
     @Html.AntiForgeryToken()
     <p>
-        <input type="submit" value="Delete" /> |
+        <input type="submit" value="Deletar" /> |
         @Html.ActionLink("Voltar a listagem", "Index")
     </p>
 }

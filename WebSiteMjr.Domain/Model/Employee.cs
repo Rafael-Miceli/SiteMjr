@@ -1,12 +1,14 @@
-﻿using WebSiteMjr.Domain.Model.Person;
+﻿using System.Collections.Generic;
+using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model
 {
-    public class Employee: IntId
+    public class Employee: IntId, IHolder
     {
-        public string Name { get; set; }
-        public string Phone { get; set; }
-        public string LastName { get; set; }
-        public int IdUser { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Phone { get; set; }
+        public virtual string LastName { get; set; }
+        public virtual int IdUser { get; set; }
+        public IEnumerable<Stuff> Stuff { get; set; }
     }
 }

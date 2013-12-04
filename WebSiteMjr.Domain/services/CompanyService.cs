@@ -5,7 +5,7 @@ using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.Domain.services
 {
-    public class CompanyService
+    public class CompanyService : ICompanyService
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -44,5 +44,13 @@ namespace WebSiteMjr.Domain.services
             return _companyRepository.GetById(idcompany);
         }
 
+    }
+
+    public interface ICompanyService
+    {
+        void CreateCompany(Company company);
+        void UpdateCompany(Company company);
+        void DeleteCompany(object company);
+        IEnumerable<Company> ListCompany();
     }
 }

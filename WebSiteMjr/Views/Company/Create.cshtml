@@ -1,21 +1,22 @@
 ﻿@model WebSiteMjr.Domain.Model.Company
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Cadastrar Condominio/Empresa";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm()) 
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Company</legend>
+        <legend>Condominio/Empresa</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            @Html.LabelFor(model => model.Name, "Nome")
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Name)
@@ -23,7 +24,7 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
+            @Html.LabelFor(model => model.Email, "E-Mail")
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Email)
@@ -31,7 +32,7 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Address)
+            @Html.LabelFor(model => model.Address, "Endereço")
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Address)
@@ -39,7 +40,7 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.City)
+            @Html.LabelFor(model => model.City, "Cidade")
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.City)
@@ -47,7 +48,7 @@
          </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Phone)
+            @Html.LabelFor(model => model.Phone, "Telefone")
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Phone)
@@ -55,12 +56,12 @@
         </div>
 
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Cadastrar" />
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Voltar a Listagem", "Index")
 </div>
 
