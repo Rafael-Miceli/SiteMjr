@@ -35,7 +35,7 @@
             @Html.LabelFor(model => model.Phone, "Telefone")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Phone)
+            @Html.EditorFor(model => model.Phone, new { id = "Phone" })
             @Html.ValidationMessageFor(model => model.Phone)
         </div>
 
@@ -48,3 +48,7 @@
 <div>
     @Html.ActionLink("Voltar a Listagem", "Index")
 </div>
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Mask/Masks.js")"></script>
+}
