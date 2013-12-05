@@ -6,9 +6,10 @@ using WebSiteMjr.EfData.DataRepository.GenericRepositorys;
 
 namespace WebSiteMjr.EfData.DataRepository
 {
-    public class CompanyRepository: GenericPersonRepository<Company>, ICompanyRepository
+    public class EmployeeRepository : GenericPersonRepository<Employee>, IEmployeeRepository
     {
-        public CompanyRepository(UnitOfWork<PersonsContext> uow) : base(uow)
-        {}
+        public EmployeeRepository(UnitOfWork<PersonsContext> uow) : base(uow)
+        {
+        }
     }
 }

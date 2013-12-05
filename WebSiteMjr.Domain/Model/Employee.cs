@@ -9,6 +9,6 @@ namespace WebSiteMjr.Domain.Model
         public virtual string Phone { get; set; }
         public virtual string LastName { get; set; }
         public virtual int IdUser { get; set; }
-        public IEnumerable<Stuff> Stuff { get; set; }
+        public virtual IEnumerable<Stuff> Stuff { get; set; }
     }
 }

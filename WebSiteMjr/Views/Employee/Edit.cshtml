@@ -1,0 +1,52 @@
+﻿@model WebSiteMjr.Domain.Model.Employee
+
+@{
+    ViewBag.Title = "Editar Funcionário";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Funcionário</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name, "Nome")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastName, "Sobrenome")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastName)
+            @Html.ValidationMessageFor(model => model.LastName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Phone, "Telefone")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Phone)
+            @Html.ValidationMessageFor(model => model.Phone)
+        </div>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <p>
+            <input type="submit" value="Atualizar" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Voltar a listagem", "Index")
+</div>

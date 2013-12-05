@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using WebSiteMjr.Domain.Interfaces.Repository;
+using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
 using WebSiteMjr.Domain.Model;
 
@@ -44,13 +45,5 @@ namespace WebSiteMjr.Domain.services
             return _companyRepository.GetById(idcompany);
         }
 
-    }
-
-    public interface ICompanyService
-    {
-        void CreateCompany(Company company);
-        void UpdateCompany(Company company);
-        void DeleteCompany(object company);
-        IEnumerable<Company> ListCompany();
     }
 }

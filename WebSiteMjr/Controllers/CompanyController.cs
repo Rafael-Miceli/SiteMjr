@@ -1,15 +1,15 @@
 ﻿using System.Web.Mvc;
+using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
-using WebSiteMjr.Domain.services;
 using WebSiteMjr.Filters;
 
 namespace WebSiteMjr.Controllers
 {
     public class CompanyController : Controller
     {
-        private readonly CompanyService _companyService;
+        private readonly ICompanyService _companyService;
 
-        public CompanyController(CompanyService companyService)
+        public CompanyController(ICompanyService companyService)
         {
             _companyService = companyService;
         }
@@ -33,7 +33,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // GET: /Company/Create
-
+        [FlexAuthorize(Roles = "MjrAdmin")]
         public ActionResult Create()
         {
             return View();
@@ -41,7 +41,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // POST: /Company/Create
-
+        [FlexAuthorize(Roles = "MjrAdmin")]
         [HttpPost]
         public ActionResult Create(Company company)
         {
@@ -61,7 +61,7 @@ namespace WebSiteMjr.Controllers
                 return View();
             }
         }
-
+        [FlexAuthorize(Roles = "MjrAdmin")]
         public ActionResult SendLogin(int idCompany)
         {
             try
@@ -78,7 +78,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // GET: /Company/Edit/5
-
+        [FlexAuthorize(Roles = "MjrAdmin")]
         public ActionResult Edit(int id)
         {
             var company = _companyService.FindCompany(id);
@@ -87,7 +87,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // POST: /Company/Edit/5
-
+        [FlexAuthorize(Roles = "MjrAdmin")]
         [HttpPost]
         public ActionResult Edit(int id, Company company)
         {
@@ -110,7 +110,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // GET: /Company/Delete/5
-
+        [FlexAuthorize(Roles = "MjrAdmin")]
         public ActionResult Delete(int id)
         {
             var company = _companyService.FindCompany(id);
@@ -119,7 +119,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // POST: /Company/Delete/5
-
+        [FlexAuthorize(Roles = "MjrAdmin")]
         [HttpPost]
         public ActionResult Delete(Company company)
         {

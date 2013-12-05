@@ -10,6 +10,6 @@ namespace WebSiteMjr.Domain.Model
         public virtual string Address { get; set; }
         public virtual string City { get; set; }
         public virtual string Phone { get; set; }
-        public IEnumerable<Stuff> Stuff { get; set; }
+        public virtual IEnumerable<Stuff> Stuff { get; set; }
     }
 }
