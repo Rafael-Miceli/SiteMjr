@@ -11,9 +11,12 @@
 
 <p>Você está logado como <strong>@User.Identity.Name</strong>.</p>
 
-<nav>
-    @Html.Action("ClientMenu", "Account")
-</nav>
+<div class="navbar navbar-static">
+    <div class="navbar-inner">
+        @Html.Action("ClientMenu", "Account")
+    </div>
+</div>
+
 <section class="content-wrapper main-content clear-fix">
     @RenderBody()
 </section>

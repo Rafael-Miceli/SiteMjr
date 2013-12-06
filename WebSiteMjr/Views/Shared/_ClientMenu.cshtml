@@ -1,19 +1,26 @@
 ﻿@model WebSiteMjr.Domain.Model.Roles.Role
 
-<ul id="menuleft">
+<ul id="menuleft" role="navigation" class="nav">
     @*<li>@Html.ActionLink("Home", "Index", "ClientHome")</li>*@
     @*<li>@Html.ActionLink("Chamados", "Index", "Task")</li>*@
     @if (Model != null && Model.Name == "MjrAdmin")
     {
         <li>@Html.ActionLink("Funcionários", "Index", "Employee")</li>
         <li>@Html.ActionLink("Condominio/Empresa", "Index", "Company")</li>
-        <li>@Html.ActionLink("Materiais", "Index", "Stuff")</li>
-        <li>@Html.ActionLink("Categorias de Materiais", "Index", "StuffCategory")</li>
-        <li>@Html.ActionLink("Fabricante de Materiais", "Index", "StuffManufacture")</li>
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Gerenciar Materiais <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink("Materiais", "Index", "Stuff")</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("Categorias de Materiais", "Index", "StuffCategory")</li>
+                <li>@Html.ActionLink("Fabricante de Materiais", "Index", "StuffManufacture")</li>        
+            </ul>
+        </li>
+        
     }
     else
     {
-        <li>@Html.ActionLink("Empresa", "Details", "Company")</li>
+        <li>@Html.ActionLink("Meu Perfil", "Details", "Company")</li>
     }
     @*<li>@Html.ActionLink("Meu Perfil", "About", "Home")</li>*@
 </ul>
