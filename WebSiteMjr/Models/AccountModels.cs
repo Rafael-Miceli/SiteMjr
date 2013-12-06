@@ -84,7 +84,7 @@ namespace WebSiteMjr.Models
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Digite o E-mail deste usuário")]
         [Display(Name = "E-mail")]
-        [RegularExpression("", ErrorMessage = "E-mail não válido")]
+        [RegularExpression(@"^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", ErrorMessage = "E-mail inválido")]
         public string Email { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Digite sua senha")]

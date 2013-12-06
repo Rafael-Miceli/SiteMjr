@@ -1,8 +1,8 @@
 ﻿@model WebSiteMjr.Domain.Model.Roles.Role
 
 <ul id="menuleft">
-    <li>@Html.ActionLink("Home", "Index", "ClientHome")</li>
-    <li>@Html.ActionLink("Chamados", "Index", "Task")</li>
+    @*<li>@Html.ActionLink("Home", "Index", "ClientHome")</li>*@
+    @*<li>@Html.ActionLink("Chamados", "Index", "Task")</li>*@
     @if (Model != null && Model.Name == "MjrAdmin")
     {
         <li>@Html.ActionLink("Funcionários", "Index", "Employee")</li>
@@ -15,5 +15,5 @@
     {
         <li>@Html.ActionLink("Empresa", "Details", "Company")</li>
     }
-    <li>@Html.ActionLink("Meu Perfil", "About", "Home")</li>
+    @*<li>@Html.ActionLink("Meu Perfil", "About", "Home")</li>*@
 </ul>
