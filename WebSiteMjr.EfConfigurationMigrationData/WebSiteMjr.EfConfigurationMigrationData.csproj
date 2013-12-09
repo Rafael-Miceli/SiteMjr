@@ -50,10 +50,6 @@
     <Compile Include="Migrations\201312041243126_InitialMigration.Designer.cs">
       <DependentUpon>201312041243126_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201312081448588_Tool.cs" />
-    <Compile Include="Migrations\201312081448588_Tool.Designer.cs">
-      <DependentUpon>201312081448588_Tool.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\MjrSolutionConfiguration.cs" />
     <Compile Include="MjrSolutionContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,9 +79,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201312041243126_InitialMigration.resx">
       <DependentUpon>201312041243126_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312081448588_Tool.resx">
-      <DependentUpon>201312081448588_Tool.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
