@@ -59,6 +59,7 @@
     <Compile Include="CompanyServiceTest.cs" />
     <Compile Include="StuffServiceTest.cs" />
     <Compile Include="StuffCategoryServiceTest.cs" />
+    <Compile Include="CheckInToolServiceTest.cs" />
     <Compile Include="UserServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
