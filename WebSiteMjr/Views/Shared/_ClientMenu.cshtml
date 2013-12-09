@@ -8,12 +8,13 @@
         <li>@Html.ActionLink("Funcionários", "Index", "Employee")</li>
         <li>@Html.ActionLink("Condominio/Empresa", "Index", "Company")</li>
         <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Gerenciar Materiais <b class="caret"></b></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Gerenciar Materiais/Ferramentas <b class="caret"></b></a>
             <ul class="dropdown-menu">
+                <li>@Html.ActionLink("Ferramentas", "Index", "Tool")</li>
                 <li>@Html.ActionLink("Materiais", "Index", "Stuff")</li>
                 <li class="divider"></li>
-                <li>@Html.ActionLink("Categorias de Materiais", "Index", "StuffCategory")</li>
-                <li>@Html.ActionLink("Fabricante de Materiais", "Index", "StuffManufacture")</li>        
+                <li>@Html.ActionLink("Categorias de Materiais/Ferramentas", "Index", "StuffCategory")</li>
+                <li>@Html.ActionLink("Fabricante de Materiais/Ferramentas", "Index", "StuffManufacture")</li>        
             </ul>
         </li>
         

@@ -1,11 +1,8 @@
-﻿
-using System.Data.Entity;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using WebSiteMjr.EfConfigurationMigrationData;
-using WebSiteMjr.EfConfigurationMigrationData.Migrations;
 
 namespace WebSiteMjr
 {
@@ -16,8 +13,8 @@ namespace WebSiteMjr
     {
         protected void Application_Start()
         {
-            var context = new MjrSolutionContext();
-            context.Database.Initialize(true);
+            //var context = new MjrSolutionContext();
+            //context.Database.Initialize(true);
 
             AreaRegistration.RegisterAllAreas();
 

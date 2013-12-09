@@ -51,6 +51,7 @@
     <Compile Include="DataRepository\StuffManufactureRepository.cs" />
     <Compile Include="DataRepository\StuffRepository.cs" />
     <Compile Include="DataRepository\GenericStuffRepository.cs" />
+    <Compile Include="DataRepository\ToolRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\StuffUow.cs" />
   </ItemGroup>

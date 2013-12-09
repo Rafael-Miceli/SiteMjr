@@ -1,0 +1,16 @@
+﻿@model WebSiteMjr.Domain.Model.StuffManufacture
+
+@using (Html.BeginForm("CreateStuffManufacture", "Stuff", FormMethod.Post, new { id = "createStuffManufactureForm" }))
+{
+    @Html.ValidationSummary(true)
+    {
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name, "Name")
+            <br />
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+        </div>
+    }
+}

@@ -12,6 +12,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Stuff> Stuffs { get; set; }
+        public DbSet<Tool> Tools { get; set; }
         public DbSet<StuffCategory> StuffCategories { get; set; }
         public DbSet<StuffManufacture> StuffManufactures { get; set; }
 

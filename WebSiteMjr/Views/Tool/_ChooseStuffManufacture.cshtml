@@ -1,0 +1,11 @@
+﻿@model WebSiteMjr.ViewModels.EditToolViewModel
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.StuffManufacture, "Fabricante")
+</div>
+@Html.DropDownList("StuffManufactureId", ViewBag.StuffManufacture as SelectList, "Selecione...")
+<a class="button" href="@Url.Content("~/Stuff/CreateStuffManufacture")"
+   id="stuffManufactureAddLink">Add Novo Fabricante</a>
+@Html.ValidationMessageFor(model => model.StuffManufacture)
+<div id="StuffManufactureDialog" class="hidden">
+</div>

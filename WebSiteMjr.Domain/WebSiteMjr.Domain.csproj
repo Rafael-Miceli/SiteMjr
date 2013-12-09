@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\Repository\IEmployeeRepository.cs" />
     <Compile Include="Interfaces\Repository\IStuffCategoryRepository.cs" />
     <Compile Include="Interfaces\Repository\IStuffManufactureRepository.cs" />
+    <Compile Include="Interfaces\Repository\IToolRepository.cs" />
     <Compile Include="Interfaces\Repository\IStuffRepository.cs" />
     <Compile Include="Interfaces\Repository\IUserRepository.cs" />
     <Compile Include="Interfaces\Role\IFlexRole.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Model\Roles\Role.cs" />
     <Compile Include="Model\StuffCategory.cs" />
     <Compile Include="Model\StuffManufacture.cs" />
+    <Compile Include="Model\Tool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\CompanyService.cs" />
     <Compile Include="Interfaces\Repository\ICompanyRepository.cs" />
@@ -91,8 +93,10 @@
     <Compile Include="services\Membership\UserService.cs" />
     <Compile Include="services\Roles\RoleService.cs" />
     <Compile Include="Interfaces\Services\IStuffService.cs" />
+    <Compile Include="Interfaces\Services\IToolService.cs" />
     <Compile Include="services\Stuffs\StuffCategoryService.cs" />
     <Compile Include="services\Stuffs\StuffManufactureService.cs" />
+    <Compile Include="services\Stuffs\ToolService.cs" />
     <Compile Include="services\Stuffs\StuffService.cs" />
   </ItemGroup>
   <ItemGroup>
