@@ -48,12 +48,12 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
             if (!String.IsNullOrEmpty(employeeCompanyName))
             {
-                checkins = checkins.Where(c => c.EmployeeCompanyHolder.Name == employeeCompanyName);
+                checkins = checkins.Where(c => String.Equals(c.EmployeeCompanyHolder.Name, employeeCompanyName, StringComparison.CurrentCultureIgnoreCase));
             }
 
             if (!String.IsNullOrEmpty(toolName))
             {
-                checkins = checkins.Where(c => c.Tool.Name == toolName);
+                checkins = checkins.Where(c => String.Equals(c.Tool.Name, toolName, StringComparison.CurrentCultureIgnoreCase));
             }
 
             if (date.HasValue)

@@ -24,7 +24,7 @@
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Tool.Name)
-            @Html.ValidationMessageFor(model => model.Tool.Name)
+            @Html.ValidationMessageFor(model => model.Tool.Name, "A Ferramenta é um campo necessário")
         </div>
 
         <div class="editor-label">
@@ -39,8 +39,7 @@
             @Html.LabelFor(model => model.CheckinDateTime, "Data do Checkin")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.CheckinDateTime.Date)
-            @Html.ValidationMessageFor(model => model.CheckinDateTime.Date)
+            @Html.EditorFor(model => model.CheckinDateTime.Date, new { id = "Date" })
         </div>
 
         <p>
@@ -93,4 +92,9 @@
 else
 {
     <h3>Nenhum Checkin Encontrado</h3>
+}
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/Mask/Masks.js")"></script>
 }
