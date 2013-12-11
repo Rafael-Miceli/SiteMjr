@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using WebSiteMjr.Domain.Model;
 
@@ -9,7 +10,7 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         void UpdateToolCheckin(CheckinTool checkinTool);
         void DeleteToolCheckin(object checkinTool);
         IEnumerable<CheckinTool> ListToolCheckins();
-        IEnumerable<CheckinTool> GetCheckinsByEmployeeName(string employeeName);
-        Tool FindToolCheckin(object idCheckinTool);
+        IEnumerable<CheckinTool> FilterCheckins(string employeeName, string toolName, DateTime ?date);
+        CheckinTool FindToolCheckin(object idCheckinTool);
     }
 }

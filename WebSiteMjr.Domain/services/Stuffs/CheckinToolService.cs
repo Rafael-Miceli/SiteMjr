@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -20,35 +21,52 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public void CheckinTool(CheckinTool checkinTool)
         {
-            throw new NotImplementedException();
+            _checkinToolRepository.Add(checkinTool);
+            _unitOfWork.Save();
         }
 
         public void UpdateToolCheckin(CheckinTool checkinTool)
         {
-            throw new NotImplementedException();
+            _checkinToolRepository.Update(checkinTool);
+            _unitOfWork.Save();
         }
 
-        public void DeleteToolCheckin(object checkinTool)
+        public void DeleteToolCheckin(object idCheckinTool)
         {
-            throw new NotImplementedException();
+            _checkinToolRepository.Remove(idCheckinTool);
+            _unitOfWork.Save();
         }
 
         public IEnumerable<CheckinTool> ListToolCheckins()
         {
-            throw new NotImplementedException();
+            return _checkinToolRepository.GetAll();
         }
 
-        public IEnumerable<CheckinTool> GetCheckinsByEmployeeName(string employeeName)
+        public IEnumerable<CheckinTool> FilterCheckins(string employeeName, string toolName, DateTime ?date)
         {
-            var checkinTool = new CheckinTool {Employee = new Employee {Name = employeeName}};
-            yield return checkinTool;
-            
+            var checkins = _checkinToolRepository.GetAll();
+
+            if (!String.IsNullOrEmpty(employeeName))
+            {
+                checkins = checkins.Where(c => c.Employee.Name == employeeName);
+            }
+
+            if (!String.IsNullOrEmpty(toolName))
+            {
+                checkins = checkins.Where(c => c.Tool.Name == toolName);
+            }
+
+            if (date != null)
+            {
+                checkins = checkins.Where(c => c.CheckinDateTime.Date == date.Value.Date);
+            }
+
+            return checkins;
         }
 
-
-        public Tool FindToolCheckin(object idCheckinTool)
+        public CheckinTool FindToolCheckin(object idCheckinTool)
         {
-            throw new NotImplementedException();
+            return _checkinToolRepository.GetById(idCheckinTool);
         }
     }
 }
