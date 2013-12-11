@@ -12,7 +12,7 @@ namespace WebSiteMjr.Assembler
             _checkinToolService = checkinToolService;
         }
 
-        public CheckinToolViewModel GetChekinsFilter(CheckinToolViewModel checkinToolViewModel)
+        public ListCheckinToolViewModel GetChekinsFilter(ListCheckinToolViewModel checkinToolViewModel)
         {
             checkinToolViewModel.CheckinTools = _checkinToolService.FilterCheckins(checkinToolViewModel.EmployeeCompanyHolder,
                                                                                    checkinToolViewModel.Tool.Name,

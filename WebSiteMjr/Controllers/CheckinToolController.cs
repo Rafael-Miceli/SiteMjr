@@ -27,7 +27,7 @@ namespace WebSiteMjr.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(CheckinToolViewModel checkinToolViewModel)
+        public ActionResult Index(ListCheckinToolViewModel checkinToolViewModel)
         {
             return View(_checkinToolMapper.GetChekinsFilter(checkinToolViewModel));
         }
