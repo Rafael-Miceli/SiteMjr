@@ -73,7 +73,7 @@
     <Compile Include="Model\IMjrException.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\Employee.cs" />
-    <Compile Include="Model\IHolder.cs" />
+    <Compile Include="Model\Holder.cs" />
     <Compile Include="Model\Stuff.cs" />
     <Compile Include="Model\Membership\FlexMembershipStatus.cs" />
     <Compile Include="Model\Person\IIntId.cs" />

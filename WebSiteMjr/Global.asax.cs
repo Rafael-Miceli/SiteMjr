@@ -13,8 +13,8 @@ namespace WebSiteMjr
     {
         protected void Application_Start()
         {
-            //var context = new MjrSolutionContext();
-            //context.Database.Initialize(true);
+            var context = new MjrSolutionContext();
+            context.Database.Initialize(true);
 
             AreaRegistration.RegisterAllAreas();
 

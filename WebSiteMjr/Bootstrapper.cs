@@ -47,18 +47,22 @@ namespace WebSiteMjr
             var personUow = new PersonsUow();
             var stuffUnow = new StuffUow();
 
+            //Services Instances
             container.RegisterType<IFlexRoleProvider, FlexRoleProvider>();
             container.RegisterType<IStuffCategoryService, StuffCategoryService>();
             container.RegisterType<IStuffService, StuffService>();
             container.RegisterType<IToolService, ToolService>();
+            container.RegisterType<ICheckinToolService, CheckinToolService>();
             container.RegisterType<IStuffManufactureService, StuffManufactureService>();
             container.RegisterType<ICompanyService, CompanyService>();
             container.RegisterType<IEmployeeService, EmployeeService>();
 
+            //Repositories Instances
             //container.RegisterInstance(new PersonsUow());
             container.RegisterInstance(new UserService(new UserRepository(personUow), new CompanyRepository(personUow), personUow));
             container.RegisterInstance(new StuffService(new StuffRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(new ToolService(new ToolRepository(stuffUnow), stuffUnow));
+            container.RegisterInstance(new CheckinToolService(new CheckinToolRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(new StuffCategoryService(new StuffCategoryRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(new StuffManufactureService(new StuffManufactureRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(new CompanyService(new CompanyRepository(personUow), personUow));

@@ -9,7 +9,7 @@ namespace WebSiteMjr.Domain.Model
 {
     public class CheckinTool: IntId
     {
-        public virtual Employee Employee { get; set; }
+        public virtual Holder EmployeeCompanyHolder { get; set; }
         public virtual Tool Tool { get; set; }
         public virtual DateTime CheckinDateTime { get; set; }
     }

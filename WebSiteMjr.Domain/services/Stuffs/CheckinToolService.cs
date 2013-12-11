@@ -42,13 +42,13 @@ namespace WebSiteMjr.Domain.services.Stuffs
             return _checkinToolRepository.GetAll();
         }
 
-        public IEnumerable<CheckinTool> FilterCheckins(string employeeName, string toolName, DateTime ?date)
+        public IEnumerable<CheckinTool> FilterCheckins(string employeeCompanyName, string toolName, DateTime ?date)
         {
             var checkins = _checkinToolRepository.GetAll();
 
-            if (!String.IsNullOrEmpty(employeeName))
+            if (!String.IsNullOrEmpty(employeeCompanyName))
             {
-                checkins = checkins.Where(c => c.Employee.Name == employeeName);
+                checkins = checkins.Where(c => c.EmployeeCompanyHolder.Name == employeeCompanyName);
             }
 
             if (!String.IsNullOrEmpty(toolName))
@@ -56,7 +56,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
                 checkins = checkins.Where(c => c.Tool.Name == toolName);
             }
 
-            if (date != null)
+            if (date.HasValue)
             {
                 checkins = checkins.Where(c => c.CheckinDateTime.Date == date.Value.Date);
             }
