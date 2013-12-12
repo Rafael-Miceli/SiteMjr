@@ -34,10 +34,15 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Phone, "Celular")
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Phone, new { mask_type = "CelPhone" })
+
+        @*// ==== Azeite no código ====*@
+
+        <div class="editor-field1">
+            @Html.EditorFor(model => model.Phone)
             @Html.ValidationMessageFor(model => model.Phone)
         </div>
+        
+        @*// ==== Azeite no código ====*@
 
         @Html.HiddenFor(model => model.Id)
 
