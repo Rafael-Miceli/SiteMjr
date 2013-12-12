@@ -1,4 +1,5 @@
 ﻿using WebSiteMjr.Domain.Interfaces.Services;
+using WebSiteMjr.Domain.Model;
 using WebSiteMjr.ViewModels;
 
 namespace WebSiteMjr.Assembler
@@ -19,6 +20,16 @@ namespace WebSiteMjr.Assembler
                                                                                    checkinToolViewModel.CheckinDateTime);
 
             return checkinToolViewModel;
+        }
+
+        public CheckinTool CreateCheckinToolViewModelToCheckinTool(CreateCheckinToolViewModel createCheckinToolViewModel)
+        {
+            return new CheckinTool
+            {
+                Name = createCheckinToolViewModel.EmployeeCompanyHolder,
+                Tool = createCheckinToolViewModel.Tool,
+                CheckinDateTime = createCheckinToolViewModel.CheckinDateTime
+            };
         }
     }
 }

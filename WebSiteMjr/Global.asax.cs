@@ -18,7 +18,6 @@ namespace WebSiteMjr
             context.Database.Initialize(true);
 
             AreaRegistration.RegisterAllAreas();
-            ModelMetadataProviders.Current = new MetadataProvider();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

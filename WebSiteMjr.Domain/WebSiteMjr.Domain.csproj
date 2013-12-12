@@ -68,7 +68,6 @@
     <Compile Include="Interfaces\Services\IStuffManufactureService.cs" />
     <Compile Include="Interfaces\Services\ICheckinToolService.cs" />
     <Compile Include="Interfaces\Uow\IUnitOfWork.cs" />
-    <Compile Include="MaskPropertieAttribute.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\CheckinTool.cs" />
     <Compile Include="Model\IMjrException.cs" />
