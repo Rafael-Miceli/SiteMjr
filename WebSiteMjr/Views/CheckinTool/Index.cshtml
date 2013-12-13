@@ -27,10 +27,10 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.EmployeeCompanyHolder, "Funcionário/Condomínio")
+            @Html.LabelFor(model => model.EmployeeCompanyHolder.Name, "Funcionário/Condomínio")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.EmployeeCompanyHolder)
+            @Html.EditorFor(model => model.EmployeeCompanyHolder.Name)
         </div>
         
         <div class="editor-label">
@@ -72,7 +72,7 @@
                     @Html.DisplayFor(modelItem => item.Tool.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeCompanyHolder)
+                    @Html.DisplayFor(modelItem => item.EmployeeCompanyHolder.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CheckinDateTime)

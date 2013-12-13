@@ -15,7 +15,7 @@ namespace WebSiteMjr.Assembler
 
         public ListCheckinToolViewModel GetChekinsFilter(ListCheckinToolViewModel checkinToolViewModel)
         {
-            checkinToolViewModel.CheckinTools = _checkinToolService.FilterCheckins(checkinToolViewModel.EmployeeCompanyHolder,
+            checkinToolViewModel.CheckinTools = _checkinToolService.FilterCheckins(checkinToolViewModel.EmployeeCompanyHolder.Name,
                                                                                    checkinToolViewModel.Tool.Name,
                                                                                    checkinToolViewModel.CheckinDateTime);
 
@@ -26,7 +26,7 @@ namespace WebSiteMjr.Assembler
         {
             return new CheckinTool
             {
-                Name = createCheckinToolViewModel.EmployeeCompanyHolder,
+                Name = createCheckinToolViewModel.EmployeeCompanyHolder.Name,
                 Tool = createCheckinToolViewModel.Tool,
                 CheckinDateTime = createCheckinToolViewModel.CheckinDateTime
             };

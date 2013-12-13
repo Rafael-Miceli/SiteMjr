@@ -45,8 +45,9 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
         private static void SeedCompany(MjrSolutionContext context)
         {
 
-            context.Company.AddOrUpdate(co => co.Name, new Company
+            context.Companies.AddOrUpdate(co => co.Name, new Company
                 {
+                    Id = 1,
                     Name = "Mjr Equipamentos eletrônicos LTDA",
                     Email = "mjrtelecom@hotmail.com"
                 });

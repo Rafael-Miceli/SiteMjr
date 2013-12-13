@@ -4,17 +4,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebSiteMjr.Domain.Model.Person
 {
-    public abstract class IntId
+    public class IntId
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public virtual int Id { get; set; }
+    }
+
+    public class IntNoneId
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public virtual int Id { get; set; }
     }
 
     public abstract class GuidId
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public virtual Guid Id { get; set; }
     }
 }

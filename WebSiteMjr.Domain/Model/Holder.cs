@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model
 {
-    public interface IHolder
+    public class Holder: IntId
     {
-        string Name { get; set; }
-        IEnumerable<Stuff> Stuff { get; set; }
+        [Required(ErrorMessage = "Nome é um campo obrigatório")]
+        public virtual string Name { get; set; }
+        public virtual IEnumerable<Tool> Tools { get; set; }
     }
 }
