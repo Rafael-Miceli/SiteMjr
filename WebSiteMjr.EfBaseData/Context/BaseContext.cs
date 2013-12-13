@@ -16,5 +16,10 @@ namespace WebSiteMjr.EfBaseData.Context
         {
 
         }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Employee>().ToTable("Employee");
+            modelBuilder.Entity<Company>().ToTable("Company");
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Filters;
@@ -8,10 +9,12 @@ namespace WebSiteMjr.Controllers
     public class CompanyController : Controller
     {
         private readonly ICompanyService _companyService;
+        private CompanyMapper _companyMapper;
 
         public CompanyController(ICompanyService companyService)
         {
             _companyService = companyService;
+            _companyMapper = new CompanyMapper(_companyService);
         }
 
         //
@@ -19,7 +22,7 @@ namespace WebSiteMjr.Controllers
         [FlexAuthorize(Roles = "MjrAdmin")]
         public ActionResult Index()
         {
-            return View(_companyService.ListCompany());
+            return View(_companyMapper.CompanyToListCompanyViewModel());
         }
 
         //
@@ -72,7 +75,7 @@ namespace WebSiteMjr.Controllers
             }
             catch
             {
-                return View();
+                return View("Edit");
             }
         }
 

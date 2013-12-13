@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckinToolMapper.cs" />
+    <Compile Include="CompanyMapper.cs" />
     <Compile Include="ToolMapper.cs" />
     <Compile Include="StuffMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

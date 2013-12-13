@@ -26,7 +26,7 @@ namespace WebSiteMjr.Assembler
         {
             return new CheckinTool
             {
-                Name = createCheckinToolViewModel.EmployeeCompanyHolder.Name,
+                EmployeeCompanyHolder = createCheckinToolViewModel.EmployeeCompanyHolder,
                 Tool = createCheckinToolViewModel.Tool,
                 CheckinDateTime = createCheckinToolViewModel.CheckinDateTime
             };

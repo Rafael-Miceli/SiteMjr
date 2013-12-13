@@ -47,7 +47,6 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
 
             context.Companies.AddOrUpdate(co => co.Name, new Company
                 {
-                    Id = 1,
                     Name = "Mjr Equipamentos eletrônicos LTDA",
                     Email = "mjrtelecom@hotmail.com"
                 });

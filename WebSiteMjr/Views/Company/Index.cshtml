@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebSiteMjr.Domain.Model.Company>
+﻿@model WebSiteMjr.ViewModels.ListCompanyViewModel
 
 @{
     ViewBag.Title = "Lista de Condominios e Empresas";
@@ -21,7 +21,7 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) 
+@foreach (var item in Model.Companies) 
 {
     <tr>
         <td>

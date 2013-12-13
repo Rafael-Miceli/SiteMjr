@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.20827.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr", "WebSiteMjr\WebSiteMjr.csproj", "{3A08A35F-BDEA-4142-81B7-3BDFDAC8AE23}"
 EndProject
@@ -50,6 +50,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{71E91F35-96AE-41BB-8E1D-B2A462F6C824}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr.EfStuffDataTest", "WebSiteMjr.EfStuffDataTest\WebSiteMjr.EfStuffDataTest.csproj", "{E4A43CDA-57D3-42F1-81B9-3813A7970A95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr.AssemblerTest", "WebSiteMjr.AssemblerTest\WebSiteMjr.AssemblerTest.csproj", "{B4B888D2-0CEB-400B-AD0E-AEB4E703AFF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,6 +111,10 @@ Global
 		{E4A43CDA-57D3-42F1-81B9-3813A7970A95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4A43CDA-57D3-42F1-81B9-3813A7970A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4A43CDA-57D3-42F1-81B9-3813A7970A95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4B888D2-0CEB-400B-AD0E-AEB4E703AFF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4B888D2-0CEB-400B-AD0E-AEB4E703AFF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4B888D2-0CEB-400B-AD0E-AEB4E703AFF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4B888D2-0CEB-400B-AD0E-AEB4E703AFF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,6 +137,7 @@ Global
 		{52063992-045B-4FD3-A291-410D587C6BDB} = {5334EDA1-5910-4A62-A519-8BC77E771432}
 		{E9694197-221B-4013-8B69-9D2943FD9513} = {CCEA6D18-68A7-41EE-956A-11C16551F74A}
 		{F1165A12-1F75-4644-8336-A9BDBEBBAF6C} = {D844F4C2-671F-4490-B9F9-3BC2E2C2C35D}
+		{B4B888D2-0CEB-400B-AD0E-AEB4E703AFF0} = {D844F4C2-671F-4490-B9F9-3BC2E2C2C35D}
 		{29947E45-7425-4CCE-90C1-2F2D7EF802E1} = {D198A4C1-387D-4D26-B819-34D5B4D42B9E}
 		{E4A43CDA-57D3-42F1-81B9-3813A7970A95} = {71E91F35-96AE-41BB-8E1D-B2A462F6C824}
 	EndGlobalSection
