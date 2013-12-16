@@ -10,5 +10,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         void DeleteEmployee(object employee);
         IEnumerable<Employee> ListEmployee();
         Employee FindEmployee(object idemployee);
+        Employee FindEmployeeByName(string employeeName);
     }
 }

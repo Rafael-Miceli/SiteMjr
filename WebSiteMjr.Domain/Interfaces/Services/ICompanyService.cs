@@ -10,5 +10,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         void DeleteCompany(object company);
         IEnumerable<Company> ListCompany();
         Company FindCompany(object idcompany);
+        Company FindCompanyByName(string companyName);
     }
 }

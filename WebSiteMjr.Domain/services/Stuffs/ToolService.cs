@@ -53,5 +53,10 @@ namespace WebSiteMjr.Domain.services.Stuffs
         {
             return _toolRepository.GetById(idTool);
         }
+
+        public Tool FindToolByName(string toolName)
+        {
+            return _toolRepository.GetToolByName(toolName);
+        }
     }
 }

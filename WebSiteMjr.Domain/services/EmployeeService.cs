@@ -44,5 +44,10 @@ namespace WebSiteMjr.Domain.services
         {
             return _employeeRepository.GetById(idemployee);
         }
+
+        public Employee FindEmployeeByName(string employeeName)
+        {
+            return _employeeRepository.GetEmployeeByName(employeeName);
+        }
     }
 }

@@ -7,9 +7,9 @@ namespace WebSiteMjr.ViewModels
 {
     public class ListCheckinToolViewModel
     {
-        public Holder EmployeeCompanyHolder { get; set; }
-        public Tool Tool { get; set; }
-        public DateTime CheckinDateTime { get; set; }
+        public string EmployeeCompanyHolder { get; set; }
+        public string Tool { get; set; }
+        public DateTime ?CheckinDateTime { get; set; }
         public IEnumerable<CheckinTool> CheckinTools { get; set; }
     }
 

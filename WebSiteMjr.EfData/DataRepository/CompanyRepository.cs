@@ -10,5 +10,9 @@ namespace WebSiteMjr.EfData.DataRepository
     {
         public CompanyRepository(UnitOfWork<PersonsContext> uow) : base(uow)
         {}
+        public Company GetCompanyByName(string name)
+        {
+            return Get(n => n.Name.ToLower() == name.ToLower());
+        }
     }
 }

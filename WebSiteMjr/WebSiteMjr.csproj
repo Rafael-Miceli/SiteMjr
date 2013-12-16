@@ -185,6 +185,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Api\CheckinToolApiController.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -288,6 +289,7 @@
     <Content Include="Images\178HCA.png" />
     <Content Include="Images\500H.png" />
     <Content Include="Images\PABX178H.jpg" />
+    <Content Include="Scripts\CheckinTool\checkinTool.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

@@ -25,7 +25,6 @@ namespace WebSiteMjr
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
 
-            //RegisterUnityConfig.RegisterContainers();
             Bootstrapper.Initialise();
         }
     }

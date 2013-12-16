@@ -5,5 +5,6 @@ namespace WebSiteMjr.Domain.Interfaces.Repository
 {
     public interface ICompanyRepository: IGenericRepository<Company>
     {
+        Company GetCompanyByName(string name);
     }
 }

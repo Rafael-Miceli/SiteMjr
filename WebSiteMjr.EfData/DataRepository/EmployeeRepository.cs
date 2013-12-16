@@ -9,7 +9,11 @@ namespace WebSiteMjr.EfData.DataRepository
     public class EmployeeRepository : GenericPersonRepository<Employee>, IEmployeeRepository
     {
         public EmployeeRepository(UnitOfWork<PersonsContext> uow) : base(uow)
+        {}
+
+        public Employee GetEmployeeByName(string name)
         {
+            return Get(n => n.Name.ToLower() == name.ToLower());
         }
     }
 }

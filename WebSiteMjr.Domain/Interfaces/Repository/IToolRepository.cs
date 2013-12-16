@@ -7,5 +7,6 @@ namespace WebSiteMjr.Domain.Interfaces.Repository
     {
         void AddOrUpdateGraph(Tool stuff);
         void UpdateGraph(Tool stuff);
+        Tool GetToolByName(string name);
     }
 }

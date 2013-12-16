@@ -10,4 +10,6 @@
     //$("[mask-type='CelPhone']").mask("(99) 99999-9999");
 
     $("#CheckinDateTime_Date").mask("99/99/9999");
+    $("#CheckinDateTime").mask("99/99/9999");
+
 });

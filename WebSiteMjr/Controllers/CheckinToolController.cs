@@ -13,10 +13,10 @@ namespace WebSiteMjr.Controllers
         private readonly ICheckinToolService _checkinToolService;
         private readonly CheckinToolMapper _checkinToolMapper;
 
-        public CheckinToolController(ICheckinToolService checkinToolService)
+        public CheckinToolController(ICheckinToolService checkinToolService, IToolService toolService)
         {
             _checkinToolService = checkinToolService;
-            _checkinToolMapper = new CheckinToolMapper(_checkinToolService);
+            _checkinToolMapper = new CheckinToolMapper(_checkinToolService, toolService);
         }
         
         
@@ -53,14 +53,14 @@ namespace WebSiteMjr.Controllers
         // POST: /Stuff/Create
 
         [HttpPost]
-        public ActionResult Create(CheckinTool checkin)
+        public ActionResult Create(CreateCheckinToolViewModel checkin)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return View(checkin);
 
-                _checkinToolService.CheckinTool(checkin);
+                _checkinToolService.CheckinTool(_checkinToolMapper.CreateCheckinToolViewModelToCheckinTool(checkin));
 
                 return RedirectToAction("Index");
             }

@@ -16,7 +16,7 @@ namespace WebSiteMjr.Domain.Test
         public void Should_Return_Checkin_By_Employee()
         {
             var employeeName = "Celso";
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null);
+            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(employeeName, null, null);
 
@@ -28,7 +28,7 @@ namespace WebSiteMjr.Domain.Test
         {
             var employeeName = "Celso";
             var tool = "Ferramenta 1";
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null);
+            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(employeeName, tool, null);
 
@@ -40,7 +40,7 @@ namespace WebSiteMjr.Domain.Test
         {
             var employeeName = "Celso";
             var date = DateTime.Parse("09/12/2013");
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null);
+            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(employeeName, null, date).ToList();
 
@@ -54,7 +54,7 @@ namespace WebSiteMjr.Domain.Test
             var employeeName = "Celso";
             var tool = "Ferramenta 1";
             var date = DateTime.Parse("09/12/2013");
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null);
+            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(employeeName, tool, date).ToList();
 
@@ -66,7 +66,7 @@ namespace WebSiteMjr.Domain.Test
         public void Should_Return_Checkin_By_Tool()
         {
             var tool = "Ferramenta 1";
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null);
+            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(null, tool, null);
 
@@ -78,7 +78,7 @@ namespace WebSiteMjr.Domain.Test
         {
             var tool = "Ferramenta 2";
             var date = DateTime.Parse("10/12/2013");
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null);
+            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(null, tool, date).ToList();
 
@@ -90,7 +90,7 @@ namespace WebSiteMjr.Domain.Test
         public void Should_Return_Checkin_By_Date()
         {
             var date = DateTime.Parse("10/12/2013");
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null);
+            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(null, null, date);
 
@@ -101,7 +101,7 @@ namespace WebSiteMjr.Domain.Test
         public void Should_Return_Checkin_By_Company()
         {
             var companyName = "Portoverano";
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null);
+            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(companyName, null, null);
 

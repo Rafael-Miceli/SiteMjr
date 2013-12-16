@@ -26,5 +26,10 @@ namespace WebSiteMjr.EfStuffData.DataRepository
             Context.Set<Tool>().Add(tool);
             Context.ApplyStateChanges();
         }
+
+        public Tool GetToolByName(string name)
+        {
+            return Get(n => n.Name.ToLower() == name.ToLower());
+        }
     }
 }

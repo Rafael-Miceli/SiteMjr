@@ -10,5 +10,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         void DeleteTool(object stuff);
         IEnumerable<Tool> ListTool();
         Tool FindTool(object idTool);
+        Tool FindToolByName(string toolName);
     }
 }

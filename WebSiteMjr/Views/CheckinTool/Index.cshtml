@@ -20,24 +20,24 @@
         <legend>Buscar Checkin</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Tool.Name, "Ferramenta")
+            @Html.LabelFor(model => model.Tool, "Ferramenta")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Tool.Name)
+            @Html.TextBoxFor(model => model.Tool)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.EmployeeCompanyHolder.Name, "Funcionário/Condomínio")
+            @Html.LabelFor(model => model.EmployeeCompanyHolder, "Funcionário/Condomínio")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.EmployeeCompanyHolder.Name)
+            @Html.TextBoxFor(model => model.EmployeeCompanyHolder)
         </div>
         
         <div class="editor-label">
             @Html.LabelFor(model => model.CheckinDateTime, "Data do Checkin")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.CheckinDateTime.Date, new { id = "Date" })
+            @Html.TextBoxFor(model => model.CheckinDateTime)
         </div>
 
         <p>
@@ -95,4 +95,5 @@ else
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Mask/Masks.js")"></script>
+    <script src="@Url.Content("~/Scripts/CheckinTool/checkinTool.js")"></script>
 }

@@ -5,5 +5,6 @@ namespace WebSiteMjr.Domain.Interfaces.Repository
 {
     public interface IEmployeeRepository : IGenericRepository<Employee>
     {
+        Employee GetEmployeeByName(string name);
     }
 }

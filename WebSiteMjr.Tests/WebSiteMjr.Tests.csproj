@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountControllerTest.cs" />
+    <Compile Include="Controllers\Api\CheckinToolApiControllerTest.cs" />
     <Compile Include="Controllers\CompanyControllerTest.cs" />
     <Compile Include="Controllers\StuffControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

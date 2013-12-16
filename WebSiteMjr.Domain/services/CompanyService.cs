@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -45,5 +46,9 @@ namespace WebSiteMjr.Domain.services
             return _companyRepository.GetById(idcompany);
         }
 
+        public Company FindCompanyByName(string companyName)
+        {
+            return _companyRepository.GetCompanyByName(companyName);
+        }
     }
 }

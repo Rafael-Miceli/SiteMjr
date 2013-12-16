@@ -58,15 +58,18 @@ namespace WebSiteMjr
             container.RegisterType<IEmployeeService, EmployeeService>();
 
             //Repositories Instances
-            //container.RegisterInstance(new PersonsUow());
+            var companyServiceInstance = new CompanyService(new CompanyRepository(personUow), personUow);
+            var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), personUow);
+            var toolServiceInstance = new ToolService(new ToolRepository(stuffUnow), stuffUnow);
+                
             container.RegisterInstance(new UserService(new UserRepository(personUow), new CompanyRepository(personUow), personUow));
             container.RegisterInstance(new StuffService(new StuffRepository(stuffUnow), stuffUnow));
-            container.RegisterInstance(new ToolService(new ToolRepository(stuffUnow), stuffUnow));
-            container.RegisterInstance(new CheckinToolService(new CheckinToolRepository(stuffUnow), stuffUnow));
+            container.RegisterInstance(toolServiceInstance);
+            container.RegisterInstance(new CheckinToolService(new CheckinToolRepository(stuffUnow), stuffUnow, companyServiceInstance, employeeServiceInstance, toolServiceInstance));
             container.RegisterInstance(new StuffCategoryService(new StuffCategoryRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(new StuffManufactureService(new StuffManufactureRepository(stuffUnow), stuffUnow));
-            container.RegisterInstance(new CompanyService(new CompanyRepository(personUow), personUow));
-            container.RegisterInstance(new EmployeeService(new EmployeeRepository(personUow), personUow));
+            container.RegisterInstance(companyServiceInstance);
+            container.RegisterInstance(employeeServiceInstance);
             container.RegisterInstance(new FlexRoleProvider(new RoleRepository<Role, User>(new PersonsContext())));
             container.RegisterInstance(new MembershipService(new FlexMembershipProvider(new MembershipRepository<User>(new PersonsContext()), new AspnetEnvironment())));
 

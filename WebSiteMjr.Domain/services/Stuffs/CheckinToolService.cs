@@ -12,11 +12,17 @@ namespace WebSiteMjr.Domain.services.Stuffs
     {
         private readonly ICheckinToolRepository _checkinToolRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICompanyService _companyService;
+        private readonly IEmployeeService _employeeService;
+        private readonly IToolService _toolService;
 
-        public CheckinToolService(ICheckinToolRepository checkinToolRepository, IUnitOfWork unitOfWork)
+        public CheckinToolService(ICheckinToolRepository checkinToolRepository, IUnitOfWork unitOfWork, ICompanyService companyService, IEmployeeService employeeService, IToolService toolService) 
         {
             _checkinToolRepository = checkinToolRepository;
             _unitOfWork = unitOfWork;
+            _companyService = companyService;
+            _employeeService = employeeService;
+            _toolService = toolService;
         }
 
         public void CheckinTool(CheckinTool checkinTool)
@@ -62,6 +68,27 @@ namespace WebSiteMjr.Domain.services.Stuffs
             }
 
             return checkins;
+        }
+
+        public IEnumerable<string> ListEmployeeCompanyHolderName()
+        {
+            return
+                _companyService.ListCompany()
+                    .Select(c => c.Name)
+                    .Concat(_employeeService.ListEmployee().Select(e => e.Name));
+        }
+
+        public Holder FindEmployeeCompanyByName(string name)
+        {
+            Holder holder = _companyService.FindCompanyByName(name) ??
+                            (Holder) _employeeService.FindEmployeeByName(name);
+
+            return holder;
+        }
+
+        public IEnumerable<string> ListToolName()
+        {
+            return _toolService.ListTool().Select(t => t.Name);
         }
 
         public CheckinTool FindToolCheckin(object idCheckinTool)

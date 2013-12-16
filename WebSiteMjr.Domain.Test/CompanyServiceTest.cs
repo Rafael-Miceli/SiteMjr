@@ -136,5 +136,10 @@ namespace WebSiteMjr.Domain.Test
         {
             throw new NotImplementedException();
         }
+
+        public Company GetCompanyByName(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
