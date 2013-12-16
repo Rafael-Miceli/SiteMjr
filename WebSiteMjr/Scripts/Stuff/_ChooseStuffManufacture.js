@@ -6,7 +6,7 @@
         modal: true,
         title: 'Adicionar Fabricante do Material',
         buttons: {
-            'Save': function () {
+            'Salvar': function () {
                 var createStuffManufactureForm = $('#createStuffManufactureForm');
                 if (createStuffManufactureForm.valid()) {
                     $.post(createStuffManufactureForm.attr('action'), createStuffManufactureForm.serialize(), function (data) {
@@ -28,7 +28,7 @@
                     });
                 }
             },
-            'Cancel': function () {
+            'Cancelar': function () {
                 $(this).dialog('close');
             }
         }

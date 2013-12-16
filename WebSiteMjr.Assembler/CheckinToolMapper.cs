@@ -21,15 +21,5 @@ namespace WebSiteMjr.Assembler
 
             return checkinToolViewModel;
         }
-
-        public CheckinTool CreateCheckinToolViewModelToCheckinTool(CreateCheckinToolViewModel createCheckinToolViewModel)
-        {
-            return new CheckinTool
-            {
-                EmployeeCompanyHolder = createCheckinToolViewModel.EmployeeCompanyHolder,
-                Tool = createCheckinToolViewModel.Tool,
-                CheckinDateTime = createCheckinToolViewModel.CheckinDateTime
-            };
-        }
     }
 }

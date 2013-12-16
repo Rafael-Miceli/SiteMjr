@@ -32,14 +32,28 @@ namespace WebSiteMjr.AssemblerTest
         }
 
         [TestMethod]
-        public void Should_Return_Companies_In_Context()
+        public void Should_Return_Companies_In_PersonsContext()
         {
             var context = new MjrSolutionContext();
             var personsContext = new PersonsContext();
-            //var personUow = new PersonsUow();
-            //var companyMapper = new CompanyMapper(new CompanyService(new CompanyRepository(personUow), personUow));
 
-            var companies = personsContext.Companies;//companyMapper.CompanyToListCompanyViewModel();
+            var companies = personsContext.Companies;
+
+            foreach (var company in companies)
+            {
+                Console.WriteLine(company.Name);
+                Console.WriteLine(company.Email);
+            }
+
+            Assert.AreNotEqual(0, companies.Count());
+        }
+
+        [TestMethod]
+        public void Should_Return_Companies_In_MjrSolutionContext()
+        {
+            var context = new MjrSolutionContext();
+
+            var companies = context.Companies;
 
             foreach (var company in companies)
             {

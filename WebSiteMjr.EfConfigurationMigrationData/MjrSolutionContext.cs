@@ -11,6 +11,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData
         public DbSet<Role> Roles { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Holder> Holders { get; set; }
         public DbSet<Stuff> Stuffs { get; set; }
         public DbSet<Tool> Tools { get; set; }
         public DbSet<CheckinTool> CheckinTools { get; set; }
@@ -24,5 +25,11 @@ namespace WebSiteMjr.EfConfigurationMigrationData
 
         public MjrSolutionContext() : base("DefaultConnection")
         {}
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Employee>().ToTable("Employee");
+            modelBuilder.Entity<Company>().ToTable("Company");
+        }
     }
 }

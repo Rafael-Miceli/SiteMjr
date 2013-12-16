@@ -6,7 +6,7 @@
         modal: true,
         title: 'Adicionar Categoria de Material',
         buttons: {
-            'Save': function () {
+            'Salvar': function () {
                 var createStuffCategoryForm = $('#createStuffCategoryForm');
                 if (createStuffCategoryForm.valid()) {
                     $.post(createStuffCategoryForm.attr('action'), createStuffCategoryForm.serialize(), function (data) {
@@ -28,7 +28,7 @@
                     });
                 }
             },
-            'Cancel': function () {
+            'Cancelar': function () {
                 $(this).dialog('close');
             }
         }

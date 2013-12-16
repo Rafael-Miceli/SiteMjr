@@ -12,6 +12,7 @@ namespace WebSiteMjr.EfData.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Holder> Holders { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

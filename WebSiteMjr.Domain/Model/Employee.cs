@@ -5,7 +5,6 @@ using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model
 {
-    [Table("Employee")]
     public class Employee: Holder
     {
         [RegularExpression(@"^(\([0-9][0-9]\) [0-9]{5}-[0-9]{4})|(\(1[2-9]\) [5-9][0-9]{3}-[0-9]{4})|(\([2-9][1-9]\) [5-9][0-9]{3}-[0-9]{4})$", 

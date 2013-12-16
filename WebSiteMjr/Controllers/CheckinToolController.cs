@@ -53,14 +53,14 @@ namespace WebSiteMjr.Controllers
         // POST: /Stuff/Create
 
         [HttpPost]
-        public ActionResult Create(CreateCheckinToolViewModel checkin)
+        public ActionResult Create(CheckinTool checkin)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return View(checkin);
 
-                _checkinToolService.CheckinTool(_checkinToolMapper.CreateCheckinToolViewModelToCheckinTool(checkin));
+                _checkinToolService.CheckinTool(checkin);
 
                 return RedirectToAction("Index");
             }

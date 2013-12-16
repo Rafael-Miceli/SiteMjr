@@ -12,13 +12,11 @@ namespace WebSiteMjr.ViewModels
         public DateTime CheckinDateTime { get; set; }
         public IEnumerable<CheckinTool> CheckinTools { get; set; }
     }
+
     public class CreateCheckinToolViewModel
     {
-        [Required(ErrorMessage = "Ferramenta é necessária.")]
-        public Tool Tool { get; set; }
-        [Required(ErrorMessage = "Nome do Funcionário ou Condomínio é necessário.")]
-        public Holder EmployeeCompanyHolder { get; set; }
-        [Required(ErrorMessage = "Data do checkin é necessária.")]
+        public string EmployeeCompanyHolderName { get; set; }
+        public string ToolName { get; set; }
         public DateTime CheckinDateTime { get; set; }
     }
 }
