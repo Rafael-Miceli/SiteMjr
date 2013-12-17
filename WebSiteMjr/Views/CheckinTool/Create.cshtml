@@ -1,7 +1,7 @@
 ﻿@model WebSiteMjr.ViewModels.CreateCheckinToolViewModel
 
 @{
-    ViewBag.Title = "Cadastrar Chekin de Ferramenta";
+    ViewBag.Title = "Cadastrar Movimentação de Ferramenta";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
@@ -20,6 +20,7 @@
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.ToolName, new { id = "Tool_Name" })
+            @Html.ValidationMessageFor(model => model.ToolName)
         </div>
 
         <div class="editor-label">
@@ -27,6 +28,7 @@
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.EmployeeCompanyHolderName, new { id = "EmployeeCompanyHolder_Name" })
+            @Html.ValidationMessageFor(model => model.EmployeeCompanyHolderName)
         </div>
 
         <div class="editor-label">
@@ -34,6 +36,7 @@
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.CheckinDateTime, new { id = "Date" })
+            @Html.ValidationMessageFor(model => model.CheckinDateTime)
         </div>
 
         <p>
@@ -44,7 +47,7 @@
 }
 
 <div>
-    @Html.ActionLink("Voltar a busca de Checkins", "Index")
+    @Html.ActionLink("Voltar a busca de Movimentações", "Index")
 </div>
 
 @section scripts

@@ -1,14 +1,14 @@
 ﻿@model WebSiteMjr.ViewModels.ListCheckinToolViewModel
 
 @{
-    ViewBag.Title = "Lista de Checkins";
+    ViewBag.Title = "Lista de Movimentação das Ferramentas";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Cadastrar Novo Checkin", "Create")
+    @Html.ActionLink("Cadastrar Nova Movimentação", "Create")
 </p>
 
 @using (Html.BeginForm())
@@ -34,9 +34,9 @@
         </div>
         
         <div class="editor-label">
-            @Html.LabelFor(model => model.CheckinDateTime, "Data do Checkin")
+            @Html.LabelFor(model => model.CheckinDateTime, "Data da Movimentação")
         </div>
-        <div class="editor-field">
+        <div class="editor-field1">
             @Html.TextBoxFor(model => model.CheckinDateTime)
         </div>
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.ViewModels;
@@ -27,27 +28,25 @@ namespace WebSiteMjr.Assembler
             var checkins = _checkinToolService.FilterCheckins(_checkinToolService.FindEmployeeCompanyByName(checkinToolViewModel.EmployeeCompanyHolder),
                                                                                    checkinToolViewModel.Tool,
                                                                                    checkinToolViewModel.CheckinDateTime);
-            checkinToolViewModel.CheckinTools = new List<EnumerableCheckinToolViewModel>();
 
-            foreach (var checkinTool in checkins)
-            {
-                checkinToolViewModel.CheckinTools.Add(CheckinToolToCreateCheckinToolViewModel(checkinTool));
-            }
+            checkinToolViewModel.CheckinTools = CheckinToolToCreateCheckinToolViewModel(checkins).OrderByDescending(c => c.CheckinDateTime);
+
 
             return checkinToolViewModel;
         }
 
-        public EnumerableCheckinToolViewModel CheckinToolToCreateCheckinToolViewModel(CheckinTool checkinTool)
+        public IEnumerable<EnumerableCheckinToolViewModel> CheckinToolToCreateCheckinToolViewModel(IEnumerable<CheckinTool> checkins)
         {
-            var createCheckinToolViewModel = new EnumerableCheckinToolViewModel
+            foreach (var checkinTool in checkins)
             {
-                Id = checkinTool.EmployeeCompanyHolderId,
-                CheckinDateTime = checkinTool.CheckinDateTime,
-                ToolName = checkinTool.Tool.Name,
-                EmployeeCompanyHolderName = _holderService.FindHolder(checkinTool.EmployeeCompanyHolderId).Name
-            };
-
-            return createCheckinToolViewModel;
+                yield return new EnumerableCheckinToolViewModel
+                {
+                    Id = checkinTool.EmployeeCompanyHolderId,
+                    CheckinDateTime = checkinTool.CheckinDateTime,
+                    ToolName = checkinTool.Tool.Name,
+                    EmployeeCompanyHolderName = _holderService.FindHolder(checkinTool.EmployeeCompanyHolderId).Name
+                };
+            }
         }
 
         public CheckinTool CreateCheckinToolViewModelToCheckinTool(CreateCheckinToolViewModel createCheckinToolViewModel)

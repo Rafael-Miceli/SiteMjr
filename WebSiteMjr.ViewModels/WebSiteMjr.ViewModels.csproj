@@ -49,6 +49,10 @@
     <Compile Include="StuffsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Mjr.Extensions\Mjr.Extensions.csproj">
+      <Project>{29947E45-7425-4CCE-90C1-2F2D7EF802E1}</Project>
+      <Name>Mjr.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr.Domain\WebSiteMjr.Domain.csproj">
       <Project>{1219ecd0-3c8e-435f-88e1-01de06d01e74}</Project>
       <Name>WebSiteMjr.Domain</Name>

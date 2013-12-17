@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
@@ -46,7 +47,8 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var createCheckinToolViewModel = new CreateCheckinToolViewModel();
+            return View(createCheckinToolViewModel);
         }
 
         //
