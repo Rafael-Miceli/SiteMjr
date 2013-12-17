@@ -10,7 +10,7 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         void UpdateToolCheckin(CheckinTool checkinTool);
         void DeleteToolCheckin(object checkinTool);
         IEnumerable<CheckinTool> ListToolCheckins();
-        IEnumerable<CheckinTool> FilterCheckins(string employeeName, string toolName, DateTime ?date);
+        IEnumerable<CheckinTool> FilterCheckins(Holder employeeName, string toolName, DateTime ?date);
         CheckinTool FindToolCheckin(object idCheckinTool);
         IEnumerable<string> ListEmployeeCompanyHolderName();
         IEnumerable<string> ListToolName();

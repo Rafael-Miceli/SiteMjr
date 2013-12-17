@@ -36,7 +36,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
             _checkinToolRepository.Update(checkinTool);
             _unitOfWork.Save();
         }
-
+        
         public void DeleteToolCheckin(object idCheckinTool)
         {
             _checkinToolRepository.Remove(idCheckinTool);
@@ -48,13 +48,13 @@ namespace WebSiteMjr.Domain.services.Stuffs
             return _checkinToolRepository.GetAll();
         }
 
-        public IEnumerable<CheckinTool> FilterCheckins(string employeeCompanyName, string toolName, DateTime ?date)
+        public IEnumerable<CheckinTool> FilterCheckins(Holder employeeCompany, string toolName, DateTime ?date)
         {
             var checkins = _checkinToolRepository.GetAll();
 
-            if (!String.IsNullOrEmpty(employeeCompanyName))
+            if (employeeCompany != null)
             {
-                checkins = checkins.Where(c => String.Equals(c.EmployeeCompanyHolder.Name, employeeCompanyName, StringComparison.CurrentCultureIgnoreCase));
+                checkins = checkins.Where(c => c.EmployeeCompanyHolderId == employeeCompany.Id);
             }
 
             if (!String.IsNullOrEmpty(toolName))

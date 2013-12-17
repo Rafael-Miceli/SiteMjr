@@ -13,10 +13,10 @@ namespace WebSiteMjr.Controllers
         private readonly ICheckinToolService _checkinToolService;
         private readonly CheckinToolMapper _checkinToolMapper;
 
-        public CheckinToolController(ICheckinToolService checkinToolService, IToolService toolService)
+        public CheckinToolController(ICheckinToolService checkinToolService, IToolService toolService, IHolderService holderService)
         {
             _checkinToolService = checkinToolService;
-            _checkinToolMapper = new CheckinToolMapper(_checkinToolService, toolService);
+            _checkinToolMapper = new CheckinToolMapper(_checkinToolService, toolService, holderService);
         }
         
         

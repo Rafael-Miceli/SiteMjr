@@ -75,6 +75,7 @@
     <Compile Include="DataRepository\CompanyRepository.cs" />
     <Compile Include="DataRepository\EmployeeRepository.cs" />
     <Compile Include="DataRepository\GenericRepositorys\GenericDtoRepository.cs" />
+    <Compile Include="DataRepository\HolderRepository.cs" />
     <Compile Include="DataRepository\MembershipRepository.cs" />
     <Compile Include="DataRepository\GenericRepositorys\GenericPersonRepository.cs" />
     <Compile Include="DataRepository\RoleRepository.cs" />

@@ -56,12 +56,14 @@ namespace WebSiteMjr
             container.RegisterType<IStuffManufactureService, StuffManufactureService>();
             container.RegisterType<ICompanyService, CompanyService>();
             container.RegisterType<IEmployeeService, EmployeeService>();
+            container.RegisterType<IHolderService, HolderService>();
 
             //Repositories Instances
             var companyServiceInstance = new CompanyService(new CompanyRepository(personUow), personUow);
             var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), personUow);
             var toolServiceInstance = new ToolService(new ToolRepository(stuffUnow), stuffUnow);
-                
+
+            container.RegisterInstance(new HolderService(new HolderRepository(personUow)));
             container.RegisterInstance(new UserService(new UserRepository(personUow), new CompanyRepository(personUow), personUow));
             container.RegisterInstance(new StuffService(new StuffRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(toolServiceInstance);

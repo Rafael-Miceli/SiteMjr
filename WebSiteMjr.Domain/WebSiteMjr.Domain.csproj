@@ -56,6 +56,7 @@
     <Compile Include="Interfaces\Membership\ISecurityEncoder.cs" />
     <Compile Include="Interfaces\Repository\ICheckinToolRepository.cs" />
     <Compile Include="Interfaces\Repository\IEmployeeRepository.cs" />
+    <Compile Include="Interfaces\Repository\IHolderRepository.cs" />
     <Compile Include="Interfaces\Repository\IStuffCategoryRepository.cs" />
     <Compile Include="Interfaces\Repository\IStuffManufactureRepository.cs" />
     <Compile Include="Interfaces\Repository\IToolRepository.cs" />
@@ -92,6 +93,8 @@
     <Compile Include="Interfaces\Services\ICompanyService.cs" />
     <Compile Include="services\EmployeeService.cs" />
     <Compile Include="Interfaces\Services\IEmployeeService.cs" />
+    <Compile Include="services\HolderService.cs" />
+    <Compile Include="Interfaces\Services\IHolderService.cs" />
     <Compile Include="services\Membership\MembershipService.cs" />
     <Compile Include="services\Membership\UserService.cs" />
     <Compile Include="services\Roles\RoleService.cs" />
