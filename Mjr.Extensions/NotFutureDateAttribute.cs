@@ -26,7 +26,7 @@ namespace Mjr.Extensions
         private static DateTime ParseDate(string dateValue)
         {
             return DateTime.ParseExact(dateValue, DateFormat,
-     CultureInfo.InvariantCulture);
+            CultureInfo.InvariantCulture);
         }
     }
 }

@@ -28,8 +28,8 @@ namespace WebSiteMjr.EfConfigurationMigrationData
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>().ToTable("Employee");
-            modelBuilder.Entity<Company>().ToTable("Company");
+            modelBuilder.Entity<Employee>().ToTable("Employees");
+            modelBuilder.Entity<Company>().ToTable("Companies");
         }
     }
 }

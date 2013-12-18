@@ -34,7 +34,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-
+            context.SaveChanges();
 
             SeedCompany(context);
             SeedMembership(context);
