@@ -17,7 +17,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
         public MjrSolutionConfiguration()
         {
             //TODO For sake to publish the site in production because it's off, REMEBER to CHANGE THIS!
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
             AutomaticMigrationDataLossAllowed = true;
         }
         protected override void Seed(MjrSolutionContext context)
@@ -34,7 +34,6 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            context.SaveChanges();
 
             SeedCompany(context);
             SeedMembership(context);

@@ -46,9 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201312181532543_CheckinTool.cs" />
-    <Compile Include="Migrations\201312181532543_CheckinTool.Designer.cs">
-      <DependentUpon>201312181532543_CheckinTool.cs</DependentUpon>
+    <Compile Include="Migrations\201312181532543_CreateToolTable.cs" />
+    <Compile Include="Migrations\201312181532543_CreateToolTable.Designer.cs">
+      <DependentUpon>201312181532543_CreateToolTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201312181950442_CreateCheckinToolTable.cs" />
+    <Compile Include="Migrations\201312181950442_CreateCheckinToolTable.Designer.cs">
+      <DependentUpon>201312181950442_CreateCheckinToolTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201312181953290_CreateHolderTable.cs" />
+    <Compile Include="Migrations\201312181953290_CreateHolderTable.Designer.cs">
+      <DependentUpon>201312181953290_CreateHolderTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MjrSolutionConfiguration.cs" />
     <Compile Include="MjrSolutionContext.cs" />
@@ -77,8 +85,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201312181532543_CheckinTool.resx">
-      <DependentUpon>201312181532543_CheckinTool.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201312181532543_CreateToolTable.resx">
+      <DependentUpon>201312181532543_CreateToolTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312181950442_CreateCheckinToolTable.resx">
+      <DependentUpon>201312181950442_CreateCheckinToolTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312181953290_CreateHolderTable.resx">
+      <DependentUpon>201312181953290_CreateHolderTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

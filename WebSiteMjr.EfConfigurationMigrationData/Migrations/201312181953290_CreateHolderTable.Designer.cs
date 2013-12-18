@@ -5,13 +5,13 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class CheckinTool : IMigrationMetadata
+    public sealed partial class CreateHolderTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CheckinTool));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateHolderTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "201312181532543_CheckinTool"; }
+            get { return "201312181953290_CreateHolderTable"; }
         }
         
         string IMigrationMetadata.Source
