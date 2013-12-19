@@ -13,7 +13,7 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Buscar Checkin</legend>
+        <legend>Movimentação</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.ToolName, "Ferramenta")
@@ -55,5 +55,5 @@
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Mask/Masks.js")"></script>
-<script src="@Url.Content("~/Scripts/CheckinTool/checkinTool.js")"></script>
+    <script src="@Url.Content("~/Scripts/CheckinTool/checkinTool.js")"></script>
 }

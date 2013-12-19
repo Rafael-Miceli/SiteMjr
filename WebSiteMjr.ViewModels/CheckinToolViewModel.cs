@@ -29,6 +29,8 @@ namespace WebSiteMjr.ViewModels
         {
             CheckinDateTime = DateTime.Now;
         }
+
+        public int Id { get; set; }
         [Required(ErrorMessage = "Nome do Condomínio/Funcionário não pode ser vazio")]
         public string EmployeeCompanyHolderName { get; set; }
         [Required(ErrorMessage = "Nome da Ferramenta não pode ser vazia")]

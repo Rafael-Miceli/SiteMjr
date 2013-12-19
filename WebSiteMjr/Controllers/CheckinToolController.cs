@@ -136,7 +136,7 @@ namespace WebSiteMjr.Controllers
         // POST: /Stuff/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(CheckinTool checkinTool)
+        public ActionResult Delete(CreateCheckinToolViewModel checkinTool)
         {
             try
             {

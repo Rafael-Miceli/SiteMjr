@@ -6,3 +6,33 @@
 }
 
 <h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>Movimentação</legend>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.ToolName, "Ferramenta")
+    </div>
+    <div class="editor-field">
+        @Html.DisplayFor(model => model.ToolName, new { id = "Tool_Name" })
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.EmployeeCompanyHolderName, "Funcionário/Condomínio")
+    </div>
+    <div class="editor-field">
+        @Html.DisplayFor(model => model.EmployeeCompanyHolderName, new { id = "EmployeeCompanyHolder_Name" })
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.CheckinDateTime, "Data do Checkin")
+    </div>
+    <div class="editor-field">
+        @Html.DisplayFor(model => model.CheckinDateTime, new { id = "Date" })
+    </div>
+</fieldset>
+
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Voltar a busca de Movimentações", "Index")
+</p>
