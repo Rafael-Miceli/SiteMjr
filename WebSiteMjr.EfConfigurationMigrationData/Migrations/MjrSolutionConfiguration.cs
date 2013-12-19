@@ -1,5 +1,6 @@
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Linq;
 using FlexProviders.Aspnet;
 using FlexProviders.Membership;
 using FlexProviders.Roles;
@@ -35,7 +36,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
             //    );
             //
 
-            SeedCompany(context);
+            //SeedCompany(context);
             SeedMembership(context);
 
             base.Seed(context);
@@ -64,7 +65,9 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
 
             if (!membership.HasLocalAccount("mjrtelecom@hotmail.com"))
             {
-                membership.CreateAccount(new User
+                var firstOrDefault = context.Companies.FirstOrDefault(n => n.Email == "mjrtelecom@hotmail.com");
+                if (firstOrDefault != null)
+                    membership.CreateAccount(user: new User
                     {
                         Username = "mjrtelecom@hotmail.com", 
                         Password = "12345678A", 
@@ -72,7 +75,19 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                         Email = "mjrtelecom@hotmail.com",
                         Name = "Constantino",
                         LastName = "Paiva",
-                        IdCompany = 1,
+                        IdCompany = firstOrDefault.Id,
+                        StatusUser = StatusUser.Active
+                    });
+                else
+                    membership.CreateAccount(user: new User
+                    {
+                        Username = "mjrtelecom@hotmail.com",
+                        Password = "12345678A",
+                        IsLocal = true,
+                        Email = "mjrtelecom@hotmail.com",
+                        Name = "Constantino",
+                        LastName = "Paiva",
+                        IdCompany = 0,
                         StatusUser = StatusUser.Active
                     });
             }
