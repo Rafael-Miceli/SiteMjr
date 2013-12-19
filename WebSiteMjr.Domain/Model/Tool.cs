@@ -3,7 +3,7 @@ using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model
 {
-    public class Tool : IntId, IObjectWithState
+    public class Tool : IntId, IObjectWithState, IMjrException
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -11,5 +11,12 @@ namespace WebSiteMjr.Domain.Model
         public virtual StuffManufacture StuffManufacture { get; set; }
         [NotMapped]
         public State State { get; set; }
+        public string ObjectName
+        {
+            get
+            {
+                return "Ferramenta";
+            }
+        }
     }
 }

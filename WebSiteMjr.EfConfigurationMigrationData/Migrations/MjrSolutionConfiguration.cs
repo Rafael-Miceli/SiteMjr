@@ -36,7 +36,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
             //    );
             //
 
-            //SeedCompany(context);
+            SeedCompany(context);
             SeedMembership(context);
 
             base.Seed(context);
@@ -50,6 +50,8 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                     Name = "Mjr Equipamentos eletrônicos LTDA",
                     Email = "mjrtelecom@hotmail.com"
                 });
+
+            context.SaveChanges();
         }
 
         private static void SeedMembership(MjrSolutionContext context)

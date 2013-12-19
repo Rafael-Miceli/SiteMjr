@@ -10,7 +10,7 @@ namespace WebSiteMjr.Tests.Controllers
     public class CompanyControllerTest
     {
         [TestMethod]
-        public void Should_Return_Company_List()
+        public void Should_Create_Company()
         {
             var companyController = new CompanyController(new CompanyService(new StubCompanyRepository(), null));
 
@@ -24,5 +24,7 @@ namespace WebSiteMjr.Tests.Controllers
             //    Assert.AreNotEqual(null, company.Name);
             //}
         }
+
+
     }
 }

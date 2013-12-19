@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ObjectNotExistsException.cs" />
     <Compile Include="Exceptions\ObjectExistsException.cs" />
     <Compile Include="Interfaces\Membership\IApplicationEnvironment.cs" />
     <Compile Include="Interfaces\Membership\IFlexMembershipProvider.cs" />
@@ -81,7 +82,6 @@
     <Compile Include="Model\IObjectWithState.cs" />
     <Compile Include="Model\Phone.cs" />
     <Compile Include="Model\Membership\User.cs" />
-    <Compile Include="Exceptions\ExpenseNotFoundException.cs" />
     <Compile Include="Interfaces\Repository\GenericRepository\IGenericRepository.cs" />
     <Compile Include="Model\Roles\Role.cs" />
     <Compile Include="Model\StuffCategory.cs" />

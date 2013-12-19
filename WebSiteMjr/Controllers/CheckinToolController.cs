@@ -1,6 +1,6 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using WebSiteMjr.Assembler;
+using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Filters;
@@ -38,7 +38,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Details(int id)
         {
-            var checkinTool = _checkinToolService.FindToolCheckin(id);
+            var checkinTool = _checkinToolMapper.EditingCheckinToolToCreateCheckinToolViewModel((_checkinToolService.FindToolCheckin(id)));
             return View(checkinTool);
         }
 
@@ -66,6 +66,16 @@ namespace WebSiteMjr.Controllers
 
                 return RedirectToAction("Index");
             }
+            catch (ObjectNotExistsException<Holder> ex)
+            {
+                ModelState.AddModelError("HolderNotExists", ex.Message);
+                return View();
+            }
+            catch (ObjectNotExistsException<Tool> ex)
+            {
+                ModelState.AddModelError("ToolNotExists", ex.Message);
+                return View();
+            }
             catch
             {
                 return View();
@@ -77,8 +87,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Edit(int id)
         {
-            var checkinTool = _checkinToolService.FindToolCheckin(id);
-            
+            var checkinTool = _checkinToolMapper.EditingCheckinToolToCreateCheckinToolViewModel(_checkinToolService.FindToolCheckin(id));
             return View(checkinTool);
         }   
         
@@ -87,16 +96,26 @@ namespace WebSiteMjr.Controllers
         // POST: /Stuff/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, CheckinTool checkinTool)
+        public ActionResult Edit(int id, CreateCheckinToolViewModel checkinTool)
         {
             try
             {
-                if (!ModelState.IsValid) 
+                if (!ModelState.IsValid)
                     return View(checkinTool);
-                
-                _checkinToolService.UpdateToolCheckin(checkinTool);
+
+                _checkinToolService.UpdateToolCheckin(_checkinToolMapper.EditingCreateCheckinToolViewModelToCheckinTool(id, checkinTool));
 
                 return RedirectToAction("Index");
+            }
+            catch (ObjectNotExistsException<Holder> ex)
+            {
+                ModelState.AddModelError("HolderNotExists", ex.Message);
+                return View();
+            }
+            catch (ObjectNotExistsException<Tool> ex)
+            {
+                ModelState.AddModelError("ToolNotExists", ex.Message);
+                return View();
             }
             catch
             {
@@ -109,7 +128,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Delete(int id)
         {
-            var checkinTool = _checkinToolService.FindToolCheckin(id);
+            var checkinTool = _checkinToolMapper.EditingCheckinToolToCreateCheckinToolViewModel(_checkinToolService.FindToolCheckin(id));
             return View(checkinTool);
         }
 

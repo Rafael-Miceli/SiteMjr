@@ -19,6 +19,7 @@
             @Html.LabelFor(model => model.ToolName, "Ferramenta")
         </div>
         <div class="editor-field">
+            @Html.ValidationMessage("ToolNotExists")
             @Html.EditorFor(model => model.ToolName, new { id = "Tool_Name" })
             @Html.ValidationMessageFor(model => model.ToolName)
         </div>
@@ -27,6 +28,7 @@
             @Html.LabelFor(model => model.EmployeeCompanyHolderName, "Funcionário/Condomínio")
         </div>
         <div class="editor-field">
+            @Html.ValidationMessage("HolderNotExists")
             @Html.EditorFor(model => model.EmployeeCompanyHolderName, new { id = "EmployeeCompanyHolder_Name" })
             @Html.ValidationMessageFor(model => model.EmployeeCompanyHolderName)
         </div>

@@ -11,7 +11,7 @@
 
     //$("#CheckinDateTime_Date").mask("99/99/9999 99:99");
     $("#CheckinDateTime").mask("99/99/9999 99:99");
-    $("editor-field1 #CheckinDateTime").mask("99/99/9999");
+    $(".editor-field1 #CheckinDateTime").mask("99/99/9999");
     
     // ==== Azeite no código ====
 });

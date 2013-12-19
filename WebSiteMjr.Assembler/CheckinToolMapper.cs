@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.ViewModels;
@@ -41,7 +42,7 @@ namespace WebSiteMjr.Assembler
             {
                 yield return new EnumerableCheckinToolViewModel
                 {
-                    Id = checkinTool.EmployeeCompanyHolderId,
+                    Id = checkinTool.Id,
                     CheckinDateTime = checkinTool.CheckinDateTime,
                     ToolName = checkinTool.Tool.Name,
                     EmployeeCompanyHolderName = _holderService.FindHolder(checkinTool.EmployeeCompanyHolderId).Name
@@ -51,14 +52,66 @@ namespace WebSiteMjr.Assembler
 
         public CheckinTool CreateCheckinToolViewModelToCheckinTool(CreateCheckinToolViewModel createCheckinToolViewModel)
         {
+            var tool = _toolService.FindToolByName(createCheckinToolViewModel.ToolName);
+            var holder = _holderService.FindHolderByName(createCheckinToolViewModel.EmployeeCompanyHolderName);
+
+            if (!CompanyOrEmployeeExists(holder))
+                throw new ObjectNotExistsException<Holder>();
+
+            if (!ToolExists(tool))
+                throw new ObjectNotExistsException<Tool>();
+
+
             var checkinTool = new CheckinTool
             {
-                EmployeeCompanyHolderId = _checkinToolService.FindEmployeeCompanyByName(createCheckinToolViewModel.EmployeeCompanyHolderName).Id,
-                Tool = _toolService.FindToolByName(createCheckinToolViewModel.ToolName),
+                EmployeeCompanyHolderId = holder.Id,
+                Tool = tool,
                 CheckinDateTime = createCheckinToolViewModel.CheckinDateTime
             };
 
             return checkinTool;
+        }
+
+        public CheckinTool EditingCreateCheckinToolViewModelToCheckinTool(int id, CreateCheckinToolViewModel createCheckinToolViewModel)
+        {
+            var tool = _toolService.FindToolByName(createCheckinToolViewModel.ToolName);
+            var holder = _holderService.FindHolderByName(createCheckinToolViewModel.EmployeeCompanyHolderName);
+
+            if (!CompanyOrEmployeeExists(holder))
+                throw new ObjectNotExistsException<Holder>();
+
+            if (!ToolExists(tool))
+                throw new ObjectNotExistsException<Tool>();
+
+
+            var checkinTool = _checkinToolService.FindToolCheckin(id);
+            checkinTool.EmployeeCompanyHolderId = holder.Id;
+            checkinTool.Tool = tool;
+            checkinTool.CheckinDateTime = createCheckinToolViewModel.CheckinDateTime;
+
+            return checkinTool;
+        }
+
+        private bool ToolExists(Tool tool)
+        {
+            return tool != null;
+        }
+
+        private bool CompanyOrEmployeeExists(Holder employeeCompanyHolder)
+        {
+            return employeeCompanyHolder != null;
+        }
+
+        public CreateCheckinToolViewModel EditingCheckinToolToCreateCheckinToolViewModel(CheckinTool checkinTool)
+        {
+            var createCheckinToolViewModel = new CreateCheckinToolViewModel
+            {
+                CheckinDateTime = checkinTool.CheckinDateTime,
+                EmployeeCompanyHolderName = _holderService.FindHolder(checkinTool.EmployeeCompanyHolderId).Name,
+                ToolName = checkinTool.Tool.Name
+            };
+
+            return createCheckinToolViewModel;
         }
     }
 }

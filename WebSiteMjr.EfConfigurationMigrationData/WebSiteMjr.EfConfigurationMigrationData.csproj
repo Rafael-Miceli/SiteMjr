@@ -66,6 +66,10 @@
     <Compile Include="Migrations\201312182359195_RecreateCompaniesAndEmployeesTables.Designer.cs">
       <DependentUpon>201312182359195_RecreateCompaniesAndEmployeesTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201312191349132_CleanDatabase.cs" />
+    <Compile Include="Migrations\201312191349132_CleanDatabase.Designer.cs">
+      <DependentUpon>201312191349132_CleanDatabase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MigrateStuffsToToolsTable.cs" />
     <Compile Include="Migrations\MigrateStuffsToToolsTable.Designer.cs">
       <DependentUpon>MigrateStuffsToToolsTable.cs</DependentUpon>
@@ -111,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201312182359195_RecreateCompaniesAndEmployeesTables.resx">
       <DependentUpon>201312182359195_RecreateCompaniesAndEmployeesTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312191349132_CleanDatabase.resx">
+      <DependentUpon>201312191349132_CleanDatabase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\MigrateStuffsToToolsTable.resx">
       <DependentUpon>MigrateStuffsToToolsTable.cs</DependentUpon>
