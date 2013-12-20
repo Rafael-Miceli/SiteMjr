@@ -8,7 +8,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
         public override void Up()
         {
 
-            DropTable("__MigrationHistory");
+            //DropTable("__MigrationHistory");
 
             CreateTable(
                 "dbo.Tools",

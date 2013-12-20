@@ -56,11 +56,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CompanyServiceTest.cs" />
-    <Compile Include="StuffServiceTest.cs" />
-    <Compile Include="StuffCategoryServiceTest.cs" />
-    <Compile Include="CheckInToolServiceTest.cs" />
-    <Compile Include="UserServiceTest.cs" />
+    <Compile Include="services\CompanyServiceTest.cs" />
+    <Compile Include="services\StuffServiceTest.cs" />
+    <Compile Include="services\StuffCategoryServiceTest.cs" />
+    <Compile Include="services\CheckInToolServiceTest.cs" />
+    <Compile Include="services\UserServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

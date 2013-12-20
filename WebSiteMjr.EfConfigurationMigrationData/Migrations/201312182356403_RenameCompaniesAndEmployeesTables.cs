@@ -6,8 +6,6 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
     {
         public override void Up()
         {
-            DropPrimaryKey("dbo.Employees");
-            DropPrimaryKey("dbo.Companies");
 
             RenameTable("Employees", "EmployeesOld");
             RenameTable("Companies", "CompaniesOld");

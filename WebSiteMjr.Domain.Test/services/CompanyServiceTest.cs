@@ -10,7 +10,7 @@ using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
 using WebSiteMjr.Domain.services;
 
-namespace WebSiteMjr.Domain.Test
+namespace WebSiteMjr.Domain.Test.services
 {
     [TestClass]
     public class CompanyServiceTest
@@ -47,27 +47,32 @@ namespace WebSiteMjr.Domain.Test
                 Email = "rafael.miceli@outlook.com",
                 Name = "Rafael Empresa"
             });
-            //var companyService = new CompanyService(companyRepository.Object, new PersonsUow());
+            var companyService = new CompanyService(companyRepository.Object, null);
 
-            //var fakeCompanyReturned = companyService.FindCompany(fakeCompanyId);
+            var fakeCompanyReturned = companyService.FindCompany(fakeCompanyId);
 
-            //Assert.IsTrue(fakeCompanyReturned.Id == fakeCompanyId);
+            Assert.IsTrue(fakeCompanyReturned.Id == fakeCompanyId);
         }
 
         [TestMethod]
         public void Should_Return_Company_List()
         {
-            var companyService = new CompanyService(new StubCompanyRepository(), null);
+            var companyService = new CompanyService(new StubCompanyRepository(), null); 
 
             var companies = companyService.ListCompany().ToList();
 
             Console.WriteLine(companies.Count());
-
             foreach (var company in companies)
             {
                 Console.WriteLine(company.Name);
                 Assert.AreNotEqual(null, company.Name);
             }
+        }
+
+        [TestMethod]
+        public void Should_Return_Company_By_Name()
+        {
+            
         }
     }
 
@@ -139,7 +144,7 @@ namespace WebSiteMjr.Domain.Test
 
         public Company GetCompanyByName(string name)
         {
-            throw new NotImplementedException();
+            return _companies.FirstOrDefault(c => c.Name == name);
         }
     }
 }

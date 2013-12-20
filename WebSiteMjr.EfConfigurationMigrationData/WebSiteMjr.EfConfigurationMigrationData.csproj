@@ -58,19 +58,13 @@
     <Compile Include="Migrations\201312181953290_CreateHolderTable.Designer.cs">
       <DependentUpon>201312181953290_CreateHolderTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201312182356403_RenameCompaniesAndEmployeesTables.cs" />
-    <Compile Include="Migrations\201312182356403_RenameCompaniesAndEmployeesTables.Designer.cs">
-      <DependentUpon>201312182356403_RenameCompaniesAndEmployeesTables.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201312182359195_RecreateCompaniesAndEmployeesTables.cs" />
     <Compile Include="Migrations\201312182359195_RecreateCompaniesAndEmployeesTables.Designer.cs">
       <DependentUpon>201312182359195_RecreateCompaniesAndEmployeesTables.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201312191349132_CleanDatabase.cs" />
-    <Compile Include="Migrations\201312191349132_CleanDatabase.Designer.cs">
-      <DependentUpon>201312191349132_CleanDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\MigrateStuffsToToolsTable.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Migrations\MigrateStuffsToToolsTable.cs" />
     <Compile Include="Migrations\MigrateStuffsToToolsTable.Designer.cs">
       <DependentUpon>MigrateStuffsToToolsTable.cs</DependentUpon>
     </Compile>
@@ -110,14 +104,8 @@
     <EmbeddedResource Include="Migrations\201312181953290_CreateHolderTable.resx">
       <DependentUpon>201312181953290_CreateHolderTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312182356403_RenameCompaniesAndEmployeesTables.resx">
-      <DependentUpon>201312182356403_RenameCompaniesAndEmployeesTables.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201312182359195_RecreateCompaniesAndEmployeesTables.resx">
       <DependentUpon>201312182359195_RecreateCompaniesAndEmployeesTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312191349132_CleanDatabase.resx">
-      <DependentUpon>201312191349132_CleanDatabase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\MigrateStuffsToToolsTable.resx">
       <DependentUpon>MigrateStuffsToToolsTable.cs</DependentUpon>

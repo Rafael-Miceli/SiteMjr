@@ -7,28 +7,99 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
     {
         public override void Up()
         {
-            Sql("Insert into Holders Select Name from CompaniesOld");
-            Sql("Insert into Holders Select Name from EmployeesOld");
+            Sql("Insert into Holders Select Name from Companies");
+            Sql("Insert into Holders Select Name from Employees");
 
-            Sql("ALTER TABLE CompaniesOld DROP COLUMN Name");
-            Sql("ALTER TABLE EmployeesOld DROP COLUMN Name");
-
-            Sql("Select Em.Id, Em.Email, Em.Address, Em.City, Em.Phone into Companies from CompaniesOld Em union select 0, 'test_row', 't', 't', 't' from sys.tables where 1 = 0");
-            Sql("Select Em.Id + (Select count(*) from Companies) as Id, Em.Phone, Em.LastName, Em.IdUser into Employees from EmployeesOld Em");
-
-            Sql("ALTER TABLE Companies ALTER COLUMN Id INTEGER NOT NULL");
-            Sql("ALTER TABLE Employees ALTER COLUMN Id INTEGER NOT NULL");
-
+            Sql("CREATE TABLE #CompanyDestination (                                                          " +
+	            "        Id int NOT NULL,                                                                    " +
+	            "        [Email] nvarchar(max),                                                              " +
+	            "        [Address] nvarchar(max),                                                            " +
+	            "        [City] nvarchar(max),                                                               " +
+	            "        [Phone] nvarchar(max)                                                               " +
+                "    )                                                                                       " +
+                "                                                                                            " +
+                "                                                                                            " +
+                "                                                                                            " +
+                "    INSERT INTO #CompanyDestination (                                                       " +
+	            "        Id,                                                                                 " +
+	            "        [Email],                                                                            " +
+	            "        [Address],                                                                          " +
+	            "        [City],                                                                             " +
+	            "        [Phone]                                                                             " +
+                "    )SELECT Id, Email, Address, City, Phone                                                 " +
+                "    FROM dbo.Companies;                                                                     " +
+                "                                                                                            " +
+                "                                                                                            " +
+                "                                                                                            " +
+                "    CREATE TABLE #EmployeeDestination (                                                     " +
+	            "        Id int NOT NULL,                                                                    " +
+	            "        [LastName] nvarchar(max),                                                           " +
+	            "        [Phone] nvarchar(max)                                                               " +
+                "    )                                                                                       " +
+                "                                                                                            " +
+                "                                                                                            " +
+                "                                                                                            " +
+                "    INSERT INTO #EmployeeDestination (                                                      " +
+	            "        Id,                                                                                 " +
+	            "        [LastName],                                                                         " +
+	            "        [Phone]                                                                             " +
+                "    )SELECT em.Id + (SELECT COUNT(*) FROM dbo.Companies) AS Id, LastName, Phone             " +
+                "    FROM dbo.Employees em                                                                   " +
+                "                                                                                            " +
+                "                                                                                            " +
+                "                                                                                            " +
+                "    DROP TABLE dbo.Companies                                                                " +
+                "    DROP TABLE dbo.Employees                                                                " +
+                "                                                                                            " +
+                "                                                                                            " +
+                "    CREATE TABLE Companies (                                                                " +
+	            "        Id int NOT NULL,                                                                    " +
+	            "        [Email] nvarchar(max),                                                              " +
+	            "        [Address] nvarchar(max),                                                            " +
+	            "        [City] nvarchar(max),                                                               " +
+	            "        [Phone] nvarchar(max)                                                               " +
+                "                                                                                            " +
+	            "        CONSTRAINT [PK_Companies] PRIMARY KEY CLUSTERED                                     " +
+	            "        (                                                                                   " +
+		        "            [Id] ASC                                                                        " +
+	            "        )                                                                                   " +
+                "    )                                                                                       " +
+                "                                                                                            " +
+                "    CREATE TABLE Employees (                                                                " +
+	            "        Id int NOT NULL,                                                                    " +
+	            "        [LastName] nvarchar(max),                                                           " +
+	            "        [Phone] nvarchar(max)                                                               " +
+                "                                                                                            " +
+	            "        CONSTRAINT [PK_Employees] PRIMARY KEY CLUSTERED                                     " +
+	            "        (                                                                                   " +
+		        "            [Id] ASC                                                                        " +
+	            "        )                                                                                   " +
+                "    )                                                                                       " +
+                "                                                                                            " +
+                "                                                                                            " +
+                "    INSERT INTO Companies (                                                                 " +
+	            "        Id,                                                                                 " +
+	            "        [Email],                                                                            " +
+	            "        [Address],                                                                          " +
+	            "        [City],                                                                             " +
+	            "        [Phone]                                                                             " +
+                "    )SELECT Id, Email, Address, City, Phone                                                 " +
+                "    FROM #CompanyDestination;                                                               " +
+                "                                                                                            " +
+                "    INSERT INTO Employees (                                                                 " +
+	            "        Id,                                                                                 " +
+	            "        [LastName],                                                                         " +
+	            "        [Phone]                                                                             " +
+                "    )SELECT Id, LastName, Phone                                                             " +
+                "    FROM #EmployeeDestination                                                               " +
+                "                                                                                            " +
+                "    -- Do Something                                                                         " +
+                "                                                                                            " +
+                "    DROP TABLE #CompanyDestination                                                          " +
+                "    DROP TABLE #EmployeeDestination                                                         ");
             
-            
-            CreateIndex("Companies", "Id");
-            CreateIndex("Employees", "Id");
-
             AddForeignKey("Companies", "Id", "Holders");
             AddForeignKey("Employees", "Id", "Holders");
-
-            AddPrimaryKey("Companies", "Id");
-            AddPrimaryKey("Employees", "Id");
         }
 
         public override void Down()

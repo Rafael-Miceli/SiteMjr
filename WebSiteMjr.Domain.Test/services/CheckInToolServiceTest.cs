@@ -7,7 +7,7 @@ using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.services.Stuffs;
 
-namespace WebSiteMjr.Domain.Test
+namespace WebSiteMjr.Domain.Test.services
 {
     [TestClass]
     public class CheckInToolServiceTest
