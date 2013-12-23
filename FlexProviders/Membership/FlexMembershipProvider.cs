@@ -171,8 +171,9 @@ namespace FlexProviders.Membership
                 throw new FlexMembershipException(FlexMembershipStatus.InvalidUserName);
             }
 
+            var tz = TimeZoneInfo.FindSystemTimeZoneById("Central Brazilian Standard Time");
             user.PasswordResetToken = GenerateToken();
-            user.PasswordResetTokenExpiration = DateTime.Now.AddMinutes(tokenExpirationInMinutesFromNow);
+            user.PasswordResetTokenExpiration = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.AddMinutes(tokenExpirationInMinutesFromNow), tz);
             _userStore.Save(user);
 
             return user.PasswordResetToken;

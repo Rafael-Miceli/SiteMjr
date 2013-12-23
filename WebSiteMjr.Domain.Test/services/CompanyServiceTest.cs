@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Mjr.Extensions;
 using Moq;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Model;
@@ -30,7 +31,7 @@ namespace WebSiteMjr.Domain.Test.services
                 IsLocal = true,
                 Password = "123",
                 PasswordResetToken = "123",
-                PasswordResetTokenExpiration = DateTime.Now,
+                PasswordResetTokenExpiration = DateTime.UtcNow.ConvertToTimeZone(),
                 Roles = new List<Role>
                         {
                             new Role

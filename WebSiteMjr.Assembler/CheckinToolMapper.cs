@@ -109,7 +109,9 @@ namespace WebSiteMjr.Assembler
                 Id = checkinTool.Id,
                 CheckinDateTime = checkinTool.CheckinDateTime,
                 EmployeeCompanyHolderName = _holderService.FindHolder(checkinTool.EmployeeCompanyHolderId).Name,
-                ToolName = checkinTool.Tool.Name
+                ToolName = checkinTool.Tool.Name,
+                StrCheckinDateTime = checkinTool.CheckinDateTime.ToString()
+               
             };
 
             return createCheckinToolViewModel;

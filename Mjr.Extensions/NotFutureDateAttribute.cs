@@ -15,10 +15,32 @@ namespace Mjr.Extensions
         {
             if (!(value is DateTime))
             {
+                DateTime dateTimeValue;
+                if (DateTime.TryParse(value.ToString(), out dateTimeValue))
+                {
+                    return !(dateTimeValue > DateTime.UtcNow.ConvertToTimeZone().AddHours(1));
+                }
+
                 return true;
             }
+
             var dateValue = (DateTime)value;
-            return !(dateValue > DateTime.Now);
+            return !(dateValue > DateTime.UtcNow.ConvertToTimeZone());
+        }
+    }
+
+    public class DateTimeIsValidAttribute : ValidationAttribute
+    {
+        private const string DefaultErrorMessage = "Data Inválida.";
+        public DateTimeIsValidAttribute()
+            : base(DefaultErrorMessage)
+        { }
+
+        public override bool IsValid(object value)
+        {
+            DateTime dateTimeValue;
+            var parsed = DateTime.TryParse(value.ToString(), out dateTimeValue);
+            return parsed;
         }
     }
 }

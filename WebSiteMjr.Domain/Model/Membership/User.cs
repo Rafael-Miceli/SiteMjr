@@ -10,7 +10,8 @@ namespace WebSiteMjr.Domain.Model.Membership
     {
         public User()
         {
-            PasswordResetTokenExpiration = DateTime.Now;
+            var tz = TimeZoneInfo.FindSystemTimeZoneById("Central Brazilian Standard Time");
+            PasswordResetTokenExpiration = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
         }
 
         public virtual string Name { get; set; }

@@ -64,6 +64,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Mjr.Extensions\Mjr.Extensions.csproj">
+      <Project>{29947E45-7425-4CCE-90C1-2F2D7EF802E1}</Project>
+      <Name>Mjr.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr.Domain\WebSiteMjr.Domain.csproj">
       <Project>{1219ECD0-3C8E-435F-88E1-01DE06D01E74}</Project>
       <Name>WebSiteMjr.Domain</Name>

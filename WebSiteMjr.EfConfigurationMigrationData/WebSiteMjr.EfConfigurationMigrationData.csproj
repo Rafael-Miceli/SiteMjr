@@ -46,28 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201312181532543_CreateToolTable.cs" />
-    <Compile Include="Migrations\201312181532543_CreateToolTable.Designer.cs">
-      <DependentUpon>201312181532543_CreateToolTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312181950442_CreateCheckinToolTable.cs" />
-    <Compile Include="Migrations\201312181950442_CreateCheckinToolTable.Designer.cs">
-      <DependentUpon>201312181950442_CreateCheckinToolTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312181953290_CreateHolderTable.cs" />
-    <Compile Include="Migrations\201312181953290_CreateHolderTable.Designer.cs">
-      <DependentUpon>201312181953290_CreateHolderTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312182359195_RecreateCompaniesAndEmployeesTables.cs" />
-    <Compile Include="Migrations\201312182359195_RecreateCompaniesAndEmployeesTables.Designer.cs">
-      <DependentUpon>201312182359195_RecreateCompaniesAndEmployeesTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\MigrateStuffsToToolsTable.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Migrations\MigrateStuffsToToolsTable.Designer.cs">
-      <DependentUpon>MigrateStuffsToToolsTable.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\MjrSolutionConfiguration.cs" />
     <Compile Include="MjrSolutionContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,23 +71,6 @@
       <Project>{1D5058F1-5CA9-4978-AC8C-A508C430E7B0}</Project>
       <Name>WebSiteMjr.EfPersonData</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201312181532543_CreateToolTable.resx">
-      <DependentUpon>201312181532543_CreateToolTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312181950442_CreateCheckinToolTable.resx">
-      <DependentUpon>201312181950442_CreateCheckinToolTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312181953290_CreateHolderTable.resx">
-      <DependentUpon>201312181953290_CreateHolderTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312182359195_RecreateCompaniesAndEmployeesTables.resx">
-      <DependentUpon>201312182359195_RecreateCompaniesAndEmployeesTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\MigrateStuffsToToolsTable.resx">
-      <DependentUpon>MigrateStuffsToToolsTable.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

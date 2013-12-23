@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using Mjr.Extensions;
-using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.ViewModels
 {
@@ -29,12 +27,11 @@ namespace WebSiteMjr.ViewModels
         {
             try
             {
-                var tz = TimeZoneInfo.FindSystemTimeZoneById("Central Brazilian Standard Time");
-                CheckinDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now, tz);
+                StrCheckinDateTime = DateTime.UtcNow.ConvertToTimeZone().AddHours(1).ToString();
             }
             catch (Exception)
             {
-                CheckinDateTime = DateTime.Now;
+                CheckinDateTime = DateTime.UtcNow;
             }
             
         }
@@ -44,8 +41,31 @@ namespace WebSiteMjr.ViewModels
         public string EmployeeCompanyHolderName { get; set; }
         [Required(ErrorMessage = "Nome da Ferramenta não pode ser vazia")]
         public string ToolName { get; set; }
+        public DateTime? CheckinDateTime 
+        {
+            get
+            {
+                DateTime checkinDateTime;
+                if (DateTime.TryParse(StrCheckinDateTime, out checkinDateTime))
+                {
+                    return checkinDateTime;
+                }
+
+                return null;
+            }
+            set
+            {
+                DateTime checkinDateTime;
+                if (DateTime.TryParse(StrCheckinDateTime, out checkinDateTime))
+                {
+                    value = checkinDateTime;
+                }   
+            }
+        }
+
+        [NoFutureDate]
+        [DateTimeIsValid]
         [Required(ErrorMessage = "Data da movimentação não pode ser vazia")]
-        [NoFutureDate()]
-        public DateTime ?CheckinDateTime { get; set; }
+        public string StrCheckinDateTime{ get; set; }
     }
 }

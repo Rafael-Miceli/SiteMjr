@@ -1,4 +1,5 @@
-﻿using WebSiteMjr.Domain.Model.Person;
+﻿using System;
+using WebSiteMjr.Domain.Model.Person;
 
 namespace Mjr.Extensions
 {
@@ -10,6 +11,12 @@ namespace Mjr.Extensions
                 return entitie.Id;
 
             return null;
+        }
+
+        public static DateTime ConvertToTimeZone(this DateTime dataTime)
+        {
+            var tz = TimeZoneInfo.FindSystemTimeZoneById("Central Brazilian Standard Time");
+            return TimeZoneInfo.ConvertTimeFromUtc(dataTime, tz);
         }
     }
 }
