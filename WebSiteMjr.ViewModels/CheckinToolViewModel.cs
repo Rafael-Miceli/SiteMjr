@@ -27,7 +27,16 @@ namespace WebSiteMjr.ViewModels
     {
         public CreateCheckinToolViewModel()
         {
-            CheckinDateTime = DateTime.Now;
+            try
+            {
+                var tz = TimeZoneInfo.FindSystemTimeZoneById("Central Brazilian Standard Time");
+                CheckinDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now, tz);
+            }
+            catch (Exception)
+            {
+                CheckinDateTime = DateTime.Now;
+            }
+            
         }
 
         public int Id { get; set; }
@@ -37,6 +46,6 @@ namespace WebSiteMjr.ViewModels
         public string ToolName { get; set; }
         [Required(ErrorMessage = "Data da movimentação não pode ser vazia")]
         [NoFutureDate()]
-        public DateTime CheckinDateTime { get; set; }
+        public DateTime ?CheckinDateTime { get; set; }
     }
 }

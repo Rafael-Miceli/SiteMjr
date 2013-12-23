@@ -66,7 +66,7 @@ namespace WebSiteMjr.Assembler
             {
                 EmployeeCompanyHolderId = holder.Id,
                 Tool = tool,
-                CheckinDateTime = createCheckinToolViewModel.CheckinDateTime
+                CheckinDateTime = createCheckinToolViewModel.CheckinDateTime.Value
             };
 
             return checkinTool;
@@ -87,7 +87,7 @@ namespace WebSiteMjr.Assembler
             var checkinTool = _checkinToolService.FindToolCheckin(createCheckinToolViewModel.Id);
             checkinTool.EmployeeCompanyHolderId = holder.Id;
             checkinTool.Tool = tool;
-            checkinTool.CheckinDateTime = createCheckinToolViewModel.CheckinDateTime;
+            checkinTool.CheckinDateTime = createCheckinToolViewModel.CheckinDateTime.Value;
 
             return checkinTool;
         }

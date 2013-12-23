@@ -34,7 +34,8 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                 "    CREATE TABLE #EmployeeDestination (                                                     " +
 	            "        Id int NOT NULL,                                                                    " +
 	            "        [LastName] nvarchar(max),                                                           " +
-	            "        [Phone] nvarchar(max)                                                               " +
+	            "        [Phone] nvarchar(max),                                                              " +
+                "        [IdUser] int                                                                        " +
                 "    )                                                                                       " +
                 "                                                                                            " +
                 "                                                                                            " +
@@ -42,8 +43,9 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                 "    INSERT INTO #EmployeeDestination (                                                      " +
 	            "        Id,                                                                                 " +
 	            "        [LastName],                                                                         " +
-	            "        [Phone]                                                                             " +
-                "    )SELECT em.Id + (SELECT COUNT(*) FROM dbo.Companies) AS Id, LastName, Phone             " +
+	            "        [Phone],                                                                            " +
+                "        [IdUser]                                                                            " +
+                "    )SELECT em.Id + (SELECT COUNT(*) FROM dbo.Companies) AS Id, LastName, Phone, IdUser     " +
                 "    FROM dbo.Employees em                                                                   " +
                 "                                                                                            " +
                 "                                                                                            " +
@@ -68,7 +70,8 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                 "    CREATE TABLE Employees (                                                                " +
 	            "        Id int NOT NULL,                                                                    " +
 	            "        [LastName] nvarchar(max),                                                           " +
-	            "        [Phone] nvarchar(max)                                                               " +
+	            "        [Phone] nvarchar(max),                                                              " +
+                "        [IdUser] int                                                                        " +
                 "                                                                                            " +
 	            "        CONSTRAINT [PK_Employees] PRIMARY KEY CLUSTERED                                     " +
 	            "        (                                                                                   " +
@@ -89,11 +92,11 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                 "    INSERT INTO Employees (                                                                 " +
 	            "        Id,                                                                                 " +
 	            "        [LastName],                                                                         " +
-	            "        [Phone]                                                                             " +
-                "    )SELECT Id, LastName, Phone                                                             " +
+	            "        [Phone],                                                                            " +
+                "        [IdUser]                                                                            " +
+                "    )SELECT Id, LastName, Phone, IdUser                                                     " +
                 "    FROM #EmployeeDestination                                                               " +
                 "                                                                                            " +
-                "    -- Do Something                                                                         " +
                 "                                                                                            " +
                 "    DROP TABLE #CompanyDestination                                                          " +
                 "    DROP TABLE #EmployeeDestination                                                         ");
