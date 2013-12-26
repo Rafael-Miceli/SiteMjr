@@ -16,7 +16,6 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
     {
         public MjrSolutionConfiguration()
         {
-            //TODO For sake to publish the site in production because it's off, REMEBER to CHANGE THIS!
             AutomaticMigrationsEnabled = false;
             AutomaticMigrationDataLossAllowed = true;
         }

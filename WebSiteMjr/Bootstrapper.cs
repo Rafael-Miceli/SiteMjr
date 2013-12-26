@@ -1,3 +1,4 @@
+using System.Web.Http;
 using System.Web.Mvc;
 using FlexProviders.Aspnet;
 using FlexProviders.Membership;
@@ -19,16 +20,13 @@ using WebSiteMjr.EfStuffData.UnitOfWork;
 
 namespace WebSiteMjr
 {
-    //Just to remember
-    //This Bootstrapper has nothing to do with bootstraps css files!
-    //This bootstrapper is to work with MVC.Unity, wich is a library to facilitate the Injection of dependencies in the component root of an App
-
     public static class Bootstrapper
     {
         public static void Initialise()
         {
             var container = BuildUnityContainer();
 
+            GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
 
@@ -37,8 +35,6 @@ namespace WebSiteMjr
             var container = new UnityContainer();
 
             // register all your components with the container here
-            // it is NOT necessary to register your controllers
-            
             // e.g. container.RegisterType<ITestService, TestService>(); 
 
             //container.RegisterType<IRepository<Associate>, AssociateDtoRepository>();
