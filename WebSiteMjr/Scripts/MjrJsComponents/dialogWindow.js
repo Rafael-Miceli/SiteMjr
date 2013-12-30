@@ -1,6 +1,6 @@
 ﻿var DialogToCreateEntity = function (dialogContainerId, dialogForm) {
 
-    function CreateDialog(dialogTitle, comboboxToPopulateId) {
+    function CreateDialog(dialogTitle, comboboxToPopulateId, dataTypeReturn) {
         $('#' + dialogContainerId).dialog({
             autoOpen: false,
             width: 400,
@@ -18,12 +18,7 @@
                                 }
                             } else {
                                 // Add the new stuff category to the dropdown list and select it
-                                $('#' + comboboxToPopulateId).append(
-                                    $('<option></option>')
-                                        .val(data.StuffCategory.Id)
-                                        .html(data.StuffCategory.Name)
-                                        .prop('selected', true)  // Selects the new stuff category in the DropDown LB
-                                );
+                                populateComboboxWithCreatedData(comboboxToPopulateId, dataTypeReturn);
                                 $('#' + dialogContainerId).dialog('close');
                             }
                         });
@@ -32,6 +27,23 @@
                 'Cancelar': function() {
                     $(this).dialog('close');
                 }
+            }
+        });
+    }
+    
+    function populateComboboxWithCreatedData(comboboxToPopulateId, dataTypeReturn) {
+        $('#' + comboboxToPopulateId).append(function() {
+            if (dataTypeReturn === 'StuffCategory') {
+                $('<option></option>')
+                .val(data.StuffCategory.Id)
+                .html(data.StuffCategory.Name)
+                .prop('selected', true); // Selects the new stuff category in the DropDown LB
+            }
+            if (dataTypeReturn === 'StuffManufacture') {
+                $('<option></option>')
+                .val(data.StuffManufacture.Id)
+                .html(data.StuffManufacture.Name)
+                .prop('selected', true); // Selects the new stuff category in the DropDown LB
             }
         });
     }
