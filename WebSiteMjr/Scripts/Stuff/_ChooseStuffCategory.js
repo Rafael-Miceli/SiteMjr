@@ -1,4 +1,9 @@
 ﻿$(function () {
+
+    //var dialogWindow = new DialogToCreateEntity('StuffCategoryDialog', 'createStuffCategoryForm');
+    //dialogWindow.AttachCallDialogEvent('stuffCategoryAddLink');
+
+
     $('#StuffCategoryDialog').dialog({
         autoOpen: false,
         width: 400,
