@@ -1,8 +1,8 @@
 ﻿$(function () {
 
-    var dialogWindow = new DialogToCreateEntity($('#StuffCategoryDialog'), $('#createStuffCategoryForm'));
+    var dialogWindow = new DialogToCreateEntity($('#StuffCategoryDialog'), 'createStuffCategoryForm');
     dialogWindow.AttachCallDialogEvent($('#stuffCategoryAddLink'));
-    dialogWindow.CreateDialog('Adicionar Categoria de Material', $('#StuffCategoryId'), 'StuffCategory');
+    dialogWindow.CreateDialog('Adicionar Categoria de Material', 'StuffCategoryId', 'StuffCategory');
 
     //$('#StuffCategoryDialog').dialog({
     //    autoOpen: false,

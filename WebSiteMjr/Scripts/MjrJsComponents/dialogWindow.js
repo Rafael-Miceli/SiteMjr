@@ -1,6 +1,6 @@
-﻿var DialogToCreateEntity = function (dialogContainer, dialogForm) {
+﻿var DialogToCreateEntity = function (dialogContainer, dialogFormId) {
 
-    function CreateDialog(dialogTitle, comboboxToPopulate, dataTypeReturn) {
+    function CreateDialog(dialogTitle, comboboxToPopulateId, dataTypeReturn) {
         dialogContainer.dialog({
             autoOpen: false,
             width: 400,
@@ -9,7 +9,7 @@
             title: dialogTitle,
             buttons: {
                 'Salvar': function() {
-                    var createStuffCategoryForm = dialogForm;
+                    var createStuffCategoryForm = $('#' + dialogFormId);
                     if (createStuffCategoryForm.valid()) {
                         $.post(createStuffCategoryForm.attr('action'), createStuffCategoryForm.serialize(), function(data) {
                             if (data.Error != undefined) {
@@ -18,7 +18,7 @@
                                 }
                             } else {
                                 // Add the new stuff category to the dropdown list and select it
-                                populateComboboxWithCreatedData(comboboxToPopulate, dataTypeReturn);
+                                populateComboboxWithCreatedData(comboboxToPopulateId, dataTypeReturn, data);
                                 dialogContainer.dialog('close');
                             }
                         });
@@ -31,8 +31,8 @@
         });
     }
     
-    function populateComboboxWithCreatedData(comboboxToPopulate, dataTypeReturn) {
-        comboboxToPopulate.append(function () {
+    function populateComboboxWithCreatedData(comboboxToPopulateId, dataTypeReturn, data) {
+        $('#'+comboboxToPopulateId).append(function () {
             if (dataTypeReturn === 'StuffCategory') {
                 $('<option></option>')
                 .val(data.StuffCategory.Id)
@@ -55,7 +55,7 @@
                 // The createstuffCategoryForm is loaded on the fly using jQuery load. 
                 // In order to have client validation working it is necessary to tell the 
                 // jQuery.validator to parse the newly added content
-                jQuery.validator.unobtrusive.parse(dialogForm);
+                jQuery.validator.unobtrusive.parse('#' + dialogFormId);
                 dialogContainer.dialog('open');
             });
 
