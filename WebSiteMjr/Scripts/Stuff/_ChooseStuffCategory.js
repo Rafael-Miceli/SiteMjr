@@ -1,8 +1,8 @@
 ﻿$(function () {
 
-    var dialogWindow = new DialogToCreateEntity('StuffCategoryDialog', 'createStuffCategoryForm');
-    dialogWindow.AttachCallDialogEvent('stuffCategoryAddLink');
-    dialogWindow.CreateDialog('Adicionar Categoria de Material', 'StuffCategoryId', 'StuffCategory');
+    var dialogWindow = new DialogToCreateEntity($('#StuffCategoryDialog'), $('#createStuffCategoryForm'));
+    dialogWindow.AttachCallDialogEvent($('#stuffCategoryAddLink'));
+    dialogWindow.CreateDialog('Adicionar Categoria de Material', $('#StuffCategoryId'), 'StuffCategory');
 
     //$('#StuffCategoryDialog').dialog({
     //    autoOpen: false,
@@ -41,11 +41,13 @@
 
     //$('#stuffCategoryAddLink').click(function () {
     //    var createFormUrl = $(this).attr('href');
+    //    //var createFormUrl = '@Url.Action("CreateStuffCategory")';
+        
     //    $('#StuffCategoryDialog').html('').load(createFormUrl, function () {
     //        // The createstuffCategoryForm is loaded on the fly using jQuery load. 
     //        // In order to have client validation working it is necessary to tell the 
     //        // jQuery.validator to parse the newly added content
-    //        jQuery.validator.unobtrusive.parse('#createStuffCategoryForm');
+    //        //jQuery.validator.unobtrusive.parse('#createStuffCategoryForm');
     //        $('#StuffCategoryDialog').dialog('open');
     //    });
 

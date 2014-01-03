@@ -1,7 +1,7 @@
-﻿var DialogToCreateEntity = function (dialogContainerId, dialogForm) {
+﻿var DialogToCreateEntity = function (dialogContainer, dialogForm) {
 
-    function CreateDialog(dialogTitle, comboboxToPopulateId, dataTypeReturn) {
-        $('#' + dialogContainerId).dialog({
+    function CreateDialog(dialogTitle, comboboxToPopulate, dataTypeReturn) {
+        dialogContainer.dialog({
             autoOpen: false,
             width: 400,
             height: 200,
@@ -9,7 +9,7 @@
             title: dialogTitle,
             buttons: {
                 'Salvar': function() {
-                    var createStuffCategoryForm = $('#' + dialogForm);
+                    var createStuffCategoryForm = dialogForm;
                     if (createStuffCategoryForm.valid()) {
                         $.post(createStuffCategoryForm.attr('action'), createStuffCategoryForm.serialize(), function(data) {
                             if (data.Error != undefined) {
@@ -18,8 +18,8 @@
                                 }
                             } else {
                                 // Add the new stuff category to the dropdown list and select it
-                                populateComboboxWithCreatedData(comboboxToPopulateId, dataTypeReturn);
-                                $('#' + dialogContainerId).dialog('close');
+                                populateComboboxWithCreatedData(comboboxToPopulate, dataTypeReturn);
+                                dialogContainer.dialog('close');
                             }
                         });
                     }
@@ -31,8 +31,8 @@
         });
     }
     
-    function populateComboboxWithCreatedData(comboboxToPopulateId, dataTypeReturn) {
-        $('#' + comboboxToPopulateId).append(function() {
+    function populateComboboxWithCreatedData(comboboxToPopulate, dataTypeReturn) {
+        comboboxToPopulate.append(function () {
             if (dataTypeReturn === 'StuffCategory') {
                 $('<option></option>')
                 .val(data.StuffCategory.Id)
@@ -49,14 +49,14 @@
     }
 
     function AttachCallDialogEvent(dialogLink) {
-        $('#' + dialogLink).click(function () {
+        dialogLink.click(function () {
             var createFormUrl = $(this).attr('href');
-            $('#' + dialogContainerId).html('').load(createFormUrl, function() {
+            dialogContainer.html('').load(createFormUrl, function () {
                 // The createstuffCategoryForm is loaded on the fly using jQuery load. 
                 // In order to have client validation working it is necessary to tell the 
                 // jQuery.validator to parse the newly added content
-                jQuery.validator.unobtrusive.parse('#' + dialogForm);
-                $('#' + dialogContainerId).dialog('open');
+                jQuery.validator.unobtrusive.parse(dialogForm);
+                dialogContainer.dialog('open');
             });
 
             return false;
