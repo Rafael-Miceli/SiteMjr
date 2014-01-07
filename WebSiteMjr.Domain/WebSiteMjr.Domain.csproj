@@ -87,6 +87,7 @@
     <Compile Include="Model\StuffCategory.cs" />
     <Compile Include="Model\StuffManufacture.cs" />
     <Compile Include="Model\Tool.cs" />
+    <Compile Include="Model\ToolLocalization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\CompanyService.cs" />
     <Compile Include="Interfaces\Repository\ICompanyRepository.cs" />

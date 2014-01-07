@@ -20,7 +20,7 @@ namespace WebSiteMjr.Domain.Test.services
                 Id = 1,
                 Name = "Celso"
             };
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
+            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(employeeName, null, null);
 
@@ -36,7 +36,7 @@ namespace WebSiteMjr.Domain.Test.services
                 Name = "Celso"
             };
             var tool = "Ferramenta 1";
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
+            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(employeeName, tool, null);
 
@@ -52,7 +52,7 @@ namespace WebSiteMjr.Domain.Test.services
                 Name = "Celso"
             };
             var date = DateTime.Parse("09/12/2013");
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
+            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(employeeName, null, date).ToList();
 
@@ -70,7 +70,7 @@ namespace WebSiteMjr.Domain.Test.services
             };
             var tool = "Ferramenta 1";
             var date = DateTime.Parse("09/12/2013");
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
+            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(employeeName, tool, date).ToList();
 
@@ -82,7 +82,7 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Return_Checkin_By_Tool()
         {
             var tool = "Ferramenta 1";
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
+            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(null, tool, null);
 
@@ -94,7 +94,7 @@ namespace WebSiteMjr.Domain.Test.services
         {
             var tool = "Ferramenta 2";
             var date = DateTime.Parse("10/12/2013");
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
+            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(null, tool, date).ToList();
 
@@ -106,7 +106,7 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Return_Checkin_By_Date()
         {
             var date = DateTime.Parse("10/12/2013");
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
+            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(null, null, date);
 
@@ -121,21 +121,24 @@ namespace WebSiteMjr.Domain.Test.services
                 Id = 4,
                 Name = "Portoverano"
             };
-            var checkInToolService = new CheckinToolService(new StubCheckinToolRepository(), null, null, null, null);
+            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null, null, null);
 
             var checkins = checkInToolService.FilterCheckins(companyName, null, null);
 
             Assert.AreEqual(0, checkins.Count(c => c.EmployeeCompanyHolderId != companyName.Id));
         }
+
     }
 
-    public class StubCheckinToolRepository : ICheckinToolRepository
+    public class FakeCheckinToolRepository : ICheckinToolRepository
     {
         private IList<CheckinTool> _checkins;
         private IList<Employee> _employees;
         private IList<Company> _companys;
 
-        public StubCheckinToolRepository()
+        public bool Created { get; set; }
+
+        public FakeCheckinToolRepository()
         {
             CreateEmployeesAndCompanys();
             CreateCheckins();
@@ -269,7 +272,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         public void Add(CheckinTool entitie)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void Remove(object entitie)

@@ -32,20 +32,23 @@
     }
     
     function populateComboboxWithCreatedData(comboboxToPopulateId, dataTypeReturn, data) {
-        $('#'+comboboxToPopulateId).append(function () {
-            if (dataTypeReturn === 'StuffCategory') {
+        if (dataTypeReturn === 'StuffCategory') {
+            $('#' + comboboxToPopulateId).append(
                 $('<option></option>')
-                .val(data.StuffCategory.Id)
-                .html(data.StuffCategory.Name)
-                .prop('selected', true); // Selects the new stuff category in the DropDown LB
-            }
-            if (dataTypeReturn === 'StuffManufacture') {
+                    .val(data.StuffCategory.Id)
+                    .html(data.StuffCategory.Name)
+                    .prop('selected', true));
+        }
+         // Selects the new stuff category in the DropDown LB
+            
+        if (dataTypeReturn === 'StuffManufacture') {
+            $('#' + comboboxToPopulateId).append(
                 $('<option></option>')
-                .val(data.StuffManufacture.Id)
-                .html(data.StuffManufacture.Name)
-                .prop('selected', true); // Selects the new stuff category in the DropDown LB
-            }
-        });
+                    .val(data.StuffManufacture.Id)
+                    .html(data.StuffManufacture.Name)
+                    .prop('selected', true)); // Selects the new stuff category in the DropDown LB
+        }
+        
     }
 
     function AttachCallDialogEvent(dialogLink) {
