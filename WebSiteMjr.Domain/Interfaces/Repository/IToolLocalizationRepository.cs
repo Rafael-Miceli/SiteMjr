@@ -1,13 +1,10 @@
-﻿using WebSiteMjr.Domain.Model;
+﻿using WebSiteMjr.Domain.Interfaces.Repository.GenericRepository;
+using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.Domain.Interfaces.Repository
 {
-    public interface IToolLocalizationRepository
+    public interface IToolLocalizationRepository : IGenericRepository<ToolLocalization>
     {
-        void Add(ToolLocalization toolLocalization);
-        void Update(ToolLocalization toolLocalization);
-        ToolLocalization GetById(object id);
-        void Delete(object id);
         ToolLocalization GetByName(string name);
     }
 }

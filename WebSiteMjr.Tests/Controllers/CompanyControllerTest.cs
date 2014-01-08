@@ -13,7 +13,7 @@ namespace WebSiteMjr.Tests.Controllers
         [TestMethod]
         public void Should_Create_Company()
         {
-            var companyController = new CompanyController(new CompanyService(new StubCompanyRepository(), null));
+            var companyController = new CompanyController(new CompanyService(new FakeCompanyRepository(), null));
 
             var result = companyController.Index();
 

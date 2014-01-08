@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Model;
+using WebSiteMjr.Domain.services;
 using WebSiteMjr.Domain.services.Stuffs;
 using WebSiteMjr.Domain.Test.Model;
 
@@ -63,16 +67,27 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Link_ToolLocalization_To_Company()
+        public void Should_Link_One_ToolLocalization_To_Company()
         {
-            
+            var toolsLocalizationsId = new List<int>();
+            var company = CompanyDumies.CreateOneCompany();
+            var toolLocalization = ToolLocalizationDumies.CreateOneToolLocalization();
+            toolsLocalizationsId.Add(toolLocalization.Id);
+            var toolLocalizationService = new ToolLocalizationService(new FakeToolLocalizationRepository());
+            var companyService = new CompanyService(new FakeCompanyRepository(), new StubUnitOfWork());
+            toolLocalizationService.CreateToolLocalization(toolLocalization);
+            companyService.CreateCompany(company);
+
+            toolLocalizationService.LinkToolsLocalizationToCompany(toolsLocalizationsId, company);
+
+            Assert.IsNotNull(companyService.FindCompany(company.Id).ToolsLocalizations.FirstOrDefault(tl => tl.Id == toolLocalization.Id));
         }
 
     }
 
     public class FakeToolLocalizationRepository : IToolLocalizationRepository
     {
-        private readonly List<ToolLocalization> _toolLocalizations = new List<ToolLocalization>();
+        private readonly ICollection<ToolLocalization> _toolLocalizations = new Collection<ToolLocalization>();
 
 
         public void Add(ToolLocalization toolLocalization)
@@ -80,29 +95,44 @@ namespace WebSiteMjr.Domain.Test.services
             _toolLocalizations.Add(toolLocalization);
         }
 
+        public void Remove(object entitie)
+        {
+            var toolLocalizationToDelete = _toolLocalizations.FirstOrDefault(t => t.Id == (int)entitie);
+
+            _toolLocalizations.Remove(toolLocalizationToDelete);
+        }
+
         public void Update(ToolLocalization toolLocalization)
         {
-            var toolLocalizationToUpdate = _toolLocalizations.Find(t => t.Id == toolLocalization.Id);
+            var toolLocalizationToUpdate = _toolLocalizations.FirstOrDefault(t => t.Id == toolLocalization.Id);
 
             toolLocalizationToUpdate.Name = toolLocalizationToUpdate.Name;
             toolLocalizationToUpdate.Company = toolLocalization.Company;
         }
 
-        public ToolLocalization GetById(object id)
+        public IEnumerable<ToolLocalization> GetAll()
         {
-            return _toolLocalizations.Find(t => t.Id == (int)id);
+            return _toolLocalizations;
         }
 
-        public void Delete(object id)
+        public IEnumerable<ToolLocalization> Query(Func<ToolLocalization, bool> filter)
         {
-            var toolLocalizationToDelete = _toolLocalizations.Find(t => t.Id == (int)id);
+            throw new NotImplementedException();
+        }
 
-            _toolLocalizations.Remove(toolLocalizationToDelete);
+        public ToolLocalization GetById(object id)
+        {
+            return _toolLocalizations.FirstOrDefault(t => t.Id == (int)id);
+        }
+
+        public ToolLocalization Get(Expression<Func<ToolLocalization, bool>> filter)
+        {
+            throw new NotImplementedException();
         }
 
         public ToolLocalization GetByName(string name)
         {
-            return _toolLocalizations.Find(t => t.Name.ToLower() == name.ToLower());
+            return _toolLocalizations.FirstOrDefault(t => t.Name.ToLower() == name.ToLower());
         }
     }
 }

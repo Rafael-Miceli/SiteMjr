@@ -59,6 +59,7 @@
     <Compile Include="Model\CompanyDumies.cs" />
     <Compile Include="Model\ToolLocalizationDummies.cs" />
     <Compile Include="services\CompanyServiceTest.cs" />
+    <Compile Include="StubUnitOfWork.cs" />
     <Compile Include="services\StuffServiceTest.cs" />
     <Compile Include="services\StuffCategoryServiceTest.cs" />
     <Compile Include="services\CheckInToolServiceTest.cs" />

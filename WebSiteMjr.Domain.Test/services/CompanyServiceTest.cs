@@ -58,7 +58,7 @@ namespace WebSiteMjr.Domain.Test.services
         [TestMethod]
         public void Should_Return_Company_List()
         {
-            var companyService = new CompanyService(new StubCompanyRepository(), null); 
+            var companyService = new CompanyService(new FakeCompanyRepository(), null); 
 
             var companies = companyService.ListCompany().ToList();
 
@@ -77,11 +77,11 @@ namespace WebSiteMjr.Domain.Test.services
         }
     }
 
-    public class StubCompanyRepository : ICompanyRepository
+    public class FakeCompanyRepository : ICompanyRepository
     {
         List<Company> _companies;
 
-        public StubCompanyRepository()
+        public FakeCompanyRepository()
         {
             CreateCompanies();
         }
@@ -110,7 +110,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         public void Add(Company entitie)
         {
-            throw new NotImplementedException();
+            _companies.Add(entitie);
         }
 
         public void Remove(object entitie)
@@ -135,7 +135,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         public Company GetById(object identitie)
         {
-            throw new NotImplementedException();
+            return _companies.Find(c => c.Id == (int) identitie);
         }
 
         public Company Get(Expression<Func<Company, bool>> filter)

@@ -1,4 +1,6 @@
-﻿using WebSiteMjr.Domain.Interfaces.Repository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.Domain.services.Stuffs
@@ -29,12 +31,22 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public void DeleteToolLocalization(object id)
         {
-            _toolLocalizationRepository.Delete(id);
+            _toolLocalizationRepository.Remove(id);
         }
         
         public ToolLocalization FindToolLocalizationByName(string name)
         {
             return _toolLocalizationRepository.GetByName(name);
+        }
+
+        public void LinkToolsLocalizationToCompany(List<int> toolsLocalizationsId, Company company)
+        {
+            var toolsLocalizations = _toolLocalizationRepository.GetAll().ToList();
+
+            foreach (var toolsId in toolsLocalizationsId)
+            {
+                company.ToolsLocalizations.Add(toolsLocalizations.FirstOrDefault(tl => tl.Id == toolsId));
+            }
         }
     }
 }
