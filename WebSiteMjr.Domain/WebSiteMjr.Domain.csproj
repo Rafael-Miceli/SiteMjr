@@ -102,10 +102,12 @@
     <Compile Include="Interfaces\Services\IStuffService.cs" />
     <Compile Include="Interfaces\Services\IToolService.cs" />
     <Compile Include="services\Stuffs\CheckinToolService.cs" />
+    <Compile Include="Interfaces\Repository\IToolLocalizationRepository.cs" />
     <Compile Include="services\Stuffs\StuffCategoryService.cs" />
     <Compile Include="services\Stuffs\StuffManufactureService.cs" />
     <Compile Include="services\Stuffs\ToolService.cs" />
     <Compile Include="services\Stuffs\StuffService.cs" />
+    <Compile Include="services\Stuffs\ToolLocalizationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

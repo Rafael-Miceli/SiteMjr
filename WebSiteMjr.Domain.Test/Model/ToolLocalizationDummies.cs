@@ -4,7 +4,7 @@ using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.Domain.Test.Model
 {
-    public static class ToolLocalizationDummies
+    public static class ToolLocalizationDumies
     {
         public static ToolLocalization CreateOneToolLocalization()
         {
