@@ -9,7 +9,7 @@ namespace WebSiteMjr.Controllers
     public class CompanyController : Controller
     {
         private readonly ICompanyService _companyService;
-        private CompanyMapper _companyMapper;
+        private readonly CompanyMapper _companyMapper;
 
         public CompanyController(ICompanyService companyService)
         {
