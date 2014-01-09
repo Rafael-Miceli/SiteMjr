@@ -103,6 +103,7 @@
     <Compile Include="Interfaces\Services\IToolService.cs" />
     <Compile Include="services\Stuffs\CheckinToolService.cs" />
     <Compile Include="Interfaces\Repository\IToolLocalizationRepository.cs" />
+    <Compile Include="Interfaces\Services\IToolLocalizationService.cs" />
     <Compile Include="services\Stuffs\StuffCategoryService.cs" />
     <Compile Include="services\Stuffs\StuffManufactureService.cs" />
     <Compile Include="services\Stuffs\ToolService.cs" />

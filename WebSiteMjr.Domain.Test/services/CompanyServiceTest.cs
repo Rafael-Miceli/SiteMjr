@@ -10,6 +10,7 @@ using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
 using WebSiteMjr.Domain.services;
+using WebSiteMjr.Domain.Test.Model;
 
 namespace WebSiteMjr.Domain.Test.services
 {
@@ -88,24 +89,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         private void CreateCompanies()
         {
-            _companies = new List<Company>()
-            {
-                new Company
-                {
-                    Name = "Company 1",
-                    City = "Rio de Janeiro"
-                },
-                new Company
-                {
-                    Name = "Company 2",
-                    City = "Rio de Janeiro"
-                },
-                new Company
-                {
-                    Name = "Company 3",
-                    City = "Rio de Janeiro"
-                },
-            };
+            _companies = CompanyDumies.CreateListOfCompanies();
         }
 
         public void Add(Company entitie)

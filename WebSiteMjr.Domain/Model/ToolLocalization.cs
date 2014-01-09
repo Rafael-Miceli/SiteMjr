@@ -9,9 +9,8 @@ namespace WebSiteMjr.Domain.Model
 {
     public class ToolLocalization: IntId, IMjrException
     {
-        public string Name { get; set; }
-        public Company Company { get; set; }
-
+        public virtual string Name { get; set; }
+        public virtual ICollection<Company> Companies { get; set; } 
         public string ObjectName
         {
             get

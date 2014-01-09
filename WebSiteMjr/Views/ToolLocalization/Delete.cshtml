@@ -1,0 +1,28 @@
+﻿@model WebSiteMjr.Domain.Model.ToolLocalization
+@{
+    ViewBag.Title = "Deletar Localização de Ferramenta";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>Tem certeza que deseja deletar a Localização de Ferramenta: @Model.Name?</h3>
+<fieldset>
+    <legend>Localização de Ferramenta</legend>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Name, "Nome")
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+</fieldset>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Deletar" /> |
+        @Html.ActionLink("Voltar a listagem", "Index")
+    </p>
+}
