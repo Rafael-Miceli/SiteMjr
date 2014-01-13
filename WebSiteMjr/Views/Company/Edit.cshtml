@@ -1,4 +1,4 @@
-﻿@model WebSiteMjr.ViewModels.EditCompanyViewModel
+﻿@model WebSiteMjr.Domain.Model.Company
 
 @{
     ViewBag.Title = "Editar Condominio/Empresa";
@@ -55,14 +55,6 @@
             @Html.ValidationMessageFor(model => model.Phone)
         </div>
         
-        
-        
-        <div id="toolsLocalizationGrid">
-            
-        </div>
-
-
-
         @Html.HiddenFor(model => model.Id)
 
         <p>

@@ -1,14 +1,14 @@
 ﻿@model WebSiteMjr.Domain.Model.ToolLocalization
 @{
-    ViewBag.Title = "Deletar Localização de Ferramenta";
+    ViewBag.Title = "Deletar Área de Condomínios/Empresas";
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
 
-<h3>Tem certeza que deseja deletar a Localização de Ferramenta: @Model.Name?</h3>
+<h3>Tem certeza que deseja deletar a Área de Condomínios/Empresas: @Model.Name?</h3>
 <fieldset>
-    <legend>Localização de Ferramenta</legend>
+    <legend>Área de Condomínios/Empresas</legend>
 
     <div class="display-label">
         @Html.LabelFor(model => model.Name, "Nome")

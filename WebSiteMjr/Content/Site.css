@@ -77,6 +77,10 @@ h2 {
     font-size: 1.75em;
 }
 
+section h2 {
+    margin-bottom: 40px;
+}
+
 h3 {
     font-size: 1.2em;
 }
