@@ -14,7 +14,7 @@ namespace WebSiteMjr.Controllers
         public CompanyController(ICompanyService companyService)
         {
             _companyService = companyService;
-            _companyMapper = new CompanyMapper(_companyService);
+            _companyMapper = new CompanyMapper(_companyService, null);
         }
 
         //

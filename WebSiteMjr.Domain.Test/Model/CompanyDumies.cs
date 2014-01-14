@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.Domain.Test.Model
@@ -15,6 +16,23 @@ namespace WebSiteMjr.Domain.Test.Model
                 Email = "adm@portoverano.com",
                 Id = 1,
                 Phone = "2455-3100"
+            };
+        }
+
+        public static Company CreateOneCompanyWithToolLocalization()
+        {
+            return new Company
+            {
+                Name = "Portoverano",
+                Address = "Rua gastao senges",
+                City = "Rio de Janeiro",
+                Email = "adm@portoverano.com",
+                Id = 1,
+                Phone = "2455-3100",
+                ToolsLocalizations = new Collection<ToolLocalization>
+                {
+                    ToolLocalizationDumies.CreateListOfToolsLocalizations().Find(t => t.Id == 2)
+                }
             };
         }
 

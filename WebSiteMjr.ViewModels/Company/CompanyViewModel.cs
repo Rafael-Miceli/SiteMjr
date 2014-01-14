@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebSiteMjr.Domain.Model;
+using System.Web.Mvc;
 
-namespace WebSiteMjr.ViewModels
+namespace WebSiteMjr.ViewModels.Company
 {
     public class ListCompanyViewModel
     {
-        public IEnumerable<Company> Companies { get; set; }
+        public IEnumerable<Domain.Model.Company> Companies { get; set; }
     }
 
     public class EditCompanyViewModel
@@ -25,7 +20,7 @@ namespace WebSiteMjr.ViewModels
         [RegularExpression(@"^(\([0-9][0-9]\) [0-9]{4}-[0-9]{4})|(\(1[2-9]\) [5-9][0-9]{3}-[0-9]{4})|(\([2-9][1-9]\) [5-9][0-9]{3}-[0-9]{4})$",
                            ErrorMessage = "Telefone Inválido")]
         public string Phone { get; set; }
-        public IEnumerable<ToolLocalization> ToolsLocalizations { get; set; }
+        public IEnumerable<SelectListItem> ToolsLocalizations { get; set; }
         public int Id { get; set; }
     }
 }
