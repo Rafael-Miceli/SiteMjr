@@ -326,6 +326,7 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\Mask\Masks.js" />
     <Content Include="Scripts\MjrJsComponents\dialogWindow.js" />
+    <Content Include="Scripts\MjrJsComponents\MjrGrid.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Stuff\_ChooseStuffManufacture.js" />
     <Content Include="Scripts\Stuff\_ChooseStuffCategory.js" />

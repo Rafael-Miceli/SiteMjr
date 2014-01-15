@@ -70,8 +70,6 @@ namespace WebSiteMjr.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-
                 return RedirectToAction("Index");
             }
             catch
@@ -108,7 +106,7 @@ namespace WebSiteMjr.Controllers
             }
             catch
             {
-                return View();
+                return View(editCompanyViewModel);
             }
         }
 

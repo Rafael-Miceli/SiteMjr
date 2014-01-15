@@ -56,7 +56,7 @@ namespace WebSiteMjr.Assembler
             return editCompanyViewModel;
         }
 
-        private IEnumerable<SelectListItem> MapToolsLocalizationInCompanyToView(ICollection<ToolLocalization> toolsLocalizationsInCompany)
+        private IList<SelectListItem> MapToolsLocalizationInCompanyToView(ICollection<ToolLocalization> toolsLocalizationsInCompany)
         {
             var toolsLocalization = _toolLocalizationService.ListToolsLocalizations();
             var toolsLocalizationMapped = new List<SelectListItem>();

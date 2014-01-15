@@ -20,7 +20,7 @@ namespace WebSiteMjr.ViewModels.Company
         [RegularExpression(@"^(\([0-9][0-9]\) [0-9]{4}-[0-9]{4})|(\(1[2-9]\) [5-9][0-9]{3}-[0-9]{4})|(\([2-9][1-9]\) [5-9][0-9]{3}-[0-9]{4})$",
                            ErrorMessage = "Telefone Inválido")]
         public string Phone { get; set; }
-        public IEnumerable<SelectListItem> ToolsLocalizations { get; set; }
+        public IList<SelectListItem> ToolsLocalizations { get; set; }
         public int Id { get; set; }
     }
 }
