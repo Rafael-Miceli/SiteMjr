@@ -74,7 +74,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 City = "Rio de Janeiro",
                 Email = "adm@portoverano.com",
                 Id = 1,
-                Phone = "2455-3100",
+                Phone = "(21) 2455-3100",
                 ToolsLocalizations = new Collection<ToolLocalization>
                 {
                     ToolLocalizationDumies.CreateListOfToolsLocalizations().Find(t => t.Id == 2)

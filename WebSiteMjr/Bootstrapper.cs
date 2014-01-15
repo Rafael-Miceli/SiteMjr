@@ -59,7 +59,7 @@ namespace WebSiteMjr
             var companyServiceInstance = new CompanyService(new CompanyRepository(personUow), personUow);
             var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), personUow);
             var toolServiceInstance = new ToolService(new ToolRepository(stuffUnow), stuffUnow);
-            var toolLocalizationServiceInstance = new ToolLocalizationService(new ToolLocalizationRepository(stuffUnow), stuffUnow);
+            var toolLocalizationServiceInstance = new ToolLocalizationService(new ToolLocalizationRepository(personUow), personUow);
 
             container.RegisterInstance(new HolderService(new HolderRepository(personUow)));
             container.RegisterInstance(new UserService(new UserRepository(personUow), new CompanyRepository(personUow), personUow));
