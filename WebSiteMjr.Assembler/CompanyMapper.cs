@@ -25,6 +25,21 @@ namespace WebSiteMjr.Assembler
                 Companies = _companyService.ListCompany().ToList()
             };
         }
+
+        public Company EditCompanyViewModelToCompany(EditCompanyViewModel editCompanyViewModel)
+        {
+            var company = _companyService.FindCompany(editCompanyViewModel.Id);
+
+            company.Name = editCompanyViewModel.Name;
+            company.Email = editCompanyViewModel.Email;
+            company.City = editCompanyViewModel.City;
+            company.Address = editCompanyViewModel.Address;
+            company.Phone = editCompanyViewModel.Phone;
+
+            company.ToolsLocalizations = MapToolsLocalizationSelectedInEditCompanyViewModelToCompany(editCompanyViewModel.ToolsLocalizations);
+
+            return company;
+        }
         
         public EditCompanyViewModel CompanyToEditCompanyViewModel(Company company)
         {
@@ -41,11 +56,6 @@ namespace WebSiteMjr.Assembler
             return editCompanyViewModel;
         }
 
-        public Company EditCompanyViewModelToCompany(EditCompanyViewModel editCompanyViewModel)
-        {
-            return null;
-        }
-
         private IEnumerable<SelectListItem> MapToolsLocalizationInCompanyToView(ICollection<ToolLocalization> toolsLocalizationsInCompany)
         {
             var toolsLocalization = _toolLocalizationService.ListToolsLocalizations();
@@ -59,6 +69,22 @@ namespace WebSiteMjr.Assembler
                     Text = toolLocalization.Name,
                     Value = toolLocalization.Id.ToString()
                 });
+            }
+
+            return toolsLocalizationMapped;
+        }
+
+        private ICollection<ToolLocalization> MapToolsLocalizationSelectedInEditCompanyViewModelToCompany(IEnumerable<SelectListItem> toolsLocalizationsSelectedInView)
+        {
+            var toolsLocalization = _toolLocalizationService.ListToolsLocalizations().ToList();
+            var toolsLocalizationMapped = new List<ToolLocalization>();
+
+            foreach (var toolLocalizationSelected in toolsLocalizationsSelectedInView)
+            {
+                if (toolLocalizationSelected.Selected)
+                {
+                    toolsLocalizationMapped.Add(toolsLocalization.FirstOrDefault(t => t.Id == int.Parse(toolLocalizationSelected.Value)));
+                }
             }
 
             return toolsLocalizationMapped;

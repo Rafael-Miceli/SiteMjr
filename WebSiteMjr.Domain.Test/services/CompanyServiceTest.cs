@@ -89,7 +89,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         private void CreateCompanies()
         {
-            _companies = CompanyDumies.CreateListOfCompanies();
+            _companies = CompanyDummies.CreateListOfCompanies();
         }
 
         public void Add(Company entitie)

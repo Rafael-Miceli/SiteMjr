@@ -70,7 +70,7 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Link_One_ToolLocalization_To_Company()
         {
             var toolsLocalizationsId = new List<int>();
-            var company = CompanyDumies.CreateOneCompany();
+            var company = CompanyDummies.CreateOneCompany();
             var toolLocalization = ToolLocalizationDumies.CreateOneToolLocalization();
             toolsLocalizationsId.Add(toolLocalization.Id);
             var toolLocalizationService = new ToolLocalizationService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
@@ -89,7 +89,7 @@ namespace WebSiteMjr.Domain.Test.services
             var toolLocalizationService = new ToolLocalizationService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
             var companyService = new CompanyService(new FakeCompanyRepository(), new StubUnitOfWork());
             var toolsLocalizationsId = new List<int>();
-            var company = CompanyDumies.CreateOneCompany();
+            var company = CompanyDummies.CreateOneCompany();
             var toolsLocalizations = toolLocalizationService.ListToolsLocalizations().ToList();
             toolsLocalizationsId.Add(toolsLocalizations[0].Id);
             toolsLocalizationsId.Add(toolsLocalizations[1].Id);

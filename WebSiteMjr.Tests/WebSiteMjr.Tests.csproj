@@ -37,6 +37,10 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Moq, Version=4.1.1309.1617, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Moq.4.1.1309.1617\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -137,6 +141,10 @@
     <ProjectReference Include="..\WebSiteMjr.Domain\WebSiteMjr.Domain.csproj">
       <Project>{1219ECD0-3C8E-435F-88E1-01DE06D01E74}</Project>
       <Name>WebSiteMjr.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebSiteMjr.ViewModels\WebSiteMjr.ViewModels.csproj">
+      <Project>{E9694197-221B-4013-8B69-9D2943FD9513}</Project>
+      <Name>WebSiteMjr.ViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr\WebSiteMjr.csproj">
       <Project>{3A08A35F-BDEA-4142-81B7-3BDFDAC8AE23}</Project>
