@@ -230,6 +230,13 @@
     <Content Include="bootstrap\img\glyphicons-halflings.png" />
     <Content Include="bootstrap\js\bootstrap.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\themes\base\images\pager\icons\first.png" />
+    <Content Include="Content\themes\base\images\pager\icons\last.png" />
+    <Content Include="Content\themes\base\images\pager\icons\loading.gif" />
+    <Content Include="Content\themes\base\images\pager\icons\next.png" />
+    <Content Include="Content\themes\base\images\pager\icons\prev.png" />
     <Content Include="Content\themes\base\jquery-ui-1.10.3.custom.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -294,7 +301,12 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\mjr %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - FTP %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - FTP.pubxml" />

@@ -1,4 +1,5 @@
-﻿@model WebSiteMjr.ViewModels.Company.ListCompanyViewModel
+﻿@using System.Web.UI.WebControls
+@model WebSiteMjr.ViewModels.Company.ListCompanyViewModel
 
 @{
     ViewBag.Title = "Lista de Condominios e Empresas";
@@ -10,7 +11,96 @@
 <p>
     @Html.ActionLink("Cadastrar Novo Condominio/Empresa", "Create")
 </p>
-<table>
+
+<table id="Grid" class="table table-striped table-bordered table-hover table-condensed">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                E-Mail
+            </th>
+            <th>
+                Telefone
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        @foreach (var item in Model.Companies)
+        {
+            ViewBag.url = "/Company/Edit/" + item.Id;
+            
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Name, "Edit", new { id = item.Id })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Detalhes", "Details", new { id = item.Id }) |*@
+
+                    @*<a href=''><i class="fa fa-pencil-square-o"></i></a>*@
+
+                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-pencil-square-o" })
+
+                    @if (item.Email != "mjrtelecom@hotmail.com")
+                    {
+                        @Html.ActionLink("Deletar", "Delete", new { id = item.Id })
+                    }
+
+                </td>
+            </tr>
+        }
+
+        @*@for (var i = 0; i < Model.ToolsLocalizations.Count; i++)
+        {
+            <tr>
+                <td style="width: 10px;">
+                    @Html.HiddenFor(tlId => tlId.ToolsLocalizations[i].Value)
+                    @Html.HiddenFor(tlId => tlId.ToolsLocalizations[i].Text)
+                    @Html.CheckBoxFor(tlId => tlId.ToolsLocalizations[i].Selected, new { id = "Chk-" + i })
+                </td>
+                <td>
+                    @Html.ActionLink(Model.ToolsLocalizations[i].Text, "Details", "ToolLocalization", new { id = Model.ToolsLocalizations[i].Value }, new { @for = "Chk-" + i })
+                </td>
+            </tr>
+        }*@
+    </tbody>
+</table>
+
+<div id="pager" class="pager">
+    <form>
+        <img src="../../Content/themes/base/images/pager/icons/first.png" class="first" />
+        <img src="../../Content/themes/base/images/pager/icons/prev.png" class="prev" />
+        <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+        <img src="../../Content/themes/base/images/pager/icons/next.png" class="next" />
+        <img src="../../Content/themes/base/images/pager/icons/last.png" class="last" />
+        <select class="pagesize">
+            <option selected="selected" value="5">5</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+        </select>
+    </form>
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/jquery.tablesorter.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tablesorter.pager.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tablesorter.widgets.js")"></script>
+    <script src="@Url.Content("~/Scripts/MjrJsComponents/MjrGrid.js")"></script>
+}
+
+@*<table>
     <tr>
         <th>
             Nome
@@ -42,4 +132,4 @@
     </tr>
 }
 
-</table>
+</table>*@

@@ -26,7 +26,8 @@ namespace WebSiteMjr
 
             bundles.Add(new StyleBundle("~/Content/css")
                         .Include("~/bootstrap/css/bootstrap.css")
-                        .Include("~/Content/site.css"));
+                        .Include("~/Content/site.css")
+                        .Include("~/Content/font-awesome.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

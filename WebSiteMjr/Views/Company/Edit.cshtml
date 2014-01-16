@@ -79,7 +79,7 @@
                             @Html.CheckBoxFor(tlId => tlId.ToolsLocalizations[i].Selected, new { id = "Chk-" + i })
                         </td>
                         <td>
-                            @Html.Label(Model.ToolsLocalizations[i].Text, new { @for = "Chk-" + i })
+                            @Html.ActionLink(Model.ToolsLocalizations[i].Text, "Details", "ToolLocalization", new {id = Model.ToolsLocalizations[i].Value}, new { @for = "Chk-" + i })
                         </td>
                     </tr>
                 }
@@ -88,11 +88,11 @@
 
         <div id="pager" class="pager">
             <form>
-                <img src="first.png" class="first" />
-                <img src="prev.png" class="prev" />
+                <img src="../../Content/themes/base/images/pager/icons/first.png" class="first" />
+                <img src="../../Content/themes/base/images/pager/icons/prev.png" class="prev" />
                 <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
-                <img src="next.png" class="next" />
-                <img src="last.png" class="last" />
+                <img src="../../Content/themes/base/images/pager/icons/next.png" class="next" />
+                <img src="../../Content/themes/base/images/pager/icons/last.png" class="last" />
                 <select class="pagesize">
                     <option selected="selected" value="5">5</option>
                     <option value="20">20</option>
@@ -105,7 +105,7 @@
         <p>
             <input type="submit" value="Atualizar" />
         </p>
-        
+
         @*<p>
             @Html.ActionLink("Enviar Login", "SendLogin", new { idCompany = Model.Id })
         </p>*@     

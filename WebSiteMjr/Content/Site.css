@@ -584,6 +584,23 @@ table {
     border: 0 none;
 }
 
+.table th {
+    cursor: pointer;
+}
+
+input[data-column='0'] {
+    width: 10px;
+    visibility: hidden;
+}
+
+.table tbody tr td {
+    width: 15px;
+}
+
+.pagesize {
+    width: 60px;
+}
+
 th {
     font-size: 1.2em;
     text-align: left;
