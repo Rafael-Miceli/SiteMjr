@@ -577,6 +577,11 @@ input[type="checkbox"].input-validation-error {
 
 /* tables
 ----------------------------------------------------------*/
+
+.fa {
+    text-decoration: none;
+}
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -584,21 +589,38 @@ table {
     border: 0 none;
 }
 
+table input {
+    width: auto;
+}
+
 .table th {
     cursor: pointer;
 }
 
-input[data-column='0'] {
-    width: 10px;
-    visibility: hidden;
+.table th.sorter-false {
+    cursor: default;
+    width: 20px;
 }
 
-.table tbody tr td {
-    width: 15px;
+#CheckGrid .tablesorter-filter.disabled {
+    width: 20px;
+    max-width: 20px;
+    visibility: hidden;
+    cursor: none;
+}
+
+#Grid .tablesorter-filter.disabled {
+    width: 50px;
+    visibility: hidden;
+    cursor: none;
 }
 
 .pagesize {
     width: 60px;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: aliceblue;
 }
 
 th {

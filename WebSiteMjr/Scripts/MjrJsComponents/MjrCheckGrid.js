@@ -29,7 +29,7 @@
         page: 0,
 
         // Number of visible rows - default is 10
-        size: 10,
+        size: 5,
 
         // Save pager page & size if the storage script is loaded (requires $.tablesorter.storage in jquery.tablesorter.widgets.js)
         savePages: true,
@@ -57,7 +57,7 @@
         cssErrorRow: 'tablesorter-errorRow' // ajax error information row
     };
 
-    $("#Grid").tablesorter({ widthFixed: false, widgets: ['filter'] }).bind('pagerChange pagerComplete pagerInitialized pageMoved', function (e, c) {
+    $("#CheckGrid").tablesorter({ widgets: ['filter'] }).bind('pagerChange pagerComplete pagerInitialized pageMoved', function (e, c) {
         var msg = '"</span> event triggered, ' + (e.type === 'pagerChange' ? 'going to' : 'now on') +
             ' page <span class="typ">' + (c.page + 1) + '/' + c.totalPages + '</span>';
         $('#display')
