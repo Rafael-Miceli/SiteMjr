@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -20,12 +21,21 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public void CreateToolLocalization(ToolLocalization toolLocalization)
         {
+            if (ToolLocalizationExists(toolLocalization)) throw new ObjectExistsException<ToolLocalization>();
+
             _toolLocalizationRepository.Add(toolLocalization);
             _unitOfWork.Save();
         }
 
+        private bool ToolLocalizationExists(ToolLocalization toolLocalization)
+        {
+            return FindToolLocalizationByName(toolLocalization.Name) != null;
+        }
+
         public void UpdateToolLocalization(ToolLocalization toolLocalization)
         {
+            if (ToolLocalizationExists(toolLocalization)) throw new ObjectExistsException<ToolLocalization>();
+
             _toolLocalizationRepository.Update(toolLocalization);
             _unitOfWork.Save();
         }

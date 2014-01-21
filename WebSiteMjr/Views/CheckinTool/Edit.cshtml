@@ -37,6 +37,7 @@
             @Html.LabelFor(model => model.StrCheckinDateTime, "Data do Checkin")
         </div>
         <div class="editor-field">
+            @Html.ValidationMessage("DateExists")
             @Html.EditorFor(model => model.StrCheckinDateTime, new { id = "CheckinDateTime" })
             @Html.ValidationMessageFor(model => model.StrCheckinDateTime)
         </div>

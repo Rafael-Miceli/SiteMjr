@@ -8,7 +8,7 @@
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Cadastrar Nova Movimentação", "Create")
+    <button type="button" class="btn btn-default" onclick="location.href = 'CheckinTool/Create'"><i class="fa fa-pencil"></i> @Html.ActionLink("Cadastrar Nova Movimentação", "Create")</button>
 </p>
 
 @using (Html.BeginForm())
@@ -49,43 +49,62 @@
 
 <br/>
 
-@if(Model != null && Model.CheckinTools != null && Model.CheckinTools.Any())
+@if (Model != null && Model.CheckinTools != null && Model.CheckinTools.Any())
 {
-    <table>
-        <tr>
-            <th>
-                Ferramenta
-            </th>
-            <th>
-                Funcionário/Condomínio
-            </th>
-            <th>
-                Data do Checkin
-            </th>
-        </tr>
-    
-   
-        @foreach (var item in Model.CheckinTools)
-        {
+    <table id="Grid" class="table table-striped table-bordered table-hover table-condensed">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ToolName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeCompanyHolderName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CheckinDateTime)
-                </td>
-                <td>
-                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Detalhes", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Deletar", "Delete", new { id = item.Id })
-                </td>
+                <th>
+                    Ferramenta
+                </th>
+                <th>
+                    Funcionário/Condomínio
+                </th>
+                <th>
+                    Data do Checkin
+                </th>
+                <th class="filter-false sorter-false">
+                </th>
             </tr>
-        }
-
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CheckinTools)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ToolName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeCompanyHolderName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CheckinDateTime)
+                    </td>
+                    <td>
+                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-pencil-square-o" })
+                        @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "fa fa-square-o" })
+                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash-o" })
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
+    
+    <div id="pager" class="pager">
+        <form>
+            <img src="../../Content/themes/base/images/pager/icons/first.png" class="first" />
+            <img src="../../Content/themes/base/images/pager/icons/prev.png" class="prev" />
+            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+            <img src="../../Content/themes/base/images/pager/icons/next.png" class="next" />
+            <img src="../../Content/themes/base/images/pager/icons/last.png" class="last" />
+            <select class="pagesize">
+                <option selected="selected" value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+        </form>
+    </div>
 }
 else
 {
@@ -96,4 +115,8 @@ else
 {
     <script src="@Url.Content("~/Scripts/Mask/Masks.js")"></script>
     <script src="@Url.Content("~/Scripts/CheckinTool/checkinTool.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tablesorter.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tablesorter.pager.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tablesorter.widgets.js")"></script>
+    <script src="@Url.Content("~/Scripts/MjrJsComponents/MjrGrid.js")"></script>
 }

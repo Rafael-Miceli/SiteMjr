@@ -135,8 +135,32 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
+        public void Should_Create_First_Checkin_For_Tool()
+        {
+            //Arrange
+            var company = CompanyDummies.CreateOneCompany();
+            var newCheckinTool = CheckinToolDummies.CreateOneCheckinTool();
+
+            var checkinToolRepositoryMock = new Mock<ICheckinToolRepository>();
+            var companyServiceMock = new Mock<ICompanyService>();
+
+            checkinToolRepositoryMock.Setup(x => x.Add(newCheckinTool));
+            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(company.Id))).Returns(company);
+
+            var checkinToolService = new CheckinToolService(checkinToolRepositoryMock.Object, new StubUnitOfWork(),
+                companyServiceMock.Object);
+
+            //Act
+            checkinToolService.CheckinTool(newCheckinTool);
+
+            //Assert
+            checkinToolRepositoryMock.VerifyAll();
+            //companyServiceMock.VerifyAll();
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ObjectExistsException<CheckinTool>))]
-        public void Should_Not_Create_CheckinTool_When_The_CheckinDateTime_Of_This_Tool_Is_Equal_To_A_CheckinDateTime_Existing_Of_the_Same_Tool()
+        public void Should_Not_Create_Checkin_When_The_CheckinDateTime_Of_This_Tool_Is_Equal_To_A_CheckinDateTime_Existing_Of_the_Same_Tool()
         {
             //Arrange
             var newCheckin = new CheckinTool
@@ -159,7 +183,8 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Not_Update_CheckinTool_When_The_CheckinDateTime_Of_This_Tool_Is_Equal_To_A_CheckinDateTime_Existing_Of_the_Same_Tool()
+        [ExpectedException(typeof(ObjectExistsException<CheckinTool>))]
+        public void Should_Not_Update_Checkin_When_The_CheckinDateTime_Of_This_Tool_Is_Equal_To_A_CheckinDateTime_Existing_Of_the_Same_Tool()
         {
             //Arrange
             var company = new Company
@@ -189,7 +214,8 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Not_Update_CheckinTool_When_Change_The_CheckinDateTime_Of_This_Tool_Create_Inconsistency_Wtih_Chekin_Between_Companies()
+        [ExpectedException(typeof(CheckinDateTimeInconsistencyException))]
+        public void Should_Not_Update_Checkin_When_Change_The_CheckinDateTime_Of_This_Tool_Create_Inconsistency_Wtih_Chekins_Between_Companies()
         {
             //Arrange
             var company = new Company
@@ -233,7 +259,8 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Not_Create_CheckinTool_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_In_A_Company()
+        [ExpectedException(typeof(CheckinCompanyToCompanyException))]
+        public void Should_Not_Create_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_In_A_Company()
         {
             //Arrange
             var company = new Company
@@ -272,7 +299,8 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Not_Update_CheckinTool_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_In_A_Company()
+        [ExpectedException(typeof(CheckinDateTimeInconsistencyException))]
+        public void Should_Not_Update_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_In_A_Company()
         {
             //Arrange
             var company = new Company
@@ -311,7 +339,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Update_CheckinTool_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_Not_In_A_Company()
+        public void Should_Update_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_Not_In_A_Company()
         {
             //Arrange
             var company = new Company
@@ -350,7 +378,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Create_CheckinTool_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_Not_In_A_Company()
+        public void Should_Create_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_Not_In_A_Company()
         {
             //Arrange
             var company = new Company
@@ -390,7 +418,8 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Not_Create_CheckinTool_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_In_A_Company_And_DateTime_Is_Between_Existing_ones()
+        [ExpectedException(typeof(CheckinCompanyToCompanyException))]
+        public void Should_Not_Create_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_In_A_Company_And_DateTime_Is_Between_Existing_ones()
         {
             //Arrange
             var company = new Company
@@ -429,7 +458,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Create_CheckinTool_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_Not_A_Company()
+        public void Should_Create_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_Not_A_Company()
         {
             //Arrange
             var company = new Company

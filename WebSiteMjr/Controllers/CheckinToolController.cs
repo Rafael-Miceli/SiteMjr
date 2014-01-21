@@ -76,6 +76,21 @@ namespace WebSiteMjr.Controllers
                 ModelState.AddModelError("ToolNotExists", ex.Message);
                 return View();
             }
+            catch (ObjectExistsException<CheckinTool> ex)
+            {
+                ModelState.AddModelError("DateExists", ex.Message);
+                return View();
+            }
+            catch (CheckinDateTimeInconsistencyException ex)
+            {
+                ModelState.AddModelError("DateExists", ex.Message);
+                return View();
+            }
+            catch (CheckinCompanyToCompanyException ex)
+            {
+                ModelState.AddModelError("HolderNotExists", ex.Message);
+                return View();
+            }
             catch
             {
                 return View();
@@ -115,6 +130,21 @@ namespace WebSiteMjr.Controllers
             catch (ObjectNotExistsException<Tool> ex)
             {
                 ModelState.AddModelError("ToolNotExists", ex.Message);
+                return View();
+            }
+            catch (ObjectExistsException<CheckinTool> ex)
+            {
+                ModelState.AddModelError("DateExists", ex.Message);
+                return View();
+            }
+            catch (CheckinDateTimeInconsistencyException ex)
+            {
+                ModelState.AddModelError("DateExists", ex.Message);
+                return View();
+            }
+            catch (CheckinCompanyToCompanyException ex)
+            {
+                ModelState.AddModelError("HolderNotExists", ex.Message);
                 return View();
             }
             catch

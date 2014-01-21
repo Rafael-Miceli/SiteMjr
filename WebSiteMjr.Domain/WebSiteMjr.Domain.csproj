@@ -48,7 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\CheckinDateTimeOfToolExistsException.cs" />
+    <Compile Include="Exceptions\CheckinCompanyToCompanyException.cs" />
+    <Compile Include="Exceptions\CheckinDateTimeInconsistencyException.cs" />
     <Compile Include="Exceptions\ObjectNotExistsException.cs" />
     <Compile Include="Exceptions\ObjectExistsException.cs" />
     <Compile Include="Interfaces\Membership\IApplicationEnvironment.cs" />

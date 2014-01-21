@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.services.Stuffs;
 using WebSiteMjr.Filters;
@@ -53,6 +54,11 @@ namespace WebSiteMjr.Controllers
 
                 return RedirectToAction("Index");
             }
+            catch (ObjectExistsException<ToolLocalization> ex)
+            {
+                ModelState.AddModelError("ToolLocalizationExists", ex.Message);
+                return View(toolLocalization);
+            }
             catch
             {
                 return View();
@@ -80,6 +86,11 @@ namespace WebSiteMjr.Controllers
                 _toolLocalizationService.UpdateToolLocalization(toolLocalization);
 
                 return RedirectToAction("Index");
+            }
+            catch (ObjectExistsException<ToolLocalization> ex)
+            {
+                ModelState.AddModelError("ToolLocalizationExists", ex.Message);
+                return View(toolLocalization);
             }
             catch
             {

@@ -77,6 +77,11 @@ namespace WebSiteMjr.Controllers
 
                 return RedirectToAction("Index");
             }
+            catch (ObjectExistsException<Tool> ex)
+            {
+                ModelState.AddModelError("ToolExists", ex.Message);
+                return View();
+            }
             catch
             {
                 return View();
@@ -161,6 +166,11 @@ namespace WebSiteMjr.Controllers
                 _toolService.UpdateTool(_stuffMapper.ToolViewModelToTool(tool));
 
                 return RedirectToAction("Index");
+            }
+            catch (ObjectExistsException<Tool> ex)
+            {
+                ModelState.AddModelError("ToolExists", ex.Message);
+                return View();
             }
             catch
             {

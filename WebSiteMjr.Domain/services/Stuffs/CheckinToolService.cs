@@ -26,7 +26,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
         public void CheckinTool(CheckinTool checkinTool)
         {
             if (IsAnyCheckiDateTimeOfThisToolAlreadyExists(checkinTool)) throw new ObjectExistsException<CheckinTool>();
-            if (IsLastCheckinOfThisToolInACompany(checkinTool)) return;
+            if (IsLastCheckinOfThisToolInACompany(checkinTool)) throw new CheckinCompanyToCompanyException();
 
             _checkinToolRepository.Add(checkinTool);
             _unitOfWork.Save();
@@ -55,7 +55,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
             var lastCheckinToolBeforeTheActual =
                 checkinsWithActualTool.OrderByDescending(c => c.CheckinDateTime).FirstOrDefault(c => c.CheckinDateTime < checkinTool.CheckinDateTime);
 
-            return lastCheckinToolBeforeTheActual == null || IsCheckinToolOfThisToolInCompany(lastCheckinToolBeforeTheActual);
+            return lastCheckinToolBeforeTheActual != null && IsCheckinToolOfThisToolInCompany(lastCheckinToolBeforeTheActual);
         }
 
         private IEnumerable<CheckinTool> ListCheckinToolsWithActualTool(CheckinTool checkinTool)
@@ -79,9 +79,9 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public void UpdateToolCheckin(CheckinTool checkinTool)
         {
-            if (IsAnyCheckiDateTimeOfThisToolAlreadyExists(checkinTool)) return;
-            if (IsCheckinDateTimeCreatingInConsitencyBetweenCheckins(checkinTool)) return;
-            if (IsLastCheckinOfThisToolInACompany(checkinTool)) return;
+            if (IsAnyCheckiDateTimeOfThisToolAlreadyExists(checkinTool)) throw new ObjectExistsException<CheckinTool>();
+            if (IsCheckinDateTimeCreatingInConsitencyBetweenCheckins(checkinTool)) throw new CheckinDateTimeInconsistencyException();
+            if (IsLastCheckinOfThisToolInACompany(checkinTool)) throw new CheckinCompanyToCompanyException();
 
             _checkinToolRepository.Update(checkinTool);
             _unitOfWork.Save();
