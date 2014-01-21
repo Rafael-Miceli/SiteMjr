@@ -133,7 +133,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Create_CheckinTool_To_Company_Only_If_Last_Checkin_In_This_Tool_Was_Not_A_Company()
+        public void Should_Not_Create_CheckinTool_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_In_A_Company()
         {
             //Arrange
             var company = new Company
@@ -162,6 +162,45 @@ namespace WebSiteMjr.Domain.Test.services
             //Assert
             Assert.IsNull(checkinToolService.FindToolCheckin(10));
             companyServiceMock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void Should_Create_CheckinTool_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_Not_A_Company()
+        {
+            //Arrange
+            var company = new Company
+            {
+                Id = 6,
+                Name = "Portoverano",
+                Email = "adm@portoverano.com"
+            };
+
+            var employee = new Employee
+            {
+                Id = 2,
+                Name = "Brendon"
+            };
+
+            var newCheckin = new CheckinTool
+            {
+                Id = 10,
+                CheckinDateTime = new DateTime(2014, 1, 21, 17, 15, 00),
+                EmployeeCompanyHolderId = 2,
+                Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
+            };
+
+            var companyServiceMock = new Mock<ICompanyService>();
+            companyServiceMock.Setup(x => x.FindCompany(6)).Returns(company);
+
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
+
+            //Act
+            checkinToolService.CheckinTool(newCheckin);
+
+            //Assert
+            Assert.IsNotNull(checkinToolService.FindToolCheckin(10));
+            Assert.AreEqual(employee.Id, checkinToolService.FindToolCheckin(10).EmployeeCompanyHolderId);
+            Assert.AreEqual(newCheckin.Tool.Name, checkinToolService.FindToolCheckin(10).Tool.Name);
         }
 
     }
