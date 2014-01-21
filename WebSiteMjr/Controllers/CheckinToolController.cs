@@ -91,6 +91,11 @@ namespace WebSiteMjr.Controllers
                 ModelState.AddModelError("HolderNotExists", ex.Message);
                 return View();
             }
+            catch (CheckinHolderTwiceThenException ex)
+            {
+                ModelState.AddModelError("HolderNotExists", ex.Message);
+                return View();
+            }
             catch
             {
                 return View();
@@ -143,6 +148,11 @@ namespace WebSiteMjr.Controllers
                 return View();
             }
             catch (CheckinCompanyToCompanyException ex)
+            {
+                ModelState.AddModelError("HolderNotExists", ex.Message);
+                return View();
+            }
+            catch (CheckinHolderTwiceThenException ex)
             {
                 ModelState.AddModelError("HolderNotExists", ex.Message);
                 return View();

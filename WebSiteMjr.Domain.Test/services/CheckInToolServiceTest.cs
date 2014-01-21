@@ -135,7 +135,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Create_First_Checkin_For_Tool()
+        public void Should_Create_First_Checkin_For_Tool_With_Company()
         {
             //Arrange
             var company = CompanyDummies.CreateOneCompany();
@@ -156,6 +156,105 @@ namespace WebSiteMjr.Domain.Test.services
             //Assert
             checkinToolRepositoryMock.VerifyAll();
             //companyServiceMock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void Should_Create_First_Checkin_For_Tool_With_Employee()
+        {
+            //Arrange
+            var employee = EmployeeDummies.CreateOneEmployee();
+            var newCheckinTool = CheckinToolDummies.CreateOneCheckinTool();
+
+            var checkinToolRepositoryMock = new Mock<ICheckinToolRepository>();
+            var companyServiceMock = new Mock<ICompanyService>();
+
+            checkinToolRepositoryMock.Setup(x => x.Add(newCheckinTool));
+            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(employee.Id)));
+
+            var checkinToolService = new CheckinToolService(checkinToolRepositoryMock.Object, new StubUnitOfWork(),
+                companyServiceMock.Object);
+
+            //Act
+            checkinToolService.CheckinTool(newCheckinTool);
+
+            //Assert
+            checkinToolRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Should_Not_Create_Checkin_For_The_Same_Employee_Twice_Then()
+        {
+            //Arrange
+            var employee = new Employee
+            {
+                Id = 2,
+                Name = "Brendon",
+                LastName = "Gay"
+            };
+
+            var newCheckin = new CheckinTool
+            {
+                Id = 9,
+                CheckinDateTime = new DateTime(2014, 12, 10, 14, 22, 00),
+                EmployeeCompanyHolderId = 2,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 1",
+                    Id = 1
+                }
+            };
+
+            var companyServiceMock = new Mock<ICompanyService>();
+
+            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(employee.Id)));
+
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(),
+                companyServiceMock.Object); 
+
+            //Act
+            checkinToolService.CheckinTool(newCheckin);
+
+            //Assert
+            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Should_Not_Create_Checkin_For_The_Same_Employee_Twice_Then_Updating_The_Date()
+        {
+            //Arrange
+            var employee = new Employee
+            {
+                Id = 2,
+                Name = "Brendon",
+                LastName = "Gay"
+            };
+
+            var newCheckin = new CheckinTool
+            {
+                Id = 1,
+                CheckinDateTime = new DateTime(2014, 12, 10, 14, 22, 00),
+                EmployeeCompanyHolderId = 2,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 1",
+                    Id = 1
+                }
+            };
+
+            var companyServiceMock = new Mock<ICompanyService>();
+
+            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(employee.Id)));
+
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(),
+                companyServiceMock.Object);
+
+            //Act
+            checkinToolService.UpdateToolCheckin(newCheckin);
+
+            //Assert
+            Assert.AreNotEqual(newCheckin.EmployeeCompanyHolderId, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
         }
 
         [TestMethod]
@@ -255,7 +354,7 @@ namespace WebSiteMjr.Domain.Test.services
 
             //Assert
             Assert.AreEqual(originalCheckin.CheckinDateTime, checkinToolService.FindToolCheckin(newCheckin.Id).CheckinDateTime);
-            Assert.IsTrue(checkinToolService.IsCheckinToolOfThisToolInCompany(checkinBeforeThis) && checkinToolService.IsCheckinToolOfThisToolInCompany(checkinAfterThis));
+            Assert.IsTrue(checkinToolService.IsCheckinOfThisToolInCompany(checkinBeforeThis) && checkinToolService.IsCheckinOfThisToolInCompany(checkinAfterThis));
         }
 
         [TestMethod]
@@ -497,7 +596,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
     }
-    
+
 
     public class FakeCheckinToolRepository : ICheckinToolRepository
     {
