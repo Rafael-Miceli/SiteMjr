@@ -121,7 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountControllerTest.cs" />
-    <Compile Include="Controllers\Api\CheckinToolApiControllerTest.cs" />
     <Compile Include="Controllers\CompanyControllerTest.cs" />
     <Compile Include="Controllers\StuffControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -150,6 +149,9 @@
       <Project>{3A08A35F-BDEA-4142-81B7-3BDFDAC8AE23}</Project>
       <Name>WebSiteMjr</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\Api\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

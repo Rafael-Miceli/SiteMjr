@@ -65,6 +65,19 @@ namespace WebSiteMjr.Domain.Test.Model
             };
         }
 
+        public static EditCompanyViewModel CreateOneEditCompanyViewModelWithNoToolLocalization()
+        {
+            return new EditCompanyViewModel
+            {
+                Name = "Portoverano",
+                Address = "Rua gastao senges",
+                City = "Rio de Janeiro",
+                Email = "adm@portoverano.com",
+                Id = 1,
+                Phone = "2455-3100"
+            };
+        }
+
         public static Company CreateOneCompanyWithToolLocalization()
         {
             return new Company

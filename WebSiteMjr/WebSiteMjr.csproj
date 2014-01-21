@@ -194,7 +194,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Api\CheckinToolApiController.cs" />
+    <Compile Include="Controllers\Api\ToolApiController.cs" />
+    <Compile Include="Controllers\Api\HolderApiController.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

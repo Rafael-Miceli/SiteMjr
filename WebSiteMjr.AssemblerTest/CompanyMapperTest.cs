@@ -103,7 +103,7 @@ namespace WebSiteMjr.AssemblerTest
         }
 
         [TestMethod]
-        public void Should_Map_Associate_New_ToolsLocalization_Created_In_EditedCompanyViewModel_To_Exisiting_Company_That_never_Had_Any_ToolsLocalization_Associated_Before()
+        public void Should_Map_And_Associate_New_ToolsLocalization_Created_In_EditedCompanyViewModel_To_Exisiting_Company_That_never_Had_Any_ToolsLocalization_Associated_Before()
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
@@ -122,6 +122,26 @@ namespace WebSiteMjr.AssemblerTest
             //Assert
             Assert.AreEqual(0, actualCountBeforeUpdate);
             Assert.AreEqual(dummieCompanyViewModel.ToolsLocalizations.Count(c => c.Selected), companyMapped.ToolsLocalizations.Count);
+            companyServiceMock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void Should_Map_EditedCompanyViewModel_To_Company_With_No_ToolLocalization_Registered()
+        {
+            //Arrange
+            var companyServiceMock = new Mock<ICompanyService>();
+            var toolLocalizationServiceMock = new Mock<IToolLocalizationService>();
+            var dummieCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithNoToolLocalization();
+            var companyShouldReturn = CompanyDummies.CreateOneCompany();
+
+            companyServiceMock.Setup(s => s.FindCompany(dummieCompanyViewModel.Id)).Returns(companyShouldReturn);
+
+            var companyMapper = new CompanyMapper(companyServiceMock.Object, toolLocalizationServiceMock.Object);
+
+            //Act
+            companyMapper.EditCompanyViewModelToCompany(dummieCompanyViewModel);
+
+            //Assert
             companyServiceMock.VerifyAll();
         }
     }

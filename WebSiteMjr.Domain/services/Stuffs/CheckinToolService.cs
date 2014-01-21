@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -14,22 +13,51 @@ namespace WebSiteMjr.Domain.services.Stuffs
         private readonly ICheckinToolRepository _checkinToolRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICompanyService _companyService;
-        private readonly IEmployeeService _employeeService;
-        private readonly IToolService _toolService;
 
-        public CheckinToolService(ICheckinToolRepository checkinToolRepository, IUnitOfWork unitOfWork, ICompanyService companyService, IEmployeeService employeeService, IToolService toolService) 
+        public CheckinToolService(ICheckinToolRepository checkinToolRepository, IUnitOfWork unitOfWork, ICompanyService companyService) 
         {
             _checkinToolRepository = checkinToolRepository;
             _unitOfWork = unitOfWork;
             _companyService = companyService;
-            _employeeService = employeeService;
-            _toolService = toolService;
         }
 
         public void CheckinTool(CheckinTool checkinTool)
         {
+            if (IsCheckinToolOfThisToolInCompany(checkinTool))
+            {
+                if (WasLastCheckinToolOfThisToolInCompany(checkinTool))
+                {
+                    return;
+                }
+            }
             _checkinToolRepository.Add(checkinTool);
             _unitOfWork.Save();
+        }
+
+        private bool WasLastCheckinToolOfThisToolInCompany(CheckinTool checkinTool)
+        {
+            var checkinsWithActualTool = ListCheckinToolsWithActualTool(checkinTool);
+
+            if (checkinsWithActualTool == null)
+            {
+                return false;
+            }
+            
+            var lastCheckinToolBeforeTheActual =
+                checkinsWithActualTool.OrderByDescending(c => c.CheckinDateTime).FirstOrDefault(c => c.CheckinDateTime <= checkinTool.CheckinDateTime);
+
+            return lastCheckinToolBeforeTheActual == null || IsCheckinToolOfThisToolInCompany(lastCheckinToolBeforeTheActual);
+        }
+
+        private IEnumerable<CheckinTool> ListCheckinToolsWithActualTool(CheckinTool checkinTool)
+        {
+            return _checkinToolRepository.Query(c => c.Tool.Id == checkinTool.Tool.Id);
+        }
+
+
+        private bool IsCheckinToolOfThisToolInCompany(CheckinTool checkinTool)
+        {
+            return _companyService.FindCompany(checkinTool.EmployeeCompanyHolderId) != null;
         }
 
 
@@ -70,27 +98,6 @@ namespace WebSiteMjr.Domain.services.Stuffs
             }
 
             return checkins;
-        }
-
-        public IEnumerable<string> ListEmployeeCompanyHolderName()
-        {
-            return
-                _companyService.ListCompany()
-                    .Select(c => c.Name)
-                    .Concat(_employeeService.ListEmployee().Select(e => e.Name));
-        }
-
-        public Holder FindEmployeeCompanyByName(string name)
-        {
-            Holder holder = _companyService.FindCompanyByName(name) ??
-                            (Holder) _employeeService.FindEmployeeByName(name);
-
-            return holder;
-        }
-
-        public IEnumerable<string> ListToolName()
-        {
-            return _toolService.ListTool().Select(t => t.Name);
         }
 
         public CheckinTool FindToolCheckin(object idCheckinTool)

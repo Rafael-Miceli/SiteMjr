@@ -6,13 +6,13 @@
 
     //Set Ajax Call
     employeeCompanyHolderNamesCall = {
-        url: '/Api/CheckinToolApi/GetEmployeeCompanyHoldersName',
+        url: '/Api/HolderApi/GetEmployeeCompanyHoldersName',
         type: 'GET',
         datatype: 'json'
     };
     
     toolNamesCall = {
-        url: '/Api/CheckinToolApi/GetToolsName',
+        url: '/Api/ToolApi/GetToolsName',
         type: 'GET',
         datatype: 'json'
     };

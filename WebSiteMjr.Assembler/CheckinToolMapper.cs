@@ -22,11 +22,7 @@ namespace WebSiteMjr.Assembler
 
         public ListCheckinToolViewModel GetChekinsFilter(ListCheckinToolViewModel checkinToolViewModel)
         {
-            //checkinToolViewModel.CheckinTools = _checkinToolService.FilterCheckins(_checkinToolService.FindEmployeeCompanyByName(checkinToolViewModel.EmployeeCompanyHolder),
-            //                                                                       checkinToolViewModel.Tool,
-            //                                                                       checkinToolViewModel.CheckinDateTime);
-
-            var checkins = _checkinToolService.FilterCheckins(_checkinToolService.FindEmployeeCompanyByName(checkinToolViewModel.EmployeeCompanyHolder),
+            var checkins = _checkinToolService.FilterCheckins(_holderService.FindHolderByName(checkinToolViewModel.EmployeeCompanyHolder),
                                                                                    checkinToolViewModel.Tool,
                                                                                    checkinToolViewModel.CheckinDateTime);
 

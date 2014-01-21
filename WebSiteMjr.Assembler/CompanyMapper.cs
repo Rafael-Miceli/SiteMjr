@@ -76,6 +76,7 @@ namespace WebSiteMjr.Assembler
 
         private ICollection<ToolLocalization> MapToolsLocalizationSelectedInEditCompanyViewModelToCompany(IEnumerable<SelectListItem> toolsLocalizationsSelectedInView)
         {
+            if (toolsLocalizationsSelectedInView == null) return null;
             var toolsLocalization = _toolLocalizationService.ListToolsLocalizations().ToList();
             var toolsLocalizationMapped = new List<ToolLocalization>();
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -47,6 +48,11 @@ namespace WebSiteMjr.Domain.services.Stuffs
         public IEnumerable<Tool> ListTool()
         {
             return _toolRepository.GetAll();
+        }
+
+        public IEnumerable<string> ListToolName()
+        {
+            return ListTool().Select(t => t.Name);
         }
 
         public Tool FindTool(object idTool)
