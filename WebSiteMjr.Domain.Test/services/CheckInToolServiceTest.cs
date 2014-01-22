@@ -354,7 +354,7 @@ namespace WebSiteMjr.Domain.Test.services
 
             //Assert
             Assert.AreEqual(originalCheckin.CheckinDateTime, checkinToolService.FindToolCheckin(newCheckin.Id).CheckinDateTime);
-            Assert.IsTrue(checkinToolService.IsCheckinOfThisToolInCompany(checkinBeforeThis) && checkinToolService.IsCheckinOfThisToolInCompany(checkinAfterThis));
+            Assert.IsTrue(checkinToolService.IsCheckinOfThisToolInCompany(checkinBeforeThis.EmployeeCompanyHolderId) && checkinToolService.IsCheckinOfThisToolInCompany(checkinAfterThis.EmployeeCompanyHolderId));
         }
 
         [TestMethod]

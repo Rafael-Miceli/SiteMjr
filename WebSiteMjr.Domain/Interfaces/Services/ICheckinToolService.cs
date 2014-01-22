@@ -12,5 +12,8 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         IEnumerable<CheckinTool> ListToolCheckins();
         IEnumerable<CheckinTool> FilterCheckins(Holder employeeName, string toolName, DateTime ?date);
         CheckinTool FindToolCheckin(object idCheckinTool);
+        IEnumerable<CheckinTool> ListCheckinToolsWithActualTool(int toolId);
+        bool IsCheckinOfThisToolInCompany(int employeeCompanyHolderId);
+        CheckinTool LastCheckinOfThisTool(int toolId, DateTime checkinDateTime);
     }
 }

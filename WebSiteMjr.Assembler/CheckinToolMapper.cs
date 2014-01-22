@@ -72,6 +72,7 @@ namespace WebSiteMjr.Assembler
         {
             var tool = _toolService.FindToolByName(createCheckinToolViewModel.ToolName);
             var holder = _holderService.FindHolderByName(createCheckinToolViewModel.EmployeeCompanyHolderName);
+            var checkinTool = new CheckinTool();
 
             if (!CompanyOrEmployeeExists(holder))
                 throw new ObjectNotExistsException<Holder>();
@@ -79,8 +80,7 @@ namespace WebSiteMjr.Assembler
             if (!ToolExists(tool))
                 throw new ObjectNotExistsException<Tool>();
 
-
-            var checkinTool = _checkinToolService.FindToolCheckin(createCheckinToolViewModel.Id);
+            checkinTool.Id = createCheckinToolViewModel.Id;
             checkinTool.EmployeeCompanyHolderId = holder.Id;
             checkinTool.Tool = tool;
             checkinTool.CheckinDateTime = createCheckinToolViewModel.CheckinDateTime.Value;

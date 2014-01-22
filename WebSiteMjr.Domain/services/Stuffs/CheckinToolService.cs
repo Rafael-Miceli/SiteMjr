@@ -35,53 +35,53 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         private bool IsCheckinHolderTwiceThen(CheckinTool checkinTool)
         {
-            var lastCheckinsOfThisTool = LastCheckinOfThisTool(checkinTool);
+            var lastCheckinsOfThisTool = LastCheckinOfThisTool(checkinTool.Tool.Id, checkinTool.CheckinDateTime);
             return lastCheckinsOfThisTool != null && lastCheckinsOfThisTool.EmployeeCompanyHolderId == checkinTool.EmployeeCompanyHolderId;
         }
 
         private bool IsAnyCheckiDateTimeOfThisToolAlreadyExists(CheckinTool checkinTool)
         {
-            return ListCheckinToolsWithActualTool(checkinTool)
+            return ListCheckinToolsWithActualTool(checkinTool.Tool.Id)
                 .Any(c => c.CheckinDateTime == checkinTool.CheckinDateTime && c.Id != checkinTool.Id);
         }
 
-        private CheckinTool LastCheckinOfThisTool(CheckinTool checkinTool)
+        public CheckinTool LastCheckinOfThisTool(int toolId, DateTime checkinDateTime)
         {
-            var checkinsWithActualTool = ListCheckinToolsWithActualTool(checkinTool);
+            var checkinsWithActualTool = ListCheckinToolsWithActualTool(toolId);
 
-            return checkinsWithActualTool.OrderByDescending(c => c.CheckinDateTime).FirstOrDefault(c => c.CheckinDateTime < checkinTool.CheckinDateTime);
+            return checkinsWithActualTool.OrderByDescending(c => c.CheckinDateTime).FirstOrDefault(c => c.CheckinDateTime < checkinDateTime);
         }
 
         private bool IsLastCheckinOfThisToolInACompany(CheckinTool checkinTool)
         {
-            return IsCheckinOfThisToolInCompany(checkinTool) && WasLastCheckinOfThisToolInCompany(checkinTool);
+            return IsCheckinOfThisToolInCompany(checkinTool.EmployeeCompanyHolderId) && WasLastCheckinOfThisToolInCompany(checkinTool);
         }
 
         private bool WasLastCheckinOfThisToolInCompany(CheckinTool checkinTool)
         {
-            var lastCheckinToolBeforeTheActual = LastCheckinOfThisTool(checkinTool);
+            var lastCheckinToolBeforeTheActual = LastCheckinOfThisTool(checkinTool.Tool.Id, checkinTool.CheckinDateTime);
 
-            return lastCheckinToolBeforeTheActual != null && IsCheckinOfThisToolInCompany(lastCheckinToolBeforeTheActual);
+            return lastCheckinToolBeforeTheActual != null && IsCheckinOfThisToolInCompany(lastCheckinToolBeforeTheActual.EmployeeCompanyHolderId);
         }
 
-        private IEnumerable<CheckinTool> ListCheckinToolsWithActualTool(CheckinTool checkinTool)
+        public IEnumerable<CheckinTool> ListCheckinToolsWithActualTool(int toolId)
         {
-            if (_listCheckinToolsWithActualTool != null && _listCheckinToolsWithActualTool.Any(c => c.Tool.Id == checkinTool.Tool.Id))
+            if (_listCheckinToolsWithActualTool != null && _listCheckinToolsWithActualTool.Any(c => c.Tool.Id == toolId))
             {
                 return _listCheckinToolsWithActualTool;
             }
 
-            _listCheckinToolsWithActualTool = _checkinToolRepository.Query(c => c.Tool.Id == checkinTool.Tool.Id);
+            _listCheckinToolsWithActualTool = _checkinToolRepository.Query(c => c.Tool.Id == toolId);
 
             return _listCheckinToolsWithActualTool;
         }
 
 
-        public bool IsCheckinOfThisToolInCompany(CheckinTool checkinTool)
+        public bool IsCheckinOfThisToolInCompany(int employeeCompanyHolderId)
         {
             try
             {
-                return _companyService.FindCompany(checkinTool.EmployeeCompanyHolderId) != null;
+                return _companyService.FindCompany(employeeCompanyHolderId) != null;
             }
             catch (Exception)
             {
@@ -93,19 +93,24 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public void UpdateToolCheckin(CheckinTool checkinTool)
         {
+            var checkinToolToUpdate = FindToolCheckin(checkinTool.Id);
+
             if (IsAnyCheckiDateTimeOfThisToolAlreadyExists(checkinTool)) throw new ObjectExistsException<CheckinTool>();
-            if (IsCheckinDateTimeCreatingInConsitencyBetweenCheckins(checkinTool)) throw new CheckinDateTimeInconsistencyException();
+            if (IsCheckinDateTimeCreatingInConsitencyBetweenCheckins(checkinToolToUpdate)) throw new CheckinDateTimeInconsistencyException();
             if (IsCheckinHolderTwiceThen(checkinTool)) throw new CheckinHolderTwiceThenException();
             if (IsLastCheckinOfThisToolInACompany(checkinTool)) throw new CheckinCompanyToCompanyException();
 
-            _checkinToolRepository.Update(checkinTool);
+            checkinToolToUpdate.EmployeeCompanyHolderId = checkinTool.EmployeeCompanyHolderId;
+            checkinToolToUpdate.Tool = checkinTool.Tool;
+            checkinToolToUpdate.CheckinDateTime = checkinTool.CheckinDateTime;
+
+            _checkinToolRepository.Update(checkinToolToUpdate);
             _unitOfWork.Save();
         }
 
-        private bool IsCheckinDateTimeCreatingInConsitencyBetweenCheckins(CheckinTool checkinTool)
+        private bool IsCheckinDateTimeCreatingInConsitencyBetweenCheckins(CheckinTool originalCheckin)
         {
-            var originalCheckin = FindToolCheckin(checkinTool.Id);
-            var checkinsWithOriginalTool = ListCheckinToolsWithActualTool(originalCheckin);
+            var checkinsWithOriginalTool = ListCheckinToolsWithActualTool(originalCheckin.Tool.Id);
 
             if (checkinsWithOriginalTool == null)
                 return false;
@@ -117,7 +122,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
             if (checkinWithThisToolBeforeActual == null || checkinWithThisToolAfterActual == null)
                 return false;
 
-            return IsCheckinOfThisToolInCompany(checkinWithThisToolBeforeActual) && IsCheckinOfThisToolInCompany(checkinWithThisToolAfterActual);
+            return IsCheckinOfThisToolInCompany(checkinWithThisToolBeforeActual.EmployeeCompanyHolderId) && IsCheckinOfThisToolInCompany(checkinWithThisToolAfterActual.EmployeeCompanyHolderId);
         }
 
         public void DeleteToolCheckin(object idCheckinTool)
