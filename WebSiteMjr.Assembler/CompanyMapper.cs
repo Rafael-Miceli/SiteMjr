@@ -10,12 +10,12 @@ namespace WebSiteMjr.Assembler
     public class CompanyMapper
     {
         private readonly ICompanyService _companyService;
-        private readonly IToolLocalizationService _toolLocalizationService;
+        private readonly ICompanyAreasService _companyAreasService;
 
-        public CompanyMapper(ICompanyService companyService, IToolLocalizationService toolLocalizationService)
+        public CompanyMapper(ICompanyService companyService, ICompanyAreasService companyAreasService)
         {
             _companyService = companyService;
-            _toolLocalizationService = toolLocalizationService;
+            _companyAreasService = companyAreasService;
         }
 
         public ListCompanyViewModel CompanyToListCompanyViewModel()
@@ -36,7 +36,7 @@ namespace WebSiteMjr.Assembler
             company.Address = editCompanyViewModel.Address;
             company.Phone = editCompanyViewModel.Phone;
 
-            company.ToolsLocalizations = MapToolsLocalizationSelectedInEditCompanyViewModelToCompany(editCompanyViewModel.ToolsLocalizations);
+            company.CompanyAreas = MapCompanyAreaSelectedInEditCompanyViewModelToCompany(editCompanyViewModel.ToolsLocalizations);
 
             return company;
         }
@@ -51,14 +51,14 @@ namespace WebSiteMjr.Assembler
                 Email = company.Email,
                 Name = company.Name,
                 Phone = company.Phone,
-                ToolsLocalizations = MapToolsLocalizationInCompanyToView(company.ToolsLocalizations)
+                ToolsLocalizations = MapCompanyAreasInCompanyToView(company.CompanyAreas)
             };
             return editCompanyViewModel;
         }
 
-        private IList<SelectListItem> MapToolsLocalizationInCompanyToView(ICollection<ToolLocalization> toolsLocalizationsInCompany)
+        private IList<SelectListItem> MapCompanyAreasInCompanyToView(ICollection<CompanyArea> toolsLocalizationsInCompany)
         {
-            var toolsLocalization = _toolLocalizationService.ListToolsLocalizations();
+            var toolsLocalization = _companyAreasService.ListToolsLocalizations();
             var toolsLocalizationMapped = new List<SelectListItem>();
 
             foreach (var toolLocalization in toolsLocalization)
@@ -74,13 +74,13 @@ namespace WebSiteMjr.Assembler
             return toolsLocalizationMapped;
         }
 
-        private ICollection<ToolLocalization> MapToolsLocalizationSelectedInEditCompanyViewModelToCompany(IEnumerable<SelectListItem> toolsLocalizationsSelectedInView)
+        private ICollection<CompanyArea> MapCompanyAreaSelectedInEditCompanyViewModelToCompany(IEnumerable<SelectListItem> companyAreasSelectedInView)
         {
-            if (toolsLocalizationsSelectedInView == null) return null;
-            var toolsLocalization = _toolLocalizationService.ListToolsLocalizations().ToList();
-            var toolsLocalizationMapped = new List<ToolLocalization>();
+            if (companyAreasSelectedInView == null) return null;
+            var toolsLocalization = _companyAreasService.ListToolsLocalizations().ToList();
+            var toolsLocalizationMapped = new List<CompanyArea>();
 
-            foreach (var toolLocalizationSelected in toolsLocalizationsSelectedInView)
+            foreach (var toolLocalizationSelected in companyAreasSelectedInView)
             {
                 if (toolLocalizationSelected.Selected)
                 {

@@ -18,11 +18,11 @@ namespace WebSiteMjr.AssemblerTest
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<IToolLocalizationService>();
+            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
             var company = CompanyDummies.CreateOneCompany();
 
             toolLocalizationServiceMock.Setup(x => x.ListToolsLocalizations())
-                .Returns(ToolLocalizationDumies.CreateListOfToolsLocalizations);
+                .Returns(CompanyAreasDumies.CreateListOfCompanyAreas);
 
             var companyMapper = new CompanyMapper(companyServiceMock.Object, toolLocalizationServiceMock.Object);
 
@@ -38,9 +38,9 @@ namespace WebSiteMjr.AssemblerTest
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<IToolLocalizationService>();
+            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
             var dummieCompany = CompanyDummies.CreateOneCompany();
-            var dummieToolsLocaliations = ToolLocalizationDumies.CreateListOfToolsLocalizations();
+            var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(x => x.FindCompany(It.IsAny<Company>())).Returns(dummieCompany);
             toolLocalizationServiceMock.Setup(x => x.ListToolsLocalizations())
@@ -62,9 +62,9 @@ namespace WebSiteMjr.AssemblerTest
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<IToolLocalizationService>();
+            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
             var dummieCompany = CompanyDummies.CreateOneCompanyWithToolLocalization();
-            var dummieToolsLocaliations = ToolLocalizationDumies.CreateListOfToolsLocalizations();
+            var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(x => x.FindCompany(It.IsAny<Company>())).Returns(dummieCompany);
             toolLocalizationServiceMock.Setup(x => x.ListToolsLocalizations())
@@ -86,7 +86,7 @@ namespace WebSiteMjr.AssemblerTest
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<IToolLocalizationService>();
+            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
             var dummieCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModel();
             var companyShouldReturn = CompanyDummies.CreateOneCompany();
 
@@ -107,10 +107,10 @@ namespace WebSiteMjr.AssemblerTest
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<IToolLocalizationService>();
+            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
             var dummieCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithToolLocalization();
             var companyShouldReturn = CompanyDummies.CreateOneCompany();
-            var actualCountBeforeUpdate = companyShouldReturn.ToolsLocalizations.Count;
+            var actualCountBeforeUpdate = companyShouldReturn.CompanyAreas.Count;
 
             companyServiceMock.Setup(s => s.FindCompany(dummieCompanyViewModel.Id)).Returns(companyShouldReturn);
 
@@ -121,7 +121,7 @@ namespace WebSiteMjr.AssemblerTest
 
             //Assert
             Assert.AreEqual(0, actualCountBeforeUpdate);
-            Assert.AreEqual(dummieCompanyViewModel.ToolsLocalizations.Count(c => c.Selected), companyMapped.ToolsLocalizations.Count);
+            Assert.AreEqual(dummieCompanyViewModel.ToolsLocalizations.Count(c => c.Selected), companyMapped.CompanyAreas.Count);
             companyServiceMock.VerifyAll();
         }
 
@@ -130,7 +130,7 @@ namespace WebSiteMjr.AssemblerTest
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<IToolLocalizationService>();
+            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
             var dummieCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithNoToolLocalization();
             var companyShouldReturn = CompanyDummies.CreateOneCompany();
 

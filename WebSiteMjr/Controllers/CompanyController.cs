@@ -12,10 +12,10 @@ namespace WebSiteMjr.Controllers
         private readonly ICompanyService _companyService;
         private readonly CompanyMapper _companyMapper;
 
-        public CompanyController(ICompanyService companyService, IToolLocalizationService toolLocalizationService)
+        public CompanyController(ICompanyService companyService, ICompanyAreasService companyAreasService)
         {
             _companyService = companyService;
-            _companyMapper = new CompanyMapper(_companyService, toolLocalizationService);
+            _companyMapper = new CompanyMapper(_companyService, companyAreasService);
         }
 
         //

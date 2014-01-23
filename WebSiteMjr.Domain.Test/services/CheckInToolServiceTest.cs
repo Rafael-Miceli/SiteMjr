@@ -7,11 +7,9 @@ using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
-using WebSiteMjr.Domain.services;
 using WebSiteMjr.Domain.services.Stuffs;
 using Moq;
 using WebSiteMjr.Domain.Test.Model;
-using WebSiteMjr.EfStuffData.DataRepository;
 
 namespace WebSiteMjr.Domain.Test.services
 {
@@ -595,6 +593,52 @@ namespace WebSiteMjr.Domain.Test.services
             Assert.AreEqual(newCheckin.Tool.Name, checkinToolService.FindToolCheckin(newCheckin.Id).Tool.Name);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(CheckinDateTimeInconsistencyException))]
+        public void Should_Not_Delete_Checkin_When_Change_The_CheckinDateTime_Of_This_Tool_Create_Inconsistency_Wtih_Chekins_Between_Companies()
+        {
+            //Arrange
+            var company = new Company
+            {
+                Id = 4,
+                Name = "Portoverano",
+                Email = "adm@portoverano.com"
+            };
+
+            var newCheckin = new CheckinTool
+            {
+                Id = 6,
+                CheckinDateTime = new DateTime(2014, 1, 21, 17, 15, 00),
+                EmployeeCompanyHolderId = 2,
+                Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
+            };
+
+            var companyServiceMock = new Mock<ICompanyService>();
+            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 5, 6)))
+                .Returns(() => company)
+                .Callback(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com"
+                });
+
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
+
+            var originalCheckin = checkinToolService.FindToolCheckin(newCheckin.Id);
+            var checkinBeforeThis = checkinToolService.FindToolCheckin(4);
+            var checkinAfterThis = checkinToolService.FindToolCheckin(7);
+
+
+            //Act
+            checkinToolService.DeleteToolCheckin(newCheckin.Id);
+
+            //Assert
+            Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id));
+            Assert.AreEqual(originalCheckin.CheckinDateTime, checkinToolService.FindToolCheckin(newCheckin.Id).CheckinDateTime);
+            Assert.IsTrue(checkinToolService.IsCheckinOfThisToolInCompany(checkinBeforeThis.EmployeeCompanyHolderId) && checkinToolService.IsCheckinOfThisToolInCompany(checkinAfterThis.EmployeeCompanyHolderId));
+        }
+
     }
 
 
@@ -761,7 +805,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         public void Remove(object entitie)
         {
-            throw new NotImplementedException();
+            _checkins.Remove(_checkins.FirstOrDefault(c => c.Id == (int) entitie));
         }
 
         public void Update(CheckinTool entitie)

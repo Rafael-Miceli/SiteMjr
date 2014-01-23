@@ -15,16 +15,16 @@ namespace WebSiteMjr.Domain.Model
                            ErrorMessage = "Telefone Inválido")]
         public virtual string Phone { get; set; }
 
-        private ICollection<ToolLocalization> _toolsLocalizations;
-        public virtual ICollection<ToolLocalization> ToolsLocalizations
+        private ICollection<CompanyArea> _companyAreas;
+        public virtual ICollection<CompanyArea> CompanyAreas
         {
             get
             {
-                return _toolsLocalizations ?? (_toolsLocalizations = new Collection<ToolLocalization>());
+                return _companyAreas ?? (_companyAreas = new Collection<CompanyArea>());
             }
             set
             {
-                _toolsLocalizations = value;
+                _companyAreas = value;
             } 
         }
 

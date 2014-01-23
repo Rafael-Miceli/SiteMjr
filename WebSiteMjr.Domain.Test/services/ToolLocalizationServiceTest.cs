@@ -17,8 +17,8 @@ namespace WebSiteMjr.Domain.Test.services
         [TestMethod]
         public void Should_Create_ToolLocalization()
         {
-            var toolLocalization = ToolLocalizationDumies.CreateOneToolLocalization();
-            var toolLocalizationService = new ToolLocalizationService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
+            var toolLocalization = CompanyAreasDumies.CreateOneToolLocalization();
+            var toolLocalizationService = new CompanyAreasService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
 
             toolLocalizationService.CreateToolLocalization(toolLocalization);
 
@@ -29,8 +29,8 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Edit_ToolLocalization()
         {
             const string toolLocalizatioNameUpdated = "Valor Atualizado";
-            var toolLocalizationCreated = ToolLocalizationDumies.CreateOneToolLocalization();
-            var toolLocalizationService = new ToolLocalizationService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
+            var toolLocalizationCreated = CompanyAreasDumies.CreateOneToolLocalization();
+            var toolLocalizationService = new CompanyAreasService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
             toolLocalizationService.CreateToolLocalization(toolLocalizationCreated);
             var toolLocalizationToUpdate = toolLocalizationService.FindToolLocalization(toolLocalizationCreated.Id);
             toolLocalizationToUpdate.Name = toolLocalizatioNameUpdated;
@@ -43,8 +43,8 @@ namespace WebSiteMjr.Domain.Test.services
         [TestMethod]
         public void Should_Delete_ToolLocalization()
         {
-            var toolLocalizationCreated = ToolLocalizationDumies.CreateOneToolLocalization();
-            var toolLocalizationService = new ToolLocalizationService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
+            var toolLocalizationCreated = CompanyAreasDumies.CreateOneToolLocalization();
+            var toolLocalizationService = new CompanyAreasService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
             toolLocalizationService.CreateToolLocalization(toolLocalizationCreated);
             var toolLocalizationToDelete = toolLocalizationService.FindToolLocalization(toolLocalizationCreated.Id);
 
@@ -56,8 +56,8 @@ namespace WebSiteMjr.Domain.Test.services
         [TestMethod]
         public void Should_Find_ToolLocalization_By_Name()
         {
-            var toolLocalizationCreated = ToolLocalizationDumies.CreateOneToolLocalization();
-            var toolLocalizationService = new ToolLocalizationService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
+            var toolLocalizationCreated = CompanyAreasDumies.CreateOneToolLocalization();
+            var toolLocalizationService = new CompanyAreasService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
             toolLocalizationService.CreateToolLocalization(toolLocalizationCreated);
 
             var toolLocalizationFounded = toolLocalizationService.FindToolLocalizationByName(toolLocalizationCreated.Name);
@@ -70,22 +70,22 @@ namespace WebSiteMjr.Domain.Test.services
         {
             var toolsLocalizationsId = new List<int>();
             var company = CompanyDummies.CreateOneCompany();
-            var toolLocalization = ToolLocalizationDumies.CreateOneToolLocalization();
+            var toolLocalization = CompanyAreasDumies.CreateOneToolLocalization();
             toolsLocalizationsId.Add(toolLocalization.Id);
-            var toolLocalizationService = new ToolLocalizationService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
+            var toolLocalizationService = new CompanyAreasService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
             var companyService = new CompanyService(new FakeCompanyRepository(), new StubUnitOfWork());
             toolLocalizationService.CreateToolLocalization(toolLocalization);
             companyService.CreateCompany(company);
 
             toolLocalizationService.LinkToolsLocalizationToCompany(toolsLocalizationsId, company);
 
-            Assert.IsNotNull(companyService.FindCompany(company.Id).ToolsLocalizations.FirstOrDefault(tl => tl.Id == toolLocalization.Id));
+            Assert.IsNotNull(companyService.FindCompany(company.Id).CompanyAreas.FirstOrDefault(tl => tl.Id == toolLocalization.Id));
         }
 
         [TestMethod]
         public void Should_Link_Two_Or_More_ToolLocalization_To_Company()
         {
-            var toolLocalizationService = new ToolLocalizationService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
+            var toolLocalizationService = new CompanyAreasService(new FakeToolLocalizationRepository(), new StubUnitOfWork());
             var companyService = new CompanyService(new FakeCompanyRepository(), new StubUnitOfWork());
             var toolsLocalizationsId = new List<int>();
             var company = CompanyDummies.CreateOneCompany();
@@ -98,25 +98,25 @@ namespace WebSiteMjr.Domain.Test.services
 
             toolLocalizationService.LinkToolsLocalizationToCompany(toolsLocalizationsId, company);
 
-            Assert.IsNotNull(companyService.FindCompany(company.Id).ToolsLocalizations.FirstOrDefault(tl => tl.Id == toolsLocalizations[0].Id));
-            Assert.IsNotNull(companyService.FindCompany(company.Id).ToolsLocalizations.FirstOrDefault(tl => tl.Id == toolsLocalizations[1].Id));
-            Assert.IsNotNull(companyService.FindCompany(company.Id).ToolsLocalizations.FirstOrDefault(tl => tl.Id == toolsLocalizations[2].Id));
+            Assert.IsNotNull(companyService.FindCompany(company.Id).CompanyAreas.FirstOrDefault(tl => tl.Id == toolsLocalizations[0].Id));
+            Assert.IsNotNull(companyService.FindCompany(company.Id).CompanyAreas.FirstOrDefault(tl => tl.Id == toolsLocalizations[1].Id));
+            Assert.IsNotNull(companyService.FindCompany(company.Id).CompanyAreas.FirstOrDefault(tl => tl.Id == toolsLocalizations[2].Id));
         }
 
     }
 
     public class FakeToolLocalizationRepository : IToolLocalizationRepository
     {
-        private readonly ICollection<ToolLocalization> _toolLocalizations;
+        private readonly ICollection<CompanyArea> _toolLocalizations;
 
         public FakeToolLocalizationRepository()
         {
-            _toolLocalizations = ToolLocalizationDumies.CreateListOfToolsLocalizations();
+            _toolLocalizations = CompanyAreasDumies.CreateListOfCompanyAreas();
         }
 
-        public void Add(ToolLocalization toolLocalization)
+        public void Add(CompanyArea companyArea)
         {
-            _toolLocalizations.Add(toolLocalization);
+            _toolLocalizations.Add(companyArea);
         }
 
         public void Remove(object entitie)
@@ -126,34 +126,34 @@ namespace WebSiteMjr.Domain.Test.services
             _toolLocalizations.Remove(toolLocalizationToDelete);
         }
 
-        public void Update(ToolLocalization toolLocalization)
+        public void Update(CompanyArea companyArea)
         {
-            var toolLocalizationToUpdate = _toolLocalizations.FirstOrDefault(t => t.Id == toolLocalization.Id);
+            var toolLocalizationToUpdate = _toolLocalizations.FirstOrDefault(t => t.Id == companyArea.Id);
 
             toolLocalizationToUpdate.Name = toolLocalizationToUpdate.Name;
         }
 
-        public IEnumerable<ToolLocalization> GetAll()
+        public IEnumerable<CompanyArea> GetAll()
         {
             return _toolLocalizations;
         }
 
-        public IEnumerable<ToolLocalization> Query(Func<ToolLocalization, bool> filter)
+        public IEnumerable<CompanyArea> Query(Func<CompanyArea, bool> filter)
         {
             throw new NotImplementedException();
         }
 
-        public ToolLocalization GetById(object id)
+        public CompanyArea GetById(object id)
         {
             return _toolLocalizations.FirstOrDefault(t => t.Id == (int)id);
         }
 
-        public ToolLocalization Get(Expression<Func<ToolLocalization, bool>> filter)
+        public CompanyArea Get(Expression<Func<CompanyArea, bool>> filter)
         {
             throw new NotImplementedException();
         }
 
-        public ToolLocalization GetByName(string name)
+        public CompanyArea GetByName(string name)
         {
             return _toolLocalizations.FirstOrDefault(t => t.Name.ToLower() == name.ToLower());
         }

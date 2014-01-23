@@ -1,4 +1,4 @@
-﻿@model WebSiteMjr.Domain.Model.ToolLocalization
+﻿@model WebSiteMjr.Domain.Model.CompanyArea
     
 @{
     ViewBag.Title = "Cadastrar Área de Condomínios/Empresas";
@@ -7,7 +7,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Create", "ToolLocalization", FormMethod.Post, new { id = "createToolLocalizationForm" }))
+@using (Html.BeginForm("Create", "ToolLocalization", FormMethod.Post, new { id = "createCompanyAreaForm" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -19,7 +19,7 @@
             @Html.LabelFor(model => model.Name, "Nome")
         </div>
         <div class="editor-field">
-            @Html.ValidationMessage("ToolLocalizationExists")
+            @Html.ValidationMessage("CompanyAreaExists")
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>

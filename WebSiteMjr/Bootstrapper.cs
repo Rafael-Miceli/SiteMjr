@@ -48,7 +48,7 @@ namespace WebSiteMjr
             container.RegisterType<IStuffCategoryService, StuffCategoryService>();
             container.RegisterType<IStuffService, StuffService>();
             container.RegisterType<IToolService, ToolService>();
-            container.RegisterType<IToolLocalizationService, ToolLocalizationService>();
+            container.RegisterType<ICompanyAreasService, CompanyAreasService>();
             container.RegisterType<ICheckinToolService, CheckinToolService>();
             container.RegisterType<IStuffManufactureService, StuffManufactureService>();
             container.RegisterType<ICompanyService, CompanyService>();
@@ -59,7 +59,7 @@ namespace WebSiteMjr
             var companyServiceInstance = new CompanyService(new CompanyRepository(personUow), personUow);
             var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), personUow);
             var toolServiceInstance = new ToolService(new ToolRepository(stuffUnow), stuffUnow);
-            var toolLocalizationServiceInstance = new ToolLocalizationService(new ToolLocalizationRepository(personUow), personUow);
+            var toolLocalizationServiceInstance = new CompanyAreasService(new ToolLocalizationRepository(personUow), personUow);
 
             container.RegisterInstance(new HolderService(new HolderRepository(personUow)));
             container.RegisterInstance(new UserService(new UserRepository(personUow), new CompanyRepository(personUow), personUow));

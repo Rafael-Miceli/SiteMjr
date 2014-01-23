@@ -127,6 +127,8 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public void DeleteToolCheckin(object idCheckinTool)
         {
+            var checkinToolToDelete = FindToolCheckin(idCheckinTool);
+            if (IsCheckinDateTimeCreatingInConsitencyBetweenCheckins(checkinToolToDelete)) throw new CheckinDateTimeInconsistencyException();
             _checkinToolRepository.Remove(idCheckinTool);
             _unitOfWork.Save();
         }

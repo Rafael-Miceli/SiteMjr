@@ -5,38 +5,38 @@ using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.Domain.Test.Model
 {
-    public static class ToolLocalizationDumies
+    public static class CompanyAreasDumies
     {
-        public static ToolLocalization CreateOneToolLocalization()
+        public static CompanyArea CreateOneToolLocalization()
         {
-            return new ToolLocalization
+            return new CompanyArea
             {
                 Id = 1,
                 Name = "Portão de visitantes"
             };
         }
 
-        public static List<ToolLocalization> CreateListOfToolsLocalizations()
+        public static List<CompanyArea> CreateListOfCompanyAreas()
         {
-            return new List<ToolLocalization>
+            return new List<CompanyArea>
             {
-                new ToolLocalization
+                new CompanyArea
                 {
                     Id = 2,
                     Name = "Portão de visitantes"
                 },
-                new ToolLocalization
+                new CompanyArea
                 {
                     Id = 3,
                     Name = "Portão de moradores"
                 },
-                new ToolLocalization
+                new CompanyArea
                 {
                     Id = 4,
                     Name = "Portão de pedestres"
                 }
                 ,
-                new ToolLocalization
+                new CompanyArea
                 {
                     Id = 5,
                     Name = "P1"

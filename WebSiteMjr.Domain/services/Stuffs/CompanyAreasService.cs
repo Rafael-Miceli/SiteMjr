@@ -8,39 +8,39 @@ using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.Domain.services.Stuffs
 {
-    public class ToolLocalizationService : IToolLocalizationService
+    public class CompanyAreasService : ICompanyAreasService
     {
         private readonly IToolLocalizationRepository _toolLocalizationRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ToolLocalizationService(IToolLocalizationRepository toolLocalizationRepository, IUnitOfWork unitOfWork)
+        public CompanyAreasService(IToolLocalizationRepository toolLocalizationRepository, IUnitOfWork unitOfWork)
         {
             _toolLocalizationRepository = toolLocalizationRepository;
             _unitOfWork = unitOfWork;
         }
 
-        public void CreateToolLocalization(ToolLocalization toolLocalization)
+        public void CreateToolLocalization(CompanyArea companyArea)
         {
-            if (ToolLocalizationExists(toolLocalization)) throw new ObjectExistsException<ToolLocalization>();
+            if (ToolLocalizationExists(companyArea)) throw new ObjectExistsException<CompanyArea>();
 
-            _toolLocalizationRepository.Add(toolLocalization);
+            _toolLocalizationRepository.Add(companyArea);
             _unitOfWork.Save();
         }
 
-        private bool ToolLocalizationExists(ToolLocalization toolLocalization)
+        private bool ToolLocalizationExists(CompanyArea companyArea)
         {
-            return FindToolLocalizationByName(toolLocalization.Name) != null;
+            return FindToolLocalizationByName(companyArea.Name) != null;
         }
 
-        public void UpdateToolLocalization(ToolLocalization toolLocalization)
+        public void UpdateToolLocalization(CompanyArea companyArea)
         {
-            if (ToolLocalizationExists(toolLocalization)) throw new ObjectExistsException<ToolLocalization>();
+            if (ToolLocalizationExists(companyArea)) throw new ObjectExistsException<CompanyArea>();
 
-            _toolLocalizationRepository.Update(toolLocalization);
+            _toolLocalizationRepository.Update(companyArea);
             _unitOfWork.Save();
         }
 
-        public ToolLocalization FindToolLocalization(object toolLocalizationId)
+        public CompanyArea FindToolLocalization(object toolLocalizationId)
         {
             return _toolLocalizationRepository.GetById(toolLocalizationId);
         }
@@ -51,7 +51,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
             _unitOfWork.Save();
         }
         
-        public ToolLocalization FindToolLocalizationByName(string name)
+        public CompanyArea FindToolLocalizationByName(string name)
         {
             return _toolLocalizationRepository.GetByName(name);
         }
@@ -62,13 +62,13 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
             foreach (var toolsId in toolsLocalizationsId)
             {
-                company.ToolsLocalizations.Add(toolsLocalizations.FirstOrDefault(tl => tl.Id == toolsId));
+                company.CompanyAreas.Add(toolsLocalizations.FirstOrDefault(tl => tl.Id == toolsId));
             }
 
             _unitOfWork.Save();
         }
 
-        public IEnumerable<ToolLocalization> ListToolsLocalizations()
+        public IEnumerable<CompanyArea> ListToolsLocalizations()
         {
             return _toolLocalizationRepository.GetAll();
         }

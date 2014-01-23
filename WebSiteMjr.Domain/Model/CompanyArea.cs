@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model
 {
-    public class ToolLocalization: IntId, IMjrException
+    public class CompanyArea: IntId, IMjrException
     {
         public virtual string Name { get; set; }
         public virtual ICollection<Company> Companies { get; set; } 
@@ -15,7 +11,7 @@ namespace WebSiteMjr.Domain.Model
         {
             get
             {
-                return "Localização de Ferramenta";
+                return "Área de condominio";
             }
         }
     }

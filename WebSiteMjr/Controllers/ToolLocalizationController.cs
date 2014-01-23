@@ -9,18 +9,18 @@ namespace WebSiteMjr.Controllers
     [FlexAuthorize(Roles = "MjrAdmin")]
     public class ToolLocalizationController : Controller
     {
-        private readonly ToolLocalizationService _toolLocalizationService;
+        private readonly CompanyAreasService _companyAreasService;
 
-        public ToolLocalizationController(ToolLocalizationService toolLocalizationService)
+        public ToolLocalizationController(CompanyAreasService companyAreasService)
         {
-            _toolLocalizationService = toolLocalizationService;
+            _companyAreasService = companyAreasService;
         }
 
         //
         // GET: /StuffCategory/
         public ActionResult Index()
         {
-            return View(_toolLocalizationService.ListToolsLocalizations());
+            return View(_companyAreasService.ListToolsLocalizations());
         }
 
         //
@@ -28,7 +28,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Details(int id)
         {
-            return View(_toolLocalizationService.FindToolLocalization(id));
+            return View(_companyAreasService.FindToolLocalization(id));
         }
 
         //
@@ -43,21 +43,21 @@ namespace WebSiteMjr.Controllers
         // POST: /StuffCategory/Create
 
         [HttpPost]
-        public ActionResult Create(ToolLocalization toolLocalization)
+        public ActionResult Create(CompanyArea companyArea)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return View(toolLocalization);
+                    return View(companyArea);
 
-                _toolLocalizationService.CreateToolLocalization(toolLocalization);
+                _companyAreasService.CreateToolLocalization(companyArea);
 
                 return RedirectToAction("Index");
             }
-            catch (ObjectExistsException<ToolLocalization> ex)
+            catch (ObjectExistsException<CompanyArea> ex)
             {
                 ModelState.AddModelError("ToolLocalizationExists", ex.Message);
-                return View(toolLocalization);
+                return View(companyArea);
             }
             catch
             {
@@ -70,27 +70,27 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(_toolLocalizationService.FindToolLocalization(id));
+            return View(_companyAreasService.FindToolLocalization(id));
         }
 
         //
         // POST: /StuffCategory/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, ToolLocalization toolLocalization)
+        public ActionResult Edit(int id, CompanyArea companyArea)
         {
             try
             {
-                if (!ModelState.IsValid) return View(toolLocalization);
+                if (!ModelState.IsValid) return View(companyArea);
 
-                _toolLocalizationService.UpdateToolLocalization(toolLocalization);
+                _companyAreasService.UpdateToolLocalization(companyArea);
 
                 return RedirectToAction("Index");
             }
-            catch (ObjectExistsException<ToolLocalization> ex)
+            catch (ObjectExistsException<CompanyArea> ex)
             {
                 ModelState.AddModelError("ToolLocalizationExists", ex.Message);
-                return View(toolLocalization);
+                return View(companyArea);
             }
             catch
             {
@@ -104,18 +104,18 @@ namespace WebSiteMjr.Controllers
         public ActionResult Delete(int id)
         {
 
-            return View(_toolLocalizationService.FindToolLocalization(id));
+            return View(_companyAreasService.FindToolLocalization(id));
         }
 
         //
         // POST: /StuffCategory/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(ToolLocalization toolLocalization)
+        public ActionResult Delete(CompanyArea companyArea)
         {
             try
             {
-                _toolLocalizationService.DeleteToolLocalization(toolLocalization.Id);
+                _companyAreasService.DeleteToolLocalization(companyArea.Id);
 
                 return RedirectToAction("Index");
             }

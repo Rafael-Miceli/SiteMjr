@@ -88,9 +88,9 @@ namespace WebSiteMjr.Domain.Test.Model
                 Email = "adm@portoverano.com",
                 Id = 1,
                 Phone = "(21) 2455-3100",
-                ToolsLocalizations = new Collection<ToolLocalization>
+                CompanyAreas = new Collection<CompanyArea>
                 {
-                    ToolLocalizationDumies.CreateListOfToolsLocalizations().Find(t => t.Id == 2)
+                    CompanyAreasDumies.CreateListOfCompanyAreas().Find(t => t.Id == 2)
                 }
             };
         }

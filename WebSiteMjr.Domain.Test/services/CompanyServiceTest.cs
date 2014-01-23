@@ -76,6 +76,25 @@ namespace WebSiteMjr.Domain.Test.services
         {
             
         }
+
+        [TestMethod]
+        public void Should_List_CompanyAreas_From_Selected_Company()
+        {
+            //Arrange
+            var company = CompanyDummies.CreateOneCompanyWithToolLocalization();
+
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            companyRepositoryMock.Setup(x => x.GetCompanyByName(company.Name)).Returns(company);
+
+            var companyService = new CompanyService(companyRepositoryMock.Object, new StubUnitOfWork());
+
+            //Act
+            var companyAreas = companyService.FindCompanyCompanyAreas(company.Name);
+
+            //Assert
+            Assert.IsNotNull(companyAreas);
+            Assert.IsTrue(companyAreas.Count > 0);
+        }
     }
 
     public class FakeCompanyRepository : ICompanyRepository
