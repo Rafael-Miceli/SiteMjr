@@ -81,7 +81,7 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_List_CompanyAreas_From_Selected_Company()
         {
             //Arrange
-            var company = CompanyDummies.CreateOneCompanyWithToolLocalization();
+            var company = CompanyDummies.CreateOneCompanyWithCompanyArea();
 
             var companyRepositoryMock = new Mock<ICompanyRepository>();
             companyRepositoryMock.Setup(x => x.GetCompanyByName(company.Name)).Returns(company);

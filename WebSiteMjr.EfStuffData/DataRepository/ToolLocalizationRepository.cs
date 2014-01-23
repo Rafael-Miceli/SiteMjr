@@ -5,9 +5,9 @@ using WebSiteMjr.EfStuffData.Context;
 
 namespace WebSiteMjr.EfStuffData.DataRepository
 {
-    //public class ToolLocalizationRepository : GenericStuffRepository<CompanyArea>, IToolLocalizationRepository
+    //public class CompanyAreaRepository : GenericStuffRepository<CompanyArea>, ICompanyAreaRepository
     //{
-    //    public ToolLocalizationRepository(UnitOfWork<StuffContext> uow) : base(uow)
+    //    public CompanyAreaRepository(UnitOfWork<StuffContext> uow) : base(uow)
     //    {}
 
     //    public CompanyArea GetByName(string name)

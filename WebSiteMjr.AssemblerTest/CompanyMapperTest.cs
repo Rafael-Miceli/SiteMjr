@@ -18,67 +18,67 @@ namespace WebSiteMjr.AssemblerTest
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
+            var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
             var company = CompanyDummies.CreateOneCompany();
 
-            toolLocalizationServiceMock.Setup(x => x.ListToolsLocalizations())
+            CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
                 .Returns(CompanyAreasDumies.CreateListOfCompanyAreas);
 
-            var companyMapper = new CompanyMapper(companyServiceMock.Object, toolLocalizationServiceMock.Object);
+            var companyMapper = new CompanyMapper(companyServiceMock.Object, CompanyAreaServiceMock.Object);
 
             //Act
             companyMapper.CompanyToEditCompanyViewModel(company);
 
             //Assert
-            toolLocalizationServiceMock.VerifyAll();
+            CompanyAreaServiceMock.VerifyAll();
         }
 
         [TestMethod]
-        public void Map_ToolsLocalization_In_Company_To_View_When_Company_Doesnt_Have_Any_ToolLocalization_Mapped()
+        public void Map_ToolsLocalization_In_Company_To_View_When_Company_Doesnt_Have_Any_CompanyArea_Mapped()
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
+            var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
             var dummieCompany = CompanyDummies.CreateOneCompany();
             var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(x => x.FindCompany(It.IsAny<Company>())).Returns(dummieCompany);
-            toolLocalizationServiceMock.Setup(x => x.ListToolsLocalizations())
+            CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
                 .Returns(dummieToolsLocaliations);
 
-            var companyMapper = new CompanyMapper(companyServiceMock.Object, toolLocalizationServiceMock.Object);
+            var companyMapper = new CompanyMapper(companyServiceMock.Object, CompanyAreaServiceMock.Object);
 
             //Act
             var companyViewModel = companyMapper.CompanyToEditCompanyViewModel(dummieCompany);
 
             //Assert
-            toolLocalizationServiceMock.VerifyAll();
-            Assert.AreEqual(companyViewModel.ToolsLocalizations.Count(), dummieToolsLocaliations.Count);
-            Assert.IsFalse(companyViewModel.ToolsLocalizations.Any(t => t.Selected));
+            CompanyAreaServiceMock.VerifyAll();
+            Assert.AreEqual(companyViewModel.CompanyAreas.Count(), dummieToolsLocaliations.Count);
+            Assert.IsFalse(companyViewModel.CompanyAreas.Any(t => t.Selected));
         }
 
         [TestMethod]
-        public void Map_ToolsLocalization_In_Company_To_View_When_Company_Have_Any_ToolLocalization_Mapped()
+        public void Map_ToolsLocalization_In_Company_To_View_When_Company_Have_Any_CompanyArea_Mapped()
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
-            var dummieCompany = CompanyDummies.CreateOneCompanyWithToolLocalization();
+            var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
+            var dummieCompany = CompanyDummies.CreateOneCompanyWithCompanyArea();
             var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(x => x.FindCompany(It.IsAny<Company>())).Returns(dummieCompany);
-            toolLocalizationServiceMock.Setup(x => x.ListToolsLocalizations())
+            CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
                 .Returns(dummieToolsLocaliations);
 
-            var companyMapper = new CompanyMapper(companyServiceMock.Object, toolLocalizationServiceMock.Object);
+            var companyMapper = new CompanyMapper(companyServiceMock.Object, CompanyAreaServiceMock.Object);
 
             //Act
             var companyViewModel = companyMapper.CompanyToEditCompanyViewModel(dummieCompany);
 
             //Assert
-            toolLocalizationServiceMock.VerifyAll();
-            Assert.AreEqual(companyViewModel.ToolsLocalizations.Count(), dummieToolsLocaliations.Count);
-            Assert.IsTrue(companyViewModel.ToolsLocalizations.Any(t => t.Selected));
+            CompanyAreaServiceMock.VerifyAll();
+            Assert.AreEqual(companyViewModel.CompanyAreas.Count(), dummieToolsLocaliations.Count);
+            Assert.IsTrue(companyViewModel.CompanyAreas.Any(t => t.Selected));
         }
 
         [TestMethod]
@@ -86,13 +86,13 @@ namespace WebSiteMjr.AssemblerTest
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
+            var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
             var dummieCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModel();
             var companyShouldReturn = CompanyDummies.CreateOneCompany();
 
             companyServiceMock.Setup(s => s.FindCompany(dummieCompanyViewModel.Id)).Returns(companyShouldReturn);
 
-            var companyMapper = new CompanyMapper(companyServiceMock.Object, toolLocalizationServiceMock.Object);
+            var companyMapper = new CompanyMapper(companyServiceMock.Object, CompanyAreaServiceMock.Object);
             
             //Act
             var companyMapped = companyMapper.EditCompanyViewModelToCompany(dummieCompanyViewModel);
@@ -107,36 +107,36 @@ namespace WebSiteMjr.AssemblerTest
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
-            var dummieCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithToolLocalization();
+            var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
+            var dummieCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithCompanyArea();
             var companyShouldReturn = CompanyDummies.CreateOneCompany();
             var actualCountBeforeUpdate = companyShouldReturn.CompanyAreas.Count;
 
             companyServiceMock.Setup(s => s.FindCompany(dummieCompanyViewModel.Id)).Returns(companyShouldReturn);
 
-            var companyMapper = new CompanyMapper(companyServiceMock.Object, toolLocalizationServiceMock.Object);
+            var companyMapper = new CompanyMapper(companyServiceMock.Object, CompanyAreaServiceMock.Object);
 
             //Act
             var companyMapped = companyMapper.EditCompanyViewModelToCompany(dummieCompanyViewModel);
 
             //Assert
             Assert.AreEqual(0, actualCountBeforeUpdate);
-            Assert.AreEqual(dummieCompanyViewModel.ToolsLocalizations.Count(c => c.Selected), companyMapped.CompanyAreas.Count);
+            Assert.AreEqual(dummieCompanyViewModel.CompanyAreas.Count(c => c.Selected), companyMapped.CompanyAreas.Count);
             companyServiceMock.VerifyAll();
         }
 
         [TestMethod]
-        public void Should_Map_EditedCompanyViewModel_To_Company_With_No_ToolLocalization_Registered()
+        public void Should_Map_EditedCompanyViewModel_To_Company_With_No_CompanyArea_Registered()
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
-            var dummieCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithNoToolLocalization();
+            var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
+            var dummieCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithNoCompanyArea();
             var companyShouldReturn = CompanyDummies.CreateOneCompany();
 
             companyServiceMock.Setup(s => s.FindCompany(dummieCompanyViewModel.Id)).Returns(companyShouldReturn);
 
-            var companyMapper = new CompanyMapper(companyServiceMock.Object, toolLocalizationServiceMock.Object);
+            var companyMapper = new CompanyMapper(companyServiceMock.Object, CompanyAreaServiceMock.Object);
 
             //Act
             companyMapper.EditCompanyViewModelToCompany(dummieCompanyViewModel);

@@ -1,0 +1,161 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebSiteMjr.Domain.Interfaces.Repository;
+using WebSiteMjr.Domain.Model;
+using WebSiteMjr.Domain.services;
+using WebSiteMjr.Domain.services.Stuffs;
+using WebSiteMjr.Domain.Test.Model;
+
+namespace WebSiteMjr.Domain.Test.services
+{
+    [TestClass]
+    public class CompanyAreaServiceTest
+    {
+        [TestMethod]
+        public void Should_Create_CompanyArea()
+        {
+            var CompanyArea = CompanyAreasDumies.CreateOneCompanyArea();
+            var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
+
+            CompanyAreaService.CreateCompanyArea(CompanyArea);
+
+            Assert.IsNotNull(CompanyAreaService.FindCompanyArea(CompanyArea.Id));
+        }
+
+        [TestMethod]
+        public void Should_Edit_CompanyArea()
+        {
+            const string CompanyAreaameUpdated = "Valor Atualizado";
+            var CompanyAreaCreated = CompanyAreasDumies.CreateOneCompanyArea();
+            var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
+            CompanyAreaService.CreateCompanyArea(CompanyAreaCreated);
+            var CompanyAreaToUpdate = CompanyAreaService.FindCompanyArea(CompanyAreaCreated.Id);
+            CompanyAreaToUpdate.Name = CompanyAreaameUpdated;
+
+            CompanyAreaService.UpdateCompanyArea(CompanyAreaToUpdate);
+
+            Assert.AreEqual(CompanyAreaService.FindCompanyArea(CompanyAreaToUpdate.Id).Name, CompanyAreaameUpdated);
+        }
+
+        [TestMethod]
+        public void Should_Delete_CompanyArea()
+        {
+            var CompanyAreaCreated = CompanyAreasDumies.CreateOneCompanyArea();
+            var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
+            CompanyAreaService.CreateCompanyArea(CompanyAreaCreated);
+            var CompanyAreaToDelete = CompanyAreaService.FindCompanyArea(CompanyAreaCreated.Id);
+
+            CompanyAreaService.DeleteCompanyArea(CompanyAreaToDelete.Id);
+
+            Assert.IsNull(CompanyAreaService.FindCompanyArea(CompanyAreaToDelete.Id));
+        }
+
+        [TestMethod]
+        public void Should_Find_CompanyArea_By_Name()
+        {
+            var CompanyAreaCreated = CompanyAreasDumies.CreateOneCompanyArea();
+            var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
+            CompanyAreaService.CreateCompanyArea(CompanyAreaCreated);
+
+            var CompanyAreaFounded = CompanyAreaService.FindCompanyAreaByName(CompanyAreaCreated.Name);
+
+            Assert.AreEqual(CompanyAreaFounded.Name, CompanyAreaCreated.Name);
+        }
+
+        [TestMethod]
+        public void Should_Link_One_CompanyArea_To_Company()
+        {
+            var CompanyAreasId = new List<int>();
+            var company = CompanyDummies.CreateOneCompany();
+            var CompanyArea = CompanyAreasDumies.CreateOneCompanyArea();
+            CompanyAreasId.Add(CompanyArea.Id);
+            var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
+            var companyService = new CompanyService(new FakeCompanyRepository(), new StubUnitOfWork());
+            CompanyAreaService.CreateCompanyArea(CompanyArea);
+            companyService.CreateCompany(company);
+
+            CompanyAreaService.LinkToolsLocalizationToCompany(CompanyAreasId, company);
+
+            Assert.IsNotNull(companyService.FindCompany(company.Id).CompanyAreas.FirstOrDefault(tl => tl.Id == CompanyArea.Id));
+        }
+
+        [TestMethod]
+        public void Should_Link_Two_Or_More_CompanyArea_To_Company()
+        {
+            var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
+            var companyService = new CompanyService(new FakeCompanyRepository(), new StubUnitOfWork());
+            var CompanyAreasId = new List<int>();
+            var company = CompanyDummies.CreateOneCompany();
+            var CompanyAreas = CompanyAreaService.ListCompanyAreas().ToList();
+            CompanyAreasId.Add(CompanyAreas[0].Id);
+            CompanyAreasId.Add(CompanyAreas[1].Id);
+            CompanyAreasId.Add(CompanyAreas[2].Id);
+            
+            companyService.CreateCompany(company);
+
+            CompanyAreaService.LinkToolsLocalizationToCompany(CompanyAreasId, company);
+
+            Assert.IsNotNull(companyService.FindCompany(company.Id).CompanyAreas.FirstOrDefault(tl => tl.Id == CompanyAreas[0].Id));
+            Assert.IsNotNull(companyService.FindCompany(company.Id).CompanyAreas.FirstOrDefault(tl => tl.Id == CompanyAreas[1].Id));
+            Assert.IsNotNull(companyService.FindCompany(company.Id).CompanyAreas.FirstOrDefault(tl => tl.Id == CompanyAreas[2].Id));
+        }
+
+    }
+
+    public class FakeCompanyAreaRepository : ICompanyAreaRepository
+    {
+        private readonly ICollection<CompanyArea> _companyAreas;
+
+        public FakeCompanyAreaRepository()
+        {
+            _companyAreas = CompanyAreasDumies.CreateListOfCompanyAreas();
+        }
+
+        public void Add(CompanyArea companyArea)
+        {
+            _companyAreas.Add(companyArea);
+        }
+
+        public void Remove(object entitie)
+        {
+            var CompanyAreaToDelete = _companyAreas.FirstOrDefault(t => t.Id == (int)entitie);
+
+            _companyAreas.Remove(CompanyAreaToDelete);
+        }
+
+        public void Update(CompanyArea companyArea)
+        {
+            var CompanyAreaToUpdate = _companyAreas.FirstOrDefault(t => t.Id == companyArea.Id);
+
+            CompanyAreaToUpdate.Name = CompanyAreaToUpdate.Name;
+        }
+
+        public IEnumerable<CompanyArea> GetAll()
+        {
+            return _companyAreas;
+        }
+
+        public IEnumerable<CompanyArea> Query(Func<CompanyArea, bool> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CompanyArea GetById(object id)
+        {
+            return _companyAreas.FirstOrDefault(t => t.Id == (int)id);
+        }
+
+        public CompanyArea Get(Expression<Func<CompanyArea, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CompanyArea GetByName(string name)
+        {
+            return _companyAreas.FirstOrDefault(t => t.Name.ToLower() == name.ToLower());
+        }
+    }
+}

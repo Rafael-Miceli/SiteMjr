@@ -10,7 +10,7 @@ namespace WebSiteMjr.EfData.Context
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<CompanyArea> ToolLocalizations { get; set; }
+        public DbSet<CompanyArea> CompanyAreas { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Holder> Holders { get; set; }
@@ -21,16 +21,16 @@ namespace WebSiteMjr.EfData.Context
 
             modelBuilder.Entity<Employee>().ToTable("Employees");
             modelBuilder.Entity<Company>().ToTable("Companies");
-            modelBuilder.Entity<CompanyArea>().ToTable("ToolLocalizations");
+            modelBuilder.Entity<CompanyArea>().ToTable("CompanyAreas");
 
             modelBuilder.Entity<CompanyArea>()
             .HasMany(i => i.Companies)
             .WithMany(s => s.CompanyAreas)
             .Map(m =>
             {
-                m.MapLeftKey("ToolLocalization_Id");
+                m.MapLeftKey("CompanyArea_Id");
                 m.MapRightKey("Company_Id");
-                m.ToTable("ToolLocalizationCompanies");
+                m.ToTable("CompanyAreaCompanies");
             });
         }
     }

@@ -7,7 +7,7 @@ namespace WebSiteMjr.Domain.Test.Model
 {
     public static class CompanyAreasDumies
     {
-        public static CompanyArea CreateOneToolLocalization()
+        public static CompanyArea CreateOneCompanyArea()
         {
             return new CompanyArea
             {

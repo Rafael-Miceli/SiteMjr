@@ -31,7 +31,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 Email = "adm@portoverano.com",
                 Id = 1,
                 Phone = "2455-3100",
-                ToolsLocalizations = new List<SelectListItem>
+                CompanyAreas = new List<SelectListItem>
                 {
                     new SelectListItem
                     {
@@ -43,7 +43,7 @@ namespace WebSiteMjr.Domain.Test.Model
             };
         }
 
-        public static EditCompanyViewModel CreateOneEditCompanyViewModelWithToolLocalization()
+        public static EditCompanyViewModel CreateOneEditCompanyViewModelWithCompanyArea()
         {
             return new EditCompanyViewModel
             {
@@ -53,7 +53,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 Email = "adm@portoverano.com",
                 Id = 1,
                 Phone = "2455-3100",
-                ToolsLocalizations = new List<SelectListItem>
+                CompanyAreas = new List<SelectListItem>
                 {
                     new SelectListItem
                     {
@@ -65,7 +65,7 @@ namespace WebSiteMjr.Domain.Test.Model
             };
         }
 
-        public static EditCompanyViewModel CreateOneEditCompanyViewModelWithNoToolLocalization()
+        public static EditCompanyViewModel CreateOneEditCompanyViewModelWithNoCompanyArea()
         {
             return new EditCompanyViewModel
             {
@@ -78,7 +78,7 @@ namespace WebSiteMjr.Domain.Test.Model
             };
         }
 
-        public static Company CreateOneCompanyWithToolLocalization()
+        public static Company CreateOneCompanyWithCompanyArea()
         {
             return new Company
             {

@@ -10,67 +10,67 @@ namespace WebSiteMjr.Domain.services.Stuffs
 {
     public class CompanyAreasService : ICompanyAreasService
     {
-        private readonly IToolLocalizationRepository _toolLocalizationRepository;
+        private readonly ICompanyAreaRepository _CompanyAreaRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CompanyAreasService(IToolLocalizationRepository toolLocalizationRepository, IUnitOfWork unitOfWork)
+        public CompanyAreasService(ICompanyAreaRepository CompanyAreaRepository, IUnitOfWork unitOfWork)
         {
-            _toolLocalizationRepository = toolLocalizationRepository;
+            _CompanyAreaRepository = CompanyAreaRepository;
             _unitOfWork = unitOfWork;
         }
 
-        public void CreateToolLocalization(CompanyArea companyArea)
+        public void CreateCompanyArea(CompanyArea companyArea)
         {
-            if (ToolLocalizationExists(companyArea)) throw new ObjectExistsException<CompanyArea>();
+            if (CompanyAreaExists(companyArea)) throw new ObjectExistsException<CompanyArea>();
 
-            _toolLocalizationRepository.Add(companyArea);
+            _CompanyAreaRepository.Add(companyArea);
             _unitOfWork.Save();
         }
 
-        private bool ToolLocalizationExists(CompanyArea companyArea)
+        private bool CompanyAreaExists(CompanyArea companyArea)
         {
-            return FindToolLocalizationByName(companyArea.Name) != null;
+            return FindCompanyAreaByName(companyArea.Name) != null;
         }
 
-        public void UpdateToolLocalization(CompanyArea companyArea)
+        public void UpdateCompanyArea(CompanyArea companyArea)
         {
-            if (ToolLocalizationExists(companyArea)) throw new ObjectExistsException<CompanyArea>();
+            if (CompanyAreaExists(companyArea)) throw new ObjectExistsException<CompanyArea>();
 
-            _toolLocalizationRepository.Update(companyArea);
+            _CompanyAreaRepository.Update(companyArea);
             _unitOfWork.Save();
         }
 
-        public CompanyArea FindToolLocalization(object toolLocalizationId)
+        public CompanyArea FindCompanyArea(object CompanyAreaId)
         {
-            return _toolLocalizationRepository.GetById(toolLocalizationId);
+            return _CompanyAreaRepository.GetById(CompanyAreaId);
         }
 
-        public void DeleteToolLocalization(object id)
+        public void DeleteCompanyArea(object id)
         {
-            _toolLocalizationRepository.Remove(id);
+            _CompanyAreaRepository.Remove(id);
             _unitOfWork.Save();
         }
         
-        public CompanyArea FindToolLocalizationByName(string name)
+        public CompanyArea FindCompanyAreaByName(string name)
         {
-            return _toolLocalizationRepository.GetByName(name);
+            return _CompanyAreaRepository.GetByName(name);
         }
 
-        public void LinkToolsLocalizationToCompany(List<int> toolsLocalizationsId, Company company)
+        public void LinkToolsLocalizationToCompany(List<int> CompanyAreasId, Company company)
         {
-            var toolsLocalizations = _toolLocalizationRepository.GetAll().ToList();
+            var CompanyAreas = _CompanyAreaRepository.GetAll().ToList();
 
-            foreach (var toolsId in toolsLocalizationsId)
+            foreach (var toolsId in CompanyAreasId)
             {
-                company.CompanyAreas.Add(toolsLocalizations.FirstOrDefault(tl => tl.Id == toolsId));
+                company.CompanyAreas.Add(CompanyAreas.FirstOrDefault(tl => tl.Id == toolsId));
             }
 
             _unitOfWork.Save();
         }
 
-        public IEnumerable<CompanyArea> ListToolsLocalizations()
+        public IEnumerable<CompanyArea> ListCompanyAreas()
         {
-            return _toolLocalizationRepository.GetAll();
+            return _CompanyAreaRepository.GetAll();
         }
     }
 }

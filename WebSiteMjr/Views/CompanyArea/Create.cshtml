@@ -7,7 +7,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Create", "ToolLocalization", FormMethod.Post, new { id = "createCompanyAreaForm" }))
+@using (Html.BeginForm("Create", "CompanyArea", FormMethod.Post, new { id = "createCompanyAreaForm" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)

@@ -5,12 +5,12 @@ namespace WebSiteMjr.Domain.Interfaces.Services
 {
     public interface ICompanyAreasService
     {
-        void CreateToolLocalization(CompanyArea companyArea);
-        void UpdateToolLocalization(CompanyArea companyArea);
-        CompanyArea FindToolLocalization(object toolLocalizationId);
-        void DeleteToolLocalization(object id);
-        CompanyArea FindToolLocalizationByName(string name);
-        void LinkToolsLocalizationToCompany(List<int> toolsLocalizationsId, Company company);
-        IEnumerable<CompanyArea> ListToolsLocalizations();
+        void CreateCompanyArea(CompanyArea companyArea);
+        void UpdateCompanyArea(CompanyArea companyArea);
+        CompanyArea FindCompanyArea(object CompanyAreaId);
+        void DeleteCompanyArea(object id);
+        CompanyArea FindCompanyAreaByName(string name);
+        void LinkToolsLocalizationToCompany(List<int> CompanyAreasId, Company company);
+        IEnumerable<CompanyArea> ListCompanyAreas();
     }
 }

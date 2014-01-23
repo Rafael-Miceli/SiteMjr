@@ -36,7 +36,7 @@ namespace WebSiteMjr.Assembler
             company.Address = editCompanyViewModel.Address;
             company.Phone = editCompanyViewModel.Phone;
 
-            company.CompanyAreas = MapCompanyAreaSelectedInEditCompanyViewModelToCompany(editCompanyViewModel.ToolsLocalizations);
+            company.CompanyAreas = MapCompanyAreaSelectedInEditCompanyViewModelToCompany(editCompanyViewModel.CompanyAreas);
 
             return company;
         }
@@ -51,23 +51,23 @@ namespace WebSiteMjr.Assembler
                 Email = company.Email,
                 Name = company.Name,
                 Phone = company.Phone,
-                ToolsLocalizations = MapCompanyAreasInCompanyToView(company.CompanyAreas)
+                CompanyAreas = MapCompanyAreasInCompanyToView(company.CompanyAreas)
             };
             return editCompanyViewModel;
         }
 
-        private IList<SelectListItem> MapCompanyAreasInCompanyToView(ICollection<CompanyArea> toolsLocalizationsInCompany)
+        private IList<SelectListItem> MapCompanyAreasInCompanyToView(ICollection<CompanyArea> CompanyAreasInCompany)
         {
-            var toolsLocalization = _companyAreasService.ListToolsLocalizations();
+            var toolsLocalization = _companyAreasService.ListCompanyAreas();
             var toolsLocalizationMapped = new List<SelectListItem>();
 
-            foreach (var toolLocalization in toolsLocalization)
+            foreach (var CompanyArea in toolsLocalization)
             {
                 toolsLocalizationMapped.Add(new SelectListItem
                 {
-                    Selected = toolsLocalizationsInCompany.Any(t => t.Id == toolLocalization.Id),
-                    Text = toolLocalization.Name,
-                    Value = toolLocalization.Id.ToString()
+                    Selected = CompanyAreasInCompany.Any(t => t.Id == CompanyArea.Id),
+                    Text = CompanyArea.Name,
+                    Value = CompanyArea.Id.ToString()
                 });
             }
 
@@ -77,14 +77,14 @@ namespace WebSiteMjr.Assembler
         private ICollection<CompanyArea> MapCompanyAreaSelectedInEditCompanyViewModelToCompany(IEnumerable<SelectListItem> companyAreasSelectedInView)
         {
             if (companyAreasSelectedInView == null) return null;
-            var toolsLocalization = _companyAreasService.ListToolsLocalizations().ToList();
+            var toolsLocalization = _companyAreasService.ListCompanyAreas().ToList();
             var toolsLocalizationMapped = new List<CompanyArea>();
 
-            foreach (var toolLocalizationSelected in companyAreasSelectedInView)
+            foreach (var CompanyAreaSelected in companyAreasSelectedInView)
             {
-                if (toolLocalizationSelected.Selected)
+                if (CompanyAreaSelected.Selected)
                 {
-                    toolsLocalizationMapped.Add(toolsLocalization.FirstOrDefault(t => t.Id == int.Parse(toolLocalizationSelected.Value)));
+                    toolsLocalizationMapped.Add(toolsLocalization.FirstOrDefault(t => t.Id == int.Parse(CompanyAreaSelected.Value)));
                 }
             }
 

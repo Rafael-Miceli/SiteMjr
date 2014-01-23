@@ -702,6 +702,11 @@ namespace WebSiteMjr.Domain.Test.services
                     {
                         Name = "Ferramenta 2",
                         Id = 2
+                    },
+                    CompanyArea = new CompanyArea
+                    {
+                        Id = 1,
+                        Name = "Portão de visitantes"
                     }
                 },
                 new CheckinTool

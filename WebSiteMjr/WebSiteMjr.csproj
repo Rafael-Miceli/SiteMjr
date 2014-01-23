@@ -208,7 +208,7 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StuffCategoryController.cs" />
-    <Compile Include="Controllers\ToolLocalizationController.cs" />
+    <Compile Include="Controllers\CompanyAreaController.cs" />
     <Compile Include="Controllers\CheckinToolController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Controllers\StuffController.cs" />
@@ -448,11 +448,11 @@
     <Content Include="Views\CheckinTool\Details.cshtml" />
     <Content Include="Views\CheckinTool\Edit.cshtml" />
     <Content Include="Views\CheckinTool\Delete.cshtml" />
-    <Content Include="Views\ToolLocalization\Create.cshtml" />
-    <Content Include="Views\ToolLocalization\Delete.cshtml" />
-    <Content Include="Views\ToolLocalization\Details.cshtml" />
-    <Content Include="Views\ToolLocalization\Edit.cshtml" />
-    <Content Include="Views\ToolLocalization\Index.cshtml" />
+    <Content Include="Views\CompanyArea\Create.cshtml" />
+    <Content Include="Views\CompanyArea\Delete.cshtml" />
+    <Content Include="Views\CompanyArea\Details.cshtml" />
+    <Content Include="Views\CompanyArea\Edit.cshtml" />
+    <Content Include="Views\CompanyArea\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

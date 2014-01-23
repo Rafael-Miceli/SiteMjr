@@ -6,9 +6,9 @@ using WebSiteMjr.EfData.DataRepository.GenericRepositorys;
 
 namespace WebSiteMjr.EfData.DataRepository
 {
-    public class ToolLocalizationRepository : GenericPersonRepository<CompanyArea>, IToolLocalizationRepository
+    public class CompanyAreaRepository : GenericPersonRepository<CompanyArea>, ICompanyAreaRepository
     {
-        public ToolLocalizationRepository(UnitOfWork<PersonsContext> uow) : base(uow)
+        public CompanyAreaRepository(UnitOfWork<PersonsContext> uow) : base(uow)
         {}
 
         public CompanyArea GetByName(string name)

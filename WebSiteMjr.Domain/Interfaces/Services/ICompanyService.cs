@@ -11,5 +11,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         IEnumerable<Company> ListCompany();
         Company FindCompany(object idcompany);
         Company FindCompanyByName(string companyName);
+        ICollection<CompanyArea> FindCompanyCompanyAreas(string name);
     }
 }

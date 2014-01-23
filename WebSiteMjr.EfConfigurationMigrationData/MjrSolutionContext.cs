@@ -15,7 +15,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData
         public DbSet<Holder> Holders { get; set; }
         public DbSet<Stuff> Stuffs { get; set; }
         public DbSet<Tool> Tools { get; set; }
-        public DbSet<CompanyArea> ToolLocalizations { get; set; }
+        public DbSet<CompanyArea> CompanyAreas { get; set; }
         public DbSet<CheckinTool> CheckinTools { get; set; }
         public DbSet<StuffCategory> StuffCategories { get; set; }
         public DbSet<StuffManufacture> StuffManufactures { get; set; }

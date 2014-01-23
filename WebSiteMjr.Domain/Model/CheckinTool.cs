@@ -16,5 +16,7 @@ namespace WebSiteMjr.Domain.Model
                 return "Data de movimentação para a ferramenta";
             } 
         }
+
+        public virtual CompanyArea CompanyArea { get; set; }
     }
 }

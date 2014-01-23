@@ -7,11 +7,11 @@ using WebSiteMjr.Filters;
 namespace WebSiteMjr.Controllers
 {
     [FlexAuthorize(Roles = "MjrAdmin")]
-    public class ToolLocalizationController : Controller
+    public class CompanyAreaController : Controller
     {
         private readonly CompanyAreasService _companyAreasService;
 
-        public ToolLocalizationController(CompanyAreasService companyAreasService)
+        public CompanyAreaController(CompanyAreasService companyAreasService)
         {
             _companyAreasService = companyAreasService;
         }
@@ -20,7 +20,7 @@ namespace WebSiteMjr.Controllers
         // GET: /StuffCategory/
         public ActionResult Index()
         {
-            return View(_companyAreasService.ListToolsLocalizations());
+            return View(_companyAreasService.ListCompanyAreas());
         }
 
         //
@@ -28,7 +28,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Details(int id)
         {
-            return View(_companyAreasService.FindToolLocalization(id));
+            return View(_companyAreasService.FindCompanyArea(id));
         }
 
         //
@@ -50,13 +50,13 @@ namespace WebSiteMjr.Controllers
                 if (!ModelState.IsValid)
                     return View(companyArea);
 
-                _companyAreasService.CreateToolLocalization(companyArea);
+                _companyAreasService.CreateCompanyArea(companyArea);
 
                 return RedirectToAction("Index");
             }
             catch (ObjectExistsException<CompanyArea> ex)
             {
-                ModelState.AddModelError("ToolLocalizationExists", ex.Message);
+                ModelState.AddModelError("CompanyAreaExists", ex.Message);
                 return View(companyArea);
             }
             catch
@@ -70,7 +70,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(_companyAreasService.FindToolLocalization(id));
+            return View(_companyAreasService.FindCompanyArea(id));
         }
 
         //
@@ -83,13 +83,13 @@ namespace WebSiteMjr.Controllers
             {
                 if (!ModelState.IsValid) return View(companyArea);
 
-                _companyAreasService.UpdateToolLocalization(companyArea);
+                _companyAreasService.UpdateCompanyArea(companyArea);
 
                 return RedirectToAction("Index");
             }
             catch (ObjectExistsException<CompanyArea> ex)
             {
-                ModelState.AddModelError("ToolLocalizationExists", ex.Message);
+                ModelState.AddModelError("CompanyAreaExists", ex.Message);
                 return View(companyArea);
             }
             catch
@@ -104,7 +104,7 @@ namespace WebSiteMjr.Controllers
         public ActionResult Delete(int id)
         {
 
-            return View(_companyAreasService.FindToolLocalization(id));
+            return View(_companyAreasService.FindCompanyArea(id));
         }
 
         //
@@ -115,7 +115,7 @@ namespace WebSiteMjr.Controllers
         {
             try
             {
-                _companyAreasService.DeleteToolLocalization(companyArea.Id);
+                _companyAreasService.DeleteCompanyArea(companyArea.Id);
 
                 return RedirectToAction("Index");
             }

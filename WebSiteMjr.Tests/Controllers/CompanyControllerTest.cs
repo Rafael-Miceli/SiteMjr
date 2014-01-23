@@ -17,17 +17,17 @@ namespace WebSiteMjr.Tests.Controllers
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
+            var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
 
             var dummieCompany = CompanyDummies.CreateOneCompany();
             var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModel();
             var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
             
             companyServiceMock.Setup(s => s.FindCompany(dummieEditCompanyViewModel.Id)).Returns(dummieCompany);
-            toolLocalizationServiceMock.Setup(x => x.ListToolsLocalizations())
+            CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
                 .Returns(dummieToolsLocaliations);
 
-            var companyController = new CompanyController(companyServiceMock.Object, toolLocalizationServiceMock.Object);
+            var companyController = new CompanyController(companyServiceMock.Object, CompanyAreaServiceMock.Object);
 
             //Act
             var model = (companyController.Edit(dummieEditCompanyViewModel.Id) as ViewResult).Model;
@@ -35,7 +35,7 @@ namespace WebSiteMjr.Tests.Controllers
             //Assert
             Assert.IsInstanceOfType(model, typeof(EditCompanyViewModel));
             companyServiceMock.VerifyAll();
-            toolLocalizationServiceMock.VerifyAll();
+            CompanyAreaServiceMock.VerifyAll();
         }
 
         [TestMethod]
@@ -43,17 +43,17 @@ namespace WebSiteMjr.Tests.Controllers
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
+            var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
 
             var dummieCompany = CompanyDummies.CreateOneCompany();
             var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModel();
             var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(s => s.FindCompany(dummieEditCompanyViewModel.Id)).Returns(dummieCompany);
-            toolLocalizationServiceMock.Setup(x => x.ListToolsLocalizations())
+            CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
                 .Returns(dummieToolsLocaliations);
 
-            var companyController = new CompanyController(companyServiceMock.Object, toolLocalizationServiceMock.Object);
+            var companyController = new CompanyController(companyServiceMock.Object, CompanyAreaServiceMock.Object);
 
             //Act
             var model = (companyController.Edit(dummieEditCompanyViewModel.Id) as ViewResult).Model;
@@ -61,7 +61,7 @@ namespace WebSiteMjr.Tests.Controllers
             //Assert
             Assert.AreEqual(dummieCompany.Name, ( (EditCompanyViewModel)model).Name);
             companyServiceMock.VerifyAll();
-            toolLocalizationServiceMock.VerifyAll();
+            CompanyAreaServiceMock.VerifyAll();
         }
 
         [TestMethod]
@@ -69,7 +69,7 @@ namespace WebSiteMjr.Tests.Controllers
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
+            var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
 
             var dummieCompany = CompanyDummies.CreateOneCompany();
             var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModel();
@@ -77,18 +77,18 @@ namespace WebSiteMjr.Tests.Controllers
 
             companyServiceMock.Setup(s => s.FindCompany(dummieEditCompanyViewModel.Id)).Returns(dummieCompany);
             companyServiceMock.Setup(s => s.UpdateCompany(dummieCompany));
-            toolLocalizationServiceMock.Setup(x => x.ListToolsLocalizations())
+            CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
                 .Returns(dummieToolsLocaliations);
 
-            var companyController = new CompanyController(companyServiceMock.Object, toolLocalizationServiceMock.Object);
+            var companyController = new CompanyController(companyServiceMock.Object, CompanyAreaServiceMock.Object);
 
             //Act
             companyController.Edit(dummieEditCompanyViewModel.Id, dummieEditCompanyViewModel);
 
             //Assert
-            Assert.AreEqual(0, dummieEditCompanyViewModel.ToolsLocalizations.Count(s => s.Selected));
+            Assert.AreEqual(0, dummieEditCompanyViewModel.CompanyAreas.Count(s => s.Selected));
             companyServiceMock.VerifyAll();
-            toolLocalizationServiceMock.VerifyAll();
+            CompanyAreaServiceMock.VerifyAll();
         }
 
         [TestMethod]
@@ -96,26 +96,26 @@ namespace WebSiteMjr.Tests.Controllers
         {
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
-            var toolLocalizationServiceMock = new Mock<ICompanyAreasService>();
+            var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
 
             var dummieCompany = CompanyDummies.CreateOneCompany();
-            var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithToolLocalization();
+            var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithCompanyArea();
             var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(s => s.FindCompany(dummieEditCompanyViewModel.Id)).Returns(dummieCompany);
             companyServiceMock.Setup(s => s.UpdateCompany(dummieCompany));
-            toolLocalizationServiceMock.Setup(x => x.ListToolsLocalizations())
+            CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
                 .Returns(dummieToolsLocaliations);
 
-            var companyController = new CompanyController(companyServiceMock.Object, toolLocalizationServiceMock.Object);
+            var companyController = new CompanyController(companyServiceMock.Object, CompanyAreaServiceMock.Object);
 
             //Act
             companyController.Edit(dummieEditCompanyViewModel.Id, dummieEditCompanyViewModel);
 
             //Assert
-            Assert.AreEqual(1, dummieEditCompanyViewModel.ToolsLocalizations.Count(s => s.Selected));
+            Assert.AreEqual(1, dummieEditCompanyViewModel.CompanyAreas.Count(s => s.Selected));
             companyServiceMock.VerifyAll();
-            toolLocalizationServiceMock.VerifyAll();
+            CompanyAreaServiceMock.VerifyAll();
         }
     }
 }

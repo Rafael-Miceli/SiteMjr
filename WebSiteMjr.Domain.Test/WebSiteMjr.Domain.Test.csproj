@@ -93,7 +93,7 @@
     <Compile Include="services\StuffServiceTest.cs" />
     <Compile Include="services\StuffCategoryServiceTest.cs" />
     <Compile Include="services\CheckInToolServiceTest.cs" />
-    <Compile Include="services\ToolLocalizationServiceTest.cs" />
+    <Compile Include="services\CompanyAreaServiceTest.cs" />
     <Compile Include="services\UserServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

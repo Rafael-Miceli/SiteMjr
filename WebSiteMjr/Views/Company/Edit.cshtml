@@ -70,16 +70,16 @@
             </thead>
             <tbody>
 
-                @for (var i = 0; i < Model.ToolsLocalizations.Count; i++)
+                @for (var i = 0; i < Model.CompanyAreas.Count; i++)
                 {
                     <tr>
                         <td>
-                            @Html.HiddenFor(tlId => tlId.ToolsLocalizations[i].Value)
-                            @Html.HiddenFor(tlId => tlId.ToolsLocalizations[i].Text)
-                            @Html.CheckBoxFor(tlId => tlId.ToolsLocalizations[i].Selected, new { id = "Chk-" + i })
+                            @Html.HiddenFor(tlId => tlId.CompanyAreas[i].Value)
+                            @Html.HiddenFor(tlId => tlId.CompanyAreas[i].Text)
+                            @Html.CheckBoxFor(tlId => tlId.CompanyAreas[i].Selected, new { id = "Chk-" + i })
                         </td>
                         <td>
-                            @Html.ActionLink(Model.ToolsLocalizations[i].Text, "Details", "ToolLocalization", new {id = Model.ToolsLocalizations[i].Value}, new { @for = "Chk-" + i })
+                            @Html.ActionLink(Model.CompanyAreas[i].Text, "Details", "CompanyArea", new {id = Model.CompanyAreas[i].Value}, new { @for = "Chk-" + i })
                         </td>
                     </tr>
                 }

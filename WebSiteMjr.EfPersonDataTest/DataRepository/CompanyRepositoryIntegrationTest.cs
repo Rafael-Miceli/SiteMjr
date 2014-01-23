@@ -53,15 +53,15 @@ namespace WebSiteMjr.EfPersonDataTest.DataRepository
                 var personContext = new PersonsContext();
                 var uow = new UnitOfWork<PersonsContext>();
                 var companyRepository = new CompanyRepository(uow);
-                var toolLocalizationRepository = new ToolLocalizationRepository(uow);
+                var CompanyAreaRepository = new CompanyAreaRepository(uow);
 
-                var toolLocalization =
+                var CompanyArea =
                     CompanyAreasDumies.CreateListOfCompanyAreas().FirstOrDefault(t => t.Id == 2);
                 var company = companyRepository.GetById(4);
 
-                toolLocalizationRepository.Add(toolLocalization);
+                CompanyAreaRepository.Add(CompanyArea);
                 uow.Save();
-                company.CompanyAreas.Add(toolLocalizationRepository.GetById(6));
+                company.CompanyAreas.Add(CompanyAreaRepository.GetById(6));
                 companyRepository.Update(company);
                 uow.Save();
 
