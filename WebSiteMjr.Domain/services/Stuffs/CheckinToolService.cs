@@ -27,7 +27,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
         {
             if (IsAnyCheckiDateTimeOfThisToolAlreadyExists(checkinTool)) throw new ObjectExistsException<CheckinTool>();
             if (IsCheckinHolderTwiceThen(checkinTool)) throw new CheckinHolderTwiceThenException();
-            if (IsLastCheckinOfThisToolInACompany(checkinTool)) throw new CheckinCompanyToCompanyException();
+            if (IsActualCheckinAndLastCheckinOfThisToolInACompany(checkinTool)) throw new CheckinCompanyToCompanyException();
 
             _checkinToolRepository.Add(checkinTool);
             _unitOfWork.Save();
@@ -52,9 +52,26 @@ namespace WebSiteMjr.Domain.services.Stuffs
             return checkinsWithActualTool.OrderByDescending(c => c.CheckinDateTime).FirstOrDefault(c => c.CheckinDateTime < checkinDateTime);
         }
 
-        private bool IsLastCheckinOfThisToolInACompany(CheckinTool checkinTool)
+        private bool IsActualCheckinAndLastCheckinOfThisToolInACompany(CheckinTool checkinTool)
         {
-            return IsCheckinOfThisToolInCompany(checkinTool.EmployeeCompanyHolderId) && WasLastCheckinOfThisToolInCompany(checkinTool);
+            var actualCheckinOfthisToolCompany = ExistsCheckinOfThisToolInCompany(checkinTool.EmployeeCompanyHolderId);
+
+            var isActualCheckinOfthisToolInCompany = actualCheckinOfthisToolCompany != null;
+            var isCompanyAreaNull = checkinTool.CompanyArea == null;
+
+            if (!isActualCheckinOfthisToolInCompany || isCompanyAreaNull || !CompanyAreaExistsInCompany(actualCheckinOfthisToolCompany, checkinTool.CompanyArea.Name))
+                checkinTool.CompanyArea = null;
+
+            return isActualCheckinOfthisToolInCompany && WasLastCheckinOfThisToolInCompany(checkinTool);
+        }
+
+        private bool CompanyAreaExistsInCompany(Company actualCheckinOfthisToolCompany, string companyAreaName)
+        {
+            if (actualCheckinOfthisToolCompany == null) return false;
+
+            var companyCompanyAreas = _companyService.FindCompanyCompanyAreas(actualCheckinOfthisToolCompany.Name);
+
+            return companyCompanyAreas != null && companyCompanyAreas.Any(ca => ca.Name == companyAreaName);
         }
 
         private bool WasLastCheckinOfThisToolInCompany(CheckinTool checkinTool)
@@ -76,7 +93,6 @@ namespace WebSiteMjr.Domain.services.Stuffs
             return _listCheckinToolsWithActualTool;
         }
 
-
         public bool IsCheckinOfThisToolInCompany(int employeeCompanyHolderId)
         {
             try
@@ -90,25 +106,38 @@ namespace WebSiteMjr.Domain.services.Stuffs
             
         }
 
+        public Company ExistsCheckinOfThisToolInCompany(int employeeCompanyHolderId)
+        {
+            try
+            {
+                return _companyService.FindCompany(employeeCompanyHolderId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
 
         public void UpdateToolCheckin(CheckinTool checkinTool)
         {
             var checkinToolToUpdate = FindToolCheckin(checkinTool.Id);
 
             if (IsAnyCheckiDateTimeOfThisToolAlreadyExists(checkinTool)) throw new ObjectExistsException<CheckinTool>();
-            if (IsCheckinDateTimeCreatingInConsitencyBetweenCheckins(checkinToolToUpdate)) throw new CheckinDateTimeInconsistencyException();
+            if (IsActualCheckinCreatingInConsitencyBetweenOtherCheckins(checkinToolToUpdate)) throw new CheckinInconsistencyException();
             if (IsCheckinHolderTwiceThen(checkinTool)) throw new CheckinHolderTwiceThenException();
-            if (IsLastCheckinOfThisToolInACompany(checkinTool)) throw new CheckinCompanyToCompanyException();
+            if (IsActualCheckinAndLastCheckinOfThisToolInACompany(checkinTool)) throw new CheckinCompanyToCompanyException();
 
             checkinToolToUpdate.EmployeeCompanyHolderId = checkinTool.EmployeeCompanyHolderId;
             checkinToolToUpdate.Tool = checkinTool.Tool;
             checkinToolToUpdate.CheckinDateTime = checkinTool.CheckinDateTime;
+            checkinToolToUpdate.CompanyArea = checkinTool.CompanyArea;
 
             _checkinToolRepository.Update(checkinToolToUpdate);
             _unitOfWork.Save();
         }
 
-        private bool IsCheckinDateTimeCreatingInConsitencyBetweenCheckins(CheckinTool originalCheckin)
+        private bool IsActualCheckinCreatingInConsitencyBetweenOtherCheckins(CheckinTool originalCheckin)
         {
             var checkinsWithOriginalTool = ListCheckinToolsWithActualTool(originalCheckin.Tool.Id);
 
@@ -116,19 +145,50 @@ namespace WebSiteMjr.Domain.services.Stuffs
                 return false;
 
             checkinsWithOriginalTool = checkinsWithOriginalTool.OrderByDescending(c => c.CheckinDateTime).ToList();
-            var checkinWithThisToolBeforeActual = checkinsWithOriginalTool.FirstOrDefault(c => c.CheckinDateTime < originalCheckin.CheckinDateTime);
-            var checkinWithThisToolAfterActual = checkinsWithOriginalTool.FirstOrDefault(c => c.CheckinDateTime > originalCheckin.CheckinDateTime);
+            var checkinWithThisToolBeforeActual = GetFirstCheckinBeforeActual(checkinsWithOriginalTool, originalCheckin);
+            var checkinWithThisToolAfterActual = GetFirstCheckinAfterActual(checkinsWithOriginalTool, originalCheckin);
 
             if (checkinWithThisToolBeforeActual == null || checkinWithThisToolAfterActual == null)
                 return false;
 
-            return IsCheckinOfThisToolInCompany(checkinWithThisToolBeforeActual.EmployeeCompanyHolderId) && IsCheckinOfThisToolInCompany(checkinWithThisToolAfterActual.EmployeeCompanyHolderId);
+            if (IsActualCheckinCreatingSequenceOfCompanyInconsistency(checkinWithThisToolBeforeActual, checkinWithThisToolAfterActual))
+            {
+                return true;
+            }
+
+            if (IsActualCheckinCreatingSequenceOfEmployeeInconsistency(checkinWithThisToolBeforeActual, checkinWithThisToolAfterActual, originalCheckin))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private CheckinTool GetFirstCheckinBeforeActual(IEnumerable<CheckinTool> checkins, CheckinTool originalCheckin)
+        {
+            return checkins.FirstOrDefault(c => c.CheckinDateTime < originalCheckin.CheckinDateTime);
+        }
+
+        private CheckinTool GetFirstCheckinAfterActual(IEnumerable<CheckinTool> checkins, CheckinTool originalCheckin)
+        {
+            return checkins.LastOrDefault(c => c.CheckinDateTime > originalCheckin.CheckinDateTime);
+        }
+
+        private bool IsActualCheckinCreatingSequenceOfCompanyInconsistency(CheckinTool checkinWithThisToolBeforeActual, CheckinTool checkinWithThisToolAfterActual)
+        {
+            return IsCheckinOfThisToolInCompany(checkinWithThisToolBeforeActual.EmployeeCompanyHolderId) &&
+                   IsCheckinOfThisToolInCompany(checkinWithThisToolAfterActual.EmployeeCompanyHolderId);
+        }
+
+        private bool IsActualCheckinCreatingSequenceOfEmployeeInconsistency(CheckinTool checkinWithThisToolBeforeActual, CheckinTool checkinWithThisToolAfterActual, CheckinTool originalCheckin)
+        {
+            return checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == originalCheckin.EmployeeCompanyHolderId || checkinWithThisToolAfterActual.EmployeeCompanyHolderId == originalCheckin.EmployeeCompanyHolderId;
         }
 
         public void DeleteToolCheckin(object idCheckinTool)
         {
             var checkinToolToDelete = FindToolCheckin(idCheckinTool);
-            if (IsCheckinDateTimeCreatingInConsitencyBetweenCheckins(checkinToolToDelete)) throw new CheckinDateTimeInconsistencyException();
+            if (IsActualCheckinCreatingInConsitencyBetweenOtherCheckins(checkinToolToDelete)) throw new CheckinInconsistencyException();
             _checkinToolRepository.Remove(idCheckinTool);
             _unitOfWork.Save();
         }

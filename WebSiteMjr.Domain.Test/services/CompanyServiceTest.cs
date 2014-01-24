@@ -95,6 +95,24 @@ namespace WebSiteMjr.Domain.Test.services
             Assert.IsNotNull(companyAreas);
             Assert.IsTrue(companyAreas.Count > 0);
         }
+
+        [TestMethod]
+        public void Should_Return_Nothing_When_Dont_Exists_CompanyAreas_From_Selected_Company()
+        {
+            //Arrange
+            var company = CompanyDummies.CreateOneCompanyWithCompanyArea();
+
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            companyRepositoryMock.Setup(x => x.GetCompanyByName(company.Name)).Returns(company);
+
+            var companyService = new CompanyService(companyRepositoryMock.Object, new StubUnitOfWork());
+
+            //Act
+            var companyAreas = companyService.FindCompanyCompanyAreas("");
+
+            //Assert
+            Assert.IsNull(companyAreas);
+        }
     }
 
     public class FakeCompanyRepository : ICompanyRepository

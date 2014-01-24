@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -50,9 +51,16 @@ namespace WebSiteMjr.Domain.services
             return _companyRepository.GetCompanyByName(companyName);
         }
 
-        public ICollection<CompanyArea> FindCompanyCompanyAreas(string name)
+        public ICollection<CompanyArea> FindCompanyCompanyAreas(string companyName)
         {
-            return FindCompanyByName(name).CompanyAreas;
+            var company = FindCompanyByName(companyName);
+            return company != null ? company.CompanyAreas : null;
+        }
+
+        public IEnumerable<string> FindCompanyCompanyAreasNames(string companyName)
+        {
+            var companyAreas = FindCompanyCompanyAreas(companyName);
+            return companyAreas != null ? FindCompanyCompanyAreas(companyName).Select(ca => ca.Name) : new List<string>() ;
         }
     }
 }

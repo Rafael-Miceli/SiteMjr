@@ -79,7 +79,7 @@
     <Compile Include="DataRepository\MembershipRepository.cs" />
     <Compile Include="DataRepository\GenericRepositorys\GenericPersonRepository.cs" />
     <Compile Include="DataRepository\RoleRepository.cs" />
-    <Compile Include="DataRepository\ToolLocalizationRepository.cs" />
+    <Compile Include="DataRepository\CompanyAreaRepository.cs" />
     <Compile Include="DataRepository\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\PersonsUow.cs" />

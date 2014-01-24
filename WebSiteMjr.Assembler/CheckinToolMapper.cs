@@ -12,12 +12,14 @@ namespace WebSiteMjr.Assembler
         private readonly ICheckinToolService _checkinToolService;
         private readonly IToolService _toolService;
         private readonly IHolderService _holderService;
+        private readonly ICompanyAreasService _companyAreasService;
 
-        public CheckinToolMapper(ICheckinToolService checkinToolService, IToolService toolService, IHolderService holderService)
+        public CheckinToolMapper(ICheckinToolService checkinToolService, IToolService toolService, IHolderService holderService, ICompanyAreasService companyAreasService)
         {
             _checkinToolService = checkinToolService;
             _toolService = toolService;
             _holderService = holderService;
+            _companyAreasService = companyAreasService;
         }
 
         public ListCheckinToolViewModel GetChekinsFilter(ListCheckinToolViewModel checkinToolViewModel)
@@ -50,6 +52,7 @@ namespace WebSiteMjr.Assembler
         {
             var tool = _toolService.FindToolByName(createCheckinToolViewModel.ToolName);
             var holder = _holderService.FindHolderByName(createCheckinToolViewModel.EmployeeCompanyHolderName);
+            var companyArea = _companyAreasService.FindCompanyAreaByName(createCheckinToolViewModel.CompanyAreaName);
 
             if (!CompanyOrEmployeeExists(holder))
                 throw new ObjectNotExistsException<Holder>();
@@ -62,7 +65,8 @@ namespace WebSiteMjr.Assembler
             {
                 EmployeeCompanyHolderId = holder.Id,
                 Tool = tool,
-                CheckinDateTime = createCheckinToolViewModel.CheckinDateTime.Value
+                CheckinDateTime = createCheckinToolViewModel.CheckinDateTime.Value,
+                CompanyArea =  companyArea
             };
 
             return checkinTool;

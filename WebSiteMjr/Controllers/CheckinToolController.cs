@@ -14,10 +14,10 @@ namespace WebSiteMjr.Controllers
         private readonly ICheckinToolService _checkinToolService;
         private readonly CheckinToolMapper _checkinToolMapper;
 
-        public CheckinToolController(ICheckinToolService checkinToolService, IToolService toolService, IHolderService holderService)
+        public CheckinToolController(ICheckinToolService checkinToolService, IToolService toolService, IHolderService holderService, ICompanyAreasService companyAreasService)
         {
             _checkinToolService = checkinToolService;
-            _checkinToolMapper = new CheckinToolMapper(_checkinToolService, toolService, holderService);
+            _checkinToolMapper = new CheckinToolMapper(_checkinToolService, toolService, holderService, companyAreasService);
         }
         
         
@@ -81,7 +81,7 @@ namespace WebSiteMjr.Controllers
                 ModelState.AddModelError("DateExists", ex.Message);
                 return View();
             }
-            catch (CheckinDateTimeInconsistencyException ex)
+            catch (CheckinInconsistencyException ex)
             {
                 ModelState.AddModelError("DateExists", ex.Message);
                 return View();
@@ -142,7 +142,7 @@ namespace WebSiteMjr.Controllers
                 ModelState.AddModelError("DateExists", ex.Message);
                 return View();
             }
-            catch (CheckinDateTimeInconsistencyException ex)
+            catch (CheckinInconsistencyException ex)
             {
                 ModelState.AddModelError("DateExists", ex.Message);
                 return View();

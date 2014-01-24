@@ -2,13 +2,13 @@
 
 namespace WebSiteMjr.Domain.Exceptions
 {
-    public class CheckinDateTimeInconsistencyException: Exception
+    public class CheckinInconsistencyException: Exception
     {
         public override string Message
         {
             get
             {
-                return "Modificação da data causa inconsistência entre movimentações anteriores.";
+                return "Modificação causa inconsistência entre movimentações anteriores.";
             }
         }
     }

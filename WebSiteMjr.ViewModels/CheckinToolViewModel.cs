@@ -41,6 +41,7 @@ namespace WebSiteMjr.ViewModels
         public string EmployeeCompanyHolderName { get; set; }
         [Required(ErrorMessage = "Nome da Ferramenta não pode ser vazia")]
         public string ToolName { get; set; }
+        public string CompanyAreaName { get; set; }
         public DateTime? CheckinDateTime 
         {
             get

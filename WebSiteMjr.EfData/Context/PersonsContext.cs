@@ -21,16 +21,16 @@ namespace WebSiteMjr.EfData.Context
 
             modelBuilder.Entity<Employee>().ToTable("Employees");
             modelBuilder.Entity<Company>().ToTable("Companies");
-            modelBuilder.Entity<CompanyArea>().ToTable("CompanyAreas");
+            modelBuilder.Entity<CompanyArea>().ToTable("ToolLocalizations");
 
             modelBuilder.Entity<CompanyArea>()
             .HasMany(i => i.Companies)
             .WithMany(s => s.CompanyAreas)
             .Map(m =>
             {
-                m.MapLeftKey("CompanyArea_Id");
+                m.MapLeftKey("ToolLocalization_Id");
                 m.MapRightKey("Company_Id");
-                m.ToTable("CompanyAreaCompanies");
+                m.ToTable("ToolLocalizationCompanies");
             });
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -311,7 +312,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CheckinDateTimeInconsistencyException))]
+        [ExpectedException(typeof(CheckinInconsistencyException))]
         public void Should_Not_Update_Checkin_When_Change_The_CheckinDateTime_Of_This_Tool_Create_Inconsistency_Wtih_Chekins_Between_Companies()
         {
             //Arrange
@@ -356,6 +357,53 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
+        [ExpectedException(typeof(CheckinInconsistencyException))]
+        public void Should_Update_Checkin_When_Change_The_Checkin_Of_This_Tool_Dont_Create_Inconsistency_Wtih_Chekins_Between_Employees()
+        {
+            //Arrange
+            var companyServiceMock = new Mock<ICompanyService>();
+
+            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 5, 6)))
+                .Returns(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com"
+                });
+
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
+
+            var originalCheckin = new CheckinTool
+            {
+                Id = 4,
+                CheckinDateTime = new DateTime(2013, 12, 10, 15, 32, 00),//DateTime.Parse("10/12/2013"),
+                EmployeeCompanyHolderId = 6,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                },
+                CompanyArea = new CompanyArea
+                {
+                    Id = 1,
+                    Name = "Portão de visitantes"
+                }
+            };
+
+            var checkinBeforeThis = checkinToolService.FindToolCheckin(2);
+            var checkinAfterThis = checkinToolService.FindToolCheckin(6);
+            var newCheckin = checkinToolService.FindToolCheckin(4);
+            newCheckin.EmployeeCompanyHolderId = 1;
+
+            //Act
+            checkinToolService.UpdateToolCheckin(newCheckin);
+
+            //Assert
+            Assert.AreNotEqual(originalCheckin.EmployeeCompanyHolderId, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
+            Assert.IsFalse(checkinBeforeThis.EmployeeCompanyHolderId == newCheckin.EmployeeCompanyHolderId || checkinAfterThis.EmployeeCompanyHolderId == newCheckin.EmployeeCompanyHolderId);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(CheckinCompanyToCompanyException))]
         public void Should_Not_Create_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_In_A_Company()
         {
@@ -396,7 +444,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CheckinDateTimeInconsistencyException))]
+        [ExpectedException(typeof(CheckinInconsistencyException))]
         public void Should_Not_Update_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_In_A_Company()
         {
             //Arrange
@@ -594,7 +642,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CheckinDateTimeInconsistencyException))]
+        [ExpectedException(typeof(CheckinInconsistencyException))]
         public void Should_Not_Delete_Checkin_When_Change_The_CheckinDateTime_Of_This_Tool_Create_Inconsistency_Wtih_Chekins_Between_Companies()
         {
             //Arrange
@@ -639,6 +687,236 @@ namespace WebSiteMjr.Domain.Test.services
             Assert.IsTrue(checkinToolService.IsCheckinOfThisToolInCompany(checkinBeforeThis.EmployeeCompanyHolderId) && checkinToolService.IsCheckinOfThisToolInCompany(checkinAfterThis.EmployeeCompanyHolderId));
         }
 
+        [TestMethod]
+        public void Should_Ignore_CompanyArea_When_Creating_A_Checkin_In_Employee()
+        {
+            //Arrange
+            var companyServiceMock = new Mock<ICompanyService>();
+
+            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 5, 6)))
+                .Returns(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com"
+                });
+
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
+
+            var newCheckin = checkinToolService.FindToolCheckin(1);
+            newCheckin.Id = 10;
+            newCheckin.CompanyArea = new CompanyArea
+            {
+                Id = 2,
+                Name = "Portão"
+            };
+
+            //Act
+            checkinToolService.CheckinTool(newCheckin);
+
+            //Assert
+            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyArea);
+        }
+
+        [TestMethod]
+        public void Should_Ignore_CompanyArea_When_Updating_Checkin_To_An_Employee()
+        {
+            //Arrange
+            var companyServiceMock = new Mock<ICompanyService>();
+
+            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 5, 6)))
+                .Returns(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com"
+                });
+
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
+
+            var newCheckin = new CheckinTool
+            {
+                Id = 4,
+                CheckinDateTime = new DateTime(2013, 12, 10, 15, 32, 00),//DateTime.Parse("10/12/2013"),
+                EmployeeCompanyHolderId = 6,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                },
+                CompanyArea = new CompanyArea
+                {
+                    Id = 1,
+                    Name = "Portão de visitantes"
+                }
+            };
+            newCheckin.EmployeeCompanyHolderId = 2;
+
+            //Act
+            checkinToolService.UpdateToolCheckin(newCheckin);
+
+            //Assert
+            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyArea);
+        }
+
+        [TestMethod]
+        public void Should_Ignore_CompanyArea_When_Updating_To_A_CompanyArea_That_Dont_Exists_In_Company()
+        {
+            //Arrange
+            var companyAreas = new Collection<CompanyArea>
+            {
+                new CompanyArea
+                {
+                    Id = 2,
+                    Name = "Portão de visitantes"
+                }
+            };
+
+            var companyServiceMock = new Mock<ICompanyService>();
+
+            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 5, 6)))
+                .Returns(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com",
+                    CompanyAreas = new Collection<CompanyArea>
+                    {
+                        new CompanyArea
+                        {
+                            Id = 2,
+                            Name = "Portão de visitantes"
+                        }
+                    }
+                });
+
+            companyServiceMock.Setup(x => x.FindCompanyCompanyAreas(It.Is<string>(str => str == "Portomare")))
+                .Returns(companyAreas);
+
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
+
+            var newCheckin = new CheckinTool
+            {
+                Id = 4,
+                CheckinDateTime = new DateTime(2013, 12, 10, 15, 32, 00),//DateTime.Parse("10/12/2013"),
+                EmployeeCompanyHolderId = 6,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                },
+                CompanyArea = new CompanyArea
+                {
+                    Id = 1,
+                    Name = "Portão"
+                }
+            };
+
+            //Act
+            checkinToolService.UpdateToolCheckin(newCheckin);
+
+            //Assert
+            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyArea);
+        }
+
+        [TestMethod]
+        public void Should_Update_Checkin_CompanyArea_When_CompanyArea_Not_Null_And_In_A_Company()
+        {
+            //Arrange
+            var companyAreas = new Collection<CompanyArea>
+            {
+                new CompanyArea
+                {
+                    Id = 2,
+                    Name = "Portão de visitantes"
+                }
+            };
+
+            var companyServiceMock = new Mock<ICompanyService>();
+
+            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 5, 6)))
+                .Returns(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com",
+                    CompanyAreas = new Collection<CompanyArea>
+                    {
+                        new CompanyArea
+                        {
+                            Id = 2,
+                            Name = "Portão de visitantes"
+                        }
+                    }
+                });
+
+            companyServiceMock.Setup(x => x.FindCompanyCompanyAreas(It.Is<string>(str => str == "Portomare")))
+                .Returns(companyAreas);
+
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
+
+            var newCheckin = new CheckinTool
+                {
+                    Id = 30,
+                    CheckinDateTime = new DateTime(2013, 12, 09, 12, 32, 00),//DateTime.Parse("10/12/2013"),
+                    EmployeeCompanyHolderId = 2,
+                    Tool = new Tool
+                    {
+                        Name = "Ferramenta 2",
+                        Id = 2
+                    }
+                };
+            newCheckin.EmployeeCompanyHolderId = 6;
+            newCheckin.CompanyArea = new CompanyArea
+            {
+                Id = 1,
+                Name = "Portão de visitantes"
+            };
+
+            //Act
+            checkinToolService.UpdateToolCheckin(newCheckin);
+
+            //Assert
+            Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyArea);
+        }
+
+        [TestMethod]
+        public void Should_Update_Checkin_CompanyArea_When_CompanyArea_Is_Null_And_In_A_Company()
+        {
+            //Arrange
+            var companyServiceMock = new Mock<ICompanyService>();
+
+            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 5, 6)))
+                .Returns(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com"
+                });
+
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
+
+            var newCheckin = new CheckinTool
+            {
+                Id = 30,
+                CheckinDateTime = new DateTime(2013, 12, 09, 12, 32, 00),//DateTime.Parse("10/12/2013"),
+                EmployeeCompanyHolderId = 2,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+            newCheckin.EmployeeCompanyHolderId = 6;
+
+            //Act
+            checkinToolService.UpdateToolCheckin(newCheckin);
+
+            //Assert
+            Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id));
+            Assert.AreEqual(newCheckin.EmployeeCompanyHolderId, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
+            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyArea);
+        }
     }
 
 
@@ -680,6 +958,17 @@ namespace WebSiteMjr.Domain.Test.services
                     {
                         Name = "Ferramenta 1",
                         Id = 1
+                    }
+                },
+                new CheckinTool
+                {
+                    Id = 30,
+                    CheckinDateTime = new DateTime(2013, 12, 09, 12, 32, 00),//DateTime.Parse("10/12/2013"),
+                    EmployeeCompanyHolderId = _employees.First(e => e.Name == "Brendon").Id,
+                    Tool = new Tool
+                    {
+                        Name = "Ferramenta 2",
+                        Id = 2
                     }
                 },
                 new CheckinTool
@@ -786,19 +1075,48 @@ namespace WebSiteMjr.Domain.Test.services
                 {
                     Id = 4,
                     Name = "Portoverano",
-                    Email = "adm@portoverano.com"
+                    Email = "adm@portoverano.com",
+                    CompanyAreas = new Collection<CompanyArea>
+                    {
+                        new CompanyArea
+                        {
+                            Id = 2,
+                            Name = "Portão de visitantes"
+                        },
+                        new CompanyArea
+                        {
+                            Id = 1,
+                            Name = "Portão"
+                        }
+                    }
                 },
                 new Company
                 {
                     Id = 5,
                     Name = "Portofino",
-                    Email = "adm@portofino.com"
+                    Email = "adm@portofino.com",
+                    CompanyAreas = new Collection<CompanyArea>
+                    {
+                        new CompanyArea
+                        {
+                            Id = 1,
+                            Name = "Portão"
+                        }
+                    }
                 },
                 new Company
                 {
                     Id = 6,
                     Name = "Portomare",
-                    Email = "adm@portomare.com"
+                    Email = "adm@portomare.com",
+                    CompanyAreas = new Collection<CompanyArea>
+                    {
+                        new CompanyArea
+                        {
+                            Id = 2,
+                            Name = "Portão de visitantes"
+                        }
+                    }
                 }
             };
         }
