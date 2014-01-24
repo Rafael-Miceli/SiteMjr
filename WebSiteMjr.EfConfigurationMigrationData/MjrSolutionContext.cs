@@ -32,6 +32,17 @@ namespace WebSiteMjr.EfConfigurationMigrationData
         {
             modelBuilder.Entity<Employee>().ToTable("Employees");
             modelBuilder.Entity<Company>().ToTable("Companies");
+            modelBuilder.Entity<CompanyArea>().ToTable("ToolLocalizations");
+
+            modelBuilder.Entity<CompanyArea>()
+            .HasMany(i => i.Companies)
+            .WithMany(s => s.CompanyAreas)
+            .Map(m =>
+            {
+                m.MapLeftKey("ToolLocalization_Id");
+                m.MapRightKey("Company_Id");
+                m.ToTable("ToolLocalizationCompanies");
+            });
         }
     }
 }

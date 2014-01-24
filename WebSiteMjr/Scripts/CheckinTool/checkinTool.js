@@ -2,6 +2,8 @@
     var employeeCompanyHolderNames,
         toolNames,
         toolNamesCall,
+        companyAreasCall,
+        companyAreaNames,
         employeeCompanyHolderNamesCall;
 
     //Set Ajax Call
@@ -17,16 +19,36 @@
         datatype: 'json'
     };
     
+    companyAreasCall = {
+        url: '/Api/CompanyApi/ListCompanyAreas?companyName=' + $('#EmployeeCompanyHolderName').val(),
+        type: 'GET',
+        datatype: 'json'
+    };
+    
 
     //Make Ajax Call
-    $.ajax(employeeCompanyHolderNamesCall)
-            .then(employeeCompanyHolderquerySucceeded)
+    $.ajax(companyAreasCall)
+            .then(companyAreasSucceded)
             .fail(queryFailed);
     
     $.ajax(toolNamesCall)
             .then(toolquerySucceeded)
             .fail(queryFailed);
     
+    $('#CompanyAreaName').focus(function () {
+        $.ajax(employeeCompanyHolderNamesCall)
+            .then(employeeCompanyHolderquerySucceeded)
+            .fail(queryFailed);
+    });
+    
+
+    function companyAreasSucceded(data) {
+        companyAreaNames = data;
+
+        $("#CompanyAreaName").autocomplete({
+            source: companyAreaNames
+        });
+    }
 
     function employeeCompanyHolderquerySucceeded(data) {
         employeeCompanyHolderNames = data;

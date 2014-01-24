@@ -16,6 +16,8 @@ namespace WebSiteMjr.Controllers.Api
             _companyService = companyService;
         }
 
+        //[HttpGet]
+        [AcceptVerbs("GET", "HEAD")]
         public IEnumerable<string> ListCompanyAreas(string companyName)
         {
             return _companyService.FindCompanyCompanyAreasNames(companyName).ToArray();

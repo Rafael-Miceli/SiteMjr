@@ -50,6 +50,10 @@
     <Compile Include="Migrations\201401091149018_ToolLocalization.Designer.cs">
       <DependentUpon>201401091149018_ToolLocalization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401241841571_CompanyAreasInCheckins.cs" />
+    <Compile Include="Migrations\201401241841571_CompanyAreasInCheckins.Designer.cs">
+      <DependentUpon>201401241841571_CompanyAreasInCheckins.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MjrSolutionConfiguration.cs" />
     <Compile Include="MjrSolutionContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +83,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201401091149018_ToolLocalization.resx">
       <DependentUpon>201401091149018_ToolLocalization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401241841571_CompanyAreasInCheckins.resx">
+      <DependentUpon>201401241841571_CompanyAreasInCheckins.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
