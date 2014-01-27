@@ -19,16 +19,9 @@
         datatype: 'json'
     };
     
-    companyAreasCall = {
-        url: '/Api/CompanyApi/ListCompanyAreas?companyName=' + $('#EmployeeCompanyHolderName').val(),
-        type: 'GET',
-        datatype: 'json'
-    };
-    
-
     //Make Ajax Call
-    $.ajax(companyAreasCall)
-            .then(companyAreasSucceded)
+    $.ajax(employeeCompanyHolderNamesCall)
+            .then(employeeCompanyHolderquerySucceeded)
             .fail(queryFailed);
     
     $.ajax(toolNamesCall)
@@ -36,9 +29,23 @@
             .fail(queryFailed);
     
     $('#CompanyAreaName').focus(function () {
-        $.ajax(employeeCompanyHolderNamesCall)
-            .then(employeeCompanyHolderquerySucceeded)
+        
+        companyAreasCall = {
+            url: '/Api/CompanyApi/ListCompanyAreas?companyName=' + $('#EmployeeCompanyHolderName').val(),
+            type: 'GET',
+            datatype: 'json'
+        };
+
+        var companyName = '';
+
+        if (companyName != $('#EmployeeCompanyHolderName').val()) {
+            
+            companyName = $('#EmployeeCompanyHolderName').val();
+            
+            $.ajax(companyAreasCall)
+            .then(companyAreasSucceded)
             .fail(queryFailed);
+        }
     });
     
 

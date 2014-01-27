@@ -43,6 +43,11 @@ namespace WebSiteMjr.EfConfigurationMigrationData
                 m.MapRightKey("Company_Id");
                 m.ToTable("ToolLocalizationCompanies");
             });
+
+            modelBuilder.Entity<CheckinTool>()
+                .HasOptional(c => c.CompanyArea)
+                .WithMany()
+                .Map(m => m.MapKey("ToolLocalizations_Id"));
         }
     }
 }

@@ -58,6 +58,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="IntegrationTest\StuffRepositoryTest.cs" />
+    <Compile Include="IntegrationTest\CheckinToolRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +69,10 @@
     <ProjectReference Include="..\WebSiteMjr.EfBaseData\WebSiteMjr.EfBaseData.csproj">
       <Project>{A7595876-2BE8-4AF2-A81F-12A0B7727D14}</Project>
       <Name>WebSiteMjr.EfBaseData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebSiteMjr.EfData\WebSiteMjr.EfPersonData.csproj">
+      <Project>{1D5058F1-5CA9-4978-AC8C-A508C430E7B0}</Project>
+      <Name>WebSiteMjr.EfPersonData</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr.EfStuffData\WebSiteMjr.EfStuffData.csproj">
       <Project>{0C8D47BC-32EC-4073-89B3-2D3888593401}</Project>

@@ -22,7 +22,7 @@ namespace WebSiteMjr.EfData.Context
             modelBuilder.Entity<Employee>().ToTable("Employees");
             modelBuilder.Entity<Company>().ToTable("Companies");
             modelBuilder.Entity<CompanyArea>().ToTable("ToolLocalizations");
-
+            
             modelBuilder.Entity<CompanyArea>()
             .HasMany(i => i.Companies)
             .WithMany(s => s.CompanyAreas)
@@ -32,6 +32,11 @@ namespace WebSiteMjr.EfData.Context
                 m.MapRightKey("Company_Id");
                 m.ToTable("ToolLocalizationCompanies");
             });
+
+            modelBuilder.Entity<CheckinTool>()
+                .HasOptional(c => c.CompanyArea)
+                .WithMany()
+                .Map(m => m.MapKey("ToolLocalizations_Id"));
         }
     }
 }
