@@ -17,6 +17,6 @@ namespace WebSiteMjr.Domain.Model
             } 
         }
 
-        public virtual CompanyArea CompanyArea { get; set; }
+        public virtual int? CompanyAreaId { get; set; }
     }
 }

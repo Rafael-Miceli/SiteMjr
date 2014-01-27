@@ -383,11 +383,7 @@ namespace WebSiteMjr.Domain.Test.services
                     Name = "Ferramenta 2",
                     Id = 2
                 },
-                CompanyArea = new CompanyArea
-                {
-                    Id = 1,
-                    Name = "Portão de visitantes"
-                }
+                CompanyAreaId = 1
             };
 
             var checkinBeforeThis = checkinToolService.FindToolCheckin(2);
@@ -705,17 +701,13 @@ namespace WebSiteMjr.Domain.Test.services
 
             var newCheckin = checkinToolService.FindToolCheckin(1);
             newCheckin.Id = 10;
-            newCheckin.CompanyArea = new CompanyArea
-            {
-                Id = 2,
-                Name = "Portão"
-            };
+            newCheckin.CompanyAreaId = 2;
 
             //Act
             checkinToolService.CheckinTool(newCheckin);
 
             //Assert
-            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyArea);
+            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
         }
 
         [TestMethod]
@@ -744,11 +736,7 @@ namespace WebSiteMjr.Domain.Test.services
                     Name = "Ferramenta 2",
                     Id = 2
                 },
-                CompanyArea = new CompanyArea
-                {
-                    Id = 1,
-                    Name = "Portão de visitantes"
-                }
+                CompanyAreaId = 1
             };
             newCheckin.EmployeeCompanyHolderId = 2;
 
@@ -756,7 +744,7 @@ namespace WebSiteMjr.Domain.Test.services
             checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyArea);
+            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
         }
 
         [TestMethod]
@@ -805,18 +793,14 @@ namespace WebSiteMjr.Domain.Test.services
                     Name = "Ferramenta 2",
                     Id = 2
                 },
-                CompanyArea = new CompanyArea
-                {
-                    Id = 1,
-                    Name = "Portão"
-                }
+                CompanyAreaId = 1
             };
 
             //Act
             checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyArea);
+            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
         }
 
         [TestMethod]
@@ -827,7 +811,7 @@ namespace WebSiteMjr.Domain.Test.services
             {
                 new CompanyArea
                 {
-                    Id = 2,
+                    Id = 1,
                     Name = "Portão de visitantes"
                 }
             };
@@ -867,17 +851,13 @@ namespace WebSiteMjr.Domain.Test.services
                     }
                 };
             newCheckin.EmployeeCompanyHolderId = 6;
-            newCheckin.CompanyArea = new CompanyArea
-            {
-                Id = 1,
-                Name = "Portão de visitantes"
-            };
+            newCheckin.CompanyAreaId = 1;
 
             //Act
             checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyArea);
+            Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
         }
 
         [TestMethod]
@@ -915,7 +895,7 @@ namespace WebSiteMjr.Domain.Test.services
             //Assert
             Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id));
             Assert.AreEqual(newCheckin.EmployeeCompanyHolderId, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
-            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyArea);
+            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
         }
     }
 
@@ -992,11 +972,7 @@ namespace WebSiteMjr.Domain.Test.services
                         Name = "Ferramenta 2",
                         Id = 2
                     },
-                    CompanyArea = new CompanyArea
-                    {
-                        Id = 1,
-                        Name = "Portão de visitantes"
-                    }
+                    CompanyAreaId = 1
                 },
                 new CheckinTool
                 {

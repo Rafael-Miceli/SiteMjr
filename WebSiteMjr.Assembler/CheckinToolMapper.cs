@@ -54,6 +54,18 @@ namespace WebSiteMjr.Assembler
             var holder = _holderService.FindHolderByName(createCheckinToolViewModel.EmployeeCompanyHolderName);
             var companyArea = _companyAreasService.FindCompanyAreaByName(createCheckinToolViewModel.CompanyAreaName);
 
+            int? companyAreaId;
+
+            if (companyArea != null)
+            {
+                companyAreaId = companyArea.Id;
+            }
+            else
+            {
+                companyAreaId = null;
+            }
+
+
             if (!CompanyOrEmployeeExists(holder))
                 throw new ObjectNotExistsException<Holder>();
 
@@ -66,7 +78,7 @@ namespace WebSiteMjr.Assembler
                 EmployeeCompanyHolderId = holder.Id,
                 Tool = tool,
                 CheckinDateTime = createCheckinToolViewModel.CheckinDateTime.Value,
-                CompanyArea =  companyArea
+                CompanyAreaId = companyAreaId
             };
 
             return checkinTool;

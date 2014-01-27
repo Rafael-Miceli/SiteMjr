@@ -16,17 +16,8 @@ namespace WebSiteMjr.EfStuffData.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<CompanyArea>().ToTable("ToolLocalizations");
+            modelBuilder.Entity<CompanyArea>().ToTable("ToolLocalizations");
 
-            modelBuilder.Entity<CheckinTool>()
-                .HasOptional(c => c.CompanyArea)
-                .WithMany()
-                .Map(m => m.MapKey("ToolLocalizations_Id"));
-
-            //modelBuilder.Entity<CheckinTool>()
-            //    .HasRequired(c => c.CompanyArea)
-            //    .WithOptional()
-            //    .Map(m => m.MapKey("ToolLocalizations_Id"));
         }
     }
 }

@@ -61,7 +61,7 @@ namespace WebSiteMjr.AssemblerTest
             Assert.IsNotNull(checkinTool.EmployeeCompanyHolderId);
             Assert.IsNotNull(checkinTool.Tool);
             Assert.IsNotNull(checkinTool.CheckinDateTime);
-            Assert.IsNotNull(checkinTool.CompanyArea);
+            Assert.IsNotNull(checkinTool.CompanyAreaId);
         }
 
         [TestMethod]
@@ -112,7 +112,7 @@ namespace WebSiteMjr.AssemblerTest
             Assert.IsNotNull(checkinTool.EmployeeCompanyHolderId);
             Assert.IsNotNull(checkinTool.Tool);
             Assert.IsNotNull(checkinTool.CheckinDateTime);
-            Assert.IsNull(checkinTool.CompanyArea);
+            Assert.IsNull(checkinTool.CompanyAreaId);
         }
     }
 }

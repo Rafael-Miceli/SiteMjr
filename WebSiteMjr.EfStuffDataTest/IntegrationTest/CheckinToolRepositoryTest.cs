@@ -23,14 +23,14 @@ namespace WebSiteMjr.EfStuffDataTest.IntegrationTest
 
             var holderId = 4;
             var tool = stuffContext.Tools.Find(1);
-            var companyArea = personContext.CompanyAreas.Find(2);
+            var companyArea = personContext.CompanyAreas.Find(6);
 
             var newCheckin = new CheckinTool
             {
                 Tool = tool,
                 EmployeeCompanyHolderId = holderId,
                 CheckinDateTime = DateTime.Now,
-                CompanyArea = companyArea
+                CompanyAreaId = companyArea.Id
             };
 
             //Act

@@ -57,21 +57,21 @@ namespace WebSiteMjr.Domain.services.Stuffs
             var actualCheckinOfthisToolCompany = ExistsCheckinOfThisToolInCompany(checkinTool.EmployeeCompanyHolderId);
 
             var isActualCheckinOfthisToolInCompany = actualCheckinOfthisToolCompany != null;
-            var isCompanyAreaNull = checkinTool.CompanyArea == null;
+            var isCompanyAreaNull = checkinTool.CompanyAreaId == null;
 
-            if (!isActualCheckinOfthisToolInCompany || isCompanyAreaNull || !CompanyAreaExistsInCompany(actualCheckinOfthisToolCompany, checkinTool.CompanyArea.Name))
-                checkinTool.CompanyArea = null;
+            if (!isActualCheckinOfthisToolInCompany || isCompanyAreaNull || !CompanyAreaExistsInCompany(actualCheckinOfthisToolCompany, checkinTool.CompanyAreaId.Value))
+                checkinTool.CompanyAreaId = null;
 
             return isActualCheckinOfthisToolInCompany && WasLastCheckinOfThisToolInCompany(checkinTool);
         }
 
-        private bool CompanyAreaExistsInCompany(Company actualCheckinOfthisToolCompany, string companyAreaName)
+        private bool CompanyAreaExistsInCompany(Company actualCheckinOfthisToolCompany, int companyAreaId)
         {
             if (actualCheckinOfthisToolCompany == null) return false;
 
             var companyCompanyAreas = _companyService.FindCompanyCompanyAreas(actualCheckinOfthisToolCompany.Name);
 
-            return companyCompanyAreas != null && companyCompanyAreas.Any(ca => ca.Name == companyAreaName);
+            return companyCompanyAreas != null && companyCompanyAreas.Any(ca => ca.Id == companyAreaId);
         }
 
         private bool WasLastCheckinOfThisToolInCompany(CheckinTool checkinTool)
@@ -131,7 +131,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
             checkinToolToUpdate.EmployeeCompanyHolderId = checkinTool.EmployeeCompanyHolderId;
             checkinToolToUpdate.Tool = checkinTool.Tool;
             checkinToolToUpdate.CheckinDateTime = checkinTool.CheckinDateTime;
-            checkinToolToUpdate.CompanyArea = checkinTool.CompanyArea;
+            checkinToolToUpdate.CompanyAreaId = checkinTool.CompanyAreaId;
 
             _checkinToolRepository.Update(checkinToolToUpdate);
             _unitOfWork.Save();
