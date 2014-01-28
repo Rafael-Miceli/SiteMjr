@@ -84,7 +84,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Return_Checkin_By_Tool()
+        public void Should_Return_Checkin_By_Tool_Name()
         {
             var tool = "Ferramenta 1";
             var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null);
@@ -92,6 +92,23 @@ namespace WebSiteMjr.Domain.Test.services
             var checkins = checkInToolService.FilterCheckins(null, tool, null);
 
             Assert.AreEqual(0, checkins.Count(c => c.Tool.Name != tool));
+        }
+
+        [TestMethod]
+        public void Should_Return_Checkin_By_Tool_Id()
+        {
+            //Arrange
+            const int toolId = 1;
+            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null);
+
+            //Act
+            var checkins = checkInToolService.ListCheckinToolsWithActualTool(toolId);
+
+            //Assert
+            var checkinsList = checkins != null ? checkins.ToList() : null;
+            Assert.IsNotNull(checkinsList);
+            Assert.AreEqual(0, checkinsList.Count(c => c.Tool.Id != toolId));
+            Assert.AreEqual(checkinsList.Count(), checkinsList.Count(c => c.Tool.Id == toolId));
         }
 
         [TestMethod]
