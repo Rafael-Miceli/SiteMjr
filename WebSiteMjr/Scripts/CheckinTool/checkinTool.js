@@ -27,6 +27,8 @@
     $.ajax(toolNamesCall)
             .then(toolquerySucceeded)
             .fail(queryFailed);
+
+    var companyName = '';
     
     $('#CompanyAreaName').focus(function () {
         
@@ -35,8 +37,6 @@
             type: 'GET',
             datatype: 'json'
         };
-
-        var companyName = '';
 
         if (companyName != $('#EmployeeCompanyHolderName').val()) {
             

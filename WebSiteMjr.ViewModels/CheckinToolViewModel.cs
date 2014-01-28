@@ -19,6 +19,7 @@ namespace WebSiteMjr.ViewModels
         public string EmployeeCompanyHolderName { get; set; }
         public string ToolName { get; set; }
         public DateTime CheckinDateTime { get; set; }
+        public string CompanyAreaName { get; set; }
     }
 
     public class CreateCheckinToolViewModel

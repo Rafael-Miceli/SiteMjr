@@ -38,12 +38,15 @@ namespace WebSiteMjr.Assembler
         {
             foreach (var checkinTool in checkins)
             {
+                var companyAreaName = _companyAreasService.FindCompanyArea(checkinTool.CompanyAreaId);
+
                 yield return new EnumerableCheckinToolViewModel
                 {
                     Id = checkinTool.Id,
                     CheckinDateTime = checkinTool.CheckinDateTime,
                     ToolName = checkinTool.Tool.Name,
-                    EmployeeCompanyHolderName = _holderService.FindHolder(checkinTool.EmployeeCompanyHolderId).Name
+                    EmployeeCompanyHolderName = _holderService.FindHolder(checkinTool.EmployeeCompanyHolderId).Name,
+                    CompanyAreaName = companyAreaName != null ? companyAreaName.Name : null
                 };
             }
         }
@@ -116,14 +119,16 @@ namespace WebSiteMjr.Assembler
 
         public CreateCheckinToolViewModel EditingCheckinToolToCreateCheckinToolViewModel(CheckinTool checkinTool)
         {
+            var companyAreaName = _companyAreasService.FindCompanyArea(checkinTool.CompanyAreaId);
+
             var createCheckinToolViewModel = new CreateCheckinToolViewModel
             {
                 Id = checkinTool.Id,
                 CheckinDateTime = checkinTool.CheckinDateTime,
                 EmployeeCompanyHolderName = _holderService.FindHolder(checkinTool.EmployeeCompanyHolderId).Name,
                 ToolName = checkinTool.Tool.Name,
-                StrCheckinDateTime = checkinTool.CheckinDateTime.ToString()
-               
+                StrCheckinDateTime = checkinTool.CheckinDateTime.ToString(),
+                CompanyAreaName = companyAreaName != null ? companyAreaName.Name : null
             };
 
             return createCheckinToolViewModel;

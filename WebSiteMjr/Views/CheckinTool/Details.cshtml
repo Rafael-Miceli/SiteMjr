@@ -23,6 +23,13 @@
     <div class="editor-field">
         @Html.DisplayFor(model => model.EmployeeCompanyHolderName, new { id = "EmployeeCompanyHolder_Name" })
     </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.CompanyAreaName, "Área do Condominio")
+    </div>
+    <div class="editor-field">
+        @Html.DisplayFor(model => model.CompanyAreaName, new { id = "CompanyArea_Name" })
+    </div>
 
     <div class="editor-label">
         @Html.LabelFor(model => model.StrCheckinDateTime, "Data do Checkin")

@@ -12,6 +12,7 @@ namespace WebSiteMjr.EfStuffDataTest.IntegrationTest
     public class CheckinToolRepositoryTest
     {
         [TestMethod]
+        [Ignore]
         public void Should_Create_CheckinTool_In_The_Database()
         {
             //Arrange
@@ -22,8 +23,8 @@ namespace WebSiteMjr.EfStuffDataTest.IntegrationTest
             var checkinToolRepository = new CheckinToolRepository(stuffUow);
 
             var holderId = 4;
-            var tool = stuffContext.Tools.Find(1);
-            var companyArea = personContext.CompanyAreas.Find(6);
+            var tool = stuffContext.Tools.Find(2);
+            var companyArea = personContext.CompanyAreas.Find(2);
 
             var newCheckin = new CheckinTool
             {
@@ -37,6 +38,7 @@ namespace WebSiteMjr.EfStuffDataTest.IntegrationTest
             checkinToolRepository.Add(newCheckin);
 
             //Assert
+            stuffUow.Save();
         }
     }
 }

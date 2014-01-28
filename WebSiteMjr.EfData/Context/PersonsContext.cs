@@ -32,15 +32,6 @@ namespace WebSiteMjr.EfData.Context
                 m.MapRightKey("Company_Id");
                 m.ToTable("ToolLocalizationCompanies");
             });
-
-            //modelBuilder.Entity<CheckinTool>()
-            //    .HasOptional(c => c.CompanyArea)
-            //    .WithMany()
-            //    .Map(m =>
-            //    {
-            //        m.ToTable("ToolLocalizations");
-            //        m.MapKey("Id");
-            //    });
         }
     }
 }
