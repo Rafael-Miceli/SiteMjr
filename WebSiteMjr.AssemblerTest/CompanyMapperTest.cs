@@ -22,7 +22,7 @@ namespace WebSiteMjr.AssemblerTest
             var company = CompanyDummies.CreateOneCompany();
 
             CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
-                .Returns(CompanyAreasDumies.CreateListOfCompanyAreas);
+                .Returns(CompanyAreasDummies.CreateListOfCompanyAreas);
 
             var companyMapper = new CompanyMapper(companyServiceMock.Object, CompanyAreaServiceMock.Object);
 
@@ -40,7 +40,7 @@ namespace WebSiteMjr.AssemblerTest
             var companyServiceMock = new Mock<ICompanyService>();
             var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
             var dummieCompany = CompanyDummies.CreateOneCompany();
-            var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
+            var dummieToolsLocaliations = CompanyAreasDummies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(x => x.FindCompany(It.IsAny<Company>())).Returns(dummieCompany);
             CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
@@ -64,7 +64,7 @@ namespace WebSiteMjr.AssemblerTest
             var companyServiceMock = new Mock<ICompanyService>();
             var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
             var dummieCompany = CompanyDummies.CreateOneCompanyWithCompanyArea();
-            var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
+            var dummieToolsLocaliations = CompanyAreasDummies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(x => x.FindCompany(It.IsAny<Company>())).Returns(dummieCompany);
             CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())

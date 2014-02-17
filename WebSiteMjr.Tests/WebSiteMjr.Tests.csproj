@@ -124,6 +124,7 @@
     <Compile Include="Controllers\Api\CompanyApiControllerTest.cs" />
     <Compile Include="Controllers\CompanyControllerTest.cs" />
     <Compile Include="Controllers\StuffControllerTest.cs" />
+    <Compile Include="Controllers\ToolControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
@@ -147,7 +148,7 @@
       <Name>WebSiteMjr.ViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr\WebSiteMjr.csproj">
-      <Project>{3A08A35F-BDEA-4142-81B7-3BDFDAC8AE23}</Project>
+      <Project>{3a08a35f-bdea-4142-81b7-3bdfdac8ae23}</Project>
       <Name>WebSiteMjr</Name>
     </ProjectReference>
   </ItemGroup>

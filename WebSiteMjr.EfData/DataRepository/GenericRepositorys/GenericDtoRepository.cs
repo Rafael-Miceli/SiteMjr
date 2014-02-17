@@ -37,6 +37,11 @@ namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys
             return Mapper.Map<IEnumerable<TEntity>, IEnumerable<TUEntity>>(_context.Set<TEntity>().Where(mappedSelector));
         }
 
+        public TUEntity FindEntity(object entityId)
+        {
+            throw new NotImplementedException();
+        }
+
         public TUEntity Get(Expression<Func<TUEntity, bool>> filter)
         {
             throw new NotImplementedException();
@@ -45,6 +50,11 @@ namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public void MakeEntityDeleted(object entitie, TUEntity entitieToRemove)
+        {
+            throw new NotImplementedException();
         }
 
         public virtual void Update(TUEntity entityToUpdate)
@@ -66,6 +76,16 @@ namespace WebSiteMjr.EfData.DataRepository.GenericRepositorys
                 _dbSet.Attach(_entity);
             }
             _dbSet.Remove(_entity);
+        }
+
+        public void DeleteEntityPermanently(TUEntity entitieToRemove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ImplementsIsDeletable(TUEntity entityToRemove)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<TUEntity> GetAll()

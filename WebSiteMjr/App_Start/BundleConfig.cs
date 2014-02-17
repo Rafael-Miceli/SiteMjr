@@ -9,6 +9,7 @@ namespace WebSiteMjr
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery")
                         .Include("~/Scripts/jquery-{version}.js")
+                        .Include("~/Scripts/jquery-migrate-{version}.js")
                         .Include("~/Scripts/jquery.maskedinput.js")
                         .Include("~/bootstrap/js/bootstrap.js"));
 

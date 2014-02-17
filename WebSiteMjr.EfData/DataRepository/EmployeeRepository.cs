@@ -1,4 +1,6 @@
-﻿using WebSiteMjr.Domain.Interfaces.Repository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.EfBaseData.UnitOfWork;
 using WebSiteMjr.EfData.Context;
@@ -14,6 +16,11 @@ namespace WebSiteMjr.EfData.DataRepository
         public Employee GetEmployeeByName(string name)
         {
             return Get(n => n.Name.ToLower() == name.ToLower());
+        }
+
+        public IEnumerable<Employee> GetAllEmployeesNotDeleted()
+        {
+            return GetAll().Where(e => !e.IsDeleted);
         }
     }
 }

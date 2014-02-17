@@ -1,4 +1,5 @@
-﻿using WebSiteMjr.Domain.Interfaces.Repository.GenericRepository;
+﻿using System.Collections.Generic;
+using WebSiteMjr.Domain.Interfaces.Repository.GenericRepository;
 using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.Domain.Interfaces.Repository
@@ -8,5 +9,6 @@ namespace WebSiteMjr.Domain.Interfaces.Repository
         void AddOrUpdateGraph(Tool stuff);
         void UpdateGraph(Tool stuff);
         Tool GetToolByName(string name);
+        IEnumerable<Tool> GetAllToolsNotDeleted();
     }
 }

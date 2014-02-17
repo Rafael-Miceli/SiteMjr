@@ -1,4 +1,6 @@
-﻿using WebSiteMjr.Domain.Interfaces.Repository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.EfBaseData.UnitOfWork;
 using WebSiteMjr.EfData.Context;
@@ -13,6 +15,11 @@ namespace WebSiteMjr.EfData.DataRepository
         public Company GetCompanyByName(string name)
         {
             return Get(n => n.Name.ToLower() == name.ToLower());
+        }
+
+        public IEnumerable<Company> GetAllCompaniesNotDeleted()
+        {
+            return GetAll().Where(c => !c.IsDeleted);
         }
     }
 }

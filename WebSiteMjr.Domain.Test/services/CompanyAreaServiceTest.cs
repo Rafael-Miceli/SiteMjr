@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.services;
@@ -17,7 +18,7 @@ namespace WebSiteMjr.Domain.Test.services
         [TestMethod]
         public void Should_Create_CompanyArea()
         {
-            var CompanyArea = CompanyAreasDumies.CreateOneCompanyArea();
+            var CompanyArea = CompanyAreasDummies.CreateOneCompanyArea();
             var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
 
             CompanyAreaService.CreateCompanyArea(CompanyArea);
@@ -29,7 +30,7 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Edit_CompanyArea()
         {
             const string CompanyAreaameUpdated = "Valor Atualizado";
-            var CompanyAreaCreated = CompanyAreasDumies.CreateOneCompanyArea();
+            var CompanyAreaCreated = CompanyAreasDummies.CreateOneCompanyArea();
             var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
             CompanyAreaService.CreateCompanyArea(CompanyAreaCreated);
             var CompanyAreaToUpdate = CompanyAreaService.FindCompanyArea(CompanyAreaCreated.Id);
@@ -43,7 +44,7 @@ namespace WebSiteMjr.Domain.Test.services
         [TestMethod]
         public void Should_Delete_CompanyArea()
         {
-            var CompanyAreaCreated = CompanyAreasDumies.CreateOneCompanyArea();
+            var CompanyAreaCreated = CompanyAreasDummies.CreateOneCompanyArea();
             var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
             CompanyAreaService.CreateCompanyArea(CompanyAreaCreated);
             var CompanyAreaToDelete = CompanyAreaService.FindCompanyArea(CompanyAreaCreated.Id);
@@ -56,7 +57,7 @@ namespace WebSiteMjr.Domain.Test.services
         [TestMethod]
         public void Should_Find_CompanyArea_By_Name()
         {
-            var CompanyAreaCreated = CompanyAreasDumies.CreateOneCompanyArea();
+            var CompanyAreaCreated = CompanyAreasDummies.CreateOneCompanyArea();
             var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
             CompanyAreaService.CreateCompanyArea(CompanyAreaCreated);
 
@@ -70,7 +71,7 @@ namespace WebSiteMjr.Domain.Test.services
         {
             var CompanyAreasId = new List<int>();
             var company = CompanyDummies.CreateOneCompany();
-            var CompanyArea = CompanyAreasDumies.CreateOneCompanyArea();
+            var CompanyArea = CompanyAreasDummies.CreateOneCompanyArea();
             CompanyAreasId.Add(CompanyArea.Id);
             var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
             var companyService = new CompanyService(new FakeCompanyRepository(), new StubUnitOfWork());
@@ -103,6 +104,24 @@ namespace WebSiteMjr.Domain.Test.services
             Assert.IsNotNull(companyService.FindCompany(company.Id).CompanyAreas.FirstOrDefault(tl => tl.Id == CompanyAreas[2].Id));
         }
 
+        [TestMethod]
+        public void Should_Return_All_Companies_Not_Deleted()
+        {
+            //Arrange
+            var companiesNotDeleted = CompanyDummies.CreateListOfCompanies().Where(e => !e.IsDeleted);
+            var companieRepositoryMock = new Mock<ICompanyRepository>();
+            companieRepositoryMock.Setup(x => x.GetAllCompaniesNotDeleted()).Returns(companiesNotDeleted);
+
+            var companyService = new CompanyService(companieRepositoryMock.Object, new StubUnitOfWork());
+
+            //Act
+            var companies = companyService.ListCompaniesNotDeleted();
+
+            //Assert
+            companieRepositoryMock.VerifyAll();
+            Assert.IsFalse(companies.Any(e => e.IsDeleted));
+        }
+
     }
 
     public class FakeCompanyAreaRepository : ICompanyAreaRepository
@@ -111,7 +130,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         public FakeCompanyAreaRepository()
         {
-            _companyAreas = CompanyAreasDumies.CreateListOfCompanyAreas();
+            _companyAreas = CompanyAreasDummies.CreateListOfCompanyAreas();
         }
 
         public void Add(CompanyArea companyArea)
@@ -124,6 +143,21 @@ namespace WebSiteMjr.Domain.Test.services
             var CompanyAreaToDelete = _companyAreas.FirstOrDefault(t => t.Id == (int)entitie);
 
             _companyAreas.Remove(CompanyAreaToDelete);
+        }
+
+        public void DeleteEntityPermanently(CompanyArea entitieToRemove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ImplementsIsDeletable(CompanyArea entityToRemove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MakeEntityDeleted(object entitie, CompanyArea entitieToRemove)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(CompanyArea companyArea)
@@ -139,6 +173,11 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         public IEnumerable<CompanyArea> Query(Func<CompanyArea, bool> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CompanyArea FindEntity(object entityId)
         {
             throw new NotImplementedException();
         }

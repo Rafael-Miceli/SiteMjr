@@ -139,6 +139,21 @@ namespace WebSiteMjr.Domain.Test.services
             throw new NotImplementedException();
         }
 
+        public void DeleteEntityPermanently(Company entitieToRemove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ImplementsIsDeletable(Company entityToRemove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MakeEntityDeleted(object entitie, Company entitieToRemove)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Company entitie)
         {
             throw new NotImplementedException();
@@ -150,6 +165,11 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         public IEnumerable<Company> Query(Func<Company, bool> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Company FindEntity(object entityId)
         {
             throw new NotImplementedException();
         }
@@ -167,6 +187,11 @@ namespace WebSiteMjr.Domain.Test.services
         public Company GetCompanyByName(string name)
         {
             return _companies.FirstOrDefault(c => c.Name == name);
+        }
+
+        public IEnumerable<Company> GetAllCompaniesNotDeleted()
+        {
+            throw new NotImplementedException();
         }
     }
 }

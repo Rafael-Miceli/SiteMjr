@@ -9,6 +9,7 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         void UpdateCompany(Company company);
         void DeleteCompany(object company);
         IEnumerable<Company> ListCompany();
+        IEnumerable<Company> ListCompaniesNotDeleted();
         Company FindCompany(object idcompany);
         Company FindCompanyByName(string companyName);
         ICollection<CompanyArea> FindCompanyCompanyAreas(string companyName);

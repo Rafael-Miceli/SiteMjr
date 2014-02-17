@@ -593,6 +593,10 @@ table input {
     width: auto;
 }
 
+#tabs table input {
+    width: 85%;
+}
+
 .table th {
     cursor: pointer;
 }

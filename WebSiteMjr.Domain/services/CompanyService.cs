@@ -62,5 +62,10 @@ namespace WebSiteMjr.Domain.services
             var companyAreas = FindCompanyCompanyAreas(companyName);
             return companyAreas != null ? FindCompanyCompanyAreas(companyName).Select(ca => ca.Name) : new List<string>() ;
         }
+
+        public IEnumerable<Company> ListCompaniesNotDeleted()
+        {
+            return _companyRepository.GetAllCompaniesNotDeleted();
+        }
     }
 }

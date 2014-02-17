@@ -58,6 +58,7 @@
     <Compile Include="Interfaces\Membership\IFlexMembershipUser.cs" />
     <Compile Include="Interfaces\Membership\IFlexUserStore.cs" />
     <Compile Include="Interfaces\Membership\ISecurityEncoder.cs" />
+    <Compile Include="Interfaces\Model\INotDeletable.cs" />
     <Compile Include="Interfaces\Repository\ICheckinToolRepository.cs" />
     <Compile Include="Interfaces\Repository\IEmployeeRepository.cs" />
     <Compile Include="Interfaces\Repository\IHolderRepository.cs" />
@@ -75,14 +76,14 @@
     <Compile Include="Interfaces\Uow\IUnitOfWork.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\CheckinTool.cs" />
-    <Compile Include="Model\IMjrException.cs" />
+    <Compile Include="Interfaces\Model\IMjrException.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Holder.cs" />
     <Compile Include="Model\Stuff.cs" />
     <Compile Include="Model\Membership\FlexMembershipStatus.cs" />
-    <Compile Include="Model\Person\IIntId.cs" />
-    <Compile Include="Model\IObjectWithState.cs" />
+    <Compile Include="Model\Person\IntId.cs" />
+    <Compile Include="Interfaces\Model\IObjectWithState.cs" />
     <Compile Include="Model\Phone.cs" />
     <Compile Include="Model\Membership\User.cs" />
     <Compile Include="Interfaces\Repository\GenericRepository\IGenericRepository.cs" />

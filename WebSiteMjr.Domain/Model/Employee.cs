@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using WebSiteMjr.Domain.Model.Person;
+﻿using System.ComponentModel.DataAnnotations;
+using WebSiteMjr.Domain.Interfaces.Model;
 
 namespace WebSiteMjr.Domain.Model
 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebSiteMjr.Domain.Exceptions;
+using WebSiteMjr.Domain.Interfaces.Model;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -58,6 +59,11 @@ namespace WebSiteMjr.Domain.services.Stuffs
         public IEnumerable<Tool> ListTool()
         {
             return _toolRepository.GetAll();
+        }
+
+        public IEnumerable<Tool> ListNotDeletedTools()
+        {
+            return _toolRepository.GetAllToolsNotDeleted();
         }
 
         public IEnumerable<string> ListToolName()

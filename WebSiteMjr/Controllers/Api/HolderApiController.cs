@@ -20,6 +20,11 @@ namespace WebSiteMjr.Controllers.Api
             return _holderService.ListEmployeeCompanyHolderName().ToArray();
         }
 
+        public IEnumerable<string> GetNotDeletedHoldersName()
+        {
+            return _holderService.ListNotDeletedHolderName().ToArray();
+        }
+
         
     }
 }

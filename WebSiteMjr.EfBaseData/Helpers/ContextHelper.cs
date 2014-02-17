@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using WebSiteMjr.Domain.Interfaces.Model;
 using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.EfBaseData.Helpers

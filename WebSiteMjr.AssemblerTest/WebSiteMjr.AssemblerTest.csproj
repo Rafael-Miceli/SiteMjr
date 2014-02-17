@@ -91,6 +91,7 @@
     <Compile Include="CompanyMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CheckinToolMapperTest.cs" />
+    <Compile Include="ToolMapperTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebSiteMjr.Assembler\WebSiteMjr.Assembler.csproj">

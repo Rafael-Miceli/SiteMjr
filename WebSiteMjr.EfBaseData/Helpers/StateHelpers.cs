@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using WebSiteMjr.Domain.Interfaces.Model;
 using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.EfBaseData.Helpers

@@ -56,7 +56,7 @@ namespace WebSiteMjr.EfPersonDataTest.DataRepository
                 var CompanyAreaRepository = new CompanyAreaRepository(uow);
 
                 var CompanyArea =
-                    CompanyAreasDumies.CreateListOfCompanyAreas().FirstOrDefault(t => t.Id == 2);
+                    CompanyAreasDummies.CreateListOfCompanyAreas().FirstOrDefault(t => t.Id == 2);
                 var company = companyRepository.GetById(4);
 
                 CompanyAreaRepository.Add(CompanyArea);

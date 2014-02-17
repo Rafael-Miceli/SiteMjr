@@ -1,4 +1,5 @@
 ﻿using System;
+using WebSiteMjr.Domain.Interfaces.Model;
 using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model

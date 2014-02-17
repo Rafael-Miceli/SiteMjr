@@ -1,4 +1,5 @@
-﻿using WebSiteMjr.Domain.Interfaces.Repository;
+﻿using WebSiteMjr.Domain.Interfaces.Model;
+using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.EfBaseData.Helpers;
 using WebSiteMjr.EfBaseData.UnitOfWork;

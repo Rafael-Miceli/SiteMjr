@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using WebSiteMjr.Domain.Interfaces.Model;
 using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model

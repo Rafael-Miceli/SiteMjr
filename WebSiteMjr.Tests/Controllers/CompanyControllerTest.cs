@@ -21,7 +21,7 @@ namespace WebSiteMjr.Tests.Controllers
 
             var dummieCompany = CompanyDummies.CreateOneCompany();
             var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModel();
-            var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
+            var dummieToolsLocaliations = CompanyAreasDummies.CreateListOfCompanyAreas();
             
             companyServiceMock.Setup(s => s.FindCompany(dummieEditCompanyViewModel.Id)).Returns(dummieCompany);
             CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
@@ -47,7 +47,7 @@ namespace WebSiteMjr.Tests.Controllers
 
             var dummieCompany = CompanyDummies.CreateOneCompany();
             var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModel();
-            var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
+            var dummieToolsLocaliations = CompanyAreasDummies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(s => s.FindCompany(dummieEditCompanyViewModel.Id)).Returns(dummieCompany);
             CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
@@ -73,7 +73,7 @@ namespace WebSiteMjr.Tests.Controllers
 
             var dummieCompany = CompanyDummies.CreateOneCompany();
             var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModel();
-            var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
+            var dummieToolsLocaliations = CompanyAreasDummies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(s => s.FindCompany(dummieEditCompanyViewModel.Id)).Returns(dummieCompany);
             companyServiceMock.Setup(s => s.UpdateCompany(dummieCompany));
@@ -100,7 +100,7 @@ namespace WebSiteMjr.Tests.Controllers
 
             var dummieCompany = CompanyDummies.CreateOneCompany();
             var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithCompanyArea();
-            var dummieToolsLocaliations = CompanyAreasDumies.CreateListOfCompanyAreas();
+            var dummieToolsLocaliations = CompanyAreasDummies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(s => s.FindCompany(dummieEditCompanyViewModel.Id)).Returns(dummieCompany);
             companyServiceMock.Setup(s => s.UpdateCompany(dummieCompany));

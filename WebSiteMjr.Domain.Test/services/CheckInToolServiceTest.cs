@@ -919,200 +919,16 @@ namespace WebSiteMjr.Domain.Test.services
 
     public class FakeCheckinToolRepository : ICheckinToolRepository
     {
-        private IList<CheckinTool> _checkins;
-        private IList<Employee> _employees;
-        private IList<Company> _companys;
+        private readonly IList<CheckinTool> _checkins;
+        
 
         public bool Created { get; set; }
 
         public FakeCheckinToolRepository()
         {
-            CreateEmployeesAndCompanys();
-            CreateCheckins();
+            _checkins = CheckinToolDummies.CreateCheckinTools();
         }
 
-        private void CreateCheckins()
-        {
-            _checkins = new List<CheckinTool>
-            {
-                new CheckinTool
-                {
-                    Id = 1,
-                    CheckinDateTime = new DateTime(2013, 12, 09, 12, 32, 00), //DateTime.Parse("09/12/2013"),
-                    EmployeeCompanyHolderId = _employees.First(e => e.Name == "Celso").Id,
-                    Tool = new Tool
-                    {
-                        Name = "Ferramenta 1",
-                        Id = 1
-                    }
-                },
-                new CheckinTool
-                {
-                    Id = 3,
-                    CheckinDateTime = new DateTime(2013, 12, 10, 14, 22, 00),//DateTime.Parse("10/12/2013"),
-                    EmployeeCompanyHolderId = _employees.First(e => e.Name == "Brendon").Id,
-                    Tool = new Tool
-                    {
-                        Name = "Ferramenta 1",
-                        Id = 1
-                    }
-                },
-                new CheckinTool
-                {
-                    Id = 30,
-                    CheckinDateTime = new DateTime(2013, 12, 09, 12, 32, 00),//DateTime.Parse("10/12/2013"),
-                    EmployeeCompanyHolderId = _employees.First(e => e.Name == "Brendon").Id,
-                    Tool = new Tool
-                    {
-                        Name = "Ferramenta 2",
-                        Id = 2
-                    }
-                },
-                new CheckinTool
-                {
-                    Id = 2,
-                    CheckinDateTime = new DateTime(2013, 12, 10, 12, 32, 00),//DateTime.Parse("10/12/2013"),
-                    EmployeeCompanyHolderId = _employees.First(e => e.Name == "Lorena").Id,
-                    Tool = new Tool
-                    {
-                        Name = "Ferramenta 2",
-                        Id = 2
-                    }
-                },
-                new CheckinTool
-                {
-                    Id = 4,
-                    CheckinDateTime = new DateTime(2013, 12, 10, 15, 32, 00),//DateTime.Parse("10/12/2013"),
-                    EmployeeCompanyHolderId = _companys.First(e => e.Name == "Portomare").Id,
-                    Tool = new Tool
-                    {
-                        Name = "Ferramenta 2",
-                        Id = 2
-                    },
-                    CompanyAreaId = 1
-                },
-                new CheckinTool
-                {
-                    Id = 6,
-                    CheckinDateTime = new DateTime(2013, 12, 10, 17, 32, 00),//DateTime.Parse("10/12/2013"),
-                    EmployeeCompanyHolderId = _employees.First(e => e.Name == "Celso").Id,
-                    Tool = new Tool
-                    {
-                        Name = "Ferramenta 2",
-                        Id = 2
-                    }
-                },
-                new CheckinTool
-                {
-                    Id = 7,
-                    CheckinDateTime = new DateTime(2013, 12, 11, 11, 02, 00),//DateTime.Parse("11/12/2013"),
-                    EmployeeCompanyHolderId = _companys.First(e => e.Name == "Portomare").Id,
-                    Tool = new Tool
-                    {
-                        Name = "Ferramenta 2",
-                        Id = 2
-                    }
-                },
-                new CheckinTool
-                {
-                    Id = 8,
-                    CheckinDateTime = new DateTime(2013, 12, 11, 12, 32, 00),//DateTime.Parse("11/12/2013"),
-                    EmployeeCompanyHolderId = _companys.First(e => e.Name == "Portoverano").Id,
-                    Tool = new Tool
-                    {
-                        Name = "Ferramenta 3",
-                        Id = 3
-                    }
-                },
-                new CheckinTool
-                {
-                    Id = 5,
-                    CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),//DateTime.Parse("10/12/2013"),
-                    EmployeeCompanyHolderId = _employees.First(e => e.Name == "Brendon").Id,
-                    Tool = new Tool
-                    {
-                        Name = "Ferramenta 3",
-                        Id = 3
-                    }
-                }
-            };
-        }
-
-        private void CreateEmployeesAndCompanys()
-        {
-            _employees = new List<Employee>
-            {
-                new Employee
-                {
-                    Id = 1,
-                    Name = "Celso",
-                    LastName = "Gay"
-                },
-                new Employee
-                {
-                    Id = 2,
-                    Name = "Brendon",
-                    LastName = "Gay"
-                },
-                new Employee
-                {
-                    Id = 3,
-                    Name = "Lorena",
-                    LastName = "Gay"
-                }
-            };
-
-            _companys = new List<Company>
-            {
-                new Company
-                {
-                    Id = 4,
-                    Name = "Portoverano",
-                    Email = "adm@portoverano.com",
-                    CompanyAreas = new Collection<CompanyArea>
-                    {
-                        new CompanyArea
-                        {
-                            Id = 2,
-                            Name = "Portão de visitantes"
-                        },
-                        new CompanyArea
-                        {
-                            Id = 1,
-                            Name = "Portão"
-                        }
-                    }
-                },
-                new Company
-                {
-                    Id = 5,
-                    Name = "Portofino",
-                    Email = "adm@portofino.com",
-                    CompanyAreas = new Collection<CompanyArea>
-                    {
-                        new CompanyArea
-                        {
-                            Id = 1,
-                            Name = "Portão"
-                        }
-                    }
-                },
-                new Company
-                {
-                    Id = 6,
-                    Name = "Portomare",
-                    Email = "adm@portomare.com",
-                    CompanyAreas = new Collection<CompanyArea>
-                    {
-                        new CompanyArea
-                        {
-                            Id = 2,
-                            Name = "Portão de visitantes"
-                        }
-                    }
-                }
-            };
-        }
 
         public void Add(CheckinTool entitie)
         {
@@ -1122,6 +938,21 @@ namespace WebSiteMjr.Domain.Test.services
         public void Remove(object entitie)
         {
             _checkins.Remove(_checkins.FirstOrDefault(c => c.Id == (int) entitie));
+        }
+
+        public void DeleteEntityPermanently(CheckinTool entitieToRemove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ImplementsIsDeletable(CheckinTool entityToRemove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MakeEntityDeleted(object entitie, CheckinTool entitieToRemove)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(CheckinTool entitie)
@@ -1141,6 +972,11 @@ namespace WebSiteMjr.Domain.Test.services
         public IEnumerable<CheckinTool> Query(Func<CheckinTool, bool> filter)
         {
             return _checkins.Where(filter);
+        }
+
+        public CheckinTool FindEntity(object entityId)
+        {
+            throw new NotImplementedException();
         }
 
         public CheckinTool GetById(object identitie)

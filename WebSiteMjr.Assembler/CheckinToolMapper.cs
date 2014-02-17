@@ -36,16 +36,19 @@ namespace WebSiteMjr.Assembler
 
         public IEnumerable<EnumerableCheckinToolViewModel> CheckinToolToCreateCheckinToolViewModel(IEnumerable<CheckinTool> checkins)
         {
+            var companyAreas = _companyAreasService.ListCompanyAreas().ToList();
+            var holders = _holderService.ListHolder().ToList();
+
             foreach (var checkinTool in checkins)
             {
-                var companyAreaName = _companyAreasService.FindCompanyArea(checkinTool.CompanyAreaId);
+                var companyAreaName =  companyAreas.FirstOrDefault(c => c.Id == checkinTool.CompanyAreaId);
 
                 yield return new EnumerableCheckinToolViewModel
                 {
                     Id = checkinTool.Id,
                     CheckinDateTime = checkinTool.CheckinDateTime,
                     ToolName = checkinTool.Tool.Name,
-                    EmployeeCompanyHolderName = _holderService.FindHolder(checkinTool.EmployeeCompanyHolderId).Name,
+                    EmployeeCompanyHolderName = holders.FirstOrDefault(h => h.Id == checkinTool.EmployeeCompanyHolderId).Name,
                     CompanyAreaName = companyAreaName != null ? companyAreaName.Name : null
                 };
             }
@@ -109,12 +112,12 @@ namespace WebSiteMjr.Assembler
 
         private bool ToolExists(Tool tool)
         {
-            return tool != null;
+            return tool != null && !tool.IsDeleted;
         }
 
         private bool CompanyOrEmployeeExists(Holder employeeCompanyHolder)
         {
-            return employeeCompanyHolder != null;
+            return employeeCompanyHolder != null && !employeeCompanyHolder.IsDeleted;
         }
 
         public CreateCheckinToolViewModel EditingCheckinToolToCreateCheckinToolViewModel(CheckinTool checkinTool)

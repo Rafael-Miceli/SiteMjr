@@ -1,59 +1,67 @@
 ﻿@model WebSiteMjr.ViewModels.EditToolViewModel
 
 @{
-    ViewBag.Title = "Editar Ferramenta";
+    ViewBag.Title = "Editar Ferramenta " + Model.Name;
     Layout = "~/Views/Shared/_ClientLayout.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+<div id="tabs">
+    <ul>
+        <li><a href="#tab1">Dados</a></li> 
+        <li>@Html.ActionLink("Movimentações", "CheckinTab", new { id = Model.Id})</li>
+    </ul>
+    <div id="tab1">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Ferramenta</legend>
+            <fieldset>
+                <legend>Ferramenta</legend>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name, "Nome")
-        </div>
-        <div class="editor-field">
-            @Html.ValidationMessage("ToolExists")
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Name, "Nome")
+                </div>
+                <div class="editor-field">
+                    @Html.ValidationMessage("ToolExists")
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Description, "Descrição")
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
-        </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Description, "Descrição")
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Description)
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
 
-        <div class="editor-field">
-            @Html.Partial("_ChooseStuffCategory")
-        </div>
-        <div class="editor-field">
-            @Html.Partial("_ChooseStuffManufacture")
-        </div>
+                <div class="editor-field">
+                    @Html.Partial("_ChooseStuffCategory")
+                </div>
+                <div class="editor-field">
+                    @Html.Partial("_ChooseStuffManufacture")
+                </div>
 
-        @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Id)
 
-        <p>
-            <input type="submit" value="Atualizar" />
-        </p>
-        
-    </fieldset>
-}
+                <p>
+                    <input type="submit" value="Atualizar" />
+                </p>
+
+            </fieldset>
+        }
+    </div>
+</div>
 
 <div>
     @Html.ActionLink("Voltar a listagem", "Index")
 </div>
 
-@section scripts{
+@section scripts
+{
     <script src="@Url.Content("~/Scripts/MjrJsComponents/dialogWindow.js")"></script>
-    <script src="@Url.Content("~/Scripts/Stuff/_ChooseStuffCategory.js")"></script>
-    <script src="@Url.Content("~/Scripts/Stuff/_ChooseStuffManufacture.js")"></script>
+    <script src="@Url.Content("~/Scripts/Tool/EditTool.js")"></script>
 }

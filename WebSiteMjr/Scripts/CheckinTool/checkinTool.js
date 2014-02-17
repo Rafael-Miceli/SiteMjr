@@ -8,7 +8,7 @@
 
     //Set Ajax Call
     employeeCompanyHolderNamesCall = {
-        url: '/Api/HolderApi/GetEmployeeCompanyHoldersName',
+        url: '/Api/HolderApi/GetNotDeletedHoldersName',
         type: 'GET',
         datatype: 'json'
     };
@@ -37,6 +37,7 @@
             type: 'GET',
             datatype: 'json'
         };
+        
 
         if (companyName != $('#EmployeeCompanyHolderName').val()) {
             
@@ -70,7 +71,7 @@
         
         $("#EmployeeCompanyHolder").autocomplete({
             source: employeeCompanyHolderNames
-        }); 
+        });
     }
     
     function toolquerySucceeded(data) {

@@ -60,6 +60,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DataRepository\CompanyRepositoryIntegrationTest.cs" />
+    <Compile Include="DataRepository\EmployeeRepostiroyIntegrationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

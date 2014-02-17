@@ -22,7 +22,7 @@ namespace WebSiteMjr.Assembler
         {
             return new ListCompanyViewModel
             {
-                Companies = _companyService.ListCompany().ToList()
+                Companies = _companyService.ListCompaniesNotDeleted().ToList()
             };
         }
 
