@@ -13,6 +13,7 @@ namespace WebSiteMjr.Domain.Model
         public virtual StuffManufacture StuffManufacture { get; set; }
         [NotMapped]
         public State State { get; set; }
+        [NotMapped]
         public string ObjectName
         {
             get

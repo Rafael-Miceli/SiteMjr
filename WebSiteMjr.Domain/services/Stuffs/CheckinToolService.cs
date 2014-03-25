@@ -27,7 +27,10 @@ namespace WebSiteMjr.Domain.services.Stuffs
         {
             if (IsAnyCheckiDateTimeOfThisToolAlreadyExists(checkinTool)) throw new ObjectExistsException<CheckinTool>();
             if (IsCheckinHolderTwiceThen(checkinTool)) throw new CheckinHolderTwiceThenException();
-            if (IsActualCheckinAndLastCheckinOfThisToolInACompany(checkinTool)) throw new CheckinCompanyToCompanyException();
+
+            if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
+                if (IsActualCheckinAndLastCheckinOfThisToolInACompany(checkinTool)) throw new CheckinCompanyToCompanyException();
+            
 
             _checkinToolRepository.Add(checkinTool);
             _unitOfWork.Save();

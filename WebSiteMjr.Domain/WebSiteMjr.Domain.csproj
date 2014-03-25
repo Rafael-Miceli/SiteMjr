@@ -74,6 +74,11 @@
     <Compile Include="Interfaces\Services\IStuffManufactureService.cs" />
     <Compile Include="Interfaces\Services\ICheckinToolService.cs" />
     <Compile Include="Interfaces\Uow\IUnitOfWork.cs" />
+    <Compile Include="MjrSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>MjrSettings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\CheckinTool.cs" />
     <Compile Include="Interfaces\Model\IMjrException.cs" />
@@ -115,6 +120,11 @@
     <Compile Include="services\Stuffs\CompanyAreasService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="MjrSettings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>MjrSettings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
