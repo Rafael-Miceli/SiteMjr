@@ -417,7 +417,6 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CheckinCompanyToCompanyException))]
         public void Given_A_Checkin_Of_A_Tool_When_Checkin_Of_Tool_Between_Company_Is_Not_Ok_And_The_Last_Checkin_Of_This_Tool_Was_In_A_Company_Then_Dont_Create_Checkin_In_Company()
         {
             //Arrange
@@ -445,14 +444,6 @@ namespace WebSiteMjr.Domain.Test.services
             };
             
             var companyServiceMock = new Mock<ICompanyService>();
-            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 6)))
-                .Returns(() => companyPortoverano)
-                .Callback(() => new Company
-                {
-                    Id = 6,
-                    Name = "Portomare",
-                    Email = "adm@portomare.com"
-                });
 
             var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
 
@@ -462,8 +453,7 @@ namespace WebSiteMjr.Domain.Test.services
 
 
             //Assert
-            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id));
-            companyServiceMock.VerifyAll();
+            Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id));
         }
 
         [TestMethod]
