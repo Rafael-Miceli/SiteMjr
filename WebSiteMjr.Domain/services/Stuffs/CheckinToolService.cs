@@ -197,15 +197,12 @@ namespace WebSiteMjr.Domain.services.Stuffs
             if (checkinWithThisToolBeforeActual == null || checkinWithThisToolAfterActual == null)
                 return false;
 
-            if (IsActualCheckinCreatingSequenceOfCompanyInconsistency(checkinWithThisToolBeforeActual, checkinWithThisToolAfterActual))
-            {
-                return true;
-            }
+            if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
+                if (IsActualCheckinCreatingSequenceOfCompanyInconsistency(checkinWithThisToolBeforeActual, checkinWithThisToolAfterActual))
+                    return true;
 
             if (IsActualCheckinCreatingSequenceOfEmployeeInconsistency(checkinWithThisToolBeforeActual, checkinWithThisToolAfterActual, originalCheckin))
-            {
                 return true;
-            }
 
             return false;
         }
