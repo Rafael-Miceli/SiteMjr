@@ -40,10 +40,15 @@ namespace WebSiteMjr.Domain.services.Stuffs
         {
             var checkinToolToUpdate = FindToolCheckin(checkinTool.Id);
 
-            if (IsAnyCheckiDateTimeOfThisToolAlreadyExists(checkinTool)) throw new ObjectExistsException<CheckinTool>();
-            if (IsActualCheckinCreatingInConsitencyBetweenOtherCheckins(checkinToolToUpdate)) throw new CheckinInconsistencyException();
+            if (IsAnyCheckiDateTimeOfThisToolAlreadyExists(checkinTool))
+                throw new ObjectExistsException<CheckinTool>();
             if (IsCheckinHolderTwiceThen(checkinTool)) throw new CheckinHolderTwiceThenException();
-            if (IsActualCheckinAndLastCheckinOfThisToolInACompany(checkinTool)) throw new CheckinCompanyToCompanyException();
+
+            IsActualCheckinCreatingInConsitencyBetweenOtherCheckins(checkinToolToUpdate);
+
+            if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
+                if (IsActualCheckinAndLastCheckinOfThisToolInACompany(checkinTool))
+                    throw new CheckinCompanyToCompanyException();
 
             checkinToolToUpdate.EmployeeCompanyHolderId = checkinTool.EmployeeCompanyHolderId;
             checkinToolToUpdate.Tool = checkinTool.Tool;
@@ -53,11 +58,12 @@ namespace WebSiteMjr.Domain.services.Stuffs
             _checkinToolRepository.Update(checkinToolToUpdate);
             _unitOfWork.Save();
         }
+           
 
         public void DeleteToolCheckin(object idCheckinTool)
         {
             var checkinToolToDelete = FindToolCheckin(idCheckinTool);
-            if (IsActualCheckinCreatingInConsitencyBetweenOtherCheckins(checkinToolToDelete)) throw new CheckinInconsistencyException();
+            IsActualCheckinCreatingInConsitencyBetweenOtherCheckins(checkinToolToDelete);
             _checkinToolRepository.Remove(idCheckinTool);
             _unitOfWork.Save();
         }
@@ -191,18 +197,22 @@ namespace WebSiteMjr.Domain.services.Stuffs
                 return false;
 
             checkinsWithOriginalTool = checkinsWithOriginalTool.OrderByDescending(c => c.CheckinDateTime).ToList();
-            var checkinWithThisToolBeforeActual = GetFirstCheckinBeforeActual(checkinsWithOriginalTool, originalCheckin);
-            var checkinWithThisToolAfterActual = GetFirstCheckinAfterActual(checkinsWithOriginalTool, originalCheckin);
+            var checkinWithThisToolBeforeActual = GetFirstCheckinBeforeActual(checkinsWithOriginalTool,
+                originalCheckin);
+            var checkinWithThisToolAfterActual = GetFirstCheckinAfterActual(checkinsWithOriginalTool,
+                originalCheckin);
 
             if (checkinWithThisToolBeforeActual == null || checkinWithThisToolAfterActual == null)
                 return false;
 
-            if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
-                if (IsActualCheckinCreatingSequenceOfCompanyInconsistency(checkinWithThisToolBeforeActual, checkinWithThisToolAfterActual))
-                    return true;
+            if (IsActualCheckinCreatingSequenceOfHoldersInconsistency(checkinWithThisToolBeforeActual,
+                checkinWithThisToolAfterActual, originalCheckin))
+                throw new CheckinHolderTwiceThenException();
 
-            if (IsActualCheckinCreatingSequenceOfEmployeeInconsistency(checkinWithThisToolBeforeActual, checkinWithThisToolAfterActual, originalCheckin))
-                return true;
+            if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
+                if (IsActualCheckinCreatingSequenceOfCompanyInconsistency(checkinWithThisToolBeforeActual,
+                    checkinWithThisToolAfterActual))
+                    throw new CheckinCompanyToCompanyException();
 
             return false;
         }
@@ -223,7 +233,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
                    IsCheckinOfThisToolInCompany(checkinWithThisToolAfterActual.EmployeeCompanyHolderId);
         }
 
-        private bool IsActualCheckinCreatingSequenceOfEmployeeInconsistency(CheckinTool checkinWithThisToolBeforeActual, CheckinTool checkinWithThisToolAfterActual, CheckinTool originalCheckin)
+        private bool IsActualCheckinCreatingSequenceOfHoldersInconsistency(CheckinTool checkinWithThisToolBeforeActual, CheckinTool checkinWithThisToolAfterActual, CheckinTool originalCheckin)
         {
             return checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == originalCheckin.EmployeeCompanyHolderId || checkinWithThisToolAfterActual.EmployeeCompanyHolderId == originalCheckin.EmployeeCompanyHolderId;
         }
