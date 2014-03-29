@@ -330,9 +330,11 @@ namespace WebSiteMjr.Domain.Test.services
 
         [TestMethod]
         [ExpectedException(typeof(CheckinCompanyToCompanyException))]
-        public void Should_Not_Update_Checkin_When_Change_The_CheckinDateTime_Of_This_Tool_Create_Inconsistency_Wtih_Chekins_Between_Companies()
+        public void Given_An_Update_To_A_Checkin_Of_A_Tool_When_Changing_Only_The_CheckinDateTime_Of_This_Checkin_Is_Creating_Inconsistency_Wtih_Chekins_Between_Companies_And_CanCheckinToolBetweenCompanies_Is_False_Then_Should_Update_The_Checkin() //Should_Not_Update_Checkin_When_Change_The_CheckinDateTime_Of_This_Tool_Create_Inconsistency_Wtih_Chekins_Between_Companies()
         {
             //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
             var company = new Company
             {
                 Id = 4,
@@ -549,7 +551,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Given_A_Checkin_Of_A_Tool_When_Checkin_Of_Tool_Between_Company_Is_Ok_And_The_Last_Checkin_Of_This_Tool_Was_In_A_Company_Then_Should_Update_Checkin_In_Company()
+        public void Given_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_True_And_The_Last_Checkin_Of_This_Tool_Was_In_A_Company_Then_Should_Update_Checkin_In_Company()
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
@@ -582,9 +584,11 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Should_Update_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_Not_In_A_Company()
+        public void Given_A_Update_Of_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_False_And_The_Last_Checkin_Of_This_Tool_Was_Not_In_A_Company_Then_Should_Update_Checkin_In_Company()//Should_Update_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_Not_In_A_Company()
         {
             //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
             var company = new Company
             {
                 Id = 4,
@@ -662,9 +666,11 @@ namespace WebSiteMjr.Domain.Test.services
 
         [TestMethod]
         [ExpectedException(typeof(CheckinCompanyToCompanyException))]
-        public void Should_Not_Create_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_In_A_Company_And_DateTime_Is_Between_Existing_ones()
+        public void Given_The_Creation_Of_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_False_And_The_Checkins_Between_This_Tool_Will_Create_Inconsistency_Between_Companies_Or_Identical_Holders_Then_Should_Not_Create_Checkin()// Should_Not_Create_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_In_A_Company_And_DateTime_Is_Between_Existing_Ones_And_()
         {
             //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
             var company = new Company
             {
                 Id = 4,
@@ -744,6 +750,8 @@ namespace WebSiteMjr.Domain.Test.services
         public void Given_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_False_And_The_Checkins_Between_This_Tool_Will_Not_Create_Inconsistency_Between_Companies_And_Identical_Holders_Then_Should_Not_Delete_Checkin()//Should_Not_Delete_Checkin_When_Change_The_CheckinDateTime_Of_This_Tool_Create_Inconsistency_Wtih_Chekins_Between_Companies()
         {
             //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
             var company = new Company
             {
                 Id = 4,
@@ -786,9 +794,11 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Given_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_True_And_The_Checkins_Between_This_Tool_Will_Not_Create_Inconsistency_Between_Identical_Holders_Then_Should_Delete_Checkin()
+        public void Given_The_Delete_Of_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_True_And_The_Checkins_Between_This_Tool_Will_Not_Create_Inconsistency_Between_Identical_Holders_Then_Should_Delete_Checkin()
         {
             //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
             var company = new Company
             {
                 Id = 4,

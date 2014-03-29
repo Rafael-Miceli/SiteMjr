@@ -29,8 +29,17 @@ namespace WebSiteMjr.Domain.services.Stuffs
             if (IsCheckinHolderTwiceThen(checkinTool)) throw new CheckinHolderTwiceThenException();
 
             if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
-                if (IsActualCheckinAndLastCheckinOfThisToolInACompany(checkinTool)) throw new CheckinCompanyToCompanyException();
-            
+            {
+                if (IsActualCheckinAndLastCheckinOfThisToolInACompany(checkinTool))
+                    throw new CheckinCompanyToCompanyException();
+            }
+            else
+            {
+                if (!IsCheckinOfThisToolInCompany(checkinTool.EmployeeCompanyHolderId))
+                {
+                    checkinTool.CompanyAreaId = null;
+                }
+            }
 
             _checkinToolRepository.Add(checkinTool);
             _unitOfWork.Save();
@@ -53,12 +62,24 @@ namespace WebSiteMjr.Domain.services.Stuffs
             checkinToolToUpdate.EmployeeCompanyHolderId = checkinTool.EmployeeCompanyHolderId;
             checkinToolToUpdate.Tool = checkinTool.Tool;
             checkinToolToUpdate.CheckinDateTime = checkinTool.CheckinDateTime;
-            checkinToolToUpdate.CompanyAreaId = checkinTool.CompanyAreaId;
+
+            if (checkinTool.CompanyAreaId != null)
+            {
+                var company = ExistsCheckinOfThisToolInCompany(checkinTool.EmployeeCompanyHolderId);
+
+                if (company != null)
+                {
+                    checkinToolToUpdate.CompanyAreaId = CompanyAreaExistsInCompany(company, checkinTool.CompanyAreaId.Value) ? checkinTool.CompanyAreaId : null;
+                }
+                else
+                    checkinToolToUpdate.CompanyAreaId = null;
+            }
+            else
+                checkinToolToUpdate.CompanyAreaId = null;
 
             _checkinToolRepository.Update(checkinToolToUpdate);
             _unitOfWork.Save();
         }
-           
 
         public void DeleteToolCheckin(object idCheckinTool)
         {
@@ -112,17 +133,9 @@ namespace WebSiteMjr.Domain.services.Stuffs
             return _listCheckinToolsWithActualTool;
         }
 
-        public bool IsCheckinOfThisToolInCompany(int employeeCompanyHolderId)
+        public bool IsCheckinOfThisToolInCompany(int holderId)
         {
-            try
-            {
-                return _companyService.FindCompany(employeeCompanyHolderId) != null;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
+            return ExistsCheckinOfThisToolInCompany(holderId) != null;
         }
 
         public Company ExistsCheckinOfThisToolInCompany(int employeeCompanyHolderId)
@@ -144,6 +157,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
             return checkinsWithActualTool.OrderByDescending(c => c.CheckinDateTime).FirstOrDefault(c => c.CheckinDateTime < checkinDateTime);
         }
+
 
 
 
