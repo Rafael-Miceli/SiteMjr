@@ -65,7 +65,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
             if (checkinTool.CompanyAreaId != null)
             {
-                var company = ExistsCheckinOfThisToolInCompany(checkinTool.EmployeeCompanyHolderId);
+                var company = _companyService.ExistsCheckinOfToolInCompany(checkinTool.EmployeeCompanyHolderId);
 
                 if (company != null)
                 {
@@ -135,20 +135,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public bool IsCheckinOfThisToolInCompany(int holderId)
         {
-            return ExistsCheckinOfThisToolInCompany(holderId) != null;
-        }
-
-        public Company ExistsCheckinOfThisToolInCompany(int employeeCompanyHolderId)
-        {
-            try
-            {
-                return _companyService.FindCompany(employeeCompanyHolderId);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
+            return _companyService.ExistsCheckinOfToolInCompany(holderId) != null;
         }
 
         public CheckinTool LastCheckinOfThisTool(int toolId, DateTime checkinDateTime)
@@ -176,7 +163,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         private bool IsActualCheckinAndLastCheckinOfThisToolInACompany(CheckinTool checkinTool)
         {
-            var actualCheckinOfthisToolCompany = ExistsCheckinOfThisToolInCompany(checkinTool.EmployeeCompanyHolderId);
+            var actualCheckinOfthisToolCompany = _companyService.ExistsCheckinOfToolInCompany(checkinTool.EmployeeCompanyHolderId);
 
             var isActualCheckinOfthisToolInCompany = actualCheckinOfthisToolCompany != null;
             var isCompanyAreaNull = checkinTool.CompanyAreaId == null;
@@ -249,7 +236,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         private bool IsActualCheckinCreatingSequenceOfHoldersInconsistency(CheckinTool checkinWithThisToolBeforeActual, CheckinTool checkinWithThisToolAfterActual, CheckinTool originalCheckin)
         {
-            return checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == originalCheckin.EmployeeCompanyHolderId || checkinWithThisToolAfterActual.EmployeeCompanyHolderId == originalCheckin.EmployeeCompanyHolderId;
+            return checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == originalCheckin.EmployeeCompanyHolderId || checkinWithThisToolAfterActual.EmployeeCompanyHolderId == originalCheckin.EmployeeCompanyHolderId || checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == checkinWithThisToolAfterActual.EmployeeCompanyHolderId;
         }
         
     }

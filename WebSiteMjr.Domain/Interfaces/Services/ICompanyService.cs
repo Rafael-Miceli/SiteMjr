@@ -14,5 +14,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         Company FindCompanyByName(string companyName);
         ICollection<CompanyArea> FindCompanyCompanyAreas(string companyName);
         IEnumerable<string> FindCompanyCompanyAreasNames(string companyName);
+        Company ExistsCheckinOfToolInCompany(int employeeCompanyHolderId);
     }
 }

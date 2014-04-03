@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
@@ -66,6 +67,19 @@ namespace WebSiteMjr.Domain.services
         public IEnumerable<Company> ListCompaniesNotDeleted()
         {
             return _companyRepository.GetAllCompaniesNotDeleted();
+        }
+
+        public Company ExistsCheckinOfToolInCompany(int employeeCompanyHolderId)
+        {
+            try
+            {
+                return FindCompany(employeeCompanyHolderId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
         }
     }
 }
