@@ -12,7 +12,7 @@ namespace WebSiteMjr.Domain.Test.Model
             return new CompanyArea
             {
                 Id = 1,
-                Name = "Portão de visitantes"
+                Name = "Portão de visitantes 2"
             };
         }
 

@@ -546,12 +546,11 @@ namespace WebSiteMjr.Domain.Test.services
             checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.AreNotEqual(company.Id, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
-            companyServiceMock.VerifyAll();
+            Assert.Fail();//AreNotEqual(company.Id, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
         }
 
         [TestMethod]
-        public void Given_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_True_And_The_Last_Checkin_Of_This_Tool_Was_In_A_Company_Then_Should_Update_Checkin_In_Company()
+        public void Given_A_Checkin_Of_A_Tool_In_A_Company_When_CanCheckinToolBetweenCompanies_Is_True_And_The_Last_Checkin_Of_This_Tool_Was_In_A_Company_Then_Should_Update_Checkin_In_Company()
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
@@ -567,7 +566,7 @@ namespace WebSiteMjr.Domain.Test.services
             {
                 Id = 6,
                 CheckinDateTime = new DateTime(2013, 12, 10, 17, 32, 00),
-                EmployeeCompanyHolderId = 4,
+                EmployeeCompanyHolderId = company.Id,
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 

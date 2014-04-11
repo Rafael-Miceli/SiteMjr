@@ -16,29 +16,34 @@ namespace WebSiteMjr.Domain.Test.services
     public class CompanyAreaServiceTest
     {
         [TestMethod]
-        public void Should_Create_CompanyArea()
+        public void Given_A_New_CompanyArea_When_Creating_With_A_Non_Existent_Name_Then_Add_The_CompanyArea()
         {
-            var CompanyArea = CompanyAreasDummies.CreateOneCompanyArea();
-            var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
+            var companyArea = CompanyAreasDummies.CreateOneCompanyArea();
+            var companyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
 
-            CompanyAreaService.CreateCompanyArea(CompanyArea);
 
-            Assert.IsNotNull(CompanyAreaService.FindCompanyArea(CompanyArea.Id));
+            companyAreaService.CreateCompanyArea(companyArea);
+
+
+            Assert.IsNotNull(companyAreaService.FindCompanyArea(companyArea.Id));
         }
 
         [TestMethod]
-        public void Should_Edit_CompanyArea()
+        public void Given_An_Existing_CompanyArea_When_Updating_With_A_Non_Existent_Name_Then_Update_The_CompanyArea()// Should_Edit_CompanyArea()
         {
-            const string CompanyAreaameUpdated = "Valor Atualizado";
-            var CompanyAreaCreated = CompanyAreasDummies.CreateOneCompanyArea();
-            var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
-            CompanyAreaService.CreateCompanyArea(CompanyAreaCreated);
-            var CompanyAreaToUpdate = CompanyAreaService.FindCompanyArea(CompanyAreaCreated.Id);
-            CompanyAreaToUpdate.Name = CompanyAreaameUpdated;
+            const string companyAreaNameUpdated = "Valor Atualizado";
+            var companyAreaCreated = CompanyAreasDummies.CreateOneCompanyArea();
+            var companyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
+            companyAreaService.CreateCompanyArea(companyAreaCreated);
 
-            CompanyAreaService.UpdateCompanyArea(CompanyAreaToUpdate);
+            var companyAreaToUpdate = companyAreaService.FindCompanyArea(companyAreaCreated.Id);
+            companyAreaToUpdate.Name = companyAreaNameUpdated;
 
-            Assert.AreEqual(CompanyAreaService.FindCompanyArea(CompanyAreaToUpdate.Id).Name, CompanyAreaameUpdated);
+
+            companyAreaService.UpdateCompanyArea(companyAreaToUpdate);
+
+
+            Assert.AreEqual(companyAreaService.FindCompanyArea(companyAreaToUpdate.Id).Name, companyAreaNameUpdated);
         }
 
         [TestMethod]
