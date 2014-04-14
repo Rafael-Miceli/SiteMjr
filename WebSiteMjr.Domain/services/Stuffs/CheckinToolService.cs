@@ -68,26 +68,53 @@ namespace WebSiteMjr.Domain.services.Stuffs
                     throw new ObjectExistsException<CheckinTool>();
 
                 if (checkinToolToUpdate.Tool.Id != checkinToolUpdated.Tool.Id)
+                    IsChangeCreatingInconsitencyBetweenOtherCheckinsWhenToolChanged(checkinToolToUpdate,
+                        checkinToolUpdated);
+                else
+                    IsChangeCreatingInconsitencyBetweenOtherCheckinsWhenToolNotChanged(checkinToolToUpdate,
+                        checkinToolUpdated);
+                
+            }
+            else
+            {
+                if (checkinToolToUpdate.Tool.Id != checkinToolUpdated.Tool.Id)
                 {
-                    
+                    if (IsAnyCheckinDateTimeOfThisToolAlreadyExists(checkinToolUpdated))
+                        throw new ObjectExistsException<CheckinTool>();
+
+                    IsChangeCreatingInconsitencyBetweenOtherCheckinsWhenToolChanged(checkinToolToUpdate,
+                        checkinToolUpdated);
                 }
                 else
                 {
-                    
+                    var checkinsWithOriginalTool = ListCheckinToolsWithActualTool(checkinToolUpdated.Tool.Id);
+
+                    if (checkinsWithOriginalTool != null)
+                    {
+
+                        checkinsWithOriginalTool = checkinsWithOriginalTool.OrderByDescending(c => c.CheckinDateTime).ToList();
+
+                        var checkinUpdatedBeforeActual = GetFirstCheckinBeforeActual(checkinsWithOriginalTool, checkinToolUpdated);
+                        var checkinUpdatedAfterActual = GetFirstCheckinAfterActual(checkinsWithOriginalTool, checkinToolUpdated);
+
+                        if (checkinUpdatedAfterActual != null &&
+                            (checkinUpdatedBeforeActual != null &&
+                             (checkinUpdatedBeforeActual.EmployeeCompanyHolderId ==
+                              checkinToolUpdated.EmployeeCompanyHolderId ||
+                              checkinUpdatedAfterActual.EmployeeCompanyHolderId ==
+                              checkinToolUpdated.EmployeeCompanyHolderId)))
+                            throw new CheckinHolderTwiceThenException();
+
+
+                        if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
+                            if (IsCheckinOfThisToolInCompany(checkinToolUpdated.EmployeeCompanyHolderId))
+                                if (IsCheckinOfThisToolInCompany(checkinUpdatedBeforeActual.EmployeeCompanyHolderId) ||
+                                    IsCheckinOfThisToolInCompany(checkinUpdatedAfterActual.EmployeeCompanyHolderId))
+                                    throw new CheckinCompanyToCompanyException();
+                    }
                 }
-                
             }
             
-            if (IsCheckinHolderTwiceThen(checkinToolUpdated)) throw new CheckinHolderTwiceThenException();
-            //if (IsCheckinHolderTwiceThen(checkinToolToUpdate)) throw new CheckinHolderTwiceThenException();
-
-            IsChangeCreatingInconsitencyBetweenOtherCheckins(checkinToolToUpdate);
-
-
-            if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
-                if (IsActualCheckinAndLastCheckinOfThisToolInACompany(checkinToolUpdated))
-                    throw new CheckinCompanyToCompanyException();
-
             checkinToolToUpdate.EmployeeCompanyHolderId = checkinToolUpdated.EmployeeCompanyHolderId;
             checkinToolToUpdate.Tool = checkinToolUpdated.Tool;
             checkinToolToUpdate.CheckinDateTime = checkinToolUpdated.CheckinDateTime;
@@ -227,7 +254,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
         }
 
 
-        private bool IsChangeCreatingInconsitencyBetweenOtherCheckins(CheckinTool checkinToUpdate, CheckinTool checkinUpdated)
+        private bool IsChangeCreatingInconsitencyBetweenOtherCheckinsWhenToolChanged(CheckinTool checkinToUpdate, CheckinTool checkinUpdated)
         {
             var checkinsWithOriginalTool = ListCheckinToolsWithActualTool(checkinToUpdate.Tool.Id);
 
@@ -243,13 +270,119 @@ namespace WebSiteMjr.Domain.services.Stuffs
             if (checkinWithThisToolBeforeActual == null && checkinWithThisToolAfterActual == null)
                 return false;
 
-            if (checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == checkinWithThisToolAfterActual.EmployeeCompanyHolderId)
+            if (checkinWithThisToolBeforeActual != null && checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == checkinWithThisToolAfterActual.EmployeeCompanyHolderId)
                 throw new CheckinHolderTwiceThenException();
 
             if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
                 if (IsActualCheckinCreatingSequenceOfCompanyInconsistency(checkinWithThisToolBeforeActual,
                     checkinWithThisToolAfterActual))
                     throw new CheckinCompanyToCompanyException();
+
+
+            checkinsWithOriginalTool = ListCheckinToolsWithActualTool(checkinUpdated.Tool.Id);
+
+            if (checkinsWithOriginalTool == null)
+                return false;
+
+            checkinsWithOriginalTool = checkinsWithOriginalTool.OrderByDescending(c => c.CheckinDateTime).ToList();
+            checkinWithThisToolBeforeActual = GetFirstCheckinBeforeActual(checkinsWithOriginalTool, checkinUpdated);
+            checkinWithThisToolAfterActual = GetFirstCheckinAfterActual(checkinsWithOriginalTool, checkinUpdated);
+
+            if (checkinWithThisToolBeforeActual == null && checkinWithThisToolAfterActual == null)
+                return false;
+
+            if (checkinWithThisToolBeforeActual != null && (checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == checkinUpdated.EmployeeCompanyHolderId || checkinWithThisToolAfterActual.EmployeeCompanyHolderId == checkinUpdated.EmployeeCompanyHolderId))
+                throw new CheckinHolderTwiceThenException();
+
+
+            if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
+                if (IsCheckinOfThisToolInCompany(checkinUpdated.EmployeeCompanyHolderId))
+                    if (IsCheckinOfThisToolInCompany(checkinWithThisToolBeforeActual.EmployeeCompanyHolderId) || IsCheckinOfThisToolInCompany(checkinWithThisToolAfterActual.EmployeeCompanyHolderId))
+                        throw new CheckinCompanyToCompanyException();
+
+            return false;
+        }
+
+        private bool IsChangeCreatingInconsitencyBetweenOtherCheckinsWhenToolNotChanged(CheckinTool checkinToUpdate, CheckinTool checkinUpdated)
+        {
+            var checkinChangedPosition = true;
+            var checkinsWithOriginalTool = ListCheckinToolsWithActualTool(checkinToUpdate.Tool.Id);
+
+            if (checkinsWithOriginalTool == null)
+                return false;
+
+            checkinsWithOriginalTool = checkinsWithOriginalTool.OrderByDescending(c => c.CheckinDateTime).ToList();
+            var checkinToUpdateBeforeActual  = GetFirstCheckinBeforeActual(checkinsWithOriginalTool,
+                checkinToUpdate);
+            var checkinToUpdateAfterActual = GetFirstCheckinAfterActual(checkinsWithOriginalTool,
+                checkinToUpdate);
+
+            var checkinUpdatedBeforeActual = GetFirstCheckinBeforeActual(checkinsWithOriginalTool,
+                checkinUpdated);
+            var checkinUpdatedAfterActual = GetFirstCheckinAfterActual(checkinsWithOriginalTool,
+                checkinUpdated);
+
+            if (checkinUpdatedBeforeActual != null && checkinToUpdateBeforeActual != null)
+            {
+                if (checkinToUpdateBeforeActual.EmployeeCompanyHolderId == checkinUpdatedBeforeActual.EmployeeCompanyHolderId)
+                {
+                    if (checkinToUpdateAfterActual != null && checkinUpdatedAfterActual != null)
+                    {
+                        if (checkinToUpdateAfterActual.EmployeeCompanyHolderId == checkinUpdatedAfterActual.EmployeeCompanyHolderId)
+                        {
+                            checkinChangedPosition = false;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (checkinToUpdateAfterActual != null && checkinUpdatedAfterActual != null)
+                {
+                    if (checkinToUpdateAfterActual.EmployeeCompanyHolderId == checkinUpdatedAfterActual.EmployeeCompanyHolderId)
+                    {
+                        checkinChangedPosition = false;
+                    }
+                }
+            }
+
+            if (checkinChangedPosition)
+            {
+                if (checkinToUpdateBeforeActual == null && checkinToUpdateAfterActual == null)
+                    return false;
+
+                if (checkinToUpdateAfterActual != null && (checkinToUpdateBeforeActual != null && checkinToUpdateBeforeActual.EmployeeCompanyHolderId == checkinToUpdateAfterActual.EmployeeCompanyHolderId))
+                    throw new CheckinHolderTwiceThenException();
+
+                if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
+                    if (IsActualCheckinCreatingSequenceOfCompanyInconsistency(checkinToUpdateBeforeActual,
+                        checkinToUpdateAfterActual))
+                        throw new CheckinCompanyToCompanyException();
+
+
+                if (checkinUpdatedBeforeActual == null && checkinUpdatedAfterActual == null)
+                    return false;
+
+                if (((checkinUpdatedBeforeActual != null && checkinUpdatedBeforeActual.EmployeeCompanyHolderId == checkinUpdated.EmployeeCompanyHolderId) || (checkinUpdatedAfterActual != null && checkinUpdatedAfterActual.EmployeeCompanyHolderId == checkinUpdated.EmployeeCompanyHolderId)))
+                    throw new CheckinHolderTwiceThenException();
+
+
+                if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
+                    if (IsCheckinOfThisToolInCompany(checkinUpdated.EmployeeCompanyHolderId))
+                        if (IsCheckinOfThisToolInCompany(checkinUpdatedBeforeActual.EmployeeCompanyHolderId) || IsCheckinOfThisToolInCompany(checkinUpdatedAfterActual.EmployeeCompanyHolderId))
+                            throw new CheckinCompanyToCompanyException();
+            }
+            else
+            {
+                if ((checkinUpdatedBeforeActual != null && checkinUpdatedBeforeActual.EmployeeCompanyHolderId == checkinUpdated.EmployeeCompanyHolderId) || (checkinUpdatedAfterActual.EmployeeCompanyHolderId == checkinUpdated.EmployeeCompanyHolderId))
+                    throw new CheckinHolderTwiceThenException();
+
+
+                if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
+                    if (IsCheckinOfThisToolInCompany(checkinUpdated.EmployeeCompanyHolderId))
+                        if (IsCheckinOfThisToolInCompany(checkinUpdatedBeforeActual.EmployeeCompanyHolderId) || IsCheckinOfThisToolInCompany(checkinUpdatedAfterActual.EmployeeCompanyHolderId))
+                            throw new CheckinCompanyToCompanyException();
+            }
 
             return false;
         }

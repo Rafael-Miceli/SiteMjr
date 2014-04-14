@@ -237,9 +237,11 @@ namespace WebSiteMjr.Domain.Test.services
 
         [TestMethod]
         [ExpectedException(typeof(CheckinHolderTwiceThenException))]
-        public void Should_Not_Create_Checkin_For_The_Same_Employee_Twice_Then_Updating_The_Date()
+        public void Should_Not_Create_Checkin_For_The_Same_Holder_Twice_Updating_The_Date()
         {
             //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
             var employee = new Employee
             {
                 Id = 2,
@@ -270,7 +272,8 @@ namespace WebSiteMjr.Domain.Test.services
             checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.AreNotEqual(newCheckin.EmployeeCompanyHolderId, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
+            Assert.Fail();
+            //Assert.AreNotEqual(newCheckin.EmployeeCompanyHolderId, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
         }
 
         [TestMethod]
@@ -329,8 +332,8 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CheckinCompanyToCompanyException))]
-        public void Given_An_Update_To_A_Checkin_Of_A_Tool_When_Changing_Only_The_CheckinDateTime_Of_This_Checkin_Is_Creating_Inconsistency_Wtih_Chekins_Between_Companies_And_CanCheckinToolBetweenCompanies_Is_False_Then_Should_Update_The_Checkin() //Should_Not_Update_Checkin_When_Change_The_CheckinDateTime_Of_This_Tool_Create_Inconsistency_Wtih_Chekins_Between_Companies()
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_Checkin_Of_A_Tool_When_Changing_Only_The_CheckinDateTime_Of_This_Checkin_Is_Creating_Inconsistency_Wtih_Chekins_Twice_And_CanCheckinToolBetweenCompanies_Is_False_Then_Should_Not_Update_The_Checkin()
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
@@ -351,6 +354,14 @@ namespace WebSiteMjr.Domain.Test.services
             };
 
             var companyServiceMock = new Mock<ICompanyService>();
+            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6)))
+                .Returns(() => company)
+                .Callback(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com"
+                });
             companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 5, 6)))
                 .Returns(() => company)
                 .Callback(() => new Company
@@ -361,18 +372,12 @@ namespace WebSiteMjr.Domain.Test.services
                 });
 
             var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
-            var originalCheckin = checkinToolService.FindToolCheckin(newCheckin.Id);
-            var checkinBeforeThis = checkinToolService.FindToolCheckin(4);
-            var checkinAfterThis = checkinToolService.FindToolCheckin(7);
-
-
+            
             //Act
             checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.AreEqual(originalCheckin.CheckinDateTime, checkinToolService.FindToolCheckin(newCheckin.Id).CheckinDateTime);
-            Assert.IsTrue(checkinToolService.IsCheckinOfThisToolInCompany(checkinBeforeThis.EmployeeCompanyHolderId) && checkinToolService.IsCheckinOfThisToolInCompany(checkinAfterThis.EmployeeCompanyHolderId));
+            Assert.Fail();
         }
 
         [TestMethod]
@@ -459,11 +464,11 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CheckinCompanyToCompanyException))]
-        public void Given_A_Checkin_Of_A_Tool_When_Checkin_Of_Tool_Between_Company_Is_Ok_And_The_Last_Checkin_Of_This_Tool_Was_In_A_Company_Then_Create_Checkin_In_Company() //Should_Not_Create_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_In_A_Company()
+        //[ExpectedException(typeof(CheckinCompanyToCompanyException))]
+        public void Given_A_Checkin_Of_A_Tool_When_Checkin_Of_Tool_Between_Company_Is_Ok_And_The_Last_Checkin_Of_This_Tool_Was_In_A_Company_Then_Create_Checkin_In_Company() 
         {
             //Arrange
-            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
             
             var tool = new Tool
             {
@@ -487,15 +492,6 @@ namespace WebSiteMjr.Domain.Test.services
             };
 
             var companyServiceMock = new Mock<ICompanyService>();
-            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 6)))
-                .Returns(() => companyPortoverano)
-                .Callback(() => new Company
-                {
-                    Id = 6,
-                    Name = "Portomare",
-                    Email = "adm@portomare.com"
-                });
-
             var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
 
 
@@ -504,13 +500,13 @@ namespace WebSiteMjr.Domain.Test.services
 
 
             //Assert
-            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id));
+            Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id));
             companyServiceMock.VerifyAll();
         }
 
         [TestMethod]
         [ExpectedException(typeof(CheckinCompanyToCompanyException))]
-        public void Given_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_False_And_The_Checkins_Between_This_Tool_Will_Not_Create_Inconsistency_Between_Companies_Then_Should_Update_Checkin() 
+        public void Given_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_False_And_The_Checkins_Between_This_Tool_Will_Create_Inconsistency_Between_Companies_Then_Should_Not_Update_Checkin() 
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
@@ -531,6 +527,14 @@ namespace WebSiteMjr.Domain.Test.services
             };
 
             var companyServiceMock = new Mock<ICompanyService>();
+            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6)))
+                .Returns(() => company)
+                .Callback(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com"
+                });
             companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 6)))
                 .Returns(() => company)
                 .Callback(() => new Company
@@ -583,7 +587,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Given_A_Update_Of_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_False_And_The_Last_Checkin_Of_This_Tool_Was_Not_In_A_Company_Then_Should_Update_Checkin_In_Company()//Should_Update_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_Not_In_A_Company()
+        public void Given_A_Update_Of_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_False_And_The_Last_Checkin_Of_This_Tool_Was_Not_In_A_Company_Then_Should_Update_Checkin_In_Company()
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
@@ -604,7 +608,7 @@ namespace WebSiteMjr.Domain.Test.services
             };
 
             var companyServiceMock = new Mock<ICompanyService>();
-            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 6)))
+            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6)))
                 .Returns(() => company)
                 .Callback(() => new Company
                 {
@@ -686,6 +690,14 @@ namespace WebSiteMjr.Domain.Test.services
             };
 
             var companyServiceMock = new Mock<ICompanyService>();
+            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6)))
+                .Returns(() => company)
+                .Callback(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com"
+                });
             companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 6)))
                 .Returns(() => company)
                 .Callback(() => new Company
@@ -701,8 +713,9 @@ namespace WebSiteMjr.Domain.Test.services
             checkinToolService.CheckinTool(newCheckin);
 
             //Assert
-            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id));
-            companyServiceMock.VerifyAll();
+            Assert.Fail();
+            //Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id));
+            //companyServiceMock.VerifyAll();
         }
 
         [TestMethod]
@@ -793,7 +806,7 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Given_The_Delete_Of_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_True_And_The_Checkins_Between_This_Tool_Will_Not_Create_Inconsistency_Between_Identical_Holders_Then_Should_Delete_Checkin()
+        public void Given_The_Delete_Of_A_Checkin_Of_A_Tool_When_CanCheckinToolBetweenCompanies_Is_True_And_The_Checkins_Between_This_Tool_Will_Not_Creating_Inconsistency_Between_Identical_Holders_Then_Should_Delete_Checkin()
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
@@ -807,13 +820,21 @@ namespace WebSiteMjr.Domain.Test.services
 
             var newCheckin = new CheckinTool
             {
-                Id = 6,
+                Id = 40,
                 CheckinDateTime = new DateTime(2014, 1, 21, 17, 15, 00),
                 EmployeeCompanyHolderId = 2,
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
             var companyServiceMock = new Mock<ICompanyService>();
+            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6)))
+                .Returns(() => company)
+                .Callback(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com"
+                });
             companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 5, 6)))
                 .Returns(() => company)
                 .Callback(() => new Company
@@ -956,6 +977,8 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Update_Checkin_CompanyArea_When_CompanyArea_Not_Null_And_In_A_Company()
         {
             //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
             var companyAreas = new Collection<CompanyArea>
             {
                 new CompanyArea
@@ -966,6 +989,21 @@ namespace WebSiteMjr.Domain.Test.services
             };
 
             var companyServiceMock = new Mock<ICompanyService>();
+            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6)))
+                .Returns(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com",
+                    CompanyAreas = new Collection<CompanyArea>
+                    {
+                        new CompanyArea
+                        {
+                            Id = 2,
+                            Name = "Portão de visitantes"
+                        }
+                    }
+                });
 
             companyServiceMock.Setup(x => x.FindCompany(It.IsIn(4, 5, 6)))
                 .Returns(() => new Company

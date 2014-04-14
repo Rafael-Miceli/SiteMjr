@@ -197,6 +197,39 @@ namespace WebSiteMjr.Domain.Test.Model
                 },
                 new CheckinTool
                 {
+                    Id = 40,
+                    CheckinDateTime = new DateTime(2013, 12, 12, 11, 02, 00),//DateTime.Parse("11/12/2013"),
+                    EmployeeCompanyHolderId = _employees.First(e => e.Name == "Celso").Id,
+                    Tool = new Tool
+                    {
+                        Name = "Ferramenta 2",
+                        Id = 2
+                    }
+                },
+                new CheckinTool
+                {
+                    Id = 41,
+                    CheckinDateTime = new DateTime(2013, 12, 17, 11, 02, 00),//DateTime.Parse("11/12/2013"),
+                    EmployeeCompanyHolderId = _companys.First(e => e.Name == "Portoverano").Id,
+                    Tool = new Tool
+                    {
+                        Name = "Ferramenta 2",
+                        Id = 2
+                    }
+                },
+                new CheckinTool
+                {
+                    Id = 7,
+                    CheckinDateTime = new DateTime(2013, 12, 21, 11, 02, 00),//DateTime.Parse("11/12/2013"),
+                    EmployeeCompanyHolderId = _companys.First(e => e.Name == "Portomare").Id,
+                    Tool = new Tool
+                    {
+                        Name = "Ferramenta 2",
+                        Id = 2
+                    }
+                },
+                new CheckinTool
+                {
                     Id = 8,
                     CheckinDateTime = new DateTime(2013, 12, 11, 12, 32, 00),//DateTime.Parse("11/12/2013"),
                     EmployeeCompanyHolderId = _companys.First(e => e.Name == "Portoverano").Id,
