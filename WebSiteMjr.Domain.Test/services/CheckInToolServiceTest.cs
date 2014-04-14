@@ -235,12 +235,54 @@ namespace WebSiteMjr.Domain.Test.services
             Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id));
         }
 
+
         [TestMethod]
         [ExpectedException(typeof(CheckinHolderTwiceThenException))]
-        public void Should_Not_Create_Checkin_For_The_Same_Holder_Twice_Updating_The_Date()
+        public void Given_A_Update_In_A_CheckinTool_When_CanCheckinToolBetweenCompanies_Is_False_And_Checkin_Update_Is_Creating_Same_Holder_Twice_Then_Should_Raise_Exception()
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var employee = new Employee
+            {
+                Id = 2,
+                Name = "Brendon",
+                LastName = "Gay"
+            };
+
+            var newCheckin = new CheckinTool
+            {
+                Id = 1,
+                CheckinDateTime = new DateTime(2014, 12, 10, 14, 22, 00),
+                EmployeeCompanyHolderId = 2,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 1",
+                    Id = 1
+                }
+            };
+
+            var companyServiceMock = new Mock<ICompanyService>();
+
+            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(employee.Id)));
+
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(),
+                companyServiceMock.Object);
+
+            //Act
+            checkinToolService.UpdateToolCheckin(newCheckin);
+
+            //Assert
+            Assert.Fail();
+            //Assert.AreNotEqual(newCheckin.EmployeeCompanyHolderId, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
+        }
+        
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_A_Update_In_A_CheckinTool_When_CanCheckinToolBetweenCompanies_Is_True_And_Checkin_Update_Is_Creating_Same_Holder_Twice_Then_Should_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
 
             var employee = new Employee
             {
@@ -464,7 +506,6 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        //[ExpectedException(typeof(CheckinCompanyToCompanyException))]
         public void Given_A_Checkin_Of_A_Tool_When_Checkin_Of_Tool_Between_Company_Is_Ok_And_The_Last_Checkin_Of_This_Tool_Was_In_A_Company_Then_Create_Checkin_In_Company() 
         {
             //Arrange

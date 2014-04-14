@@ -29,14 +29,18 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
-        public void Given_An_Existing_CompanyArea_When_Updating_With_A_Non_Existent_Name_Then_Update_The_CompanyArea()// Should_Edit_CompanyArea()
+        public void Given_An_Existing_CompanyArea_When_Updating_With_A_Non_Existent_Name_Then_Update_The_CompanyArea()
         {
             const string companyAreaNameUpdated = "Valor Atualizado";
             var companyAreaCreated = CompanyAreasDummies.CreateOneCompanyArea();
             var companyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
             companyAreaService.CreateCompanyArea(companyAreaCreated);
 
-            var companyAreaToUpdate = companyAreaService.FindCompanyArea(companyAreaCreated.Id);
+            var companyAreaToUpdate = new CompanyArea
+            {
+                Id = companyAreaCreated.Id,
+                Name = companyAreaCreated.Name
+            }; //companyAreaService.FindCompanyArea(companyAreaCreated.Id);
             companyAreaToUpdate.Name = companyAreaNameUpdated;
 
 
@@ -169,7 +173,7 @@ namespace WebSiteMjr.Domain.Test.services
         {
             var CompanyAreaToUpdate = _companyAreas.FirstOrDefault(t => t.Id == companyArea.Id);
 
-            CompanyAreaToUpdate.Name = CompanyAreaToUpdate.Name;
+            CompanyAreaToUpdate.Name = companyArea.Name;
         }
 
         public IEnumerable<CompanyArea> GetAll()

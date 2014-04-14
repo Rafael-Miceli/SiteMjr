@@ -21,20 +21,20 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public void CreateCompanyArea(CompanyArea companyArea)
         {
-            if (CompanyAreaExists(companyArea)) throw new ObjectExistsException<CompanyArea>();
+            if (CompanyAreaExists(companyArea.Name)) throw new ObjectExistsException<CompanyArea>();
 
             _CompanyAreaRepository.Add(companyArea);
             _unitOfWork.Save();
         }
 
-        private bool CompanyAreaExists(CompanyArea companyArea)
+        private bool CompanyAreaExists(string companyAreaName)
         {
-            return FindCompanyAreaByName(companyArea.Name) != null;
+            return FindCompanyAreaByName(companyAreaName) != null;
         }
 
         public void UpdateCompanyArea(CompanyArea companyArea)
         {
-            if (CompanyAreaExists(companyArea)) throw new ObjectExistsException<CompanyArea>();
+            if (CompanyAreaExists(companyArea.Name)) throw new ObjectExistsException<CompanyArea>();
 
             _CompanyAreaRepository.Update(companyArea);
             _unitOfWork.Save();
