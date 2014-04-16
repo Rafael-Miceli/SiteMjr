@@ -120,7 +120,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 new CheckinTool
                 {
                     Id = 1,
-                    CheckinDateTime = new DateTime(2013, 12, 09, 12, 32, 00), //DateTime.Parse("09/12/2013"),
+                    CheckinDateTime = new DateTime(2013, 12, 09, 12, 32, 00), 
                     EmployeeCompanyHolderId = _employees.First(e => e.Name == "Celso").Id,
                     Tool = new Tool
                     {
@@ -131,7 +131,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 new CheckinTool
                 {
                     Id = 3,
-                    CheckinDateTime = new DateTime(2013, 12, 10, 14, 22, 00),//DateTime.Parse("10/12/2013"),
+                    CheckinDateTime = new DateTime(2013, 12, 10, 14, 22, 00),
                     EmployeeCompanyHolderId = _employees.First(e => e.Name == "Brendon").Id,
                     Tool = new Tool
                     {
@@ -142,7 +142,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 new CheckinTool
                 {
                     Id = 30,
-                    CheckinDateTime = new DateTime(2013, 12, 09, 12, 32, 00),//DateTime.Parse("10/12/2013"),
+                    CheckinDateTime = new DateTime(2013, 12, 09, 12, 32, 00),
                     EmployeeCompanyHolderId = _employees.First(e => e.Name == "Brendon").Id,
                     Tool = new Tool
                     {
@@ -153,7 +153,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 new CheckinTool
                 {
                     Id = 2,
-                    CheckinDateTime = new DateTime(2013, 12, 10, 12, 32, 00),//DateTime.Parse("10/12/2013"),
+                    CheckinDateTime = new DateTime(2013, 12, 10, 12, 32, 00),
                     EmployeeCompanyHolderId = _employees.First(e => e.Name == "Lorena").Id,
                     Tool = new Tool
                     {
@@ -164,7 +164,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 new CheckinTool
                 {
                     Id = 4,
-                    CheckinDateTime = new DateTime(2013, 12, 10, 15, 32, 00),//DateTime.Parse("10/12/2013"),
+                    CheckinDateTime = new DateTime(2013, 12, 10, 15, 32, 00),
                     EmployeeCompanyHolderId = _companys.First(e => e.Name == "Portomare").Id,
                     Tool = new Tool
                     {
@@ -176,7 +176,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 new CheckinTool
                 {
                     Id = 6,
-                    CheckinDateTime = new DateTime(2013, 12, 10, 17, 32, 00),//DateTime.Parse("10/12/2013"),
+                    CheckinDateTime = new DateTime(2013, 12, 10, 17, 32, 00),
                     EmployeeCompanyHolderId = _employees.First(e => e.Name == "Celso").Id,
                     Tool = new Tool
                     {
@@ -187,7 +187,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 new CheckinTool
                 {
                     Id = 7,
-                    CheckinDateTime = new DateTime(2013, 12, 11, 11, 02, 00),//DateTime.Parse("11/12/2013"),
+                    CheckinDateTime = new DateTime(2013, 12, 11, 11, 02, 00),
                     EmployeeCompanyHolderId = _companys.First(e => e.Name == "Portomare").Id,
                     Tool = new Tool
                     {
@@ -198,7 +198,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 new CheckinTool
                 {
                     Id = 40,
-                    CheckinDateTime = new DateTime(2013, 12, 12, 11, 02, 00),//DateTime.Parse("11/12/2013"),
+                    CheckinDateTime = new DateTime(2013, 12, 12, 11, 02, 00),
                     EmployeeCompanyHolderId = _employees.First(e => e.Name == "Celso").Id,
                     Tool = new Tool
                     {
@@ -209,7 +209,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 new CheckinTool
                 {
                     Id = 41,
-                    CheckinDateTime = new DateTime(2013, 12, 17, 11, 02, 00),//DateTime.Parse("11/12/2013"),
+                    CheckinDateTime = new DateTime(2013, 12, 17, 11, 02, 00),
                     EmployeeCompanyHolderId = _companys.First(e => e.Name == "Portoverano").Id,
                     Tool = new Tool
                     {
@@ -220,7 +220,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 new CheckinTool
                 {
                     Id = 7,
-                    CheckinDateTime = new DateTime(2013, 12, 21, 11, 02, 00),//DateTime.Parse("11/12/2013"),
+                    CheckinDateTime = new DateTime(2013, 12, 21, 11, 02, 00),
                     EmployeeCompanyHolderId = _companys.First(e => e.Name == "Portomare").Id,
                     Tool = new Tool
                     {
@@ -230,8 +230,19 @@ namespace WebSiteMjr.Domain.Test.Model
                 },
                 new CheckinTool
                 {
+                    Id = 5,
+                    CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),
+                    EmployeeCompanyHolderId = _employees.First(e => e.Name == "Brendon").Id,
+                    Tool = new Tool
+                    {
+                        Name = "Ferramenta 3",
+                        Id = 3
+                    }
+                },
+                new CheckinTool
+                {
                     Id = 8,
-                    CheckinDateTime = new DateTime(2013, 12, 11, 12, 32, 00),//DateTime.Parse("11/12/2013"),
+                    CheckinDateTime = new DateTime(2013, 12, 11, 12, 32, 00),
                     EmployeeCompanyHolderId = _companys.First(e => e.Name == "Portoverano").Id,
                     Tool = new Tool
                     {
@@ -241,13 +252,13 @@ namespace WebSiteMjr.Domain.Test.Model
                 },
                 new CheckinTool
                 {
-                    Id = 5,
-                    CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),//DateTime.Parse("10/12/2013"),
+                    Id = 33,
+                    CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),
                     EmployeeCompanyHolderId = _employees.First(e => e.Name == "Brendon").Id,
                     Tool = new Tool
                     {
-                        Name = "Ferramenta 3",
-                        Id = 3
+                        Name = "Ferramenta 4",
+                        Id = 4
                     }
                 }
             };

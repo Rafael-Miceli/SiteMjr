@@ -258,19 +258,13 @@ namespace WebSiteMjr.Domain.services.Stuffs
         {
             var checkinsWithOriginalTool = ListCheckinToolsWithActualTool(checkinToUpdate.Tool.Id);
 
-            if (checkinsWithOriginalTool == null)
-                return false;
-
             checkinsWithOriginalTool = checkinsWithOriginalTool.OrderByDescending(c => c.CheckinDateTime).ToList();
             var checkinWithThisToolBeforeActual = GetFirstCheckinBeforeActual(checkinsWithOriginalTool,
                 checkinToUpdate);
             var checkinWithThisToolAfterActual = GetFirstCheckinAfterActual(checkinsWithOriginalTool,
                 checkinToUpdate);
-
-            if (checkinWithThisToolBeforeActual == null && checkinWithThisToolAfterActual == null)
-                return false;
-
-            if (checkinWithThisToolBeforeActual != null && checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == checkinWithThisToolAfterActual.EmployeeCompanyHolderId)
+            
+            if (checkinWithThisToolBeforeActual != null && checkinWithThisToolAfterActual != null && checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == checkinWithThisToolAfterActual.EmployeeCompanyHolderId)
                 throw new CheckinHolderTwiceThenException();
 
             if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
@@ -291,7 +285,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
             if (checkinWithThisToolBeforeActual == null && checkinWithThisToolAfterActual == null)
                 return false;
 
-            if (checkinWithThisToolBeforeActual != null && (checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == checkinUpdated.EmployeeCompanyHolderId || checkinWithThisToolAfterActual.EmployeeCompanyHolderId == checkinUpdated.EmployeeCompanyHolderId))
+            if (((checkinWithThisToolBeforeActual != null && checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == checkinUpdated.EmployeeCompanyHolderId) || (checkinWithThisToolAfterActual != null && checkinWithThisToolAfterActual.EmployeeCompanyHolderId == checkinUpdated.EmployeeCompanyHolderId)))
                 throw new CheckinHolderTwiceThenException();
 
 
@@ -307,9 +301,6 @@ namespace WebSiteMjr.Domain.services.Stuffs
         {
             var checkinChangedPosition = true;
             var checkinsWithOriginalTool = ListCheckinToolsWithActualTool(checkinToUpdate.Tool.Id);
-
-            if (checkinsWithOriginalTool == null)
-                return false;
 
             checkinsWithOriginalTool = checkinsWithOriginalTool.OrderByDescending(c => c.CheckinDateTime).ToList();
             var checkinToUpdateBeforeActual  = GetFirstCheckinBeforeActual(checkinsWithOriginalTool,

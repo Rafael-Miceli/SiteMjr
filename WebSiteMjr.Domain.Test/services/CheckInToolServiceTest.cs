@@ -1193,6 +1193,180 @@ namespace WebSiteMjr.Domain.Test.services
             Assert.AreEqual(newCheckin.EmployeeCompanyHolderId, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
             Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Was_The_First_And_CanCheckinToolBetweenCompanies_Is_False_And_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 8,
+                CheckinDateTime = new DateTime(2013, 12, 16, 11, 02, 00), 
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            var mockCompanyService = new Mock<ICompanyService>();
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), mockCompanyService.Object);
+
+            //Act
+            checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Was_The_First_And_CanCheckinToolBetweenCompanies_Is_True_And_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 8,
+                CheckinDateTime = new DateTime(2013, 12, 16, 11, 02, 00),
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            var mockCompanyService = new Mock<ICompanyService>();
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), mockCompanyService.Object);
+
+            //Act
+            checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Was_The_Last_And_CanCheckinToolBetweenCompanies_Is_False_And_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 5,
+                CheckinDateTime = new DateTime(2013, 12, 16, 11, 02, 00),
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            var mockCompanyService = new Mock<ICompanyService>();
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), mockCompanyService.Object);
+
+            //Act
+            checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Was_The_Last_And_CanCheckinToolBetweenCompanies_Is_True_And_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 5,
+                CheckinDateTime = new DateTime(2013, 12, 16, 11, 02, 00),
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            var mockCompanyService = new Mock<ICompanyService>();
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), mockCompanyService.Object);
+
+            //Act
+            checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Was_The_Only_And_CanCheckinToolBetweenCompanies_Is_False_And_Is_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 33,
+                CheckinDateTime = new DateTime(2013, 12, 11, 11, 02, 00),
+                EmployeeCompanyHolderId = 2,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 3",
+                    Id = 3
+                }
+            };
+
+            var mockCompanyService = new Mock<ICompanyService>();
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), mockCompanyService.Object);
+
+            //Act
+            checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Was_The_Only_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 33,
+                CheckinDateTime = new DateTime(2013, 12, 11, 11, 02, 00),
+                EmployeeCompanyHolderId = 2,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 3",
+                    Id = 3
+                }
+            };
+
+            var mockCompanyService = new Mock<ICompanyService>();
+            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), mockCompanyService.Object);
+
+            //Act
+            checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
     }
 
 
