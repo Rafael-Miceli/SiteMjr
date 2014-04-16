@@ -40,7 +40,7 @@ namespace WebSiteMjr.Domain.Test.services
             {
                 Id = companyAreaCreated.Id,
                 Name = companyAreaCreated.Name
-            }; //companyAreaService.FindCompanyArea(companyAreaCreated.Id);
+            }; 
             companyAreaToUpdate.Name = companyAreaNameUpdated;
 
 
