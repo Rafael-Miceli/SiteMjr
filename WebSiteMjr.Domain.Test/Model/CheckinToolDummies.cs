@@ -219,7 +219,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 },
                 new CheckinTool
                 {
-                    Id = 7,
+                    Id = 42,
                     CheckinDateTime = new DateTime(2013, 12, 21, 11, 02, 00),
                     EmployeeCompanyHolderId = _companys.First(e => e.Name == "Portomare").Id,
                     Tool = new Tool

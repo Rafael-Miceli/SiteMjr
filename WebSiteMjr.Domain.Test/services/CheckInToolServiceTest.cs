@@ -1089,6 +1089,112 @@ namespace WebSiteMjr.Domain.Test.services
             //Assert
             Assert.Fail();
         }
+        
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolBeforeChange_Is_Creating_Inconsistency_Between_Holders_And_CanCheckinToolBetweenCompanies_Is_False_And_Then_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 7,
+                CheckinDateTime = new DateTime(2013, 12, 10, 11, 02, 00),
+                EmployeeCompanyHolderId = 2,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 3",
+                    Id = 3
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolBeforeChange_Is_Creating_Inconsistency_Between_Holders_And_CanCheckinToolBetweenCompanies_Is_True_And_Then_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 7,
+                CheckinDateTime = new DateTime(2013, 12, 10, 11, 02, 00),
+                EmployeeCompanyHolderId = 2,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 3",
+                    Id = 3
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinCompanyToCompanyException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolBeforeChange_Is_Creating_Inconsistency_Between_Companies_And_CanCheckinToolBetweenCompanies_Is_False_And_Then_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 40,
+                CheckinDateTime = new DateTime(2013, 12, 10, 11, 02, 00),
+                EmployeeCompanyHolderId = 2,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 3",
+                    Id = 3
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolBeforeChange_Is_Creating_Inconsistency_Between_Companies_But_CanCheckinToolBetweenCompanies_Is_True_And_Then_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 40,
+                CheckinDateTime = new DateTime(2013, 12, 10, 11, 02, 00),
+                EmployeeCompanyHolderId = 1,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 3",
+                    Id = 3
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            var checkin = _checkinToolService.FindToolCheckin(checkinToUpdate.Id);
+
+            Assert.IsNotNull(checkin);
+            Assert.AreEqual(checkin.Tool.Id, checkinToUpdate.Tool.Id);
+        }
 
         [TestMethod]
         [ExpectedException(typeof(CheckinHolderTwiceThenException))]
@@ -1145,6 +1251,437 @@ namespace WebSiteMjr.Domain.Test.services
             Assert.AreEqual(checkinUpdated.Tool.Id, checkinToUpdate.Tool.Id);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(CheckinCompanyToCompanyException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_CanCheckinToolBetweenCompanies_Is_False_And_Is_Creating_Inconsistency_Between_Companies_Then_Should_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 5,
+                CheckinDateTime = new DateTime(2013, 12, 16, 11, 02, 00),
+                EmployeeCompanyHolderId = 6,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Creating_Inconsistency_Between_Companies_Then_Should_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 5,
+                CheckinDateTime = new DateTime(2013, 12, 16, 11, 02, 00),
+                EmployeeCompanyHolderId = 6,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            var checkin = _checkinToolService.FindToolCheckin(checkinToUpdate.Id);
+
+            Assert.IsNotNull(checkin);
+            Assert.AreEqual(checkin.Tool.Id, checkinToUpdate.Tool.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ObjectExistsException<CheckinTool>))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Not_Changed_And_The_Tool_Has_Changed_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Same_CheckinDateTime_Of_Another_Checkin_In_The_Same_Tool_Then_Should_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 33,
+                CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),
+                EmployeeCompanyHolderId = 6,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 3",
+                    Id = 3
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Not_Changed_And_The_Tool_Has_Changed_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Not_Creating_Inconsistency_Between_Holders_Then_Should_Update_Checkin()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 5,
+                CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            var checkin = _checkinToolService.FindToolCheckin(checkinToUpdate.Id);
+
+            Assert.IsNotNull(checkin);
+            Assert.AreEqual(checkin.Tool.Id, checkinToUpdate.Tool.Id);
+        }
+
+        [TestMethod]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Not_Changed_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Not_Creating_Inconsistency_Between_Holders_Then_Should_Update_Checkin()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 42,
+                CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            var checkin = _checkinToolService.FindToolCheckin(checkinToUpdate.Id);
+
+            Assert.IsNotNull(checkin);
+            Assert.AreEqual(checkin.Tool.Id, checkinToUpdate.Tool.Id);
+        }
+
+        [TestMethod]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Not_Changed_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_The_Only_Checkin_In_Tool_Then_Should_Update_Checkin()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 33,
+                CheckinDateTime = new DateTime(2013, 12, 11, 16, 32, 00),
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 4",
+                    Id = 4
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            var checkin = _checkinToolService.FindToolCheckin(checkinToUpdate.Id);
+
+            Assert.IsNotNull(checkin);
+            Assert.AreEqual(checkin.Tool.Id, checkinToUpdate.Tool.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinCompanyToCompanyException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Not_Changed_And_CanCheckinToolBetweenCompanies_Is_False_And_Is_Creating_Inconsistency_Between_Companies_After_Change_Then_Should_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 2,
+                CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinCompanyToCompanyException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Not_Changed_And_CanCheckinToolBetweenCompanies_Is_False_And_Is_Creating_Inconsistency_Between_Companies_Before_Change_Then_Should_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 40,
+                CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),
+                EmployeeCompanyHolderId = 3,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Not_Changed_And_The_Position_Between_Other_Checkins_Has_Not_Changed_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Not_Creating_Inconsistency_Between_Holders_Then_Should_Update_Checkin()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 6,
+                CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            var checkin = _checkinToolService.FindToolCheckin(checkinToUpdate.Id);
+
+            Assert.IsNotNull(checkin);
+            Assert.AreEqual(checkin.Tool.Id, checkinToUpdate.Tool.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinCompanyToCompanyException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Not_Changed_And_The_Position_Between_Other_Checkins_Has_Not_Changed_And_CanCheckinToolBetweenCompanies_Is_False_And_Is_Creating_Inconsistency_Between_Companies_Then_Should_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 6,
+                CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Not_Changed_And_The_Position_Between_Other_Checkins_Has_Not_Changed_And_CanCheckinToolBetweenCompanies_Is_False_And_Is_Creating_Inconsistency_Between_Holders_Then_Should_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 4,
+                CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),
+                EmployeeCompanyHolderId = 1,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Not_Changed_And_The_Position_Between_Other_Checkins_Has_Not_Changed_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Creating_Inconsistency_Between_Holders_Then_Should_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 4,
+                CheckinDateTime = new DateTime(2013, 12, 10, 16, 32, 00),
+                EmployeeCompanyHolderId = 3,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Not_Changed_And_The_Position_Between_Other_Checkins_Has_Not_Changed_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Creating_Inconsistency_Between_Holders_And_Is_First_Checkin_Then_Should_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 30,
+                CheckinDateTime = new DateTime(2013, 12, 09, 15, 32, 00),
+                EmployeeCompanyHolderId = 3,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Not_Changed_And_The_Position_Between_Other_Checkins_Has_Not_Changed_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Not_Creating_Inconsistency_Between_Holders_And_Is_First_Checkin_Then_Should_Update_Checkin()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 30,
+                CheckinDateTime = new DateTime(2013, 12, 09, 15, 32, 00),
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            var checkin = _checkinToolService.FindToolCheckin(checkinToUpdate.Id);
+
+            Assert.IsNotNull(checkin);
+            Assert.AreEqual(checkin.EmployeeCompanyHolderId, checkinToUpdate.EmployeeCompanyHolderId);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CheckinHolderTwiceThenException))]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Not_Changed_And_The_Position_Between_Other_Checkins_Has_Not_Changed_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Creating_Inconsistency_Between_Holders_And_Is_Last_Checkin_Then_Should_Raise_Exception()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 42,
+                CheckinDateTime = new DateTime(2013, 12, 20, 11, 02, 00),
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Not_Changed_And_The_Position_Between_Other_Checkins_Has_Not_Changed_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Not_Creating_Inconsistency_Between_Holders_And_Is_Last_Checkin_Then_Should_Update_Checkin()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 42,
+                CheckinDateTime = new DateTime(2013, 12, 20, 11, 02, 00),
+                EmployeeCompanyHolderId = 1,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            var checkin = _checkinToolService.FindToolCheckin(checkinToUpdate.Id);
+
+            Assert.IsNotNull(checkin.Id);
+            Assert.AreEqual(checkin.EmployeeCompanyHolderId, checkinToUpdate.EmployeeCompanyHolderId);
+        }
     }
 
 

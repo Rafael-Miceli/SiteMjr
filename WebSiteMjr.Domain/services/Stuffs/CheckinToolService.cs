@@ -256,6 +256,8 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         private bool IsChangeCreatingInconsitencyBetweenOtherCheckinsWhenToolChanged(CheckinTool checkinToUpdate, CheckinTool checkinUpdated)
         {
+            //Old Values changing Validation
+
             var checkinsWithOriginalTool = ListCheckinToolsWithActualTool(checkinToUpdate.Tool.Id);
 
             checkinsWithOriginalTool = checkinsWithOriginalTool.OrderByDescending(c => c.CheckinDateTime).ToList();
@@ -273,10 +275,9 @@ namespace WebSiteMjr.Domain.services.Stuffs
                     throw new CheckinCompanyToCompanyException();
 
 
-            checkinsWithOriginalTool = ListCheckinToolsWithActualTool(checkinUpdated.Tool.Id);
+            // Update Validation
 
-            if (checkinsWithOriginalTool == null)
-                return false;
+            checkinsWithOriginalTool = ListCheckinToolsWithActualTool(checkinUpdated.Tool.Id);
 
             checkinsWithOriginalTool = checkinsWithOriginalTool.OrderByDescending(c => c.CheckinDateTime).ToList();
             checkinWithThisToolBeforeActual = GetFirstCheckinBeforeActual(checkinsWithOriginalTool, checkinUpdated);
@@ -300,7 +301,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
         private bool IsChangeCreatingInconsitencyBetweenOtherCheckinsWhenToolNotChanged(CheckinTool checkinToUpdate, CheckinTool checkinUpdated)
         {
             var checkinChangedPosition = true;
-            var checkinsWithOriginalTool = ListCheckinToolsWithActualTool(checkinToUpdate.Tool.Id);
+            var checkinsWithOriginalTool = ListCheckinToolsWithActualTool(checkinToUpdate.Tool.Id).Where(c => c.Id != checkinToUpdate.Id);
 
             checkinsWithOriginalTool = checkinsWithOriginalTool.OrderByDescending(c => c.CheckinDateTime).ToList();
             var checkinToUpdateBeforeActual  = GetFirstCheckinBeforeActual(checkinsWithOriginalTool,
@@ -349,10 +350,6 @@ namespace WebSiteMjr.Domain.services.Stuffs
                     if (IsActualCheckinCreatingSequenceOfCompanyInconsistency(checkinToUpdateBeforeActual,
                         checkinToUpdateAfterActual))
                         throw new CheckinCompanyToCompanyException();
-
-
-                if (checkinUpdatedBeforeActual == null && checkinUpdatedAfterActual == null)
-                    return false;
 
                 if (((checkinUpdatedBeforeActual != null && checkinUpdatedBeforeActual.EmployeeCompanyHolderId == checkinUpdated.EmployeeCompanyHolderId) || (checkinUpdatedAfterActual != null && checkinUpdatedAfterActual.EmployeeCompanyHolderId == checkinUpdated.EmployeeCompanyHolderId)))
                     throw new CheckinHolderTwiceThenException();
