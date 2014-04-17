@@ -802,6 +802,29 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
+        [ExpectedException(typeof(CheckinCompanyToCompanyException))]
+        public void Given_The_Creation_Of_A_Checkin_When_This_Checkin_Is_For_A_Company_And_Checkin_After_That_One_Is_In_Company_And_CanCheckinToolBetweenCompanies_Is_False_Then_Should_Raise_Exeption()
+        {
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var newCheckin = new CheckinTool
+            {
+                Id = 27,
+                CheckinDateTime = new DateTime(2013, 12, 10, 13, 32, 00),
+                EmployeeCompanyHolderId = 4,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 2",
+                    Id = 2
+                }
+            };
+
+            _checkinToolService.CheckinTool(newCheckin);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
         public void Should_Ignore_CompanyArea_When_Creating_A_Checkin_In_Employee()
         {
             //Arrange

@@ -8,7 +8,7 @@ namespace WebSiteMjr.Domain.Exceptions
         {
             get
             {
-                return "Não é possível haver movimentação duas vezes para o mesmo funcionário seguidamente.";
+                return "Não é possível haver movimentação duas vezes para o mesmo holder seguidamente.";
             }
         }
     }
