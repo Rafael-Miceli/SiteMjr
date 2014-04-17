@@ -17,6 +17,32 @@ namespace WebSiteMjr.Domain.Test.services
     [TestClass]
     public class CheckInToolServiceTest
     {
+        private CheckinToolService _checkinToolService;
+        private Mock<ICompanyService> _companyServiceMock;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            var company = new Company
+            {
+                Id = 4,
+                Name = "Portoverano",
+                Email = "adm@portoverano.com"
+            };
+
+            _companyServiceMock = new Mock<ICompanyService>();
+            _companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6)))
+                .Returns(() => company)
+                .Callback(() => new Company
+                {
+                    Id = 6,
+                    Name = "Portomare",
+                    Email = "adm@portomare.com"
+                });
+
+            _checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), _companyServiceMock.Object);
+        }
+
         [TestMethod]
         public void Should_Return_Checkin_By_Employee()
         {
@@ -25,9 +51,8 @@ namespace WebSiteMjr.Domain.Test.services
                 Id = 1,
                 Name = "Celso"
             };
-            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null);
 
-            var checkins = checkInToolService.FilterCheckins(employeeName, null, null);
+            var checkins = _checkinToolService.FilterCheckins(employeeName, null, null);
 
             Assert.AreEqual(0, checkins.Count(c => c.EmployeeCompanyHolderId != employeeName.Id));
         }
@@ -40,10 +65,10 @@ namespace WebSiteMjr.Domain.Test.services
                 Id = 1,
                 Name = "Celso"
             };
-            var tool = "Ferramenta 1";
-            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null);
+            const string tool = "Ferramenta 1";
 
-            var checkins = checkInToolService.FilterCheckins(employeeName, tool, null);
+
+            var checkins = _checkinToolService.FilterCheckins(employeeName, tool, null);
 
             Assert.AreEqual(0, checkins.Count(c => c.EmployeeCompanyHolderId != employeeName.Id || c.Tool.Name != tool));
         }
@@ -57,9 +82,8 @@ namespace WebSiteMjr.Domain.Test.services
                 Name = "Celso"
             };
             var date = DateTime.Parse("09/12/2013");
-            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null);
 
-            var checkins = checkInToolService.FilterCheckins(employeeName, null, date).ToList();
+            var checkins = _checkinToolService.FilterCheckins(employeeName, null, date).ToList();
 
             Assert.AreNotEqual(0, checkins.Count);
             Assert.AreEqual(checkins.Count, checkins.Count(c => c.EmployeeCompanyHolderId == employeeName.Id && c.CheckinDateTime.Date == date));
@@ -75,9 +99,8 @@ namespace WebSiteMjr.Domain.Test.services
             };
             var tool = "Ferramenta 1";
             var date = DateTime.Parse("09/12/2013");
-            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null);
 
-            var checkins = checkInToolService.FilterCheckins(employeeName, tool, date).ToList();
+            var checkins = _checkinToolService.FilterCheckins(employeeName, tool, date).ToList();
 
             Assert.AreNotEqual(0, checkins.Count);
             Assert.AreEqual(checkins.Count, checkins.Count(c => c.EmployeeCompanyHolderId == employeeName.Id && c.Tool.Name == tool && c.CheckinDateTime.Date == date));
@@ -87,9 +110,8 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Return_Checkin_By_Tool_Name()
         {
             var tool = "Ferramenta 1";
-            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null);
 
-            var checkins = checkInToolService.FilterCheckins(null, tool, null);
+            var checkins = _checkinToolService.FilterCheckins(null, tool, null);
 
             Assert.AreEqual(0, checkins.Count(c => c.Tool.Name != tool));
         }
@@ -99,10 +121,9 @@ namespace WebSiteMjr.Domain.Test.services
         {
             //Arrange
             const int toolId = 1;
-            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null);
 
             //Act
-            var checkins = checkInToolService.ListCheckinToolsWithActualTool(toolId);
+            var checkins = _checkinToolService.ListCheckinToolsWithActualTool(toolId);
 
             //Assert
             var checkinsList = checkins != null ? checkins.ToList() : null;
@@ -116,9 +137,10 @@ namespace WebSiteMjr.Domain.Test.services
         {
             var tool = "Ferramenta 2";
             var date = DateTime.Parse("10/12/2013");
-            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null);
 
-            var checkins = checkInToolService.FilterCheckins(null, tool, date).ToList();
+
+            var checkins = _checkinToolService.FilterCheckins(null, tool, date).ToList();
+
 
             Assert.AreNotEqual(0, checkins.Count);
             Assert.AreEqual(checkins.Count, checkins.Count(c => c.Tool.Name == tool && c.CheckinDateTime.Date == date));
@@ -128,9 +150,8 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Return_Checkin_By_Date()
         {
             var date = DateTime.Parse("10/12/2013");
-            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null);
 
-            var checkins = checkInToolService.FilterCheckins(null, null, date);
+            var checkins = _checkinToolService.FilterCheckins(null, null, date);
 
             Assert.AreEqual(0, checkins.Count(c => c.CheckinDateTime.Date != date));
         }
@@ -143,9 +164,8 @@ namespace WebSiteMjr.Domain.Test.services
                 Id = 4,
                 Name = "Portoverano"
             };
-            var checkInToolService = new CheckinToolService(new FakeCheckinToolRepository(), null, null);
 
-            var checkins = checkInToolService.FilterCheckins(companyName, null, null);
+            var checkins = _checkinToolService.FilterCheckins(companyName, null, null);
 
             Assert.AreEqual(0, checkins.Count(c => c.EmployeeCompanyHolderId != companyName.Id));
         }
@@ -153,47 +173,27 @@ namespace WebSiteMjr.Domain.Test.services
         [TestMethod]
         public void Should_Create_First_Checkin_For_Tool_With_Company()
         {
-            //Arrange
-            var company = CompanyDummies.CreateOneCompany();
             var newCheckinTool = CheckinToolDummies.CreateOneCheckinTool();
 
-            var checkinToolRepositoryMock = new Mock<ICheckinToolRepository>();
-            var companyServiceMock = new Mock<ICompanyService>();
+            
+            _checkinToolService.CheckinTool(newCheckinTool);
 
-            checkinToolRepositoryMock.Setup(x => x.Add(newCheckinTool));
-            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(company.Id))).Returns(company);
-
-            var checkinToolService = new CheckinToolService(checkinToolRepositoryMock.Object, new StubUnitOfWork(),
-                companyServiceMock.Object);
-
-            //Act
-            checkinToolService.CheckinTool(newCheckinTool);
-
-            //Assert
-            checkinToolRepositoryMock.VerifyAll();
+            
+            var checkin = _checkinToolService.FindToolCheckin(newCheckinTool.Id);
+            Assert.IsNotNull(checkin);
         }
 
         [TestMethod]
         public void Should_Create_First_Checkin_For_Tool_With_Employee()
         {
-            //Arrange
-            var employee = EmployeeDummies.CreateOneEmployee();
             var newCheckinTool = CheckinToolDummies.CreateOneCheckinTool();
 
-            var checkinToolRepositoryMock = new Mock<ICheckinToolRepository>();
-            var companyServiceMock = new Mock<ICompanyService>();
+            
+            _checkinToolService.CheckinTool(newCheckinTool);
 
-            checkinToolRepositoryMock.Setup(x => x.Add(newCheckinTool));
-            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(employee.Id)));
-
-            var checkinToolService = new CheckinToolService(checkinToolRepositoryMock.Object, new StubUnitOfWork(),
-                companyServiceMock.Object);
-
-            //Act
-            checkinToolService.CheckinTool(newCheckinTool);
-
-            //Assert
-            checkinToolRepositoryMock.VerifyAll();
+            
+            var checkin = _checkinToolService.FindToolCheckin(newCheckinTool.Id);
+            Assert.IsNotNull(checkin);
         }
 
         [TestMethod]
@@ -202,13 +202,6 @@ namespace WebSiteMjr.Domain.Test.services
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
-
-            var employee = new Employee
-            {
-                Id = 2,
-                Name = "Brendon",
-                LastName = "Gay"
-            };
 
             var newCheckin = new CheckinTool
             {
@@ -222,15 +215,8 @@ namespace WebSiteMjr.Domain.Test.services
                 }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-
-            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(employee.Id)));
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(),
-                companyServiceMock.Object); 
-
             //Act
-            checkinToolService.CheckinTool(newCheckin);
+            _checkinToolService.CheckinTool(newCheckin);
 
             //Assert
             Assert.Fail();
@@ -242,13 +228,6 @@ namespace WebSiteMjr.Domain.Test.services
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
-
-            var employee = new Employee
-            {
-                Id = 2,
-                Name = "Brendon",
-                LastName = "Gay"
-            };
 
             var newCheckin = new CheckinTool
             {
@@ -262,15 +241,8 @@ namespace WebSiteMjr.Domain.Test.services
                 }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-
-            companyServiceMock.Setup(x => x.FindCompany(It.IsIn(employee.Id)));
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(),
-                companyServiceMock.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
             Assert.Fail();
@@ -291,12 +263,8 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.CheckinTool(newCheckin);
+            _checkinToolService.CheckinTool(newCheckin);
 
             //Assert
             Assert.Fail();
@@ -317,12 +285,8 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.CheckinTool(newCheckin);
+            _checkinToolService.CheckinTool(newCheckin);
 
             //Assert
             Assert.Fail();
@@ -346,19 +310,16 @@ namespace WebSiteMjr.Domain.Test.services
             {
                 Id = 6,
                 CheckinDateTime = new DateTime(2013, 12, 11, 11, 02, 00),
-                EmployeeCompanyHolderId = 4,
+                EmployeeCompanyHolderId = company.Id,
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
 
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.AreNotEqual(company.Id, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
+            Assert.AreNotEqual(company.Id, _checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
         }
 
         [TestMethod]
@@ -383,15 +344,11 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.AreNotEqual(company.Id, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
+            Assert.AreNotEqual(company.Id, _checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
         }
 
         [TestMethod]
@@ -409,11 +366,9 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
             
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
             Assert.Fail();
@@ -434,11 +389,8 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
             Assert.Fail();
@@ -451,13 +403,11 @@ namespace WebSiteMjr.Domain.Test.services
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
 
-            var companyServiceMock = new Mock<ICompanyService>();
-
             var newCheckin = new CheckinTool
             {
                 Id = 4,
                 CheckinDateTime = new DateTime(2013, 12, 10, 15, 32, 00),
-                EmployeeCompanyHolderId = 6,
+                EmployeeCompanyHolderId = 1,
                 Tool = new Tool
                 {
                     Name = "Ferramenta 2",
@@ -466,12 +416,8 @@ namespace WebSiteMjr.Domain.Test.services
                 CompanyAreaId = 1
             };
 
-            newCheckin.EmployeeCompanyHolderId = 1;
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
             Assert.Fail();
@@ -484,13 +430,11 @@ namespace WebSiteMjr.Domain.Test.services
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
 
-            var companyServiceMock = new Mock<ICompanyService>();
-
             var newCheckin = new CheckinTool
             {
                 Id = 4,
                 CheckinDateTime = new DateTime(2013, 12, 10, 15, 32, 00),
-                EmployeeCompanyHolderId = 6,
+                EmployeeCompanyHolderId = 1,
                 Tool = new Tool
                 {
                     Name = "Ferramenta 2",
@@ -499,12 +443,8 @@ namespace WebSiteMjr.Domain.Test.services
                 CompanyAreaId = 1
             };
 
-            newCheckin.EmployeeCompanyHolderId = 1;
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
             Assert.Fail();
@@ -516,14 +456,8 @@ namespace WebSiteMjr.Domain.Test.services
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
-
-            var tool = new Tool
-            {
-                Id = 2,
-                Name = "Ferramenta 2"
-            };
-
-            var companyPortoverano = new Company
+            
+            var company = new Company
             {
                 Id = 4,
                 Name = "Portoverano",
@@ -534,31 +468,18 @@ namespace WebSiteMjr.Domain.Test.services
             {
                 Id = 10,
                 CheckinDateTime = new DateTime(2014, 1, 21, 17, 15, 00),
-                EmployeeCompanyHolderId = companyPortoverano.Id,
-                Tool = tool
-            };
-            
-            var companyServiceMock = new Mock<ICompanyService>();
-            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6))).Returns(companyPortoverano).Callback(() => new Company
-            {
-                Id = 6,
-                Name = "Portomare",
-                Email = "adm@portomare.com",
-                CompanyAreas = new Collection<CompanyArea>
+                EmployeeCompanyHolderId = company.Id,
+                Tool = new Tool
                 {
-                    new CompanyArea
-                    {
-                        Id = 2,
-                        Name = "Portão de visitantes"
-                    }
-                }
-            });
 
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
+                    Id = 2,
+                    Name = "Ferramenta 2"
+                }
+            };
 
 
             //Act
-            checkinToolService.CheckinTool(newCheckin);
+            _checkinToolService.CheckinTool(newCheckin);
 
 
             //Assert
@@ -570,14 +491,8 @@ namespace WebSiteMjr.Domain.Test.services
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
-
-            var tool = new Tool
-            {
-                Id = 2,
-                Name = "Ferramenta 2"
-            };
-
-            var companyPortoverano = new Company
+            
+            var company = new Company
             {
                 Id = 4,
                 Name = "Portoverano",
@@ -588,36 +503,21 @@ namespace WebSiteMjr.Domain.Test.services
             {
                 Id = 10,
                 CheckinDateTime = new DateTime(2014, 1, 21, 17, 15, 00),
-                EmployeeCompanyHolderId = companyPortoverano.Id,
-                Tool = tool
+                EmployeeCompanyHolderId = company.Id,
+                Tool = new Tool
+                {
+                    Id = 2,
+                    Name = "Ferramenta 2"
+                }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6))).Returns(companyPortoverano).Callback(() => new Company
-            {
-                Id = 6,
-                Name = "Portomare",
-                Email = "adm@portomare.com",
-                CompanyAreas = new Collection<CompanyArea>
-                {
-                    new CompanyArea
-                    {
-                        Id = 2,
-                        Name = "Portão de visitantes"
-                    }
-                }
-            });
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
-
             //Act
-            checkinToolService.CheckinTool(newCheckin);
+            _checkinToolService.CheckinTool(newCheckin);
 
 
             //Assert
-            Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id));
-            companyServiceMock.VerifyAll();
+            Assert.IsNotNull(_checkinToolService.FindToolCheckin(newCheckin.Id));
+            _companyServiceMock.VerifyAll();
         }
 
         [TestMethod]
@@ -627,13 +527,6 @@ namespace WebSiteMjr.Domain.Test.services
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
 
-            var company = new Company
-            {
-                Id = 4,
-                Name = "Portoverano",
-                Email = "adm@portoverano.com"
-            };
-
             var newCheckin = new CheckinTool
             {
                 Id = 6,
@@ -642,20 +535,8 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6)))
-                .Returns(() => company)
-                .Callback(() => new Company
-                {
-                    Id = 6,
-                    Name = "Portomare",
-                    Email = "adm@portomare.com"
-                });
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
             Assert.Fail();
@@ -681,15 +562,12 @@ namespace WebSiteMjr.Domain.Test.services
                 EmployeeCompanyHolderId = company.Id,
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
-
-            var companyServiceMock = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
+            
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.AreEqual(company.Id, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
+            Assert.AreEqual(company.Id, _checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
         }
 
         [TestMethod]
@@ -713,24 +591,12 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6)))
-                .Returns(() => company)
-                .Callback(() => new Company
-                {
-                    Id = 6,
-                    Name = "Portomare",
-                    Email = "adm@portomare.com"
-                });
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.AreEqual(company.Id, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
-            companyServiceMock.VerifyAll();
+            Assert.AreEqual(company.Id, _checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
+            _companyServiceMock.VerifyAll();
         }
 
         [TestMethod]
@@ -754,16 +620,15 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 1, Name = "Ferramenta 1" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.CheckinTool(newCheckin);
+            _checkinToolService.CheckinTool(newCheckin);
 
             //Assert
-            Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id));
-            Assert.AreEqual(company.Id, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
-            Assert.AreEqual(newCheckin.Tool.Name, checkinToolService.FindToolCheckin(newCheckin.Id).Tool.Name);
+            var checkin = _checkinToolService.FindToolCheckin(newCheckin.Id);
+
+            Assert.IsNotNull(checkin);
+            Assert.AreEqual(company.Id, checkin.EmployeeCompanyHolderId);
+            Assert.AreEqual(newCheckin.Tool.Name, checkin.Tool.Name);
         }
 
         [TestMethod]
@@ -787,16 +652,15 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 1, Name = "Ferramenta 1" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.CheckinTool(newCheckin);
+            _checkinToolService.CheckinTool(newCheckin);
 
             //Assert
-            Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id));
-            Assert.AreEqual(company.Id, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
-            Assert.AreEqual(newCheckin.Tool.Name, checkinToolService.FindToolCheckin(newCheckin.Id).Tool.Name);
+            var checkin = _checkinToolService.FindToolCheckin(newCheckin.Id);
+
+            Assert.IsNotNull(checkin);
+            Assert.AreEqual(company.Id, checkin.EmployeeCompanyHolderId);
+            Assert.AreEqual(newCheckin.Tool.Name, checkin.Tool.Name);
         }
 
         [TestMethod]
@@ -806,13 +670,6 @@ namespace WebSiteMjr.Domain.Test.services
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
 
-            var company = new Company
-            {
-                Id = 4,
-                Name = "Portoverano",
-                Email = "adm@portoverano.com"
-            };
-
             var newCheckin = new CheckinTool
             {
                 Id = 10,
@@ -821,20 +678,8 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6)))
-                .Returns(() => company)
-                .Callback(() => new Company
-                {
-                    Id = 6,
-                    Name = "Portomare",
-                    Email = "adm@portomare.com"
-                });
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.CheckinTool(newCheckin);
+            _checkinToolService.CheckinTool(newCheckin);
 
             //Assert
             Assert.Fail();
@@ -844,13 +689,6 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Create_Checkin_In_Company_When_The_Last_Checkin_Of_This_Tool_Was_Not_A_Company()
         {
             //Arrange
-            var company = new Company
-            {
-                Id = 6,
-                Name = "Portoverano",
-                Email = "adm@portoverano.com"
-            };
-
             var employee = new Employee
             {
                 Id = 2,
@@ -865,18 +703,15 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-            companyServiceMock.Setup(x => x.FindCompany(It.IsNotIn(2))).Returns(company);
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.CheckinTool(newCheckin);
+            _checkinToolService.CheckinTool(newCheckin);
 
             //Assert
-            Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id));
-            Assert.AreEqual(employee.Id, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
-            Assert.AreEqual(newCheckin.Tool.Name, checkinToolService.FindToolCheckin(newCheckin.Id).Tool.Name);
+            var checkin = _checkinToolService.FindToolCheckin(newCheckin.Id);
+
+            Assert.IsNotNull(checkin);
+            Assert.AreEqual(employee.Id, checkin.EmployeeCompanyHolderId);
+            Assert.AreEqual(newCheckin.Tool.Name, checkin.Tool.Name);
         }
 
         [TestMethod]
@@ -894,11 +729,8 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.DeleteToolCheckin(checkinToDelete.Id);
+            _checkinToolService.DeleteToolCheckin(checkinToDelete.Id);
 
             //Assert
             Assert.Fail();
@@ -919,11 +751,8 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.DeleteToolCheckin(checkinToDelete.Id);
+            _checkinToolService.DeleteToolCheckin(checkinToDelete.Id);
 
             //Assert
             Assert.Fail();
@@ -942,15 +771,12 @@ namespace WebSiteMjr.Domain.Test.services
                 EmployeeCompanyHolderId = 2,
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
-
-            var companyServiceMock = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
             
             //Act
-            checkinToolService.DeleteToolCheckin(checkinToDelete.Id);
+            _checkinToolService.DeleteToolCheckin(checkinToDelete.Id);
 
             //Assert
-            Assert.IsNull(checkinToolService.FindToolCheckin(checkinToDelete.Id));
+            Assert.IsNull(_checkinToolService.FindToolCheckin(checkinToDelete.Id));
         }
 
         [TestMethod]
@@ -960,13 +786,6 @@ namespace WebSiteMjr.Domain.Test.services
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
 
-            var company = new Company
-            {
-                Id = 4,
-                Name = "Portoverano",
-                Email = "adm@portoverano.com"
-            };
-
             var checkinToDelete = new CheckinTool
             {
                 Id = 40,
@@ -975,20 +794,8 @@ namespace WebSiteMjr.Domain.Test.services
                 Tool = new Tool { Id = 2, Name = "Ferramenta 2" }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6)))
-                .Returns(() => company)
-                .Callback(() => new Company
-                {
-                    Id = 6,
-                    Name = "Portomare",
-                    Email = "adm@portomare.com"
-                });
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             //Act
-            checkinToolService.DeleteToolCheckin(checkinToDelete.Id);
+            _checkinToolService.DeleteToolCheckin(checkinToDelete.Id);
 
             //Assert
             Assert.Fail();
@@ -998,34 +805,26 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Ignore_CompanyArea_When_Creating_A_Checkin_In_Employee()
         {
             //Arrange
-            var companyServiceMock = new Mock<ICompanyService>();
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
-            var newCheckin = checkinToolService.FindToolCheckin(1);
+            var newCheckin = _checkinToolService.FindToolCheckin(1);
             newCheckin.Id = 10;
             newCheckin.CompanyAreaId = 2;
 
             //Act
-            checkinToolService.CheckinTool(newCheckin);
+            _checkinToolService.CheckinTool(newCheckin);
 
             //Assert
-            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
+            Assert.IsNull(_checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
         }
 
         [TestMethod]
         public void Should_Ignore_CompanyArea_When_Updating_Checkin_To_An_Employee()
         {
             //Arrange
-            var companyServiceMock = new Mock<ICompanyService>();
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             var newCheckin = new CheckinTool
             {
                 Id = 4,
-                CheckinDateTime = new DateTime(2013, 12, 10, 15, 32, 00),//DateTime.Parse("10/12/2013"),
-                EmployeeCompanyHolderId = 6,
+                CheckinDateTime = new DateTime(2013, 12, 10, 15, 32, 00),
+                EmployeeCompanyHolderId = 2,
                 Tool = new Tool
                 {
                     Name = "Ferramenta 2",
@@ -1033,13 +832,12 @@ namespace WebSiteMjr.Domain.Test.services
                 },
                 CompanyAreaId = 1
             };
-            newCheckin.EmployeeCompanyHolderId = 2;
 
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
+            Assert.IsNull(_checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
         }
 
         [TestMethod]
@@ -1055,29 +853,6 @@ namespace WebSiteMjr.Domain.Test.services
                 }
             };
 
-            var companyServiceMock = new Mock<ICompanyService>();
-
-            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 5, 6)))
-                .Returns(() => new Company
-                {
-                    Id = 6,
-                    Name = "Portomare",
-                    Email = "adm@portomare.com",
-                    CompanyAreas = new Collection<CompanyArea>
-                    {
-                        new CompanyArea
-                        {
-                            Id = 2,
-                            Name = "Portão de visitantes"
-                        }
-                    }
-                });
-
-            companyServiceMock.Setup(x => x.FindCompanyCompanyAreas(It.Is<string>(str => str == "Portomare")))
-                .Returns(companyAreas);
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             var newCheckin = new CheckinTool
             {
                 Id = 4,
@@ -1091,11 +866,13 @@ namespace WebSiteMjr.Domain.Test.services
                 CompanyAreaId = 1
             };
 
+            _companyServiceMock.Setup(x => x.FindCompanyCompanyAreas(It.Is<string>(str => str == "Portomare")))
+                .Returns(companyAreas);
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
+            Assert.IsNull(_checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
         }
 
         [TestMethod]
@@ -1138,7 +915,7 @@ namespace WebSiteMjr.Domain.Test.services
             var newCheckin = new CheckinTool
                 {
                     Id = 30,
-                    CheckinDateTime = new DateTime(2013, 12, 09, 12, 32, 00),//DateTime.Parse("10/12/2013"),
+                    CheckinDateTime = new DateTime(2013, 12, 09, 12, 32, 00),
                     EmployeeCompanyHolderId = 2,
                     Tool = new Tool
                     {
@@ -1160,18 +937,6 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Update_Checkin_CompanyArea_When_CompanyArea_Is_Null_And_In_A_Company()
         {
             //Arrange
-            var companyServiceMock = new Mock<ICompanyService>();
-
-            companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 5, 6)))
-                .Returns(() => new Company
-                {
-                    Id = 6,
-                    Name = "Portomare",
-                    Email = "adm@portomare.com"
-                });
-
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), companyServiceMock.Object);
-
             var newCheckin = new CheckinTool
             {
                 Id = 30,
@@ -1183,20 +948,21 @@ namespace WebSiteMjr.Domain.Test.services
                     Id = 2
                 }
             };
-            newCheckin.EmployeeCompanyHolderId = 6;
 
             //Act
-            checkinToolService.UpdateToolCheckin(newCheckin);
+            _checkinToolService.UpdateToolCheckin(newCheckin);
 
             //Assert
-            Assert.IsNotNull(checkinToolService.FindToolCheckin(newCheckin.Id));
-            Assert.AreEqual(newCheckin.EmployeeCompanyHolderId, checkinToolService.FindToolCheckin(newCheckin.Id).EmployeeCompanyHolderId);
-            Assert.IsNull(checkinToolService.FindToolCheckin(newCheckin.Id).CompanyAreaId);
+            var checkin = _checkinToolService.FindToolCheckin(newCheckin.Id);
+
+            Assert.IsNotNull(checkin);
+            Assert.AreEqual(newCheckin.EmployeeCompanyHolderId, checkin.EmployeeCompanyHolderId);
+            Assert.IsNull(checkin.CompanyAreaId);
         }
 
         [TestMethod]
         [ExpectedException(typeof(CheckinHolderTwiceThenException))]
-        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Was_The_First_And_CanCheckinToolBetweenCompanies_Is_False_And_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolBeforeChange_Was_The_First_And_CanCheckinToolBetweenCompanies_Is_False_And_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
@@ -1213,11 +979,8 @@ namespace WebSiteMjr.Domain.Test.services
                 }
             };
 
-            var mockCompanyService = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), mockCompanyService.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(checkinToUpdate);
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
 
             //Assert
             Assert.Fail();
@@ -1225,7 +988,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         [TestMethod]
         [ExpectedException(typeof(CheckinHolderTwiceThenException))]
-        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Was_The_First_And_CanCheckinToolBetweenCompanies_Is_True_And_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolBeforeChange_Was_The_First_And_CanCheckinToolBetweenCompanies_Is_True_And_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
@@ -1242,11 +1005,8 @@ namespace WebSiteMjr.Domain.Test.services
                 }
             };
 
-            var mockCompanyService = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), mockCompanyService.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(checkinToUpdate);
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
 
             //Assert
             Assert.Fail();
@@ -1254,7 +1014,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         [TestMethod]
         [ExpectedException(typeof(CheckinHolderTwiceThenException))]
-        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Was_The_Last_And_CanCheckinToolBetweenCompanies_Is_False_And_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolBeforeChange_Was_The_Last_And_CanCheckinToolBetweenCompanies_Is_False_And_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
@@ -1271,11 +1031,8 @@ namespace WebSiteMjr.Domain.Test.services
                 }
             };
 
-            var mockCompanyService = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), mockCompanyService.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(checkinToUpdate);
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
 
             //Assert
             Assert.Fail();
@@ -1283,7 +1040,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         [TestMethod]
         [ExpectedException(typeof(CheckinHolderTwiceThenException))]
-        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Was_The_Last_And_CanCheckinToolBetweenCompanies_Is_True_And_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolBeforeChange_Was_The_Last_And_CanCheckinToolBetweenCompanies_Is_True_And_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
@@ -1300,11 +1057,8 @@ namespace WebSiteMjr.Domain.Test.services
                 }
             };
 
-            var mockCompanyService = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), mockCompanyService.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(checkinToUpdate);
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
 
             //Assert
             Assert.Fail();
@@ -1312,7 +1066,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         [TestMethod]
         [ExpectedException(typeof(CheckinHolderTwiceThenException))]
-        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Was_The_Only_And_CanCheckinToolBetweenCompanies_Is_False_And_Is_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolBeforeChange_Was_The_Only_And_CanCheckinToolBetweenCompanies_Is_False_And_Is_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
@@ -1329,11 +1083,8 @@ namespace WebSiteMjr.Domain.Test.services
                 }
             };
 
-            var mockCompanyService = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), mockCompanyService.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(checkinToUpdate);
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
 
             //Assert
             Assert.Fail();
@@ -1341,7 +1092,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         [TestMethod]
         [ExpectedException(typeof(CheckinHolderTwiceThenException))]
-        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Was_The_Only_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolBeforeChange_Was_The_Only_And_CanCheckinToolBetweenCompanies_Is_True_And_Is_Creating_Inconsistency_Between_Holders_Then_Raise_Exception()
         {
             //Arrange
             MjrSettings.Default.CanCheckinToolBetweenCompanies = true;
@@ -1358,15 +1109,42 @@ namespace WebSiteMjr.Domain.Test.services
                 }
             };
 
-            var mockCompanyService = new Mock<ICompanyService>();
-            var checkinToolService = new CheckinToolService(new FakeCheckinToolRepository(), new StubUnitOfWork(), mockCompanyService.Object);
-
             //Act
-            checkinToolService.UpdateToolCheckin(checkinToUpdate);
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
 
             //Assert
             Assert.Fail();
         }
+
+        [TestMethod]
+        public void Given_An_Update_To_A_CheckinTool_When_CheckinDateTime_Has_Changed_And_The_Tool_Has_Changed_And_The_ToolChanged_Had_No_Checkins_And_CanCheckinToolBetweenCompanies_Is_False_And_Is_Not_Creating_Inconsistency_Between_Holders_Then_Should_Update_CheckinTool()
+        {
+            //Arrange
+            MjrSettings.Default.CanCheckinToolBetweenCompanies = false;
+
+            var checkinToUpdate = new CheckinTool
+            {
+                Id = 41,
+                CheckinDateTime = new DateTime(2013, 12, 16, 11, 02, 00),
+                EmployeeCompanyHolderId = 1,
+                Tool = new Tool
+                {
+                    Name = "Ferramenta 5",
+                    Id = 5
+                }
+            };
+            
+
+            //Act
+            _checkinToolService.UpdateToolCheckin(checkinToUpdate);
+
+            //Assert
+            var checkinUpdated = _checkinToolService.FindToolCheckin(checkinToUpdate.Id);
+
+            Assert.IsNotNull(checkinUpdated);
+            Assert.AreEqual(checkinUpdated.Tool.Id, checkinToUpdate.Tool.Id);
+        }
+
     }
 
 

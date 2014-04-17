@@ -18,7 +18,7 @@ namespace WebSiteMjr.Domain.Test.Model
         {
             return new CheckinTool
             {
-                Id = 1,
+                Id = 52,
                 CheckinDateTime = new DateTime(2014, 1, 21, 13, 23, 00),
                 EmployeeCompanyHolderId = 1,
                 Tool = new Tool {Id = 1, Name = "Ferramenta 1"}
