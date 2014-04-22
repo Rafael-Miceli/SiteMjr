@@ -42,6 +42,11 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
             PerformValidationBeforeUpdateCheckin(checkinToolUpdated, checkinToolToUpdate);
 
+            checkinToolToUpdate.EmployeeCompanyHolderId = checkinToolUpdated.EmployeeCompanyHolderId;
+            checkinToolToUpdate.Tool = checkinToolUpdated.Tool;
+            checkinToolToUpdate.CheckinDateTime = checkinToolUpdated.CheckinDateTime;
+            checkinToolToUpdate.CompanyAreaId = checkinToolUpdated.CompanyAreaId;
+
             _checkinToolRepository.Update(checkinToolToUpdate);
             _unitOfWork.Save();
         }
@@ -54,12 +59,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
                     throw new ObjectExistsException<CheckinTool>();
 
                 if (checkinToolToUpdate.Tool.Id != checkinToolUpdated.Tool.Id)
-                {
                     ValidateOldPositionOfCheckin(checkinToolToUpdate);
-
-                    ValidateNewPositionOfCheckin(checkinToolUpdated);
-                }
-
                 else
                     IsChangeCreatingInconsitencyBetweenOtherCheckinsWhenToolNotChanged(checkinToolToUpdate,
                         checkinToolUpdated);
@@ -73,38 +73,19 @@ namespace WebSiteMjr.Domain.services.Stuffs
                         throw new ObjectExistsException<CheckinTool>();
 
                     ValidateOldPositionOfCheckin(checkinToolToUpdate);
-
-                    ValidateNewPositionOfCheckin(checkinToolUpdated);
                 }
-                else
-                    ValidateNewPositionOfCheckin(checkinToolUpdated);
             }
-            
-            checkinToolToUpdate.EmployeeCompanyHolderId = checkinToolUpdated.EmployeeCompanyHolderId;
-            checkinToolToUpdate.Tool = checkinToolUpdated.Tool;
-            checkinToolToUpdate.CheckinDateTime = checkinToolUpdated.CheckinDateTime;
 
-            if (checkinToolUpdated.CompanyAreaId != null)
-            {
-                var company = _companyService.ExistsCheckinOfToolInCompany(checkinToolUpdated.EmployeeCompanyHolderId);
-
-                if (company != null)
-                {
-                    checkinToolToUpdate.CompanyAreaId = CompanyAreaExistsInCompany(company, checkinToolUpdated.CompanyAreaId.Value)
-                        ? checkinToolUpdated.CompanyAreaId
-                        : null;
-                }
-                else
-                    checkinToolToUpdate.CompanyAreaId = null;
-            }
-            else
-                checkinToolToUpdate.CompanyAreaId = null;
+            ValidateNewPositionOfCheckin(checkinToolUpdated);
+            ValidateCheckinCompanyArea(checkinToolUpdated);
         }
 
         public void DeleteToolCheckin(object idCheckinTool)
         {
             var checkinToolToDelete = FindToolCheckin(idCheckinTool);
-            IsChangeCreatingInconsitencyBetweenOtherCheckins(checkinToolToDelete);
+
+            ValidateOldPositionOfCheckin(checkinToolToDelete);
+
             _checkinToolRepository.Remove(idCheckinTool);
             _unitOfWork.Save();
         }
@@ -119,19 +100,13 @@ namespace WebSiteMjr.Domain.services.Stuffs
             var checkins = _checkinToolRepository.GetAll();
 
             if (employeeCompany != null)
-            {
                 checkins = checkins.Where(c => c.EmployeeCompanyHolderId == employeeCompany.Id);
-            }
 
             if (!String.IsNullOrEmpty(toolName))
-            {
                 checkins = checkins.Where(c => String.Equals(c.Tool.Name, toolName, StringComparison.CurrentCultureIgnoreCase));
-            }
 
             if (date.HasValue)
-            {
                 checkins = checkins.Where(c => c.CheckinDateTime.Date == date.Value.Date);
-            }
 
             return checkins;
         }
@@ -181,10 +156,6 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
             return checkinsWithActualTool.OrderByDescending(c => c.CheckinDateTime).LastOrDefault(c => c.CheckinDateTime > checkinTool.CheckinDateTime);
         }
-
-
-
-
 
         private bool IsNewCheckinCreatingHolderTwice(CheckinTool checkinTool)
         {
@@ -247,8 +218,6 @@ namespace WebSiteMjr.Domain.services.Stuffs
             return (checkinToolBeforeTheActual != null && IsCheckinOfToolInCompany(checkinToolBeforeTheActual.EmployeeCompanyHolderId)) || (checkinToolAfterTheActual != null && IsCheckinOfToolInCompany(checkinToolAfterTheActual.EmployeeCompanyHolderId));
         }
 
-
-
         private void ValidateNewPositionOfCheckin(CheckinTool checkin)
         {
             if (IsNewCheckinCreatingHolderTwice(checkin))
@@ -271,7 +240,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
                 throw new CheckinCompanyToCompanyException();
         }
 
-        private bool IsChangeCreatingInconsitencyBetweenOtherCheckinsWhenToolNotChanged(CheckinTool checkinToUpdate, CheckinTool checkinUpdated)
+        private void IsChangeCreatingInconsitencyBetweenOtherCheckinsWhenToolNotChanged(CheckinTool checkinToUpdate, CheckinTool checkinUpdated)
         {
             var checkinChangedPosition = true;
 
@@ -306,68 +275,8 @@ namespace WebSiteMjr.Domain.services.Stuffs
             }
 
             if (checkinChangedPosition)
-            {
-
                 ValidateOldPositionOfCheckin(checkinToUpdate);
 
-                ValidateNewPositionOfCheckin(checkinUpdated);
-
-            }
-            else
-                ValidateNewPositionOfCheckin(checkinUpdated);
-
-            return false;
         }
-
-
-        private bool IsChangeCreatingInconsitencyBetweenOtherCheckins(CheckinTool originalCheckin)
-        {
-            var checkinsWithOriginalTool = ListCheckinToolsWithActualTool(originalCheckin.Tool.Id);
-
-            if (checkinsWithOriginalTool == null)
-                return false;
-
-            checkinsWithOriginalTool = checkinsWithOriginalTool.OrderByDescending(c => c.CheckinDateTime).ToList();
-            var checkinWithThisToolBeforeActual = GetFirstCheckinBeforeActual(checkinsWithOriginalTool,
-                originalCheckin);
-            var checkinWithThisToolAfterActual = GetFirstCheckinAfterActual(checkinsWithOriginalTool,
-                originalCheckin);
-
-            if (checkinWithThisToolBeforeActual == null || checkinWithThisToolAfterActual == null)
-                return false;
-
-            if (IsActualCheckinCreatingSequenceOfHoldersInconsistency(checkinWithThisToolBeforeActual,
-                checkinWithThisToolAfterActual, originalCheckin))
-                throw new CheckinHolderTwiceThenException();
-
-            if (!MjrSettings.Default.CanCheckinToolBetweenCompanies)
-                if (IsActualCheckinCreatingSequenceOfCompanyInconsistency(checkinWithThisToolBeforeActual,
-                    checkinWithThisToolAfterActual))
-                    throw new CheckinCompanyToCompanyException();
-
-            return false;
-        }
-
-        private CheckinTool GetFirstCheckinBeforeActual(IEnumerable<CheckinTool> checkins, CheckinTool originalCheckin)
-        {
-            return checkins.FirstOrDefault(c => c.CheckinDateTime < originalCheckin.CheckinDateTime);
-        }
-
-        private CheckinTool GetFirstCheckinAfterActual(IEnumerable<CheckinTool> checkins, CheckinTool originalCheckin)
-        {
-            return checkins.LastOrDefault(c => c.CheckinDateTime > originalCheckin.CheckinDateTime);
-        }
-
-        private bool IsActualCheckinCreatingSequenceOfCompanyInconsistency(CheckinTool checkinWithThisToolBeforeActual, CheckinTool checkinWithThisToolAfterActual)
-        {
-            return (checkinWithThisToolBeforeActual != null && IsCheckinOfToolInCompany(checkinWithThisToolBeforeActual.EmployeeCompanyHolderId)) &&
-                   (checkinWithThisToolAfterActual != null && IsCheckinOfToolInCompany(checkinWithThisToolAfterActual.EmployeeCompanyHolderId));
-        }
-
-        private bool IsActualCheckinCreatingSequenceOfHoldersInconsistency(CheckinTool checkinWithThisToolBeforeActual, CheckinTool checkinWithThisToolAfterActual, CheckinTool originalCheckin)
-        {
-            return checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == originalCheckin.EmployeeCompanyHolderId || checkinWithThisToolAfterActual.EmployeeCompanyHolderId == originalCheckin.EmployeeCompanyHolderId || checkinWithThisToolBeforeActual.EmployeeCompanyHolderId == checkinWithThisToolAfterActual.EmployeeCompanyHolderId;
-        }
-        
     }
 }

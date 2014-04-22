@@ -10,12 +10,12 @@ namespace WebSiteMjr.Domain.services.Stuffs
 {
     public class CompanyAreasService : ICompanyAreasService
     {
-        private readonly ICompanyAreaRepository _CompanyAreaRepository;
+        private readonly ICompanyAreaRepository _companyAreaRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CompanyAreasService(ICompanyAreaRepository CompanyAreaRepository, IUnitOfWork unitOfWork)
+        public CompanyAreasService(ICompanyAreaRepository companyAreaRepository, IUnitOfWork unitOfWork)
         {
-            _CompanyAreaRepository = CompanyAreaRepository;
+            _companyAreaRepository = companyAreaRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -23,7 +23,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
         {
             if (CompanyAreaExists(companyArea.Name)) throw new ObjectExistsException<CompanyArea>();
 
-            _CompanyAreaRepository.Add(companyArea);
+            _companyAreaRepository.Add(companyArea);
             _unitOfWork.Save();
         }
 
@@ -36,33 +36,33 @@ namespace WebSiteMjr.Domain.services.Stuffs
         {
             if (CompanyAreaExists(companyArea.Name)) throw new ObjectExistsException<CompanyArea>();
 
-            _CompanyAreaRepository.Update(companyArea);
+            _companyAreaRepository.Update(companyArea);
             _unitOfWork.Save();
         }
 
-        public CompanyArea FindCompanyArea(object CompanyAreaId)
+        public CompanyArea FindCompanyArea(object companyAreaId)
         {
-            return _CompanyAreaRepository.GetById(CompanyAreaId);
+            return _companyAreaRepository.GetById(companyAreaId);
         }
 
         public void DeleteCompanyArea(object id)
         {
-            _CompanyAreaRepository.Remove(id);
+            _companyAreaRepository.Remove(id);
             _unitOfWork.Save();
         }
         
         public CompanyArea FindCompanyAreaByName(string name)
         {
-            return _CompanyAreaRepository.GetByName(name);
+            return _companyAreaRepository.GetByName(name);
         }
 
-        public void LinkToolsLocalizationToCompany(List<int> CompanyAreasId, Company company)
+        public void LinkToolsLocalizationToCompany(List<int> companyAreasId, Company company)
         {
-            var CompanyAreas = _CompanyAreaRepository.GetAll().ToList();
+            var companyAreas = _companyAreaRepository.GetAll().ToList();
 
-            foreach (var toolsId in CompanyAreasId)
+            foreach (var toolsId in companyAreasId)
             {
-                company.CompanyAreas.Add(CompanyAreas.FirstOrDefault(tl => tl.Id == toolsId));
+                company.CompanyAreas.Add(companyAreas.FirstOrDefault(tl => tl.Id == toolsId));
             }
 
             _unitOfWork.Save();
@@ -70,7 +70,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public IEnumerable<CompanyArea> ListCompanyAreas()
         {
-            return _CompanyAreaRepository.GetAll();
+            return _companyAreaRepository.GetAll();
         }
     }
 }
