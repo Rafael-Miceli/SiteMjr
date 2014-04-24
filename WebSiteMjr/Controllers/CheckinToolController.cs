@@ -38,7 +38,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Details(int id)
         {
-            var checkinTool = _checkinToolMapper.EditingCheckinToolToCreateCheckinToolViewModel((_checkinToolService.FindToolCheckin(id)));
+            var checkinTool = _checkinToolMapper.CheckinToolToCreateCheckinToolViewModel((_checkinToolService.FindToolCheckin(id)));
             return View(checkinTool);
         }
 
@@ -47,7 +47,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Create()
         {
-            var createCheckinToolViewModel = new CreateCheckinToolViewModel();
+            var createCheckinToolViewModel = new CheckinToolViewModel();
             return View(createCheckinToolViewModel);
         }
 
@@ -55,7 +55,7 @@ namespace WebSiteMjr.Controllers
         // POST: /Stuff/Create
 
         [HttpPost]
-        public ActionResult Create(CreateCheckinToolViewModel checkin)
+        public ActionResult Create(CheckinToolViewModel checkin)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Edit(int id)
         {
-            var checkinTool = _checkinToolMapper.EditingCheckinToolToCreateCheckinToolViewModel(_checkinToolService.FindToolCheckin(id));
+            var checkinTool = _checkinToolMapper.CheckinToolToCreateCheckinToolViewModel(_checkinToolService.FindToolCheckin(id));
             return View(checkinTool);
         }   
         
@@ -116,14 +116,14 @@ namespace WebSiteMjr.Controllers
         // POST: /Stuff/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, CreateCheckinToolViewModel checkinTool)
+        public ActionResult Edit(int id, CheckinToolViewModel checkinTool)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return View(checkinTool);
 
-                _checkinToolService.UpdateToolCheckin(_checkinToolMapper.EditingCreateCheckinToolViewModelToCheckinTool(id, checkinTool));
+                _checkinToolService.UpdateToolCheckin(_checkinToolMapper.CreateCheckinToolViewModelToCheckinTool(checkinTool));
 
                 return RedirectToAction("Index");
             }
@@ -168,7 +168,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Delete(int id)
         {
-            var checkinTool = _checkinToolMapper.EditingCheckinToolToCreateCheckinToolViewModel(_checkinToolService.FindToolCheckin(id));
+            var checkinTool = _checkinToolMapper.CheckinToolToCreateCheckinToolViewModel(_checkinToolService.FindToolCheckin(id));
             return View(checkinTool);
         }
 
@@ -176,7 +176,7 @@ namespace WebSiteMjr.Controllers
         // POST: /Stuff/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(CreateCheckinToolViewModel checkinTool)
+        public ActionResult Delete(CheckinToolViewModel checkinTool)
         {
             try
             {

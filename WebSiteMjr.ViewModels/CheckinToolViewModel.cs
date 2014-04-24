@@ -22,9 +22,9 @@ namespace WebSiteMjr.ViewModels
         public string CompanyAreaName { get; set; }
     }
 
-    public class CreateCheckinToolViewModel
+    public class CheckinToolViewModel
     {
-        public CreateCheckinToolViewModel()
+        public CheckinToolViewModel()
         {
             try
             {

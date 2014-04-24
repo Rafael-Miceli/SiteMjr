@@ -21,7 +21,19 @@ namespace WebSiteMjr.Domain.Test.Model
                 Id = 52,
                 CheckinDateTime = new DateTime(2014, 1, 21, 13, 23, 00),
                 EmployeeCompanyHolderId = 1,
-                Tool = new Tool {Id = 1, Name = "Ferramenta 1"}
+                Tool = new Tool {Id = 1, Name = "Ferramenta 1"},
+                CompanyAreaId = 1
+            };
+        }
+
+        public static CheckinTool CreateOneCheckinToolWithoutCompanyArea()
+        {
+            return new CheckinTool
+            {
+                Id = 52,
+                CheckinDateTime = new DateTime(2014, 1, 21, 13, 23, 00),
+                EmployeeCompanyHolderId = 1,
+                Tool = new Tool { Id = 1, Name = "Ferramenta 1" }
             };
         }
 
@@ -264,9 +276,9 @@ namespace WebSiteMjr.Domain.Test.Model
             };
         }
 
-        public static CreateCheckinToolViewModel CreateOneCheckinToolViewModel()
+        public static CheckinToolViewModel CreateOneCheckinToolViewModel()
         {
-            return new CreateCheckinToolViewModel
+            return new CheckinToolViewModel
             {
                 Id = 1,
                 CheckinDateTime = new DateTime(2014, 1, 21, 13, 23, 00),
@@ -276,9 +288,9 @@ namespace WebSiteMjr.Domain.Test.Model
             };
         }
 
-        public static CreateCheckinToolViewModel CreateOneCheckinToolViewModelWithoutCompanyArea()
+        public static CheckinToolViewModel CreateOneCheckinToolViewModelWithoutCompanyArea()
         {
-            return new CreateCheckinToolViewModel
+            return new CheckinToolViewModel
             {
                 Id = 1,
                 CheckinDateTime = new DateTime(2014, 1, 21, 13, 23, 00),
