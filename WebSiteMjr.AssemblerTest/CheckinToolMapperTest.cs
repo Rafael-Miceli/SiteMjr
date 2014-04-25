@@ -4,6 +4,7 @@ using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
+using WebSiteMjr.Domain.Model.NullObjects;
 using WebSiteMjr.Domain.Test.Model;
 
 namespace WebSiteMjr.AssemblerTest
@@ -67,7 +68,7 @@ namespace WebSiteMjr.AssemblerTest
             Assert.IsNotNull(checkinTool.EmployeeCompanyHolderId);
             Assert.IsNotNull(checkinTool.Tool);
             Assert.IsNotNull(checkinTool.CheckinDateTime);
-            Assert.IsNull(checkinTool.CompanyAreaId);
+            Assert.AreEqual(0, checkinTool.CompanyAreaId);
         }
         
         [TestMethod]
@@ -215,6 +216,8 @@ namespace WebSiteMjr.AssemblerTest
                 .Returns(tool);
             _companyAreaServiceMock.Setup(x => x.FindCompanyAreaByName(companyArea.Name))
                 .Returns(companyArea);
+            _companyAreaServiceMock.Setup(x => x.FindCompanyAreaByName(It.IsNotIn(companyArea.Name)))
+                .Returns(new NullCompanyArea());
         }
 
         private void ArrangeCheckinTool()
@@ -235,6 +238,8 @@ namespace WebSiteMjr.AssemblerTest
                 .Returns(employee);
             _companyAreaServiceMock.Setup(x => x.FindCompanyArea(companyArea.Id))
                 .Returns(companyArea);
+            _companyAreaServiceMock.Setup(x => x.FindCompanyAreaByName(It.IsNotIn(companyArea.Name)))
+                .Returns(new NullCompanyArea());
         }
     }
 }

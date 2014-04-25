@@ -5,6 +5,7 @@ using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
 using WebSiteMjr.Domain.Model;
+using WebSiteMjr.Domain.Model.NullObjects;
 
 namespace WebSiteMjr.Domain.services.Stuffs
 {
@@ -29,7 +30,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         private bool CompanyAreaExists(string companyAreaName)
         {
-            return FindCompanyAreaByName(companyAreaName) != null;
+            return !FindCompanyAreaByName(companyAreaName).IsNull;
         }
 
         public void UpdateCompanyArea(CompanyArea companyArea)
@@ -53,7 +54,9 @@ namespace WebSiteMjr.Domain.services.Stuffs
         
         public CompanyArea FindCompanyAreaByName(string name)
         {
-            return _companyAreaRepository.GetByName(name);
+            var companyArea = _companyAreaRepository.GetByName(name);
+            
+            return companyArea ?? new NullCompanyArea();; 
         }
 
         public void LinkToolsLocalizationToCompany(List<int> companyAreasId, Company company)

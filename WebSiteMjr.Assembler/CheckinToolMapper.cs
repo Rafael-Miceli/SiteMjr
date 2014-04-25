@@ -35,7 +35,7 @@ namespace WebSiteMjr.Assembler
             return checkinToolViewModel;
         }
 
-        public IEnumerable<EnumerableCheckinToolViewModel> CheckinToolToCreateCheckinToolViewModel(IEnumerable<CheckinTool> checkins)
+        private IEnumerable<EnumerableCheckinToolViewModel> CheckinToolToCreateCheckinToolViewModel(IEnumerable<CheckinTool> checkins)
         {
             var companyAreas = _companyAreasService.ListCompanyAreas().ToList();
             var holders = _holderService.ListHolder().ToList();
@@ -61,31 +61,19 @@ namespace WebSiteMjr.Assembler
             var holder = _holderService.FindHolderByName(createCheckinToolViewModel.EmployeeCompanyHolderName);
             var companyArea = _companyAreasService.FindCompanyAreaByName(createCheckinToolViewModel.CompanyAreaName);
 
-            int? companyAreaId;
-
-            if (companyArea != null)
-            {
-                companyAreaId = companyArea.Id;
-            }
-            else
-            {
-                companyAreaId = null;
-            }
-
-
             if (!holder.Exists())
                 throw new ObjectNotExistsException<Holder>();
 
             if (!tool.Exists())
                 throw new ObjectNotExistsException<Tool>();
 
-
             var checkinTool = new CheckinTool
             {
+                Id = createCheckinToolViewModel.Id,
                 EmployeeCompanyHolderId = holder.Id,
                 Tool = tool,
                 CheckinDateTime = createCheckinToolViewModel.CheckinDateTime.Value,
-                CompanyAreaId = companyAreaId
+                CompanyAreaId = companyArea.Id
             };
 
             return checkinTool;
