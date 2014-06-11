@@ -8,7 +8,7 @@ using WebSiteMjr.ViewModels;
 
 namespace WebSiteMjr.Controllers
 {
-    [FlexAuthorize(Roles = "MjrAdmin")] 
+    [FlexAuthorize(Roles = "MjrAdmin")]
     public class CheckinToolController : Controller
     {
         private readonly ICheckinToolService _checkinToolService;
@@ -19,8 +19,7 @@ namespace WebSiteMjr.Controllers
             _checkinToolService = checkinToolService;
             _checkinToolMapper = new CheckinToolMapper(_checkinToolService, toolService, holderService, companyAreasService);
         }
-        
-        
+
         // GET: /Stuff/
         public ActionResult Index()
         {
@@ -109,8 +108,7 @@ namespace WebSiteMjr.Controllers
         {
             var checkinTool = _checkinToolMapper.CheckinToolToCreateCheckinToolViewModel(_checkinToolService.FindToolCheckin(id));
             return View(checkinTool);
-        }   
-        
+        }
 
         //
         // POST: /Stuff/Edit/5
@@ -183,6 +181,11 @@ namespace WebSiteMjr.Controllers
                 _checkinToolService.DeleteToolCheckin(checkinTool.Id);
 
                 return RedirectToAction("Index");
+            }
+            catch (CheckinHolderTwiceThenException ex)
+            {
+                ModelState.AddModelError("HolderNotExists", ex.Message);
+                return View(checkinTool);
             }
             catch
             {
