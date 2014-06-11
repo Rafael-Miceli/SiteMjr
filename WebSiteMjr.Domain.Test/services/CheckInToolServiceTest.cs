@@ -197,6 +197,20 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         [TestMethod]
+        public void Should_Create_Checkin_For_Tool_With_Informer_Field_Different_From_Null()
+        {
+            var newCheckinTool = CheckinToolDummies.CreateOneCheckinToolWithInformer();
+
+
+            _checkinToolService.CheckinTool(newCheckinTool);
+
+
+            var checkin = _checkinToolService.FindToolCheckin(newCheckinTool.Id);
+            Assert.IsNotNull(checkin);
+            Assert.IsNotNull(checkin.Informer);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(CheckinHolderTwiceThenException))]
         public void Given_A_Update_In_A_CheckinTool_When_CanCheckinToolBetweenCompanies_Is_True_And_Checkin_Update_Is_Creating_Same_Holder_Twice_Then_Should_Raise_Exception()
         {
@@ -1705,6 +1719,7 @@ namespace WebSiteMjr.Domain.Test.services
             Assert.IsNotNull(checkin.Id);
             Assert.AreEqual(checkin.EmployeeCompanyHolderId, checkinToUpdate.EmployeeCompanyHolderId);
         }
+
     }
 
 

@@ -26,6 +26,19 @@ namespace WebSiteMjr.Domain.Test.Model
             };
         }
 
+        public static CheckinTool CreateOneCheckinToolWithInformer()
+        {
+            return new CheckinTool
+            {
+                Id = 52,
+                CheckinDateTime = new DateTime(2014, 1, 21, 13, 23, 00),
+                EmployeeCompanyHolderId = 1,
+                Tool = new Tool { Id = 1, Name = "Ferramenta 1" },
+                CompanyAreaId = 1,
+                Informer = "Gabriela"
+            };
+        }
+
         public static CheckinTool CreateOneCheckinToolWithoutCompanyArea()
         {
             return new CheckinTool
@@ -285,6 +298,18 @@ namespace WebSiteMjr.Domain.Test.Model
                 EmployeeCompanyHolderName = "Celso",
                 ToolName = "Ferramenta 1",
                 CompanyAreaName = "Portão"
+            };
+        }
+        public static CheckinToolViewModel CreateOneCheckinToolViewModelWithInformer()
+        {
+            return new CheckinToolViewModel
+            {
+                Id = 1,
+                CheckinDateTime = new DateTime(2014, 1, 21, 13, 23, 00),
+                EmployeeCompanyHolderName = "Celso",
+                ToolName = "Ferramenta 1",
+                CompanyAreaName = "Portão",
+                Informer = "Gabriela"
             };
         }
 

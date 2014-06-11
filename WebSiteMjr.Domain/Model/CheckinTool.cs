@@ -19,5 +19,6 @@ namespace WebSiteMjr.Domain.Model
         }
 
         public virtual int? CompanyAreaId { get; set; }
+        public virtual string Informer { get; set; }
     }
 }

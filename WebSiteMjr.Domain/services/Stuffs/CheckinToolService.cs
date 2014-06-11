@@ -46,6 +46,7 @@ namespace WebSiteMjr.Domain.services.Stuffs
             checkinToolToUpdate.Tool = checkinToolUpdated.Tool;
             checkinToolToUpdate.CheckinDateTime = checkinToolUpdated.CheckinDateTime;
             checkinToolToUpdate.CompanyAreaId = checkinToolUpdated.CompanyAreaId;
+            checkinToolToUpdate.Informer = checkinToolUpdated.Informer;
 
             _checkinToolRepository.Update(checkinToolToUpdate);
             _unitOfWork.Save();

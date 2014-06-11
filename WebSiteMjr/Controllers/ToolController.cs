@@ -82,6 +82,7 @@ namespace WebSiteMjr.Controllers
             }
             catch (ObjectExistsException<Tool> ex)
             {
+                SetCategory_ManufactureViewBag();
                 ModelState.AddModelError("ToolExists", ex.Message);
                 return View();
             }
@@ -171,8 +172,9 @@ namespace WebSiteMjr.Controllers
             }
             catch (ObjectExistsException<Tool> ex)
             {
+                SetCategory_ManufactureViewBag();
                 ModelState.AddModelError("ToolExists", ex.Message);
-                return View();
+                return View(tool);
             }
             catch
             {
@@ -196,7 +198,7 @@ namespace WebSiteMjr.Controllers
                 var checkinTool = _toolMapper.MapCheckinToolTabViewModelToCheckinTool(checkinToolTabViewModel);
                 _checkinToolService.CheckinTool(checkinTool);
 
-                return RedirectToAction("Edit", new  {id = checkinToolTabViewModel.ToolId});
+                return RedirectToAction("Edit", new { id = checkinToolTabViewModel.ToolId });
             }
             catch (ObjectNotExistsException<Holder> ex)
             {

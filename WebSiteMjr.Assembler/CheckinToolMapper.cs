@@ -73,7 +73,8 @@ namespace WebSiteMjr.Assembler
                 EmployeeCompanyHolderId = holder.Id,
                 Tool = tool,
                 CheckinDateTime = createCheckinToolViewModel.CheckinDateTime.Value,
-                CompanyAreaId = companyArea.Id
+                CompanyAreaId = companyArea.Id,
+                Informer = createCheckinToolViewModel.Informer
             };
 
             return checkinTool;
@@ -90,7 +91,8 @@ namespace WebSiteMjr.Assembler
                 EmployeeCompanyHolderName = _holderService.FindHolder(checkinTool.EmployeeCompanyHolderId).Name,
                 ToolName = checkinTool.Tool.Name,
                 StrCheckinDateTime = checkinTool.CheckinDateTime.ToString(),
-                CompanyAreaName = companyAreaName != null ? companyAreaName.Name : null
+                CompanyAreaName = companyAreaName != null ? companyAreaName.Name : null,
+                Informer = checkinTool.Informer
             };
 
             return createCheckinToolViewModel;

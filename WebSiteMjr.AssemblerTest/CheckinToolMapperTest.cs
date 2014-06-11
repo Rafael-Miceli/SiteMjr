@@ -33,7 +33,7 @@ namespace WebSiteMjr.AssemblerTest
         public void Should_Map_CreateCheckinToolViewModel_To_CheckinTool_When_All_Fields_Are_Populated()
         {
             //Arrange
-            var createCheckinToolViewModel = CheckinToolDummies.CreateOneCheckinToolViewModel();
+            var createCheckinToolViewModel = CheckinToolDummies.CreateOneCheckinToolViewModelWithInformer();
 
             ArrangeCheckinToolViewModel();
 
@@ -48,6 +48,7 @@ namespace WebSiteMjr.AssemblerTest
             Assert.IsNotNull(checkinTool.Tool);
             Assert.IsNotNull(checkinTool.CheckinDateTime);
             Assert.IsNotNull(checkinTool.CompanyAreaId);
+            Assert.IsNotNull(checkinTool.Informer);
         }
 
         [TestMethod]
@@ -154,7 +155,7 @@ namespace WebSiteMjr.AssemblerTest
         public void Should_Map_CheckinTool_To_CreateCheckinToolViewModel_When_All_Fields_Are_Populated()
         {
             //Arrange
-            var createCheckinTool = CheckinToolDummies.CreateOneCheckinTool();
+            var createCheckinTool = CheckinToolDummies.CreateOneCheckinToolWithInformer();
 
             ArrangeCheckinTool();
 
@@ -168,6 +169,7 @@ namespace WebSiteMjr.AssemblerTest
             Assert.IsNotNull(checkinToolViewModel.ToolName);
             Assert.IsNotNull(checkinToolViewModel.StrCheckinDateTime);
             Assert.IsNotNull(checkinToolViewModel.CompanyAreaName);
+            Assert.IsNotNull(checkinToolViewModel.Informer);
         }
 
         [TestMethod]
