@@ -20,7 +20,7 @@ namespace WebSiteMjr.Controllers
         [FlexAuthorize(Roles = "MjrAdmin")]
         public ActionResult Index()
         {
-            return View(_employeeService.ListEmployee());
+            return View(_employeeService.ListEmployeesNotDeleted());
         }
 
         //

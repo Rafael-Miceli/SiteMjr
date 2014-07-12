@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model
 {
@@ -17,16 +15,16 @@ namespace WebSiteMjr.Domain.Model
                            ErrorMessage = "Telefone Inválido")]
         public virtual string Phone { get; set; }
 
-        private ICollection<ToolLocalization> _toolsLocalizations;
-        public virtual ICollection<ToolLocalization> ToolsLocalizations
+        private ICollection<CompanyArea> _companyAreas;
+        public virtual ICollection<CompanyArea> CompanyAreas
         {
             get
             {
-                return _toolsLocalizations ?? (_toolsLocalizations = new Collection<ToolLocalization>());
+                return _companyAreas ?? (_companyAreas = new Collection<CompanyArea>());
             }
             set
             {
-                _toolsLocalizations = value;
+                _companyAreas = value;
             } 
         }
 

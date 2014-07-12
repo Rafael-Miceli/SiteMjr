@@ -77,6 +77,10 @@ h2 {
     font-size: 1.75em;
 }
 
+section h2 {
+    margin-bottom: 40px;
+}
+
 h3 {
     font-size: 1.2em;
 }
@@ -573,11 +577,54 @@ input[type="checkbox"].input-validation-error {
 
 /* tables
 ----------------------------------------------------------*/
+
+.fa {
+    text-decoration: none;
+}
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
     margin-top: 0.75em;
     border: 0 none;
+}
+
+table input {
+    width: auto;
+}
+
+#tabs table input {
+    width: 85%;
+}
+
+.table th {
+    cursor: pointer;
+}
+
+.table th.sorter-false {
+    cursor: default;
+    width: 20px;
+}
+
+#CheckGrid .tablesorter-filter.disabled {
+    width: 20px;
+    max-width: 20px;
+    visibility: hidden;
+    cursor: none;
+}
+
+#Grid .tablesorter-filter.disabled {
+    width: 50px;
+    visibility: hidden;
+    cursor: none;
+}
+
+.pagesize {
+    width: 60px;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: aliceblue;
 }
 
 th {

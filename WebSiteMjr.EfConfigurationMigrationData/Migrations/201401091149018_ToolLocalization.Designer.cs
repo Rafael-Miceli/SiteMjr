@@ -5,13 +5,13 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class ToolLocalization : IMigrationMetadata
+    public sealed partial class CompanyArea : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ToolLocalization));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CompanyArea));
         
         string IMigrationMetadata.Id
         {
-            get { return "201401091149018_ToolLocalization"; }
+            get { return "201401091149018_CompanyArea"; }
         }
         
         string IMigrationMetadata.Source

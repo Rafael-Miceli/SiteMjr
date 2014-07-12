@@ -21,6 +21,7 @@
             @Html.LabelFor(model => model.Name, "Nome")
         </div>
         <div class="editor-field">
+            @Html.ValidationMessage("ToolExists")
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>

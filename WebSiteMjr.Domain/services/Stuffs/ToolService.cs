@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using WebSiteMjr.Domain.Exceptions;
+using WebSiteMjr.Domain.Interfaces.Model;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -20,12 +23,21 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public void CreateTool(Tool tool)
         {
+            if (ToolExists(tool)) throw new ObjectExistsException<Tool>(); 
+
             _toolRepository.AddOrUpdateGraph(tool);
             _unitOfWork.Save();
         }
 
+        private bool ToolExists(Tool tool)
+        {
+            return _toolRepository.Get(t => t.Name == tool.Name && t.Id != tool.Id) != null;
+        }
+
         public void UpdateTool(Tool tool)
         {
+            if (ToolExists(tool)) throw new ObjectExistsException<Tool>();
+
             tool.State = State.Modified;
 
             if (tool.StuffCategory != null)
@@ -47,6 +59,16 @@ namespace WebSiteMjr.Domain.services.Stuffs
         public IEnumerable<Tool> ListTool()
         {
             return _toolRepository.GetAll();
+        }
+
+        public IEnumerable<Tool> ListNotDeletedTools()
+        {
+            return _toolRepository.GetAllToolsNotDeleted();
+        }
+
+        public IEnumerable<string> ListToolName()
+        {
+            return ListTool().Select(t => t.Name);
         }
 
         public Tool FindTool(object idTool)

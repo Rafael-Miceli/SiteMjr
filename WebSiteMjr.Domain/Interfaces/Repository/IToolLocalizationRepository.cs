@@ -3,8 +3,8 @@ using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.Domain.Interfaces.Repository
 {
-    public interface IToolLocalizationRepository : IGenericRepository<ToolLocalization>
+    public interface ICompanyAreaRepository : IGenericRepository<CompanyArea>
     {
-        ToolLocalization GetByName(string name);
+        CompanyArea GetByName(string name);
     }
 }

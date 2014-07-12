@@ -14,16 +14,19 @@ namespace WebSiteMjr.Controllers
     public class ToolController : Controller
     {
         private readonly IToolService _toolService;
-        private readonly ToolMapper _stuffMapper;
+        private readonly ToolMapper _toolMapper;
         private readonly IStuffCategoryService _stuffCategoryService;
-        private readonly IStuffManufactureService _stuffManufactureService; 
+        private readonly IStuffManufactureService _stuffManufactureService;
+        private readonly ICheckinToolService _checkinToolService;
 
-        public ToolController(IToolService toolService, IStuffCategoryService stuffCategoryService, IStuffManufactureService stuffManufactureService)
+        public ToolController(IToolService toolService, IStuffCategoryService stuffCategoryService, IStuffManufactureService stuffManufactureService,
+             IHolderService holderService, ICompanyAreasService companyAreasService, ICheckinToolService checkinToolService)
         {
             _toolService = toolService;
             _stuffCategoryService = stuffCategoryService;
             _stuffManufactureService = stuffManufactureService;
-            _stuffMapper = new ToolMapper(_stuffCategoryService, _stuffManufactureService, _toolService);
+            _checkinToolService = checkinToolService;
+            _toolMapper = new ToolMapper(_stuffCategoryService, _stuffManufactureService, _toolService, holderService, companyAreasService, checkinToolService);
         }
 
         private void SetCategory_ManufactureViewBag(int? stuffCategoryId = null, int? stuffManufactureId = null)
@@ -41,7 +44,7 @@ namespace WebSiteMjr.Controllers
         // GET: /Stuff/
         public ActionResult Index()
         {
-            return View(_toolService.ListTool());
+            return View(_toolService.ListNotDeletedTools());
         }
 
         //
@@ -50,7 +53,7 @@ namespace WebSiteMjr.Controllers
         public ActionResult Details(int id)
         {
             var tool = _toolService.FindTool(id);
-            return View(_stuffMapper.ToolToToolViewModel(tool));
+            return View(_toolMapper.ToolToToolViewModel(tool));
         }
 
         //
@@ -73,9 +76,15 @@ namespace WebSiteMjr.Controllers
                 if (!ModelState.IsValid)
                     return View(tool);
 
-                _toolService.CreateTool(_stuffMapper.ToolViewModelToTool(tool));
+                _toolService.CreateTool(_toolMapper.ToolViewModelToTool(tool));
 
                 return RedirectToAction("Index");
+            }
+            catch (ObjectExistsException<Tool> ex)
+            {
+                SetCategory_ManufactureViewBag();
+                ModelState.AddModelError("ToolExists", ex.Message);
+                return View();
             }
             catch
             {
@@ -143,9 +152,8 @@ namespace WebSiteMjr.Controllers
 
             SetCategory_ManufactureViewBag(tool.StuffCategory.IfEntitieIsNotNullReturnId(), tool.StuffManufacture.IfEntitieIsNotNullReturnId());    
             
-            return View(_stuffMapper.ToolToToolViewModel(tool));
+            return View(_toolMapper.ToolToToolViewModel(tool));
         }   
-        
 
         //
         // POST: /Stuff/Edit/5
@@ -158,13 +166,68 @@ namespace WebSiteMjr.Controllers
                 if (!ModelState.IsValid) 
                     return View(tool);
                 
-                _toolService.UpdateTool(_stuffMapper.ToolViewModelToTool(tool));
+                _toolService.UpdateTool(_toolMapper.ToolViewModelToTool(tool));
 
                 return RedirectToAction("Index");
+            }
+            catch (ObjectExistsException<Tool> ex)
+            {
+                SetCategory_ManufactureViewBag();
+                ModelState.AddModelError("ToolExists", ex.Message);
+                return View(tool);
             }
             catch
             {
                 return View();
+            }
+        }
+
+        public ActionResult CheckinTab(int id)
+        {
+            return View(_toolMapper.CheckinsOfThisToolToCheckinToolTabViewModel(id));
+        }
+
+        [HttpPost]
+        public ActionResult CheckinTab(CheckinToolTabViewModel checkinToolTabViewModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid) 
+                    return View(checkinToolTabViewModel);
+
+                var checkinTool = _toolMapper.MapCheckinToolTabViewModelToCheckinTool(checkinToolTabViewModel);
+                _checkinToolService.CheckinTool(checkinTool);
+
+                return RedirectToAction("Edit", new { id = checkinToolTabViewModel.ToolId });
+            }
+            catch (ObjectNotExistsException<Holder> ex)
+            {
+                ModelState.AddModelError("HolderNotExists", ex.Message);
+                return RedirectToAction("Edit", new { id = checkinToolTabViewModel.ToolId });
+            }
+            catch (ObjectExistsException<CheckinTool> ex)
+            {
+                ModelState.AddModelError("DateExists", ex.Message);
+                return RedirectToAction("Edit", new { id = checkinToolTabViewModel.ToolId });
+            }
+            catch (CheckinInconsistencyException ex)
+            {
+                ModelState.AddModelError("DateExists", ex.Message);
+                return RedirectToAction("Edit", new { id = checkinToolTabViewModel.ToolId });
+            }
+            catch (CheckinCompanyToCompanyException ex)
+            {
+                ModelState.AddModelError("HolderNotExists", ex.Message);
+                return RedirectToAction("Edit", new { id = checkinToolTabViewModel.ToolId });
+            }
+            catch (CheckinHolderTwiceThenException ex)
+            {
+                ModelState.AddModelError("HolderNotExists", ex.Message);
+                return RedirectToAction("Edit", new { id = checkinToolTabViewModel.ToolId });
+            }
+            catch
+            {
+                return RedirectToAction("Edit", new { id = checkinToolTabViewModel.ToolId });
             }
         }
 
@@ -174,7 +237,7 @@ namespace WebSiteMjr.Controllers
         public ActionResult Delete(int id)
         {
             var tool = _toolService.FindTool(id);
-            return View(_stuffMapper.ToolToToolViewModel(tool));
+            return View(_toolMapper.ToolToToolViewModel(tool));
         }
 
         //

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
@@ -49,6 +50,36 @@ namespace WebSiteMjr.Domain.services
         public Company FindCompanyByName(string companyName)
         {
             return _companyRepository.GetCompanyByName(companyName);
+        }
+
+        public ICollection<CompanyArea> FindCompanyCompanyAreas(string companyName)
+        {
+            var company = FindCompanyByName(companyName);
+            return company != null ? company.CompanyAreas : null;
+        }
+
+        public IEnumerable<string> FindCompanyCompanyAreasNames(string companyName)
+        {
+            var companyAreas = FindCompanyCompanyAreas(companyName);
+            return companyAreas != null ? FindCompanyCompanyAreas(companyName).Select(ca => ca.Name) : new List<string>() ;
+        }
+
+        public IEnumerable<Company> ListCompaniesNotDeleted()
+        {
+            return _companyRepository.GetAllCompaniesNotDeleted();
+        }
+
+        public Company ExistsCheckinOfToolInCompany(int employeeCompanyHolderId)
+        {
+            try
+            {
+                return FindCompany(employeeCompanyHolderId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
         }
     }
 }

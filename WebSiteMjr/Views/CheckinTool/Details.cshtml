@@ -1,4 +1,4 @@
-﻿@model WebSiteMjr.ViewModels.CreateCheckinToolViewModel
+﻿@model WebSiteMjr.ViewModels.CheckinToolViewModel
 
 @{
     ViewBag.Title = "Detalhe de Movimentação de Ferramenta";
@@ -22,6 +22,20 @@
     </div>
     <div class="editor-field">
         @Html.DisplayFor(model => model.EmployeeCompanyHolderName, new { id = "EmployeeCompanyHolder_Name" })
+    </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.CompanyAreaName, "Área do Condominio")
+    </div>
+    <div class="editor-field">
+        @Html.DisplayFor(model => model.CompanyAreaName, new { id = "CompanyArea_Name" })
+    </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Informer, "Informante")
+    </div>
+    <div class="editor-field">
+        @Html.DisplayFor(model => model.Informer, new { id = "Informer" })
     </div>
 
     <div class="editor-label">

@@ -11,5 +11,6 @@ namespace WebSiteMjr.Domain.Interfaces.Repository
     public interface IHolderRepository : IGenericRepository<Holder>
     {
         Holder GetHolderByName(string name);
+        IEnumerable<Holder> GetAllHoldersNotDeleted();
     }
 }

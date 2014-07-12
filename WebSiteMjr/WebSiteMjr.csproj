@@ -194,7 +194,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Api\CheckinToolApiController.cs" />
+    <Compile Include="Controllers\Api\CompanyApiController.cs" />
+    <Compile Include="Controllers\Api\ToolApiController.cs" />
+    <Compile Include="Controllers\Api\HolderApiController.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -207,7 +209,7 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StuffCategoryController.cs" />
-    <Compile Include="Controllers\ToolLocalizationController.cs" />
+    <Compile Include="Controllers\CompanyAreaController.cs" />
     <Compile Include="Controllers\CheckinToolController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Controllers\StuffController.cs" />
@@ -230,6 +232,22 @@
     <Content Include="bootstrap\img\glyphicons-halflings.png" />
     <Content Include="bootstrap\js\bootstrap.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\bootstrap-responsive.css" />
+    <Content Include="Content\bootstrap-responsive.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\glyphicons-halflings-white.png" />
+    <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\themes\base\images\pager\icons\first.png" />
+    <Content Include="Content\themes\base\images\pager\icons\last.png" />
+    <Content Include="Content\themes\base\images\pager\icons\loading.gif" />
+    <Content Include="Content\themes\base\images\pager\icons\next.png" />
+    <Content Include="Content\themes\base\images\pager\icons\prev.png" />
+    <Content Include="Content\themes\base\jquery-ui-1.10.3.custom.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -293,7 +311,18 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\mjr %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - FTP %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - FTP.pubxml" />
@@ -306,17 +335,25 @@
     <Content Include="Images\178HCA.png" />
     <Content Include="Images\500H.png" />
     <Content Include="Images\PABX178H.jpg" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\CheckinTool\checkinTool.js" />
-    <None Include="Scripts\jquery-2.0.3.intellisense.js" />
-    <Content Include="Scripts\jquery-2.0.3.js" />
-    <Content Include="Scripts\jquery-2.0.3.min.js" />
-    <Content Include="Scripts\jquery-2.0.3.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery-2.1.0.intellisense.js" />
+    <Content Include="Scripts\CheckinTool\Index.js" />
+    <Content Include="Scripts\jquery-2.1.0.js" />
+    <Content Include="Scripts\jquery-2.1.0.min.js" />
+    <Content Include="Scripts\jquery-migrate-1.2.1.js" />
+    <Content Include="Scripts\jquery-migrate-1.2.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.min.js" />
     <Content Include="Scripts\jquery.maskedinput.js" />
+    <Content Include="Scripts\jquery.tablesorter.js" />
+    <Content Include="Scripts\jquery.tablesorter.pager.js" />
+    <Content Include="Scripts\jquery.tablesorter.widgets.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery-2.1.0.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -325,9 +362,13 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\Mask\Masks.js" />
     <Content Include="Scripts\MjrJsComponents\dialogWindow.js" />
+    <Content Include="Scripts\MjrJsComponents\MjrGrid.js" />
+    <Content Include="Scripts\MjrJsComponents\MjrCheckGrid.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Stuff\_ChooseStuffManufacture.js" />
     <Content Include="Scripts\Stuff\_ChooseStuffCategory.js" />
+    <Content Include="Scripts\Tool\CheckinTab.js" />
+    <Content Include="Scripts\Tool\EditTool.js" />
     <Content Include="Unity.WebAPI.README.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -337,6 +378,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
@@ -419,11 +461,12 @@
     <Content Include="Views\CheckinTool\Details.cshtml" />
     <Content Include="Views\CheckinTool\Edit.cshtml" />
     <Content Include="Views\CheckinTool\Delete.cshtml" />
-    <Content Include="Views\ToolLocalization\Create.cshtml" />
-    <Content Include="Views\ToolLocalization\Delete.cshtml" />
-    <Content Include="Views\ToolLocalization\Details.cshtml" />
-    <Content Include="Views\ToolLocalization\Edit.cshtml" />
-    <Content Include="Views\ToolLocalization\Index.cshtml" />
+    <Content Include="Views\CompanyArea\Create.cshtml" />
+    <Content Include="Views\CompanyArea\Delete.cshtml" />
+    <Content Include="Views\CompanyArea\Details.cshtml" />
+    <Content Include="Views\CompanyArea\Edit.cshtml" />
+    <Content Include="Views\CompanyArea\Index.cshtml" />
+    <Content Include="Views\Tool\CheckinTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

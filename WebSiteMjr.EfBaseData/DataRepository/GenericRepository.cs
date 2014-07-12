@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using WebSiteMjr.Domain.Interfaces.Model;
 using WebSiteMjr.Domain.Interfaces.Repository.GenericRepository;
 using WebSiteMjr.Domain.Model.Person;
 using WebSiteMjr.EfBaseData.Context;
@@ -23,10 +24,47 @@ namespace WebSiteMjr.EfBaseData.DataRepository
             Context.Entry(entitie).State = EntityState.Added;
         }
 
-        public void Remove(object entitie)
+        public void Remove(object entityId)
         {
-            var entitieToRemove = Context.Set<TEntity>().Find(entitie);
+            var entityToRemove = FindEntity(entityId);
+
+            if (entityToRemove == null)
+                return;
+                
+            if (ImplementsIsDeletable(entityToRemove))
+            {
+                MakeEntityDeleted(entityId, entityToRemove);
+            }
+            else
+                DeleteEntityPermanently(entityToRemove);
+        }
+
+        public TEntity FindEntity(object entityId)
+        {
+            return Context.Set<TEntity>().Find(entityId);
+        }
+
+        public void DeleteEntityPermanently(TEntity entitieToRemove)
+        {
             Context.Set<TEntity>().Remove(entitieToRemove);
+        }
+
+        public bool ImplementsIsDeletable(TEntity entityToRemove)
+        {
+            return entityToRemove is INotDeletable;
+        }
+
+        public void MakeEntityDeleted(object entitie, TEntity entityToRemove)
+        {
+            var entityToUpdate = (entityToRemove as INotDeletable);
+
+            if (!entityToUpdate.IsDeleted)
+            {
+                entityToUpdate.Name += " (Excluido)";
+                entityToUpdate.IsDeleted = true;    
+            }
+
+            Context.Entry(entityToUpdate).CurrentValues.SetValues(entitie);
         }
 
         public void Update(TEntity entitie)
@@ -35,7 +73,7 @@ namespace WebSiteMjr.EfBaseData.DataRepository
 
             //if (entry.State == EntityState.Detached) return;
 
-            var attachedEntity = Context.Set<TEntity>().Find(entitie.Id);
+            var attachedEntity = FindEntity(entitie.Id);
 
             if (attachedEntity != null)
                 Context.Entry(attachedEntity).CurrentValues.SetValues(entitie);
@@ -57,7 +95,7 @@ namespace WebSiteMjr.EfBaseData.DataRepository
 
         public TEntity GetById(object idEntitie)
         {
-            return Context.Set<TEntity>().Find(idEntitie);
+            return FindEntity(idEntitie);
         }
 
         //public void Save()

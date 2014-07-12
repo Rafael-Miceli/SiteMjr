@@ -3,18 +3,19 @@ using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Filters;
+using WebSiteMjr.ViewModels.Company;
 
 namespace WebSiteMjr.Controllers
 {
     public class CompanyController : Controller
     {
         private readonly ICompanyService _companyService;
-        private CompanyMapper _companyMapper;
+        private readonly CompanyMapper _companyMapper;
 
-        public CompanyController(ICompanyService companyService)
+        public CompanyController(ICompanyService companyService, ICompanyAreasService companyAreasService)
         {
             _companyService = companyService;
-            _companyMapper = new CompanyMapper(_companyService);
+            _companyMapper = new CompanyMapper(_companyService, companyAreasService);
         }
 
         //
@@ -69,8 +70,6 @@ namespace WebSiteMjr.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-
                 return RedirectToAction("Index");
             }
             catch
@@ -84,30 +83,30 @@ namespace WebSiteMjr.Controllers
         [FlexAuthorize(Roles = "MjrAdmin")]
         public ActionResult Edit(int id)
         {
-            var company = _companyService.FindCompany(id);
-            return View(company);
+            var edtiCompanyViewModel = _companyMapper.CompanyToEditCompanyViewModel(_companyService.FindCompany(id));
+            return View(edtiCompanyViewModel);
         }
 
         //
         // POST: /Company/Edit/5
         [FlexAuthorize(Roles = "MjrAdmin")]
         [HttpPost]
-        public ActionResult Edit(int id, Company company)
+        public ActionResult Edit(int id, EditCompanyViewModel editCompanyViewModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _companyService.UpdateCompany(company);
+                    _companyService.UpdateCompany(_companyMapper.EditCompanyViewModelToCompany(editCompanyViewModel));
 
                     return RedirectToAction("Index");    
                 }
 
-                return View(company);
+                return View(editCompanyViewModel);
             }
             catch
             {
-                return View();
+                return View(editCompanyViewModel);
             }
         }
 

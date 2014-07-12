@@ -2,22 +2,23 @@
     var employeeCompanyHolderNames,
         toolNames,
         toolNamesCall,
+        companyAreasCall,
+        companyAreaNames,
         employeeCompanyHolderNamesCall;
 
     //Set Ajax Call
     employeeCompanyHolderNamesCall = {
-        url: '/Api/CheckinToolApi/GetEmployeeCompanyHoldersName',
+        url: '/Api/HolderApi/GetNotDeletedHoldersName',
         type: 'GET',
         datatype: 'json'
     };
     
     toolNamesCall = {
-        url: '/Api/CheckinToolApi/GetToolsName',
+        url: '/Api/ToolApi/GetToolsName',
         type: 'GET',
         datatype: 'json'
     };
     
-
     //Make Ajax Call
     $.ajax(employeeCompanyHolderNamesCall)
             .then(employeeCompanyHolderquerySucceeded)
@@ -26,7 +27,36 @@
     $.ajax(toolNamesCall)
             .then(toolquerySucceeded)
             .fail(queryFailed);
+
+    var companyName = '';
     
+    $('#CompanyAreaName').focus(function () {
+        
+        companyAreasCall = {
+            url: '/Api/CompanyApi/ListCompanyAreas?companyName=' + $('#EmployeeCompanyHolderName').val(),
+            type: 'GET',
+            datatype: 'json'
+        };
+        
+
+        if (companyName != $('#EmployeeCompanyHolderName').val()) {
+            
+            companyName = $('#EmployeeCompanyHolderName').val();
+            
+            $.ajax(companyAreasCall)
+            .then(companyAreasSucceded)
+            .fail(queryFailed);
+        }
+    });
+    
+
+    function companyAreasSucceded(data) {
+        companyAreaNames = data;
+
+        $("#CompanyAreaName").autocomplete({
+            source: companyAreaNames
+        });
+    }
 
     function employeeCompanyHolderquerySucceeded(data) {
         employeeCompanyHolderNames = data;
@@ -41,7 +71,7 @@
         
         $("#EmployeeCompanyHolder").autocomplete({
             source: employeeCompanyHolderNames
-        }); 
+        });
     }
     
     function toolquerySucceeded(data) {

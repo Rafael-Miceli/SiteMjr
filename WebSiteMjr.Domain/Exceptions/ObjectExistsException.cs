@@ -1,5 +1,5 @@
 ﻿using System;
-using WebSiteMjr.Domain.Model;
+using WebSiteMjr.Domain.Interfaces.Model;
 
 namespace WebSiteMjr.Domain.Exceptions
 {

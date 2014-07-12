@@ -48,7 +48,7 @@ namespace WebSiteMjr
             container.RegisterType<IStuffCategoryService, StuffCategoryService>();
             container.RegisterType<IStuffService, StuffService>();
             container.RegisterType<IToolService, ToolService>();
-            container.RegisterType<IToolLocalizationService, ToolLocalizationService>();
+            container.RegisterType<ICompanyAreasService, CompanyAreasService>();
             container.RegisterType<ICheckinToolService, CheckinToolService>();
             container.RegisterType<IStuffManufactureService, StuffManufactureService>();
             container.RegisterType<ICompanyService, CompanyService>();
@@ -59,14 +59,14 @@ namespace WebSiteMjr
             var companyServiceInstance = new CompanyService(new CompanyRepository(personUow), personUow);
             var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), personUow);
             var toolServiceInstance = new ToolService(new ToolRepository(stuffUnow), stuffUnow);
-            var toolLocalizationServiceInstance = new ToolLocalizationService(new ToolLocalizationRepository(stuffUnow), stuffUnow);
+            var CompanyAreaServiceInstance = new CompanyAreasService(new CompanyAreaRepository(personUow), personUow);
 
             container.RegisterInstance(new HolderService(new HolderRepository(personUow)));
             container.RegisterInstance(new UserService(new UserRepository(personUow), new CompanyRepository(personUow), personUow));
             container.RegisterInstance(new StuffService(new StuffRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(toolServiceInstance);
-            container.RegisterInstance(toolLocalizationServiceInstance);
-            container.RegisterInstance(new CheckinToolService(new CheckinToolRepository(stuffUnow), stuffUnow, companyServiceInstance, employeeServiceInstance, toolServiceInstance));
+            container.RegisterInstance(CompanyAreaServiceInstance);
+            container.RegisterInstance(new CheckinToolService(new CheckinToolRepository(stuffUnow), stuffUnow, companyServiceInstance));
             container.RegisterInstance(new StuffCategoryService(new StuffCategoryRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(new StuffManufactureService(new StuffManufactureRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(companyServiceInstance);

@@ -7,10 +7,17 @@ namespace WebSiteMjr.EfStuffData.Context
     public class StuffContext: BaseContext<StuffContext>
     {
         public DbSet<Tool> Tools { get; set; }
-        public DbSet<ToolLocalization> ToolLocalizations { get; set; }
         public DbSet<CheckinTool> CheckinTools { get; set; }
         public DbSet<Stuff> Stuffs { get; set; }
         public DbSet<StuffCategory> StuffCategories { get; set; }
         public DbSet<StuffManufacture> StuffManufactures { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<CompanyArea>().ToTable("ToolLocalizations");
+
+        }
     }
 }

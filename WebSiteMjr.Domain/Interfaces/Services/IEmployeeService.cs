@@ -11,5 +11,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         IEnumerable<Employee> ListEmployee();
         Employee FindEmployee(object idemployee);
         Employee FindEmployeeByName(string employeeName);
+        IEnumerable<Employee> ListEmployeesNotDeleted();
     }
 }

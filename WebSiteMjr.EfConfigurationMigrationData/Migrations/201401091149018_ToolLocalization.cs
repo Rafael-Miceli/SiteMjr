@@ -3,12 +3,12 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ToolLocalization : DbMigration
+    public partial class CompanyArea : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.ToolLocalizations",
+                "dbo.CompanyAreas",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -17,28 +17,28 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.ToolLocalizationCompanies",
+                "dbo.CompanyAreaCompanies",
                 c => new
                     {
-                        ToolLocalization_Id = c.Int(nullable: false),
+                        CompanyArea_Id = c.Int(nullable: false),
                         Company_Id = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.ToolLocalization_Id, t.Company_Id })
-                .ForeignKey("dbo.ToolLocalizations", t => t.ToolLocalization_Id, cascadeDelete: true)
+                .PrimaryKey(t => new { t.CompanyArea_Id, t.Company_Id })
+                .ForeignKey("dbo.CompanyAreas", t => t.CompanyArea_Id, cascadeDelete: true)
                 .ForeignKey("dbo.Companies", t => t.Company_Id, cascadeDelete: true)
-                .Index(t => t.ToolLocalization_Id)
+                .Index(t => t.CompanyArea_Id)
                 .Index(t => t.Company_Id);
             
         }
         
         public override void Down()
         {
-            DropIndex("dbo.ToolLocalizationCompanies", new[] { "Company_Id" });
-            DropIndex("dbo.ToolLocalizationCompanies", new[] { "ToolLocalization_Id" });
-            DropForeignKey("dbo.ToolLocalizationCompanies", "Company_Id", "dbo.Companies");
-            DropForeignKey("dbo.ToolLocalizationCompanies", "ToolLocalization_Id", "dbo.ToolLocalizations");
-            DropTable("dbo.ToolLocalizationCompanies");
-            DropTable("dbo.ToolLocalizations");
+            DropIndex("dbo.CompanyAreaCompanies", new[] { "Company_Id" });
+            DropIndex("dbo.CompanyAreaCompanies", new[] { "CompanyArea_Id" });
+            DropForeignKey("dbo.CompanyAreaCompanies", "Company_Id", "dbo.Companies");
+            DropForeignKey("dbo.CompanyAreaCompanies", "CompanyArea_Id", "dbo.CompanyAreas");
+            DropTable("dbo.CompanyAreaCompanies");
+            DropTable("dbo.CompanyAreas");
         }
     }
 }

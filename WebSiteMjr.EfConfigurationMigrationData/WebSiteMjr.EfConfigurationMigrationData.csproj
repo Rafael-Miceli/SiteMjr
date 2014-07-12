@@ -50,6 +50,26 @@
     <Compile Include="Migrations\201401091149018_ToolLocalization.Designer.cs">
       <DependentUpon>201401091149018_ToolLocalization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401280030526_CompanyAreaInCheckin.cs" />
+    <Compile Include="Migrations\201401280030526_CompanyAreaInCheckin.Designer.cs">
+      <DependentUpon>201401280030526_CompanyAreaInCheckin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201402111249522_EmployeeNowIsNotDeletedAnyMore.cs" />
+    <Compile Include="Migrations\201402111249522_EmployeeNowIsNotDeletedAnyMore.Designer.cs">
+      <DependentUpon>201402111249522_EmployeeNowIsNotDeletedAnyMore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201402111330069_ChangedIsDeletedToHolder.cs" />
+    <Compile Include="Migrations\201402111330069_ChangedIsDeletedToHolder.Designer.cs">
+      <DependentUpon>201402111330069_ChangedIsDeletedToHolder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403251446003_ToolsNotDeleted.cs" />
+    <Compile Include="Migrations\201403251446003_ToolsNotDeleted.Designer.cs">
+      <DependentUpon>201403251446003_ToolsNotDeleted.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201406111844438_AddedInformerField.cs" />
+    <Compile Include="Migrations\201406111844438_AddedInformerField.Designer.cs">
+      <DependentUpon>201406111844438_AddedInformerField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MjrSolutionConfiguration.cs" />
     <Compile Include="MjrSolutionContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +99,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201401091149018_ToolLocalization.resx">
       <DependentUpon>201401091149018_ToolLocalization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401280030526_CompanyAreaInCheckin.resx">
+      <DependentUpon>201401280030526_CompanyAreaInCheckin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402111249522_EmployeeNowIsNotDeletedAnyMore.resx">
+      <DependentUpon>201402111249522_EmployeeNowIsNotDeletedAnyMore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402111330069_ChangedIsDeletedToHolder.resx">
+      <DependentUpon>201402111330069_ChangedIsDeletedToHolder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403251446003_ToolsNotDeleted.resx">
+      <DependentUpon>201403251446003_ToolsNotDeleted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406111844438_AddedInformerField.resx">
+      <DependentUpon>201406111844438_AddedInformerField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

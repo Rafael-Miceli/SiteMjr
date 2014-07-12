@@ -1,4 +1,7 @@
-﻿using WebSiteMjr.Domain.Interfaces.Repository;
+﻿using System.Collections.Generic;
+using System.Linq;
+using WebSiteMjr.Domain.Interfaces.Model;
+using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.EfBaseData.Helpers;
 using WebSiteMjr.EfBaseData.UnitOfWork;
@@ -30,6 +33,11 @@ namespace WebSiteMjr.EfStuffData.DataRepository
         public Tool GetToolByName(string name)
         {
             return Get(n => n.Name.ToLower() == name.ToLower());
+        }
+
+        public IEnumerable<Tool> GetAllToolsNotDeleted()
+        {
+            return GetAll().Where(t => !t.IsDeleted);
         }
     }
 }

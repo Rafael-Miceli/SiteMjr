@@ -32,5 +32,17 @@ namespace WebSiteMjr.Domain.services
         {
             return _holderRepository.GetHolderByName(holderName);
         }
+
+        public IEnumerable<string> ListEmployeeCompanyHolderName()
+        {
+            var holders = ListHolder().ToList();
+            return holders.Any() ? holders.Select(h => h.Name) : null;
+        }
+
+        public IEnumerable<string> ListNotDeletedHolderName()
+        {
+            var notDeletedHolders = _holderRepository.GetAllHoldersNotDeleted();
+            return notDeletedHolders.Select(h => h.Name);
+        }
     }
 }

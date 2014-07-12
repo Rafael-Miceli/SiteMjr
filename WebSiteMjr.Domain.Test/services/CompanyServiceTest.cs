@@ -76,6 +76,43 @@ namespace WebSiteMjr.Domain.Test.services
         {
             
         }
+
+        [TestMethod]
+        public void Should_List_CompanyAreas_From_Selected_Company()
+        {
+            //Arrange
+            var company = CompanyDummies.CreateOneCompanyWithCompanyArea();
+
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            companyRepositoryMock.Setup(x => x.GetCompanyByName(company.Name)).Returns(company);
+
+            var companyService = new CompanyService(companyRepositoryMock.Object, new StubUnitOfWork());
+
+            //Act
+            var companyAreas = companyService.FindCompanyCompanyAreas(company.Name);
+
+            //Assert
+            Assert.IsNotNull(companyAreas);
+            Assert.IsTrue(companyAreas.Count > 0);
+        }
+
+        [TestMethod]
+        public void Should_Return_Nothing_When_Dont_Exists_CompanyAreas_From_Selected_Company()
+        {
+            //Arrange
+            var company = CompanyDummies.CreateOneCompanyWithCompanyArea();
+
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            companyRepositoryMock.Setup(x => x.GetCompanyByName(company.Name)).Returns(company);
+
+            var companyService = new CompanyService(companyRepositoryMock.Object, new StubUnitOfWork());
+
+            //Act
+            var companyAreas = companyService.FindCompanyCompanyAreas("");
+
+            //Assert
+            Assert.IsNull(companyAreas);
+        }
     }
 
     public class FakeCompanyRepository : ICompanyRepository
@@ -89,7 +126,7 @@ namespace WebSiteMjr.Domain.Test.services
 
         private void CreateCompanies()
         {
-            _companies = CompanyDumies.CreateListOfCompanies();
+            _companies = CompanyDummies.CreateListOfCompanies();
         }
 
         public void Add(Company entitie)
@@ -98,6 +135,21 @@ namespace WebSiteMjr.Domain.Test.services
         }
 
         public void Remove(object entitie)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteEntityPermanently(Company entitieToRemove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ImplementsIsDeletable(Company entityToRemove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MakeEntityDeleted(object entitie, Company entitieToRemove)
         {
             throw new NotImplementedException();
         }
@@ -117,6 +169,11 @@ namespace WebSiteMjr.Domain.Test.services
             throw new NotImplementedException();
         }
 
+        public Company FindEntity(object entityId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Company GetById(object identitie)
         {
             return _companies.Find(c => c.Id == (int) identitie);
@@ -130,6 +187,11 @@ namespace WebSiteMjr.Domain.Test.services
         public Company GetCompanyByName(string name)
         {
             return _companies.FirstOrDefault(c => c.Name == name);
+        }
+
+        public IEnumerable<Company> GetAllCompaniesNotDeleted()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -6,17 +6,22 @@
     @if (Model != null && Model.Name == "MjrAdmin")
     {
         <li>@Html.ActionLink("Funcionários", "Index", "Employee")</li>
-        <li>@Html.ActionLink("Condominio/Empresa", "Index", "Company")</li>
+        <li>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Gerenciar Condominio/Empresa <b class="caret"></b></a>
+            <ul class="dropdown-menu" style="margin-left: 170px;">
+                <li>@Html.ActionLink("Condominio/Empresa", "Index", "Company")</li>
+                <li>@Html.ActionLink("Áreas de Condominio/Empresa", "Index", "CompanyArea")</li>
+            </ul>
+        </li>
         <li class="dropdown">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Gerenciar Materiais/Ferramentas <b class="caret"></b></a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" style="margin-left: 40px;">
                 <li>@Html.ActionLink("Ferramentas", "Index", "Tool")</li>
                 <li class="divider"></li>
                 <li>@Html.ActionLink("Materiais", "Index", "Stuff")</li>
                 <li class="divider"></li>
-                <li>@Html.ActionLink("Localização de Ferramentas", "Index", "ToolLocalization")</li>
                 <li>@Html.ActionLink("Categorias de Materiais/Ferramentas", "Index", "StuffCategory")</li>
-                <li>@Html.ActionLink("Fabricante de Materiais/Ferramentas", "Index", "StuffManufacture")</li>        
+                <li>@Html.ActionLink("Fabricante de Materiais/Ferramentas", "Index", "StuffManufacture")</li>
                 <li class="divider"></li>
                 <li>@Html.ActionLink("Movimentação de Ferramentas", "Index", "CheckinTool")</li>
             </ul>

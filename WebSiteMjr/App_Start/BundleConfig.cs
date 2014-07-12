@@ -9,6 +9,7 @@ namespace WebSiteMjr
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery")
                         .Include("~/Scripts/jquery-{version}.js")
+                        .Include("~/Scripts/jquery-migrate-{version}.js")
                         .Include("~/Scripts/jquery.maskedinput.js")
                         .Include("~/bootstrap/js/bootstrap.js"));
 
@@ -26,7 +27,8 @@ namespace WebSiteMjr
 
             bundles.Add(new StyleBundle("~/Content/css")
                         .Include("~/bootstrap/css/bootstrap.css")
-                        .Include("~/Content/site.css"));
+                        .Include("~/Content/site.css")
+                        .Include("~/Content/font-awesome.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
@@ -40,7 +42,8 @@ namespace WebSiteMjr
                         "~/Content/themes/base/jquery.ui.tabs.css",
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
-                        "~/Content/themes/base/jquery.ui.theme.css"));
+                        "~/Content/themes/base/jquery.ui.theme.css",
+                        "~/Content/themes/base/jquery-ui-{version}.custom.css"));
         }
     }
 }

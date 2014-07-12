@@ -1,4 +1,5 @@
 ﻿using System;
+using WebSiteMjr.Domain.Interfaces.Model;
 using WebSiteMjr.Domain.Model.Person;
 
 namespace Mjr.Extensions
@@ -17,6 +18,11 @@ namespace Mjr.Extensions
         {
             var tz = TimeZoneInfo.FindSystemTimeZoneById("Central Brazilian Standard Time");
             return TimeZoneInfo.ConvertTimeFromUtc(dataTime, tz);
+        }
+
+        public static bool Exists(this INotDeletable notDeletableEntity)
+        {
+            return notDeletableEntity != null && !notDeletableEntity.IsDeleted;
         }
     }
 }

@@ -19,11 +19,12 @@ namespace WebSiteMjr.ViewModels
         public string EmployeeCompanyHolderName { get; set; }
         public string ToolName { get; set; }
         public DateTime CheckinDateTime { get; set; }
+        public string CompanyAreaName { get; set; }
     }
 
-    public class CreateCheckinToolViewModel
+    public class CheckinToolViewModel
     {
-        public CreateCheckinToolViewModel()
+        public CheckinToolViewModel()
         {
             try
             {
@@ -41,6 +42,7 @@ namespace WebSiteMjr.ViewModels
         public string EmployeeCompanyHolderName { get; set; }
         [Required(ErrorMessage = "Nome da Ferramenta não pode ser vazia")]
         public string ToolName { get; set; }
+        public string CompanyAreaName { get; set; }
         public DateTime? CheckinDateTime 
         {
             get
@@ -67,5 +69,7 @@ namespace WebSiteMjr.ViewModels
         [DateTimeIsValid]
         [Required(ErrorMessage = "Data da movimentação não pode ser vazia")]
         public string StrCheckinDateTime{ get; set; }
+
+        public string Informer { get; set; }
     }
 }

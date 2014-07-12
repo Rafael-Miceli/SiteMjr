@@ -34,6 +34,9 @@ namespace WebSiteMjr.Domain.services.Stuffs
 
         public void UpdateStuffCategory(StuffCategory stuffCategory)
         {
+            if (CategoryExists(stuffCategory))
+                throw new ObjectExistsException<StuffCategory>();
+
             _stuffCategoryRepository.Update(stuffCategory);
             _unitOfWork.Save();
         }

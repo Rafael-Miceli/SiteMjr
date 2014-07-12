@@ -1,4 +1,4 @@
-﻿@model WebSiteMjr.Domain.Model.Company
+﻿@model WebSiteMjr.ViewModels.Company.EditCompanyViewModel
 
 @{
     ViewBag.Title = "Editar Condominio/Empresa";
@@ -54,15 +54,62 @@
             @Html.EditorFor(model => model.Phone, new { id = "Phone" })
             @Html.ValidationMessageFor(model => model.Phone)
         </div>
+        
         @Html.HiddenFor(model => model.Id)
+        
+
+        <table id="CheckGrid" class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th class="filter-false sorter-false">
+                    </th>
+                    <th>
+                        Nome
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for (var i = 0; i < Model.CompanyAreas.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.HiddenFor(tlId => tlId.CompanyAreas[i].Value)
+                            @Html.HiddenFor(tlId => tlId.CompanyAreas[i].Text)
+                            @Html.CheckBoxFor(tlId => tlId.CompanyAreas[i].Selected, new { id = "Chk-" + i })
+                        </td>
+                        <td>
+                            @Html.ActionLink(Model.CompanyAreas[i].Text, "Details", "CompanyArea", new {id = Model.CompanyAreas[i].Value}, new { @for = "Chk-" + i })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div id="pager" class="pager">
+            <form>
+                <img src="../../Content/themes/base/images/pager/icons/first.png" class="first" />
+                <img src="../../Content/themes/base/images/pager/icons/prev.png" class="prev" />
+                <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+                <img src="../../Content/themes/base/images/pager/icons/next.png" class="next" />
+                <img src="../../Content/themes/base/images/pager/icons/last.png" class="last" />
+                <select class="pagesize">
+                    <option selected="selected" value="5">5</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                </select>
+            </form>
+        </div>
 
         <p>
             <input type="submit" value="Atualizar" />
         </p>
-        
+
         @*<p>
             @Html.ActionLink("Enviar Login", "SendLogin", new { idCompany = Model.Id })
-        </p>*@        
+        </p>*@     
+           
     </fieldset>
 }
 
@@ -72,4 +119,8 @@
 
 @section scripts{
     <script src="@Url.Content("~/Scripts/Mask/Masks.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tablesorter.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tablesorter.pager.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tablesorter.widgets.js")"></script>
+    <script src="@Url.Content("~/Scripts/MjrJsComponents/MjrCheckGrid.js")"></script>
 }

@@ -1,0 +1,24 @@
+﻿@model WebSiteMjr.Domain.Model.CompanyArea
+
+@{
+    ViewBag.Title = "Detalhes da Área de Condomínios/Empresas";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>Área de Condomínios/Empresas</legend>
+
+    <div class="display-label">
+        @Html.LabelFor(model => model.Name, "Nome")
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+</fieldset>
+
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Voltar a listagem", "Index")
+</p>

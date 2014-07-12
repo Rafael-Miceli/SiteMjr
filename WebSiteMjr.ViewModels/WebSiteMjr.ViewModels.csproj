@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckinToolViewModel.cs" />
-    <Compile Include="CompanyViewModel.cs" />
+    <Compile Include="Company\CompanyViewModel.cs" />
     <Compile Include="RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolsViewModel.cs" />
