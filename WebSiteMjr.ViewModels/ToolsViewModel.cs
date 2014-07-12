@@ -62,5 +62,7 @@ namespace WebSiteMjr.ViewModels
         [DateTimeIsValid]
         [Required(ErrorMessage = "Data da movimentação não pode ser vazia")]
         public string StrCheckinDateTime { get; set; }
+
+        public string Informer { get; set; }
     }
 }

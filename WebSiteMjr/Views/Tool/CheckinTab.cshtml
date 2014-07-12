@@ -31,6 +31,14 @@
             @Html.EditorFor(model => model.CompanyAreaName, new { id = "CompanyArea_Name" })
             @Html.ValidationMessageFor(model => model.CompanyAreaName)
         </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Informer, "Informante")
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Informer, new { id = "Informer" })
+            @Html.ValidationMessageFor(model => model.Informer)
+        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.StrCheckinDateTime, "Data do Checkin")

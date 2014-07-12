@@ -6,7 +6,7 @@
 
     //Set Ajax Call
     employeeCompanyHolderNamesCall = {
-        url: '/Api/HolderApi/GetEmployeeCompanyHoldersName',
+        url: '/Api/HolderApi/GetNotDeletedHoldersName',
         type: 'GET',
         datatype: 'json'
     };

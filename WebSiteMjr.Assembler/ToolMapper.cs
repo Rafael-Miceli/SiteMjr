@@ -94,6 +94,7 @@ namespace WebSiteMjr.Assembler
                 EmployeeCompanyHolderId = holder.Id,
                 Tool = tool,
                 CheckinDateTime = checkinToolTabViewModel.CheckinDateTime.Value,
+                Informer = checkinToolTabViewModel.Informer,
                 CompanyAreaId = companyAreaId
             };
 
