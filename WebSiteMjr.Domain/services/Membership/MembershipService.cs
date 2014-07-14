@@ -2,7 +2,7 @@
 
 namespace WebSiteMjr.Domain.services.Membership
 {
-    public class MembershipService
+    public class MembershipService : IMembershipService
     {
         private readonly IFlexMembershipProvider _membershipProvider;
 

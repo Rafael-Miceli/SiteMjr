@@ -165,13 +165,6 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Manage(ManageMessageId? message)
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Sua senha foi modifcada."
-                : message == ManageMessageId.SetPasswordSuccess ? "Sua senha foi enviada."
-                : message == ManageMessageId.RemoveLoginSuccess ? "O login externo foi removido."
-                : "";
-            ViewBag.HasLocalPassword = true;// OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-            ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
 
@@ -182,57 +175,6 @@ namespace WebSiteMjr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
         {
-            var hasLocalAccount = _membershipProvider.HasLocalAccount(User.Identity.Name);
-            ViewBag.HasLocalPassword = hasLocalAccount;
-            ViewBag.ReturnUrl = Url.Action("Manage");
-            if (hasLocalAccount)
-            {
-                if (ModelState.IsValid)
-                {
-                    // ChangePassword will throw an exception rather than return false in certain failure scenarios.
-                    bool changePasswordSucceeded;
-                    try
-                    {
-                        changePasswordSucceeded = _membershipProvider.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
-                    }
-                    catch (Exception)
-                    {
-                        changePasswordSucceeded = false;
-                    }
-
-                    if (changePasswordSucceeded)
-                    {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
-                    }
-
-                    ModelState.AddModelError("", "A senha atual está incorreta ou a nova senha é invalida.");
-                }
-            }
-            else
-            {
-                // User does not have a local password so remove any validation errors caused by a missing
-                // OldPassword field
-                var state = ModelState["OldPassword"];
-                if (state != null)
-                {
-                    state.Errors.Clear();
-                }
-
-                if (ModelState.IsValid)
-                {
-                    try
-                    {
-                        _membershipProvider.SetLocalPassword(User.Identity.Name, model.NewPassword);
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
-                    }
-                    catch (Exception)
-                    {
-                        ModelState.AddModelError("", String.Format("Não foi possivel criar a conta. Uma conta com este login \"{0}\" já existe.", User.Identity.Name));
-                    }
-                }
-            }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 

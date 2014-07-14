@@ -97,6 +97,16 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                 roles.CreateRole("MjrAdmin");
             }
 
+            if (!roles.RoleExists("CompanyAdmin"))
+            {
+                roles.CreateRole("CompanyAdmin");
+            }
+
+            if (!roles.RoleExists("User"))
+            {
+                roles.CreateRole("User");
+            }
+
             if (!roles.IsUserInRole("mjrtelecom@hotmail.com", "MjrAdmin"))
             {
                 roles.AddUsersToRoles(new[] { "mjrtelecom@hotmail.com" }, new[] { "MjrAdmin" });
