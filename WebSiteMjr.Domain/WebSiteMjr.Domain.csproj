@@ -106,7 +106,8 @@
     <Compile Include="Interfaces\Services\IEmployeeService.cs" />
     <Compile Include="services\HolderService.cs" />
     <Compile Include="Interfaces\Services\IHolderService.cs" />
-    <Compile Include="Interfaces\Membership\IMembershipService.cs" />
+    <Compile Include="Interfaces\Services\IMembershipService.cs" />
+    <Compile Include="Interfaces\Services\IUserService.cs" />
     <Compile Include="services\Membership\MembershipService.cs" />
     <Compile Include="services\Membership\UserService.cs" />
     <Compile Include="services\Roles\RoleService.cs" />

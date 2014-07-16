@@ -6,6 +6,7 @@ using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
+using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.Filters;
@@ -18,10 +19,10 @@ namespace WebSiteMjr.Controllers
     public class AccountController : Controller
     {
 
-        private readonly MembershipService _membershipProvider;
-        private readonly UserService _user;
+        private readonly IMembershipService _membershipProvider;
+        private readonly IUserService _user;
 
-        public AccountController(MembershipService membership, UserService user)
+        public AccountController(IMembershipService membership, IUserService user)
         {
             _membershipProvider = membership;
             _user = user;
