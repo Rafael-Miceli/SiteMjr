@@ -1,6 +1,6 @@
 ﻿using WebSiteMjr.Domain.Interfaces.Membership;
 
-namespace WebSiteMjr.Domain.services.Membership
+namespace WebSiteMjr.Domain.Interfaces.Services
 {
     public interface IMembershipService
     {

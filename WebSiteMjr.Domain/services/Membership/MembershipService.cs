@@ -1,4 +1,5 @@
 ﻿using WebSiteMjr.Domain.Interfaces.Membership;
+using WebSiteMjr.Domain.Interfaces.Services;
 
 namespace WebSiteMjr.Domain.services.Membership
 {

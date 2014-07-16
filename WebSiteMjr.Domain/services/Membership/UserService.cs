@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Repository;
+using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.Model.Membership;
@@ -8,7 +9,7 @@ using WebSiteMjr.Domain.Model.Roles;
 
 namespace WebSiteMjr.Domain.services.Membership
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _user;
         private readonly ICompanyRepository _company;
