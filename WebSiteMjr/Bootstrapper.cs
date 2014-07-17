@@ -37,9 +37,6 @@ namespace WebSiteMjr
             // register all your components with the container here
             // e.g. container.RegisterType<ITestService, TestService>(); 
 
-            //container.RegisterType<IRepository<Associate>, AssociateDtoRepository>();
-            //container.RegisterType<IRepository<User>, UserDtoRepository>();
-            //container.RegisterType<IRepository<Employee>, EmployeeDtoRepository>();
             var personUow = new PersonsUow();
             var stuffUnow = new StuffUow();
 
@@ -54,18 +51,20 @@ namespace WebSiteMjr
             container.RegisterType<ICompanyService, CompanyService>();
             container.RegisterType<IEmployeeService, EmployeeService>();
             container.RegisterType<IHolderService, HolderService>();
+            container.RegisterType<IUserService, UserService>();
+            container.RegisterType<IMembershipService, MembershipService>();
 
             //Repositories Instances
             var companyServiceInstance = new CompanyService(new CompanyRepository(personUow), personUow);
             var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), personUow);
             var toolServiceInstance = new ToolService(new ToolRepository(stuffUnow), stuffUnow);
-            var CompanyAreaServiceInstance = new CompanyAreasService(new CompanyAreaRepository(personUow), personUow);
+            var companyAreaServiceInstance = new CompanyAreasService(new CompanyAreaRepository(personUow), personUow);
 
             container.RegisterInstance(new HolderService(new HolderRepository(personUow)));
-            container.RegisterInstance(new UserService(new UserRepository(personUow), new CompanyRepository(personUow), personUow));
+            container.RegisterInstance(new UserService(new UserRepository(personUow), companyServiceInstance, personUow));
             container.RegisterInstance(new StuffService(new StuffRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(toolServiceInstance);
-            container.RegisterInstance(CompanyAreaServiceInstance);
+            container.RegisterInstance(companyAreaServiceInstance);
             container.RegisterInstance(new CheckinToolService(new CheckinToolRepository(stuffUnow), stuffUnow, companyServiceInstance));
             container.RegisterInstance(new StuffCategoryService(new StuffCategoryRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(new StuffManufactureService(new StuffManufactureRepository(stuffUnow), stuffUnow));

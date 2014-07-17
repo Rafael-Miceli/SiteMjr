@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Transactions;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -8,7 +7,6 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model.Membership;
-using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.Filters;
 using WebSiteMjr.Models;
 
@@ -38,7 +36,6 @@ namespace WebSiteMjr.Controllers
 
         [ChildActionOnly]
         [AllowAnonymous]
-        //[OutputCache(VaryByParam = "role", Duration = 86400)]
         public ActionResult Menu()
         {
             var role = _user.GetUserRole(User.Identity.Name);
@@ -48,7 +45,6 @@ namespace WebSiteMjr.Controllers
 
         [ChildActionOnly]
         [AllowAnonymous]
-        //[OutputCache(VaryByParam = "role", Duration = 86400)]
         public ActionResult ClientMenu()
         {
             var role = _user.GetUserRole(User.Identity.Name);

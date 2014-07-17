@@ -6,7 +6,7 @@ using WebSiteMjr.EfData.Context;
 
 namespace WebSiteMjr.EfData.DataRepository
 {
-    public class MembershipRepository<TUser> : IFlexUserStore where TUser : class, IFlexMembershipUser, new() 
+    public class MembershipRepository<TUser> : IFlexMembershipRepository where TUser : class, IFlexMembershipUser, new() 
     {
         private readonly DbContext _context;
         
