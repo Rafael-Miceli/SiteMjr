@@ -56,7 +56,7 @@
     <Compile Include="Interfaces\Membership\IApplicationEnvironment.cs" />
     <Compile Include="Interfaces\Membership\IFlexMembershipProvider.cs" />
     <Compile Include="Interfaces\Membership\IFlexMembershipUser.cs" />
-    <Compile Include="Interfaces\Membership\IFlexUserStore.cs" />
+    <Compile Include="Interfaces\Membership\IFlexMembershipRepository.cs" />
     <Compile Include="Interfaces\Membership\ISecurityEncoder.cs" />
     <Compile Include="Interfaces\Model\INotDeletable.cs" />
     <Compile Include="Interfaces\Repository\ICheckinToolRepository.cs" />

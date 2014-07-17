@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebMatrix.WebData;
+using WebSiteMjr.Controllers;
 
 namespace WebSiteMjr.Tests.Controllers
 {
@@ -8,14 +9,9 @@ namespace WebSiteMjr.Tests.Controllers
     {
         [TestMethod]
         [Ignore]
-        public void Should_Login()
+        public void Given_A_Valid_Login_When_Login_Then_User_Should_Be_LogedIn()
         {
-            const string userName = "MjrAdmin";
-            const string password = "123456";
-
-            var userIsLogged = WebSecurity.Login(userName, password);
-
-            Assert.IsTrue(userIsLogged);
+            
         }
     }
 }

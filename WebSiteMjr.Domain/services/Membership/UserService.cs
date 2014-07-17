@@ -12,10 +12,10 @@ namespace WebSiteMjr.Domain.services.Membership
     public class UserService : IUserService
     {
         private readonly IUserRepository _user;
-        private readonly ICompanyRepository _company;
+        private readonly ICompanyService _company;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository user, ICompanyRepository company, IUnitOfWork unitOfWork)
+        public UserService(IUserRepository user, ICompanyService company, IUnitOfWork unitOfWork)
         {
             _user = user;
             _company = company;
@@ -61,8 +61,7 @@ namespace WebSiteMjr.Domain.services.Membership
             var user = _user.GetByUserName(userName);
             var idCompany = user != null ? user.IdCompany : 0;
 
-            var company = new CompanyService(_company, _unitOfWork);
-            return company.FindCompany(idCompany);
+            return _company.FindCompany(idCompany);
         }
 
         public User FindUser(object iduser)

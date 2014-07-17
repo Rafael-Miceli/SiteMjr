@@ -18,20 +18,19 @@ namespace FlexProviders.Membership
             new Dictionary<string, AuthenticationClientData>(StringComparer.OrdinalIgnoreCase);
 
         private readonly IApplicationEnvironment _applicationEnvironment;
-        private readonly ISecurityEncoder _encoder = new DefaultSecurityEncoder();
-        private readonly IFlexUserStore _userStore;
+        private readonly ISecurityEncoder _encoder;
+        private readonly IFlexMembershipRepository _membershipRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FlexMembershipProvider" /> class.
         /// </summary>
-        /// <param name="userStore">The user store.</param>
+        /// <param name="membershipRepository">The user store.</param>
         /// <param name="applicationEnvironment">The application environment.</param>
-        public FlexMembershipProvider(
-            IFlexUserStore userStore,
-            IApplicationEnvironment applicationEnvironment)
+        public FlexMembershipProvider(IFlexMembershipRepository membershipRepository, IApplicationEnvironment applicationEnvironment)
         {
-            _userStore = userStore;
+            _membershipRepository = membershipRepository;
             _applicationEnvironment = applicationEnvironment;
+            _encoder = new DefaultSecurityEncoder();
         }
 
         #region IFlexMembershipProvider Members
@@ -50,7 +49,7 @@ namespace FlexProviders.Membership
         /// </returns>
         public bool Login(string username, string password, bool rememberMe = false)
         {
-            IFlexMembershipUser user = _userStore.GetUserByUsername(username);
+            IFlexMembershipUser user = _membershipRepository.GetUserByUsername(username);
             if (user == null)
             {
                 return false;
@@ -80,7 +79,7 @@ namespace FlexProviders.Membership
         /// <param name="user"> The user. </param>
         public void CreateAccount(IFlexMembershipUser user)
         {
-            IFlexMembershipUser existingUser = _userStore.GetUserByUsername(user.Username);
+            IFlexMembershipUser existingUser = _membershipRepository.GetUserByUsername(user.Username);
             if (existingUser != null)
             {
                 throw new FlexMembershipException(FlexMembershipStatus.DuplicateUserName);
@@ -88,7 +87,7 @@ namespace FlexProviders.Membership
 
             user.Salt = user.Salt ?? _encoder.GenerateSalt();
             user.Password = _encoder.Encode(user.Password, user.Salt);
-            _userStore.Add(user);
+            _membershipRepository.Add(user);
         }
 
         /// <summary>
@@ -97,7 +96,7 @@ namespace FlexProviders.Membership
         /// <param name="user"> The user. </param>
         public void UpdateAccount(IFlexMembershipUser user)
         {
-            _userStore.Save(user);
+            _membershipRepository.Save(user);
         }
 
         /// <summary>
@@ -108,13 +107,13 @@ namespace FlexProviders.Membership
         /// <returns> <c>true</c> if the specified username has a local account; otherwise, <c>false</c> . </returns>
         public bool HasLocalAccount(string userName)
         {
-            IFlexMembershipUser user = _userStore.GetUserByUsername(userName);
+            IFlexMembershipUser user = _membershipRepository.GetUserByUsername(userName);
             return user != null && !String.IsNullOrEmpty(user.Password);
         }
 
         public bool Exists(string userName)
         {
-            IFlexMembershipUser user = _userStore.GetUserByUsername(userName);
+            IFlexMembershipUser user = _membershipRepository.GetUserByUsername(userName);
             return user != null;
         }
 
@@ -127,7 +126,7 @@ namespace FlexProviders.Membership
         /// <returns> </returns>
         public bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            IFlexMembershipUser user = _userStore.GetUserByUsername(username);
+            IFlexMembershipUser user = _membershipRepository.GetUserByUsername(username);
             string encodedPassword = _encoder.Encode(oldPassword, user.Salt);
             if (!encodedPassword.Equals(user.Password))
             {
@@ -135,7 +134,7 @@ namespace FlexProviders.Membership
             }
 
             user.Password = _encoder.Encode(newPassword, user.Salt);
-            _userStore.Save(user);
+            _membershipRepository.Save(user);
             return true;
         }
 
@@ -146,7 +145,7 @@ namespace FlexProviders.Membership
         /// <param name="newPassword"> The new password. </param>
         public void SetLocalPassword(string username, string newPassword)
         {
-            IFlexMembershipUser user = _userStore.GetUserByUsername(username);
+            IFlexMembershipUser user = _membershipRepository.GetUserByUsername(username);
             if (!String.IsNullOrEmpty(user.Password))
             {
                 throw new FlexMembershipException("SetLocalPassword can only be used on accounts that currently don't have a local password.");
@@ -154,7 +153,7 @@ namespace FlexProviders.Membership
 
             user.Salt = _encoder.GenerateSalt();
             user.Password = _encoder.Encode(newPassword, user.Salt);
-            _userStore.Save(user);
+            _membershipRepository.Save(user);
         }
 
         /// <summary>
@@ -165,7 +164,7 @@ namespace FlexProviders.Membership
         /// <returns> </returns>
         public string GeneratePasswordResetToken(string username, int tokenExpirationInMinutesFromNow = 1440)
         {
-            IFlexMembershipUser user = _userStore.GetUserByUsername(username);
+            IFlexMembershipUser user = _membershipRepository.GetUserByUsername(username);
             if (user == null)
             {
                 throw new FlexMembershipException(FlexMembershipStatus.InvalidUserName);
@@ -174,7 +173,7 @@ namespace FlexProviders.Membership
             var tz = TimeZoneInfo.FindSystemTimeZoneById("Central Brazilian Standard Time");
             user.PasswordResetToken = GenerateToken();
             user.PasswordResetTokenExpiration = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.AddMinutes(tokenExpirationInMinutesFromNow), tz);
-            _userStore.Save(user);
+            _membershipRepository.Save(user);
 
             return user.PasswordResetToken;
         }
@@ -188,7 +187,7 @@ namespace FlexProviders.Membership
         /// <returns> </returns>
         public bool ResetPassword(string passwordResetToken, string newPassword)
         {
-            IFlexMembershipUser user = _userStore.GetUserByPasswordResetToken(passwordResetToken);
+            IFlexMembershipUser user = _membershipRepository.GetUserByPasswordResetToken(passwordResetToken);
             if (user == null)
             {
                 return false;
@@ -199,7 +198,7 @@ namespace FlexProviders.Membership
                 user.Salt = _encoder.GenerateSalt();
             }
             user.Password = _encoder.Encode(newPassword, user.Salt);
-            _userStore.Save(user);
+            _membershipRepository.Save(user);
 
             return true;
         }
@@ -216,12 +215,12 @@ namespace FlexProviders.Membership
         /// <param name="user"> The user. </param>
         public void CreateOAuthAccount(string provider, string providerUserId, IFlexMembershipUser user)
         {
-            IFlexMembershipUser existingUser = _userStore.GetUserByUsername(user.Username);
+            IFlexMembershipUser existingUser = _membershipRepository.GetUserByUsername(user.Username);
             if (existingUser == null)
             {
-                _userStore.Add(user);
+                _membershipRepository.Add(user);
             }
-            _userStore.CreateOAuthAccount(provider, providerUserId, existingUser ?? user);
+            _membershipRepository.CreateOAuthAccount(provider, providerUserId, existingUser ?? user);
         }
 
         /// <summary>
@@ -334,7 +333,7 @@ namespace FlexProviders.Membership
         /// <returns></returns>
         public string GetUserNameFromOpenAuth(string provider, string providerUserId)
         {
-            IFlexMembershipUser user = _userStore.GetUserByOAuthProvider(provider, providerUserId);
+            IFlexMembershipUser user = _membershipRepository.GetUserByOAuthProvider(provider, providerUserId);
             if (user != null)
             {
                 return user.Username;
