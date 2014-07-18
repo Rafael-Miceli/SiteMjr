@@ -1,5 +1,7 @@
 ﻿using WebSiteMjr.Domain.Interfaces.Membership;
 using WebSiteMjr.Domain.Interfaces.Services;
+using WebSiteMjr.Domain.Model.Membership;
+using WebSiteMjr.Domain.Model.Roles;
 
 namespace WebSiteMjr.Domain.services.Membership
 {
@@ -22,7 +24,7 @@ namespace WebSiteMjr.Domain.services.Membership
             _membershipProvider.Logout();
         }
 
-        public void CreateAccount(IFlexMembershipUser user)
+        public void CreateAccount(User user)
         {
             _membershipProvider.CreateAccount(user);
         }
@@ -40,6 +42,16 @@ namespace WebSiteMjr.Domain.services.Membership
         public void SetLocalPassword(string username, string newPassword)
         {
             _membershipProvider.SetLocalPassword(username, newPassword);
+        }
+
+        public Role GetUserRole(string userName)
+        {
+            return _membershipProvider.GetUserRole(userName);
+        }
+
+        public User GetLoggedUser(string userName)
+        {
+            return _membershipProvider.GetUser(userName);
         }
     }
 }
