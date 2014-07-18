@@ -1,3 +1,5 @@
+using WebSiteMjr.Domain.Model.Membership;
+
 namespace WebSiteMjr.Domain.Interfaces.Membership
 {
     public interface IFlexMembershipProvider
@@ -80,5 +82,8 @@ namespace WebSiteMjr.Domain.Interfaces.Membership
         /// <param name="newPassword"> The new password for the user. </param>
         /// <returns> </returns>
         bool ResetPassword(string passwordResetToken, string newPassword);
+
+        Domain.Model.Roles.Role GetUserRole(string userName);
+        User GetUser(string userName);
     }
 }

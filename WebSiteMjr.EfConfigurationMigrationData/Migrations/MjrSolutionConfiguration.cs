@@ -9,6 +9,7 @@ using WebSiteMjr.Domain.Model.Roles;
 using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.Domain.services.Roles;
 using WebSiteMjr.EfData.DataRepository;
+using WebSiteMjr.EfData.UnitOfWork;
 
 namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
 {

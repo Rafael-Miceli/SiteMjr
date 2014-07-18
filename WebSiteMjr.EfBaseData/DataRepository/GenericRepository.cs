@@ -17,10 +17,6 @@ namespace WebSiteMjr.EfBaseData.DataRepository
 
         public void Add(TEntity entitie)
         {
-            //In Entity Framework the Add() Method Adds all of the graphs related to the context
-            //_context.Set<TEntity>().Add(entitie);
-
-            //But in the Entry() it only changes the first entitie 
             Context.Entry(entitie).State = EntityState.Added;
         }
 

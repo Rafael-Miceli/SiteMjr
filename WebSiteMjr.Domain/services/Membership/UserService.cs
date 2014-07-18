@@ -68,5 +68,6 @@ namespace WebSiteMjr.Domain.services.Membership
         {
             return _user.GetById(iduser);
         }
+
     }
 }

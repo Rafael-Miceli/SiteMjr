@@ -18,19 +18,17 @@ namespace WebSiteMjr.Controllers
     {
 
         private readonly IMembershipService _membershipProvider;
-        private readonly IUserService _user;
 
-        public AccountController(IMembershipService membership, IUserService user)
+        public AccountController(IMembershipService membership)
         {
             _membershipProvider = membership;
-            _user = user;
         }
 
         [ChildActionOnly]
         [AllowAnonymous]
         public ActionResult UserInformations()
         {
-            var user = _user.GetLoggedUser(User.Identity.Name);
+            var user = _membershipProvider.GetLoggedUser(User.Identity.Name);
             return PartialView("_LoginPartial", user);
         }
 
@@ -38,7 +36,7 @@ namespace WebSiteMjr.Controllers
         [AllowAnonymous]
         public ActionResult Menu()
         {
-            var role = _user.GetUserRole(User.Identity.Name);
+            var role = _membershipProvider.GetUserRole(User.Identity.Name);
 
             return PartialView("_Menu", role);
         }
@@ -47,7 +45,7 @@ namespace WebSiteMjr.Controllers
         [AllowAnonymous]
         public ActionResult ClientMenu()
         {
-            var role = _user.GetUserRole(User.Identity.Name);
+            var role = _membershipProvider.GetUserRole(User.Identity.Name);
 
             return PartialView("_ClientMenu", role);
         }

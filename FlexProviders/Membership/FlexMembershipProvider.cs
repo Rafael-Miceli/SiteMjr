@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebSiteMjr.Domain.Interfaces.Membership;
 using WebSiteMjr.Domain.Model.Membership;
+using WebSiteMjr.Domain.Model.Roles;
 
 namespace FlexProviders.Membership
 {
@@ -50,7 +52,7 @@ namespace FlexProviders.Membership
         public bool Login(string username, string password, bool rememberMe = false)
         {
             IFlexMembershipUser user = _membershipRepository.GetUserByUsername(username);
-            if (user == null)
+            if (user == null || user.StatusUser != StatusUser.Active)
             {
                 return false;
             }
@@ -201,6 +203,17 @@ namespace FlexProviders.Membership
             _membershipRepository.Save(user);
 
             return true;
+        }
+
+        public Role GetUserRole(string userName)
+        {
+            var user = _membershipRepository.GetUserByUsername(userName);
+            return user != null ? user.Roles.FirstOrDefault() : null;
+        }
+
+        public User GetUser(string userName)
+        {
+            return (User) _membershipRepository.GetUserByUsername(userName);
         }
 
         #endregion
