@@ -73,7 +73,6 @@
     <Compile Include="Migrations\MjrSolutionConfiguration.cs" />
     <Compile Include="MjrSolutionContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitOfWork\MigrationUow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
