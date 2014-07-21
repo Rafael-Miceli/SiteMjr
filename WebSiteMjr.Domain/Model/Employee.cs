@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WebSiteMjr.Domain.Interfaces.Model;
 
 namespace WebSiteMjr.Domain.Model
@@ -11,6 +12,16 @@ namespace WebSiteMjr.Domain.Model
         public virtual string Phone { get; set; }
         [Required(ErrorMessage = "Sobrenome é um campo obrigatório")]
         public virtual string LastName { get; set; }
-        public virtual int IdUser { get; set; }
+
+        public virtual Company Company { get; set; }
+
+        [NotMapped]
+        public override string ObjectName
+        {
+            get
+            {
+                return "Funcionário";
+            }
+        }
     }
 }

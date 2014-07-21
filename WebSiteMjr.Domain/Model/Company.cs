@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebSiteMjr.Domain.Model
 {
@@ -26,6 +27,17 @@ namespace WebSiteMjr.Domain.Model
             {
                 _companyAreas = value;
             } 
+        }
+
+        public virtual ICollection<Employee> Employees { get; set; }
+
+        [NotMapped]
+        public override string ObjectName
+        {
+            get
+            {
+                return "Empresa/Condomínio";
+            }
         }
 
     }

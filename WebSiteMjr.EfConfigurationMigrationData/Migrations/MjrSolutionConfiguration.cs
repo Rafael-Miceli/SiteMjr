@@ -59,9 +59,9 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
 
             //WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "UserName", true);
 
-            var membership = new MembershipService(new FlexMembershipProvider(new MembershipRepository<User>(context), new AspnetEnvironment()));
+            var membership = new FlexMembershipProvider(new MembershipRepository<User>(context), new AspnetEnvironment());
 
-            var roles = new RoleService(new FlexRoleProvider(new RoleRepository<Role, User>(context)));  // (SimpleRoleProvider)Roles.Provider;
+            var roles = new FlexRoleProvider(new RoleRepository<Role, User>(context));  // (SimpleRoleProvider)Roles.Provider;
 
 
             if (!membership.HasLocalAccount("mjrtelecom@hotmail.com"))

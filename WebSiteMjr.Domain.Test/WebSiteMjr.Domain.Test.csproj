@@ -88,6 +88,7 @@
     <Compile Include="Model\CompanyDumies.cs" />
     <Compile Include="Model\CompanyAreasDummies.cs" />
     <Compile Include="Model\HolderDummies.cs" />
+    <Compile Include="Model\UserDummies.cs" />
     <Compile Include="services\CompanyServiceTest.cs" />
     <Compile Include="Model\EmployeeDummies.cs" />
     <Compile Include="services\EmployeeServiceTest.cs" />

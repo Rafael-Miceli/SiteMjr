@@ -13,20 +13,17 @@ namespace WebSiteMjr.Domain.Model.Membership
             var tz = TimeZoneInfo.FindSystemTimeZoneById("Central Brazilian Standard Time");
             PasswordResetTokenExpiration = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
         }
-
-        public virtual string Name { get; set; }
-        public virtual string LastName { get; set; }
+        
         public virtual string Email { get; set; }
-        public virtual StatusUser StatusUser { get; set; }
         public virtual int IdCompany { get; set; }
 
+        public virtual StatusUser StatusUser { get; set; }
         public virtual string Username { get; set; }
         public virtual string Password { get; set; }
         public string Salt { get; set; }
         public string PasswordResetToken { get; set; }
         public DateTime PasswordResetTokenExpiration { get; set; }
         public bool IsLocal { get; set; }
-
         public virtual ICollection<Role> Roles { get; set; }
         
     }

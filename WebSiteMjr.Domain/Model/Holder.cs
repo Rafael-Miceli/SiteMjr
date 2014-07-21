@@ -13,7 +13,7 @@ namespace WebSiteMjr.Domain.Model
         public bool IsDeleted { get; set; }
         public virtual IEnumerable<Tool> Tools { get; set; }
         [NotMapped]
-        public string ObjectName
+        public virtual string ObjectName
         {
             get
             {
