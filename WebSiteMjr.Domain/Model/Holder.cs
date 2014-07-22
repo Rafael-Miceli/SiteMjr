@@ -10,6 +10,7 @@ namespace WebSiteMjr.Domain.Model
     {
         [Required(ErrorMessage = "Nome é um campo obrigatório")]
         public virtual string Name { get; set; }
+        public virtual string Email { get; set; }
         public bool IsDeleted { get; set; }
         public virtual IEnumerable<Tool> Tools { get; set; }
         [NotMapped]

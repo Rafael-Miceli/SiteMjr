@@ -14,8 +14,7 @@ namespace WebSiteMjr.Domain.Model.Membership
             PasswordResetTokenExpiration = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
         }
         
-        public virtual string Email { get; set; }
-        public virtual int IdCompany { get; set; }
+        public virtual Employee Employee { get; set; }
 
         public virtual StatusUser StatusUser { get; set; }
         public virtual string Username { get; set; }

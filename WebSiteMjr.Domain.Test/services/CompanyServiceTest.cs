@@ -24,11 +24,14 @@ namespace WebSiteMjr.Domain.Test.services
             var fakeUser = new User
             {
                 Id = 1,
-                Name = "Rafael",
-                LastName = "Paiva",
                 Username = "rafael.miceli@outlook.com",
-                Email = "rafael.miceli@outlook.com",
-                IdCompany = 1,
+                Employee = new Employee
+                {
+                    Company = new Company
+                    {
+                        Id = 1
+                    }
+                },
                 IsLocal = true,
                 Password = "123",
                 PasswordResetToken = "123",
@@ -42,7 +45,7 @@ namespace WebSiteMjr.Domain.Test.services
                                 }
                         }
             };
-            var fakeCompanyId = fakeUser.IdCompany;
+            var fakeCompanyId = fakeUser.Employee.Company.Id;
             companyRepository.Setup(s => s.GetById(fakeCompanyId)).Returns(() => new Company
             {
                 Id = 1,
