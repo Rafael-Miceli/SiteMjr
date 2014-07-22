@@ -13,8 +13,7 @@ namespace WebSiteMjr.Domain.Test.Model
         {
             var user = new User
             {
-                Id = 1,
-                Email = "rafael.miceli@hotmail.com"
+                Id = 1
             };
 
             return user;
@@ -25,11 +24,7 @@ namespace WebSiteMjr.Domain.Test.Model
             var user = new User
             {
                 Id = 1,
-                Email = "rafael.miceli@hotmail.com",
-                IdCompany = CompanyDummies.CreateOneCompany().Id,
                 IsLocal = true,
-                Name = "Rafael",
-                LastName = "Miceli",
                 Password = "",
                 StatusUser = StatusUser.Active,
                 Username = "rafael.miceli@hotmail.com"

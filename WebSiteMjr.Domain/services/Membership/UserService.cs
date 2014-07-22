@@ -59,7 +59,7 @@ namespace WebSiteMjr.Domain.services.Membership
         public Company GetUserCompany(string userName)
         {
             var user = _user.GetByUserName(userName);
-            var idCompany = user != null ? user.IdCompany : 0;
+            var idCompany = user != null ? user.Employee.Company.Id : 0;
 
             return _company.FindCompany(idCompany);
         }
