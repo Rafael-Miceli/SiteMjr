@@ -1,6 +1,5 @@
 namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
     public partial class UpdateCompanyAndEmployeeAndUserHierarchy : DbMigration
