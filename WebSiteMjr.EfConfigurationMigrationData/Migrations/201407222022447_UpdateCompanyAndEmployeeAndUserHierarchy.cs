@@ -6,6 +6,8 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
     {
         public override void Up()
         {
+            Sql("CREATE TABLE Migration ( IdHolder int, EmailHolder char(100) ) Insert Into Migration (IdHolder, EmailHolder) Select Id, Email From Companies ");
+
             AddColumn("dbo.Users", "Employee_Id", c => c.Int());
             AddColumn("dbo.Holders", "Email", c => c.String());
             AddColumn("dbo.Employees", "Company_Id", c => c.Int());
@@ -19,6 +21,22 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
             DropColumn("dbo.Users", "IdCompany");
             DropColumn("dbo.Employees", "IdUser");
             DropColumn("dbo.Companies", "Email");
+
+            Sql("DECLARE @ComId int, @ComEmail nvarchar(100) " +
+                "DECLARE Company_Cursor CURSOR FOR " +
+                "SELECT com.IdHolder, com.EmailHolder " +
+                "FROM Migration com " +
+                "OPEN Company_Cursor; " +
+                "FETCH Company_Cursor INTO @ComId, @ComEmail " +
+                "WHILE @@FETCH_STATUS = 0 " +
+                "   BEGIN   		" +
+	            "      update Holders Set Email = @ComEmail Where Id = @ComId " +
+                "      FETCH Company_Cursor INTO @ComId, @ComEmail " +
+                "   END; " +
+                "CLOSE Company_Cursor; " +
+                "DEALLOCATE Company_Cursor; " +
+                "Update Employees Set Company_Id = 1"
+                );
         }
         
         public override void Down()

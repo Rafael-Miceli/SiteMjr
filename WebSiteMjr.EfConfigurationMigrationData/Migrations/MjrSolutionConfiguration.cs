@@ -6,14 +6,11 @@ using System.Linq;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
-using WebSiteMjr.Domain.services.Membership;
-using WebSiteMjr.Domain.services.Roles;
 using WebSiteMjr.EfData.DataRepository;
-using WebSiteMjr.EfData.UnitOfWork;
 
 namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
 {
-    public class MjrSolutionConfiguration : DbMigrationsConfiguration<MjrSolutionContext> // CreateDatabaseIfNotExists<MjrSolutionContext>
+    public class MjrSolutionConfiguration : DbMigrationsConfiguration<MjrSolutionContext> 
     {
         public MjrSolutionConfiguration()
         {
@@ -23,19 +20,6 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
 
         protected override void Seed(MjrSolutionContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
-
             SeedCompany(context);
             SeedEmployee(context);
             SeedMembership(context);
@@ -54,13 +38,14 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
             context.SaveChanges();
         }
 
-        private void SeedEmployee(MjrSolutionContext context)
+        private static void SeedEmployee(MjrSolutionContext context)
         {
-            context.Employees.AddOrUpdate(co => co.Name, new Employee
+            context.Employees.AddOrUpdate(em => em.LastName, new Employee
             {
                 Name = "Mjr Administrador",
+                LastName = " - ",
                 Email = "mjrtelecom@hotmail.com",
-                Company = context.Companies.FirstOrDefault(n => n.Email == "mjrtelecom@hotmail.com")
+                Company = context.Companies.FirstOrDefault(n => n.Id == 1)
             });
 
             context.SaveChanges();
@@ -72,10 +57,11 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
             var membership = new FlexMembershipProvider(new MembershipRepository<User>(context), new AspnetEnvironment());
             var roles = new FlexRoleProvider(new RoleRepository<Role, User>(context));
 
-            if (!membership.HasLocalAccount("mjrtelecom@hotmail.com") || context.Users.First().Employee == null)
+            var firstUser = context.Users.FirstOrDefault(u => u.Username == "mjrtelecom@hotmail.com");
+            var firstEmployee = context.Employees.FirstOrDefault(n => n.Email == "mjrtelecom@hotmail.com");
+
+            if (firstUser == null)
             {
-                Employee firstEmployee = context.Employees.FirstOrDefault(n => n.Email == "mjrtelecom@hotmail.com");
-                
                 membership.CreateAccount(user: new User
                 {
                     Username = "mjrtelecom@hotmail.com",
@@ -84,6 +70,11 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                     Employee = firstEmployee,
                     StatusUser = StatusUser.Active
                 });
+            }
+            else if (firstUser.Employee == null)
+            {
+                firstUser.Employee = firstEmployee;
+                context.SaveChanges();
             }
 
             if (!roles.RoleExists("MjrAdmin"))
