@@ -43,6 +43,17 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
             base.Seed(context);
         }
 
+        private static void SeedCompany(MjrSolutionContext context)
+        {
+            context.Companies.AddOrUpdate(co => co.Name, new Company
+                {
+                    Name = "Mjr Equipamentos eletrônicos LTDA",
+                    Email = "mjrtelecom@hotmail.com"
+                });
+
+            context.SaveChanges();
+        }
+
         private void SeedEmployee(MjrSolutionContext context)
         {
             context.Employees.AddOrUpdate(co => co.Name, new Employee
@@ -55,24 +66,13 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
             context.SaveChanges();
         }
 
-        private static void SeedCompany(MjrSolutionContext context)
-        {
-            context.Companies.AddOrUpdate(co => co.Name, new Company
-                {
-                    Name = "Mjr Equipamentos eletrônicos LTDA",
-                    Email = "mjrtelecom@hotmail.com"
-                });
-
-            context.SaveChanges();
-        }
-
         private static void SeedMembership(MjrSolutionContext context)
         {
 
             var membership = new FlexMembershipProvider(new MembershipRepository<User>(context), new AspnetEnvironment());
             var roles = new FlexRoleProvider(new RoleRepository<Role, User>(context));
 
-            if (!membership.HasLocalAccount("mjrtelecom@hotmail.com"))
+            if (!membership.HasLocalAccount("mjrtelecom@hotmail.com") || context.Users.First().Employee == null)
             {
                 Employee firstEmployee = context.Employees.FirstOrDefault(n => n.Email == "mjrtelecom@hotmail.com");
                 
