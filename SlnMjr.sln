@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr.EfPersonDataTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexProvidersTests", "FlexProvidersTests\FlexProvidersTests.csproj", "{843FEE95-D9DD-437A-9C0C-96B9E87C8E6A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr.EFConfigurationMigrationDataTest", "WebSiteMjr.EFConfigurationMigrationDataTest\WebSiteMjr.EFConfigurationMigrationDataTest.csproj", "{FA2ABB59-29B0-4A18-AEDE-A5D22BE34906}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +129,10 @@ Global
 		{843FEE95-D9DD-437A-9C0C-96B9E87C8E6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{843FEE95-D9DD-437A-9C0C-96B9E87C8E6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{843FEE95-D9DD-437A-9C0C-96B9E87C8E6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA2ABB59-29B0-4A18-AEDE-A5D22BE34906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA2ABB59-29B0-4A18-AEDE-A5D22BE34906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA2ABB59-29B0-4A18-AEDE-A5D22BE34906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA2ABB59-29B0-4A18-AEDE-A5D22BE34906}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,6 +160,7 @@ Global
 		{29947E45-7425-4CCE-90C1-2F2D7EF802E1} = {D198A4C1-387D-4D26-B819-34D5B4D42B9E}
 		{E4A43CDA-57D3-42F1-81B9-3813A7970A95} = {71E91F35-96AE-41BB-8E1D-B2A462F6C824}
 		{51738777-54C2-4BDB-B3CF-F353000F0A10} = {71E91F35-96AE-41BB-8E1D-B2A462F6C824}
+		{FA2ABB59-29B0-4A18-AEDE-A5D22BE34906} = {71E91F35-96AE-41BB-8E1D-B2A462F6C824}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
