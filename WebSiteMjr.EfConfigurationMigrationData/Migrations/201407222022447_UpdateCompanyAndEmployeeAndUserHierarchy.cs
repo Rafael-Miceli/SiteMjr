@@ -35,7 +35,13 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                 "   END; " +
                 "CLOSE Company_Cursor; " +
                 "DEALLOCATE Company_Cursor; " +
-                "Update Employees Set Company_Id = 1"
+                "Update Employees Set Company_Id = 1; " +
+                "DROP TABLE Migration " +
+                "DROP TABLE webpages_Membership " +
+                "DROP TABLE webpages_OAuthMembership " +
+                "DROP TABLE webpages_UsersInRoles " +
+                "DROP TABLE webpages_Roles " +
+                "DROP TABLE UserProfile"
                 );
         }
         

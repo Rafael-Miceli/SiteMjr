@@ -120,13 +120,13 @@
     <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AccountControllerTest.cs" />
-    <Compile Include="Controllers\Api\CompanyApiControllerTest.cs" />
-    <Compile Include="Controllers\CompanyControllerTest.cs" />
-    <Compile Include="Controllers\StuffControllerTest.cs" />
-    <Compile Include="Controllers\ToolControllerTest.cs" />
+    <Compile Include="Integration\Controllers\AccountControllerTest.cs" />
+    <Compile Include="Unit\Controllers\Api\CompanyApiControllerTest.cs" />
+    <Compile Include="Unit\Controllers\CompanyControllerTest.cs" />
+    <Compile Include="Unit\Controllers\StuffControllerTest.cs" />
+    <Compile Include="Unit\Controllers\ToolControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Unit\Controllers\HomeControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -135,6 +135,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FlexProviders\FlexProviders.csproj">
+      <Project>{9C987907-BD64-4100-89D4-F4BCFB77768B}</Project>
+      <Name>FlexProviders</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr.Domain.Test\WebSiteMjr.Domain.Test.csproj">
       <Project>{52063992-045B-4FD3-A291-410D587C6BDB}</Project>
       <Name>WebSiteMjr.Domain.Test</Name>
