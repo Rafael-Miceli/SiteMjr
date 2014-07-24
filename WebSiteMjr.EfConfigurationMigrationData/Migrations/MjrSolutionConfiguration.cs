@@ -38,7 +38,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
             context.SaveChanges();
         }
 
-        private static void SeedEmployee(MjrSolutionContext context)
+        public void SeedEmployee(MjrSolutionContext context)
         {
             context.Employees.AddOrUpdate(em => em.LastName, new Employee
             {

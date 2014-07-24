@@ -1,19 +1,17 @@
 ﻿using System.Linq;
 using System.Transactions;
 using System.Web.Mvc;
-using System.Web.Security;
 using DotNetOpenAuth.AspNet;
+using FlexProviders.Membership;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model.Membership;
-using WebSiteMjr.Filters;
 using WebSiteMjr.Models;
 
 namespace WebSiteMjr.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
     public class AccountController : Controller
     {
 
@@ -116,7 +114,7 @@ namespace WebSiteMjr.Controllers
                     //_membershipProvider.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }
-                catch (MembershipCreateUserException e)
+                catch (FlexMembershipException e)
                 {
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
                 }
@@ -326,37 +324,37 @@ namespace WebSiteMjr.Controllers
             }
         }
 
-        private static string ErrorCodeToString(MembershipCreateStatus createStatus)
+        private static string ErrorCodeToString(FlexMembershipStatus createStatus)
         {
             // See http://go.microsoft.com/fwlink/?LinkID=177550 for
             // a full list of status codes.
             switch (createStatus)
             {
-                case MembershipCreateStatus.DuplicateUserName:
+                case FlexMembershipStatus.DuplicateUserName:
                     return "Usuário já existente. por favor entre com um usuário diferente.";
 
-                case MembershipCreateStatus.DuplicateEmail:
+                case FlexMembershipStatus.DuplicateEmail:
                     return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
 
-                case MembershipCreateStatus.InvalidPassword:
+                case FlexMembershipStatus.InvalidPassword:
                     return "The password provided is invalid. Please enter a valid password value.";
 
-                case MembershipCreateStatus.InvalidEmail:
+                case FlexMembershipStatus.InvalidEmail:
                     return "The e-mail address provided is invalid. Please check the value and try again.";
 
-                case MembershipCreateStatus.InvalidAnswer:
+                case FlexMembershipStatus.InvalidAnswer:
                     return "The password retrieval answer provided is invalid. Please check the value and try again.";
 
-                case MembershipCreateStatus.InvalidQuestion:
+                case FlexMembershipStatus.InvalidQuestion:
                     return "The password retrieval question provided is invalid. Please check the value and try again.";
 
-                case MembershipCreateStatus.InvalidUserName:
+                case FlexMembershipStatus.InvalidUserName:
                     return "The user name provided is invalid. Please check the value and try again.";
 
-                case MembershipCreateStatus.ProviderError:
+                case FlexMembershipStatus.ProviderError:
                     return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
 
-                case MembershipCreateStatus.UserRejected:
+                case FlexMembershipStatus.UserRejected:
                     return "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
 
                 default:

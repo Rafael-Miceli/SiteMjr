@@ -1,33 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using FlexProviders.Membership;
+using WebSiteMjr.Domain.Interfaces.Membership;
 using WebSiteMjr.Domain.Model.Membership;
+using WebSiteMjr.Domain.Model.Roles;
 
 namespace WebSiteMjr.Domain.Test.Model
 {
     public static class UserDummies
     {
-        public static User ReturneOneMjrActiveUser()
+        private static readonly ISecurityEncoder Encoder;
+        private static readonly string Salt;
+
+        static UserDummies()
+        {
+            Encoder = new DefaultSecurityEncoder();
+            Salt = "/eYHK+MXIeHmZOgbffphWQ==";
+        }
+
+        public static User ReturnOneMjrActiveUser()
         {
             var user = new User
             {
-                Id = 1
+                Id = 1,
+                Password = Encoder.Encode("12345678", Salt),
+                Salt = Salt,
+                IsLocal = true,
+                StatusUser = StatusUser.Active,
+                Username = "Administrator",
+                Roles = new List<Role>
+                {
+                    RoleDummies.ReturnMjrAdminRole()
+                }
             };
 
             return user;
         }
 
-        public static User ReturneOneNonMjrActiveUser()
+        public static User ReturnOneNonMjrActiveUser()
         {
             var user = new User
             {
-                Id = 1,
+                Id = 2,
                 IsLocal = true,
-                Password = "",
-                StatusUser = StatusUser.Active,
-                Username = "rafael.miceli@hotmail.com"
+                Password = "12345678",
+                Salt = "/eYHK+MXIeHmZOgbffphWQ==",
+                StatusUser = StatusUser.Unactive,
+                Username = "Administrator",
+                Roles = new List<Role>
+                {
+                    RoleDummies.ReturnMjrAdminRole()
+                }
             };
 
             return user;

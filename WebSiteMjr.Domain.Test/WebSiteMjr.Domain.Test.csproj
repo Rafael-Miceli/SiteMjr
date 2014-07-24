@@ -88,6 +88,7 @@
     <Compile Include="Model\CompanyDumies.cs" />
     <Compile Include="Model\CompanyAreasDummies.cs" />
     <Compile Include="Model\HolderDummies.cs" />
+    <Compile Include="Model\RoleDummies.cs" />
     <Compile Include="Model\UserDummies.cs" />
     <Compile Include="services\CompanyServiceTest.cs" />
     <Compile Include="Model\EmployeeDummies.cs" />
@@ -101,6 +102,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FlexProviders\FlexProviders.csproj">
+      <Project>{9C987907-BD64-4100-89D4-F4BCFB77768B}</Project>
+      <Name>FlexProviders</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mjr.Extensions\Mjr.Extensions.csproj">
       <Project>{29947E45-7425-4CCE-90C1-2F2D7EF802E1}</Project>
       <Name>Mjr.Extensions</Name>
