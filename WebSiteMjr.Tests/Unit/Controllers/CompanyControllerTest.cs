@@ -19,7 +19,7 @@ namespace WebSiteMjr.Tests.Controllers
             var companyServiceMock = new Mock<ICompanyService>();
             var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
 
-            var dummieCompany = CompanyDummies.CreateOneCompany();
+            var dummieCompany = CompanyDummies.CreatePortofinoCompany();
             var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModel();
             var dummieToolsLocaliations = CompanyAreasDummies.CreateListOfCompanyAreas();
             
@@ -45,7 +45,7 @@ namespace WebSiteMjr.Tests.Controllers
             var companyServiceMock = new Mock<ICompanyService>();
             var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
 
-            var dummieCompany = CompanyDummies.CreateOneCompany();
+            var dummieCompany = CompanyDummies.CreatePortofinoCompany();
             var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModel();
             var dummieToolsLocaliations = CompanyAreasDummies.CreateListOfCompanyAreas();
 
@@ -71,7 +71,7 @@ namespace WebSiteMjr.Tests.Controllers
             var companyServiceMock = new Mock<ICompanyService>();
             var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
 
-            var dummieCompany = CompanyDummies.CreateOneCompany();
+            var dummieCompany = CompanyDummies.CreatePortofinoCompany();
             var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModel();
             var dummieToolsLocaliations = CompanyAreasDummies.CreateListOfCompanyAreas();
 
@@ -98,7 +98,7 @@ namespace WebSiteMjr.Tests.Controllers
             var companyServiceMock = new Mock<ICompanyService>();
             var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
 
-            var dummieCompany = CompanyDummies.CreateOneCompany();
+            var dummieCompany = CompanyDummies.CreatePortofinoCompany();
             var dummieEditCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithCompanyArea();
             var dummieToolsLocaliations = CompanyAreasDummies.CreateListOfCompanyAreas();
 

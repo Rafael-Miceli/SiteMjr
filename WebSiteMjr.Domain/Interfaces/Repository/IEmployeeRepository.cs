@@ -8,5 +8,6 @@ namespace WebSiteMjr.Domain.Interfaces.Repository
     {
         Employee GetEmployeeByName(string name);
         IEnumerable<Employee> GetAllEmployeesNotDeleted();
+        IEnumerable<Employee> GetAllEmployeesFromCompanyNotDeleted(int companyId);
     }
 }

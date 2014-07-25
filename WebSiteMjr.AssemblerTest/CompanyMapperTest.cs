@@ -19,7 +19,7 @@ namespace WebSiteMjr.AssemblerTest
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
             var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
-            var company = CompanyDummies.CreateOneCompany();
+            var company = CompanyDummies.CreatePortofinoCompany();
 
             CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
                 .Returns(CompanyAreasDummies.CreateListOfCompanyAreas);
@@ -39,7 +39,7 @@ namespace WebSiteMjr.AssemblerTest
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
             var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
-            var dummieCompany = CompanyDummies.CreateOneCompany();
+            var dummieCompany = CompanyDummies.CreatePortofinoCompany();
             var dummieToolsLocaliations = CompanyAreasDummies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(x => x.FindCompany(It.IsAny<Company>())).Returns(dummieCompany);
@@ -88,7 +88,7 @@ namespace WebSiteMjr.AssemblerTest
             var companyServiceMock = new Mock<ICompanyService>();
             var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
             var dummieCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModel();
-            var companyShouldReturn = CompanyDummies.CreateOneCompany();
+            var companyShouldReturn = CompanyDummies.CreatePortofinoCompany();
 
             companyServiceMock.Setup(s => s.FindCompany(dummieCompanyViewModel.Id)).Returns(companyShouldReturn);
 
@@ -109,7 +109,7 @@ namespace WebSiteMjr.AssemblerTest
             var companyServiceMock = new Mock<ICompanyService>();
             var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
             var dummieCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithCompanyArea();
-            var companyShouldReturn = CompanyDummies.CreateOneCompany();
+            var companyShouldReturn = CompanyDummies.CreatePortofinoCompany();
             var actualCountBeforeUpdate = companyShouldReturn.CompanyAreas.Count;
 
             companyServiceMock.Setup(s => s.FindCompany(dummieCompanyViewModel.Id)).Returns(companyShouldReturn);
@@ -132,7 +132,7 @@ namespace WebSiteMjr.AssemblerTest
             var companyServiceMock = new Mock<ICompanyService>();
             var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
             var dummieCompanyViewModel = CompanyDummies.CreateOneEditCompanyViewModelWithNoCompanyArea();
-            var companyShouldReturn = CompanyDummies.CreateOneCompany();
+            var companyShouldReturn = CompanyDummies.CreatePortofinoCompany();
 
             companyServiceMock.Setup(s => s.FindCompany(dummieCompanyViewModel.Id)).Returns(companyShouldReturn);
 

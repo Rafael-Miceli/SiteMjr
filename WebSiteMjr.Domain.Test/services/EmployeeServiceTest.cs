@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.services;
 using WebSiteMjr.Domain.Test.Model;
-using WebSiteMjr.EfData.DataRepository;
 
 namespace WebSiteMjr.Domain.Test.services
 {
@@ -46,6 +44,28 @@ namespace WebSiteMjr.Domain.Test.services
             //Assert
             employeeRepositoryMock.VerifyAll();
             Assert.IsTrue(employees.Any(e => e.IsDeleted));
+        }
+
+        [TestMethod]
+        public void Given_A_Request_To_List_All_Active_Users_From_The_Company_Who_Is_Requesting_When_Requesting_Then_Should_Return_All_Active_Users_From_That_Company()
+        {
+            //Arrange
+            var companyRequesting = CompanyDummies.CreatePortofinoCompany();
+            var employeesNotDeletedFromCompany = EmployeeDummies.CreateListOfEmployees().Where(e => !e.IsDeleted && e.Company.Id == companyRequesting.Id);
+
+            var employeeRepositoryMock = new Mock<IEmployeeRepository>();
+
+            employeeRepositoryMock.Setup(x => x.GetAllEmployeesFromCompanyNotDeleted(companyRequesting.Id)).Returns(employeesNotDeletedFromCompany);
+
+            var employeeService = new EmployeeService(employeeRepositoryMock.Object, new StubUnitOfWork());
+
+            //Act
+            var employees = employeeService.ListEmployeesFromCompanyNotDeleted(companyRequesting.Id);
+
+            ////Assert
+            employeeRepositoryMock.VerifyAll();
+            Assert.IsFalse(employees.Any(e => e.IsDeleted));
+            Assert.IsFalse(employees.Any(e => e.Company.Id != companyRequesting.Id));
         }
     }
 }

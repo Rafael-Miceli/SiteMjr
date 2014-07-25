@@ -5,15 +5,6 @@ namespace WebSiteMjr.Domain.Test.Model
 {
     public class EmployeeDummies
     {
-        public static Employee CreateOneEmployee()
-        {
-            return new Employee
-            {
-                Id = 2,
-                Name = "Celso"
-            };
-        }
-
         public static IEnumerable<Employee> CreateListOfEmployees()
         {
             return new List<Employee>
@@ -23,28 +14,63 @@ namespace WebSiteMjr.Domain.Test.Model
                     Id = 1,
                     Name = "Celso",
                     LastName = "Gay",
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Email = "rafael.miceli@hotmail.com",
+                    Company = CompanyDummies.CreateMjrCompany()
                 },
                 new Employee
                 {
                     Id = 2,
                     Name = "Brendon",
                     LastName = "Gay",
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Email = "rafael.miceli@hotmail.com",
+                    Company = CompanyDummies.CreateMjrCompany()
                 },
                 new Employee
                 {
                     Id = 3,
                     Name = "Lorena",
                     LastName = "Gay",
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Email = "rafael.miceli@hotmail.com",
+                    Company = CompanyDummies.CreateMjrCompany()
                 },
                 new Employee
                 {
                     Id = 4,
                     Name = "Gabriela",
                     LastName = "Gay",
-                    IsDeleted = true
+                    IsDeleted = true,
+                    Email = "rafael.miceli@hotmail.com",
+                    Company = CompanyDummies.CreateMjrCompany()
+                },
+                new Employee
+                {
+                    Id = 5,
+                    Name = "Maria",
+                    LastName = "Hetero",
+                    IsDeleted = false,
+                    Email = "rafael.miceli@hotmail.com",
+                    Company = CompanyDummies.CreatePortofinoCompany()
+                },
+                new Employee
+                {
+                    Id = 6,
+                    Name = "José",
+                    LastName = "Hetero",
+                    IsDeleted = true,
+                    Email = "rafael.miceli@hotmail.com",
+                    Company = CompanyDummies.CreatePortofinoCompany()
+                },
+                new Employee
+                {
+                    Id = 6,
+                    Name = "Valdir",
+                    LastName = "Hetero",
+                    IsDeleted = false,
+                    Email = "rafael.miceli@hotmail.com",
+                    Company = CompanyDummies.CreatePortofinoCompany()
                 }
             };
         }

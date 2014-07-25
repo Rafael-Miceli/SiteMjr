@@ -1,26 +1,37 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
+using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
+using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Filters;
+using WebSiteMjr.Models;
+using WebSiteMjr.ViewModels;
 
 namespace WebSiteMjr.Controllers
 {
-    [FlexAuthorize(Roles = "MjrAdmin")]
+    [FlexAuthorize(Roles = "MjrAdmin, CompanyAdmin")]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;
+        private readonly ICacheService _cacheService;
+        private readonly IMembershipService _membershipService;
+        private readonly EmployeeMapper _employeeMapper;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeService, ICacheService cacheService, IMembershipService membershipService)
         {
             _employeeService = employeeService;
+            _cacheService = cacheService;
+            _membershipService = membershipService;
+            _employeeMapper = new EmployeeMapper();
         }
 
         //
         // GET: /Employee/
-        [FlexAuthorize(Roles = "MjrAdmin")]
         public ActionResult Index()
         {
-            return View(_employeeService.ListEmployeesNotDeleted());
+            var employeeCompanyId = _cacheService.Get("User", () => _membershipService.GetLoggedUser(User.Identity.Name)).Employee.Company.Id;
+            return View(_employeeService.ListEmployeesFromCompanyNotDeleted(employeeCompanyId));
         }
 
         //
@@ -49,13 +60,20 @@ namespace WebSiteMjr.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Employee employee)
+        public ActionResult Create(CreateEmployeeViewModel employee)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _employeeService.CreateEmployee(employee);
+                    if (employee.GenerateLogin && String.IsNullOrEmpty(employee.Email))
+                    {
+                        ModelState.AddModelError("", "Para criar um login para o funcionário, preencha o E-mail do mesmo.");
+                    }
+
+                    var employeeCompany = _cacheService.Get("User", () => _membershipService.GetLoggedUser(User.Identity.Name)).Employee.Company;
+
+                    _employeeService.CreateEmployee(_employeeMapper.CreateEmployeeViewModelToEmployee(employee, employeeCompany));
 
                     return RedirectToAction("Index");
                 }

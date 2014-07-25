@@ -127,6 +127,7 @@
     <Compile Include="Unit\Controllers\ToolControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\Controllers\HomeControllerTest.cs" />
+    <Compile Include="Integration\Controllers\EmployeeControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

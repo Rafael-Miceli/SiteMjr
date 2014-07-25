@@ -16,17 +16,20 @@ namespace WebSiteMjr.Controllers
     {
 
         private readonly IMembershipService _membershipProvider;
+        private readonly ICacheService _cacheService;
 
-        public AccountController(IMembershipService membership)
+        public AccountController(IMembershipService membership, ICacheService cacheService)
         {
             _membershipProvider = membership;
+            _cacheService = cacheService;
         }
 
         [ChildActionOnly]
         [AllowAnonymous]
         public ActionResult UserInformations()
         {
-            var user = _membershipProvider.GetLoggedUser(User.Identity.Name);
+
+            var user = _cacheService.Get("User", () => _membershipProvider.GetLoggedUser(User.Identity.Name));
             return PartialView("_LoginPartial", user);
         }
 

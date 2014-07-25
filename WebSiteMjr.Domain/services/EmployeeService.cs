@@ -54,5 +54,10 @@ namespace WebSiteMjr.Domain.services
         {
             return _employeeRepository.GetAllEmployeesNotDeleted();
         }
+
+        public IEnumerable<Employee> ListEmployeesFromCompanyNotDeleted(int companyId)
+        {
+            return _employeeRepository.GetAllEmployeesFromCompanyNotDeleted(companyId);
+        }
     }
 }
