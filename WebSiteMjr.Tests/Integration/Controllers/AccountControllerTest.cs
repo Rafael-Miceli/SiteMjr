@@ -19,6 +19,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         private IMembershipService _membershipService;
         private Mock<IFlexMembershipRepository> _flexMembershipRepository;
         private Mock<IApplicationEnvironment> _applicationEnvironment;
+        private Mock<ICacheService> _cacheServiceMock;
         private UrlHelper _urlHelperMock;
         private AccountController _accountController;
 
@@ -27,6 +28,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         {
             _flexMembershipRepository = new Mock<IFlexMembershipRepository>();
             _applicationEnvironment = new Mock<IApplicationEnvironment>();
+            _cacheServiceMock = new Mock<ICacheService>();
 
             var httpCtxStub = new Mock<HttpContextBase>();
             var requestContextMock = new RequestContext { HttpContext = httpCtxStub.Object };
@@ -35,7 +37,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers
             _membershipService =
                 new MembershipService(new FlexMembershipProvider(_flexMembershipRepository.Object, _applicationEnvironment.Object));
 
-            _accountController = new AccountController(_membershipService) { Url = _urlHelperMock };
+            _accountController = new AccountController(_membershipService, _cacheServiceMock.Object) { Url = _urlHelperMock };
         }
 
         [TestMethod]

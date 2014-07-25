@@ -8,14 +8,27 @@ namespace WebSiteMjr.Domain.Test.Model
 {
     public static class CompanyDummies
     {
-        public static Company CreateOneCompany()
+        public static Company CreatePortofinoCompany()
         {
             return new Company
             {
-                Name = "Portoverano",
+                Name = "Portofino",
                 Address = "Rua gastao senges",
                 City = "Rio de Janeiro",
                 Email = "adm@portoverano.com",
+                Id = 6,
+                Phone = "2455-3100"
+            };
+        }
+
+        public static Company CreateMjrCompany()
+        {
+            return new Company
+            {
+                Name = "Mjr",
+                Address = "Rua gastao senges",
+                City = "Rio de Janeiro",
+                Email = "mjr@mjr.com.br",
                 Id = 1,
                 Phone = "2455-3100"
             };

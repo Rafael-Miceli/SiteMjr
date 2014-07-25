@@ -12,6 +12,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         bool ChangePassword(string username, string oldPassword, string newPassword);
         void SetLocalPassword(string username, string newPassword);
         User GetLoggedUser(string name);
-        Domain.Model.Roles.Role GetUserRole(string name);
+        Domain.Model.Roles.Role GetUserRole(string userName);
     }
 }

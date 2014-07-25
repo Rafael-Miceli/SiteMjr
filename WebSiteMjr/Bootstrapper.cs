@@ -17,6 +17,7 @@ using WebSiteMjr.EfData.DataRepository;
 using WebSiteMjr.EfData.UnitOfWork;
 using WebSiteMjr.EfStuffData.DataRepository;
 using WebSiteMjr.EfStuffData.UnitOfWork;
+using WebSiteMjr.Models;
 
 namespace WebSiteMjr
 {
@@ -53,6 +54,7 @@ namespace WebSiteMjr
             container.RegisterType<IHolderService, HolderService>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IMembershipService, MembershipService>();
+            container.RegisterType<ICacheService, CacheService>();
 
             //Repositories Instances
             var companyServiceInstance = new CompanyService(new CompanyRepository(personUow), personUow);

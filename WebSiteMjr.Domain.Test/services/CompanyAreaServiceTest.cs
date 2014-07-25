@@ -79,7 +79,7 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Link_One_CompanyArea_To_Company()
         {
             var CompanyAreasId = new List<int>();
-            var company = CompanyDummies.CreateOneCompany();
+            var company = CompanyDummies.CreatePortofinoCompany();
             var CompanyArea = CompanyAreasDummies.CreateOneCompanyArea();
             CompanyAreasId.Add(CompanyArea.Id);
             var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
@@ -98,7 +98,7 @@ namespace WebSiteMjr.Domain.Test.services
             var CompanyAreaService = new CompanyAreasService(new FakeCompanyAreaRepository(), new StubUnitOfWork());
             var companyService = new CompanyService(new FakeCompanyRepository(), new StubUnitOfWork());
             var CompanyAreasId = new List<int>();
-            var company = CompanyDummies.CreateOneCompany();
+            var company = CompanyDummies.CreatePortofinoCompany();
             var CompanyAreas = CompanyAreaService.ListCompanyAreas().ToList();
             CompanyAreasId.Add(CompanyAreas[0].Id);
             CompanyAreasId.Add(CompanyAreas[1].Id);
