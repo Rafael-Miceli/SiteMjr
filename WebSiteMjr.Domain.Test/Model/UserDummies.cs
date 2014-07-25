@@ -3,6 +3,7 @@ using FlexProviders.Membership;
 using WebSiteMjr.Domain.Interfaces.Membership;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
+using System.Linq;
 
 namespace WebSiteMjr.Domain.Test.Model
 {
@@ -30,7 +31,8 @@ namespace WebSiteMjr.Domain.Test.Model
                 Roles = new List<Role>
                 {
                     RoleDummies.ReturnMjrAdminRole()
-                }
+                },
+                Employee = EmployeeDummies.CreateListOfEmployees().FirstOrDefault(e => e.Id == 7)
             };
 
             return user;
