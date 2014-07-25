@@ -71,6 +71,15 @@ namespace WebSiteMjr.Domain.Test.Model
                     IsDeleted = false,
                     Email = "rafael.miceli@hotmail.com",
                     Company = CompanyDummies.CreatePortofinoCompany()
+                },
+                new Employee
+                {
+                    Id = 7,
+                    Name = "Administrator",
+                    LastName = "Hetero",
+                    IsDeleted = false,
+                    Email = "rafael.miceli@hotmail.com",
+                    Company = CompanyDummies.CreateMjrCompany()
                 }
             };
         }

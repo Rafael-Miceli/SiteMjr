@@ -1,10 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
+using System.Web.Mvc;
 using WebSiteMjr.Controllers;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
+using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.services;
+using WebSiteMjr.Domain.Test.Model;
 using WebSiteMjr.Models;
 using WebSiteMjr.ViewModels;
 
@@ -41,9 +45,13 @@ namespace WebSiteMjr.Tests.Integration.Controllers
                 GenerateLogin = true
             };
 
-            var result = _employeeController.Create(createEmployeeViewModel);
+            _membershipServiceMock.Setup(x => x.GetLoggedUser("teste")).Returns((User)UserDummies.ReturnOneMjrActiveUser());
+            _cacheServiceMock.Setup(x => x.Get<User>("User", It.IsAny<Func<User>>())).Returns((User)UserDummies.ReturnOneMjrActiveUser());
+
+            var result = _employeeController.Create(createEmployeeViewModel) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
         }
 
         [TestMethod]
