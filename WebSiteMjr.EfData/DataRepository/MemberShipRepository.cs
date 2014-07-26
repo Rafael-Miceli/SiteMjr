@@ -2,7 +2,6 @@
 using System.Data.Entity;
 using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Membership;
-using WebSiteMjr.EfData.Context;
 
 namespace WebSiteMjr.EfData.DataRepository
 {

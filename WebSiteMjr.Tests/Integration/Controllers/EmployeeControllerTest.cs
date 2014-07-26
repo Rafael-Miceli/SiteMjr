@@ -45,8 +45,8 @@ namespace WebSiteMjr.Tests.Integration.Controllers
                 GenerateLogin = true
             };
 
-            _membershipServiceMock.Setup(x => x.GetLoggedUser("teste")).Returns((User)UserDummies.ReturnOneMjrActiveUser());
-            _cacheServiceMock.Setup(x => x.Get<User>("User", It.IsAny<Func<User>>())).Returns((User)UserDummies.ReturnOneMjrActiveUser());
+            _membershipServiceMock.Setup(x => x.GetLoggedUser("teste")).Returns(UserDummies.ReturnOneMjrActiveUser());
+            _cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>())).Returns(UserDummies.ReturnOneMjrActiveUser());
 
             var result = _employeeController.Create(createEmployeeViewModel) as RedirectToRouteResult;
 

@@ -14,6 +14,9 @@ namespace WebSiteMjr.Models
             if (item != null) return item;
 
             item = getItemCallback();
+
+            if (item == null) return null;
+
             HttpContext.Current.Cache.Insert(cacheId, item);
             return item;
         }
