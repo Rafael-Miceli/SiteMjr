@@ -22,11 +22,12 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
         {
             SeedCompany(context);
             SeedEmployee(context);
+            SeedRoles(context);
             SeedMembership(context);
 
             base.Seed(context);
         }
-
+        
         private static void SeedCompany(MjrSolutionContext context)
         {
             context.Companies.AddOrUpdate(co => co.Name, new Company
@@ -51,51 +52,52 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
             context.SaveChanges();
         }
 
+        private static void SeedRoles(MjrSolutionContext context)
+        {
+            context.Roles.AddOrUpdate(r => r.Name, new Role
+            {
+                Name = "MjrAdmin"
+            });
+
+            context.Roles.AddOrUpdate(r => r.Name, new Role
+            {
+                Name = "CompanyAdmin"
+            });
+
+            context.Roles.AddOrUpdate(r => r.Name, new Role
+            {
+                Name = "User"
+            });
+        }
+
         private static void SeedMembership(MjrSolutionContext context)
         {
+            var encoder = new DefaultSecurityEncoder();
 
-            var membership = new FlexMembershipProvider(new MembershipRepository<User>(context), new AspnetEnvironment());
-            var roles = new FlexRoleProvider(new RoleRepository<Role, User>(context));
+            var salt = encoder.GenerateSalt();
+            var password = encoder.Encode("12345678A", salt);
 
             var firstUser = context.Users.FirstOrDefault(u => u.Username == "mjrtelecom@hotmail.com");
             var firstEmployee = context.Employees.FirstOrDefault(n => n.Email == "mjrtelecom@hotmail.com");
 
             if (firstUser == null)
             {
-                membership.CreateAccount(user: new User
+                context.Users.AddOrUpdate(usr => usr.Username, new User
                 {
                     Username = "mjrtelecom@hotmail.com",
-                    Password = "12345678A",
+                    Password = password,
                     IsLocal = true,
                     Employee = firstEmployee,
-                    StatusUser = StatusUser.Active
+                    StatusUser = StatusUser.Active,
+                    Roles = context.Roles.Local.Where(r => r.Name == "MjrAdmin").ToList()
                 });
             }
             else if (firstUser.Employee == null)
             {
                 firstUser.Employee = firstEmployee;
-                context.SaveChanges();
             }
 
-            if (!roles.RoleExists("MjrAdmin"))
-            {
-                roles.CreateRole("MjrAdmin");
-            }
-
-            if (!roles.RoleExists("CompanyAdmin"))
-            {
-                roles.CreateRole("CompanyAdmin");
-            }
-
-            if (!roles.RoleExists("User"))
-            {
-                roles.CreateRole("User");
-            }
-
-            if (!roles.IsUserInRole("mjrtelecom@hotmail.com", "MjrAdmin"))
-            {
-                roles.AddUsersToRoles(new[] { "mjrtelecom@hotmail.com" }, new[] { "MjrAdmin" });
-            }
+            context.SaveChanges();
         }
     }
 }
