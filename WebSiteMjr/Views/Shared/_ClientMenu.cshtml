@@ -3,9 +3,15 @@
 <ul id="menuleft" role="navigation" class="nav">
     @*<li>@Html.ActionLink("Home", "Index", "ClientHome")</li>*@
     @*<li>@Html.ActionLink("Chamados", "Index", "Task")</li>*@
-    @if (Model != null && Model.Name == "MjrAdmin")
+    @if (Model != null && (Model.Name == "MjrAdmin" || Model.Name == "MjrUser"))
     {
-        <li>@Html.ActionLink("Funcionários", "Index", "Employee")</li>
+        <li>@Html.ActionLink("Meu Perfil", "Details", "Company")</li>
+
+        if (!Model.Name.Equals("MjrUser"))
+        {
+            <li>@Html.ActionLink("Funcionários", "Index", "Employee")</li>
+        }
+        
         <li>
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Gerenciar Condominio/Empresa <b class="caret"></b></a>
             <ul class="dropdown-menu" style="margin-left: 170px;">
@@ -31,6 +37,11 @@
     else
     {
         <li>@Html.ActionLink("Meu Perfil", "Details", "Company")</li>
+        
+        if (Model != null && !Model.Name.Equals("User"))
+        {
+            <li>@Html.ActionLink("Funcionários", "Index", "Employee")</li>
+        }
     }
     @*<li>@Html.ActionLink("Meu Perfil", "About", "Home")</li>*@
 </ul>

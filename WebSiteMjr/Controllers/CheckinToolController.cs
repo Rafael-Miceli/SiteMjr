@@ -8,7 +8,7 @@ using WebSiteMjr.ViewModels;
 
 namespace WebSiteMjr.Controllers
 {
-    [FlexAuthorize(Roles = "MjrAdmin")]
+    [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
     public class CheckinToolController : Controller
     {
         private readonly ICheckinToolService _checkinToolService;

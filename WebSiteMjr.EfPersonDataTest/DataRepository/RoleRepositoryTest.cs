@@ -10,6 +10,7 @@ namespace WebSiteMjr.EfPersonDataTest.DataRepository
     public class RoleRepositoryTest
     {
         [TestMethod]
+        [Ignore]
         public void Sould_GetUsersInRole_Return_Succefully()
         {
             var roleRepository = new RoleRepository<MjrAppRole, User>();

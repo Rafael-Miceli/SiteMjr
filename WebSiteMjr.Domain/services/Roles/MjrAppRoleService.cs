@@ -67,5 +67,10 @@ namespace WebSiteMjr.Domain.services.Roles
         {
             return _roleProvider.GetAllRoles().Where(r => r.Name == "User").ToList();
         }
+
+        public ICollection<MjrAppRole> GetRole_MjrUser_ForEmployee()
+        {
+            return _roleProvider.GetAllRoles().Where(r => r.Name == "MjrUser").ToList();
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using WebSiteMjr.Domain.Model.Roles;
 
 namespace WebSiteMjr.Domain.Interfaces.Services
 {
@@ -14,5 +15,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         string[] GetUsersInRole(string roleName);
         IEnumerable<Domain.Model.Roles.MjrAppRole> GetAllRoles();
         ICollection<Domain.Model.Roles.MjrAppRole> GetRole_User_ForEmployee();
+        ICollection<MjrAppRole> GetRole_MjrUser_ForEmployee();
     }
 }

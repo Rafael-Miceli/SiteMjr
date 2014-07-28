@@ -4,12 +4,12 @@
     <li>@Html.ActionLink("Home", "Index", "Home")</li>
     <li>@Html.ActionLink("Empresa", "About", "Home")</li>
     <li>@Html.ActionLink("Contatos", "Contact", "Home")</li>
-    @if (Model != null && Model.Name == "MjrAdmin")
+    @if (Model != null && (Model.Name == "MjrAdmin" || Model.Name == "MjrUser"))
     {
         <li>@Html.ActionLink("Administrar", "Manage", "Account")</li>
     }
-    @*else
+    else if (Model != null && (Model.Name == "CompanyAdmin" || Model.Name == "User"))
     {
         <li>@Html.ActionLink("Meu Espaço", "Manage", "Account")</li>
-    }*@
+    }
 </ul>

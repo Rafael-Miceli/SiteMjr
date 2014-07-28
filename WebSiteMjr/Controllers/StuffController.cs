@@ -11,7 +11,7 @@ using WebSiteMjr.ViewModels;
 
 namespace WebSiteMjr.Controllers
 {
-    [FlexAuthorize(Roles = "MjrAdmin")] 
+    [FlexAuthorize(Roles = "MjrAdmin, MjrUser")] 
     public class StuffController : Controller
     {
         private readonly IStuffService _stuffService;
