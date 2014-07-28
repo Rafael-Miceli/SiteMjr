@@ -54,23 +54,25 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
 
         private static void SeedRoles(MjrSolutionContext context)
         {
-            context.Roles.AddOrUpdate(r => r.Name, new Role
+            context.Roles.AddOrUpdate(r => r.Name, new MjrAppRole
             {
                 Name = "MjrAdmin"
             });
 
-            context.Roles.AddOrUpdate(r => r.Name, new Role
+            context.Roles.AddOrUpdate(r => r.Name, new MjrAppRole
             {
                 Name = "CompanyAdmin"
             });
 
-            context.Roles.AddOrUpdate(r => r.Name, new Role
+            context.Roles.AddOrUpdate(r => r.Name, new MjrAppRole
             {
                 Name = "User"
             });
+
+            context.SaveChanges();
         }
 
-        private static void SeedMembership(MjrSolutionContext context)
+        public void SeedMembership(MjrSolutionContext context)
         {
             var encoder = new DefaultSecurityEncoder();
 
@@ -85,16 +87,22 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                 context.Users.AddOrUpdate(usr => usr.Username, new User
                 {
                     Username = "mjrtelecom@hotmail.com",
+                    Salt = salt,
                     Password = password,
                     IsLocal = true,
                     Employee = firstEmployee,
                     StatusUser = StatusUser.Active,
-                    Roles = context.Roles.Local.Where(r => r.Name == "MjrAdmin").ToList()
+                    Roles = context.Roles.Where(r => r.Name == "MjrAdmin").ToList()
                 });
             }
-            else if (firstUser.Employee == null)
+            else
             {
+                if (firstUser.Roles == null)
+                    firstUser.Roles = context.Roles.Where(r => r.Name == "User").ToList();    
+
                 firstUser.Employee = firstEmployee;
+                firstUser.Salt = salt;
+                firstUser.Password = password;
             }
 
             context.SaveChanges();

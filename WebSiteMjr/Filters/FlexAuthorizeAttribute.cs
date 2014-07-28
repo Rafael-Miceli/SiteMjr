@@ -4,8 +4,10 @@ using System.Web.Mvc;
 using FlexProviders.Roles;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
+using WebSiteMjr.EfBaseData.UnitOfWork;
 using WebSiteMjr.EfData.Context;
 using WebSiteMjr.EfData.DataRepository;
+using WebSiteMjr.EfData.UnitOfWork;
 
 namespace WebSiteMjr.Filters
 {
@@ -73,7 +75,7 @@ namespace WebSiteMjr.Filters
 
             if (_rolesSplit.Length > 0)
             {
-                RoleProvider = new FlexRoleProvider(new RoleRepository<Role, User>(new PersonsContext()));
+                RoleProvider = new FlexRoleProvider(new RoleRepository<MjrAppRole, User>());
                 if (_rolesSplit.Any(role => RoleProvider.IsUserInRole(user.Identity.Name, role)))
                 {
                     return;

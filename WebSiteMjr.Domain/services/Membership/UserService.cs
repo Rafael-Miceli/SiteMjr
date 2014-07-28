@@ -50,7 +50,7 @@ namespace WebSiteMjr.Domain.services.Membership
             return _user.GetByUserName(userName);
         }
 
-        public Role GetUserRole(string userName)
+        public MjrAppRole GetUserRole(string userName)
         {
             var user = _user.GetByUserName(userName);
             return user != null ? user.Roles.FirstOrDefault() : null;

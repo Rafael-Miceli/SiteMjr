@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Data.Entity.Validation;
 using System.Web.Mvc;
 using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
-using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Filters;
 using WebSiteMjr.Models;
 using WebSiteMjr.ViewModels;
@@ -57,7 +57,6 @@ namespace WebSiteMjr.Controllers
 
         //
         // POST: /Employee/Create
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateEmployeeViewModel employee)
@@ -66,20 +65,39 @@ namespace WebSiteMjr.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (employee.GenerateLogin && String.IsNullOrEmpty(employee.Email))
-                    {
-                        ModelState.AddModelError("", "Para criar um login para o funcionário, preencha o E-mail do mesmo.");
-                    }
-
                     var employeeCompany = _cacheService.Get("User", () => _membershipService.GetLoggedUser(User.Identity.Name)).Employee.Company;
 
-                    _employeeService.CreateEmployee(_employeeMapper.CreateEmployeeViewModelToEmployee(employee, employeeCompany));
+                    if (employee.GenerateLogin)
+                    {
+                        if (String.IsNullOrEmpty(employee.Email))
+                        {
+                            ModelState.AddModelError("", "Para criar um login para o funcionário, preencha o E-mail do mesmo.");
+                            return View(employee);
+                        }
+                        _employeeService.CreateEmployeeAndLogin(_employeeMapper.CreateEmployeeViewModelToEmployee(employee, employeeCompany));
+                    }
+                    else
+                        _employeeService.CreateEmployee(_employeeMapper.CreateEmployeeViewModelToEmployee(employee, employeeCompany));
 
                     return RedirectToAction("Index");
                 }
 
                 return View(employee);
             }
+            //catch (DbEntityValidationException e)
+            //{
+            //    foreach (var eve in e.EntityValidationErrors)
+            //    {
+            //        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+            //            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+            //        foreach (var ve in eve.ValidationErrors)
+            //        {
+            //            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+            //                ve.PropertyName, ve.ErrorMessage);
+            //        }
+            //    }
+            //    throw;
+            //}
             catch
             {
                 return View();

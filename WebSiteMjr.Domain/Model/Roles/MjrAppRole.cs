@@ -5,7 +5,7 @@ using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model.Roles
 {
-    public class Role : IntId, IFlexRole<User>
+    public class MjrAppRole : IntId, IFlexRole<User>
     {
         public string Name { get; set; }
         public ICollection<User> Users { get; set; }

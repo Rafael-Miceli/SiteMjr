@@ -20,10 +20,17 @@ namespace WebSiteMjr.Models
             HttpContext.Current.Cache.Insert(cacheId, item);
             return item;
         }
+
+        public void Remove(string cacheId)
+        {
+            HttpRuntime.Cache.Remove(cacheId);
+        }
     }
 
     public interface ICacheService
     {
         T Get<T>(string cacheId, Func<T> getItemCallback) where T : class;
+
+        void Remove(string cacheId);
     }
 }

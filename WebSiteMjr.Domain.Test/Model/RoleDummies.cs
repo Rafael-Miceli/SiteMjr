@@ -9,9 +9,9 @@ namespace WebSiteMjr.Domain.Test.Model
 {
     public static class RoleDummies
     {
-        public static Role ReturnMjrAdminRole()
+        public static MjrAppRole ReturnMjrAdminRole()
         {
-            var role = new Role
+            var role = new MjrAppRole
             {
                 Id = 1,
                 Name = "MjrAdmin"
@@ -20,9 +20,9 @@ namespace WebSiteMjr.Domain.Test.Model
             return role;
         }
 
-        public static Role ReturnCompanyAdminRole()
+        public static MjrAppRole ReturnCompanyAdminRole()
         {
-            var role = new Role
+            var role = new MjrAppRole
             {
                 Id = 2,
                 Name = "CompanyAdmin"
@@ -31,15 +31,25 @@ namespace WebSiteMjr.Domain.Test.Model
             return role;
         }
 
-        public static Role ReturnUserRole()
+        public static MjrAppRole ReturnUserRole()
         {
-            var role = new Role
+            var role = new MjrAppRole
             {
                 Id = 3,
                 Name = "User"
             };
 
             return role;
+        }
+
+        public static IEnumerable<MjrAppRole> ReturnAllRoles()
+        {
+            return new List<MjrAppRole>
+            {
+                ReturnMjrAdminRole(),
+                ReturnCompanyAdminRole(),
+                ReturnUserRole()
+            };
         }
 
     }

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace WebSiteMjr.Domain.Interfaces.Role
+namespace WebSiteMjr.Domain.Interfaces.Services
 {
-    public interface IFlexRoleProvider
+    public interface IRoleService
     {
         bool IsUserInRole(string username, string roleName);
         string[] GetRolesForUser(string username);
@@ -13,5 +13,6 @@ namespace WebSiteMjr.Domain.Interfaces.Role
         void RemoveUsersFromRoles(string[] usernames, string[] roleNames);
         string[] GetUsersInRole(string roleName);
         IEnumerable<Domain.Model.Roles.MjrAppRole> GetAllRoles();
+        ICollection<Domain.Model.Roles.MjrAppRole> GetRole_User_ForEmployee();
     }
 }

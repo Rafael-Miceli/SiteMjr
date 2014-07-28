@@ -7,8 +7,6 @@ namespace WebSiteMjr.Domain.Model
 {
     public class Company : Holder
     {
-
-        [RegularExpression(@"^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", ErrorMessage = "E-mail inválido")]
         
         public virtual string Address { get; set; }
         public virtual string City { get; set; }

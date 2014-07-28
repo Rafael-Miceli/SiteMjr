@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration.Provider;
 using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Role;
+using WebSiteMjr.Domain.Model.Roles;
 
 namespace FlexProviders.Roles
 {
@@ -117,7 +119,7 @@ namespace FlexProviders.Roles
         /// <returns>
         /// 
         /// </returns>
-        public string[] GetAllRoles()
+        public IEnumerable<MjrAppRole> GetAllRoles()
         {
             return _roleStore.GetAllRoles();
         }
