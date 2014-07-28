@@ -34,6 +34,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         private Mock<IFlexMembershipRepository> _flexMembershipRepositoryMock;
         private Mock<IFlexRoleStore> _flexRoleStoreMock;
         private MjrAppRoleService _roleService;
+        private Mock<IEmailService> _emailServiceMock;
 
         [TestInitialize]
         public void Initialize()
@@ -48,9 +49,11 @@ namespace WebSiteMjr.Tests.Integration.Controllers
 
             _flexRoleStoreMock = new Mock<IFlexRoleStore>();
 
+            _emailServiceMock = new Mock<IEmailService>();
+
             _roleService = new MjrAppRoleService(new FlexRoleProvider(_flexRoleStoreMock.Object));
             _membershipService = new MembershipService(new FlexMembershipProvider(_flexMembershipRepositoryMock.Object, _applicationEnvironmentMock.Object, new StubUnitOfWork()), _roleService);
-            _employeeController = new EmployeeController(new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _unitOfWorkMock.Object), _cacheServiceMock.Object, _membershipServiceMock.Object);
+            _employeeController = new EmployeeController(new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object), _cacheServiceMock.Object, _membershipServiceMock.Object);
         }
 
         [TestMethod]

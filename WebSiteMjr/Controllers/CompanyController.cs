@@ -20,7 +20,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // GET: /Company/
-        [FlexAuthorize(Roles = "MjrAdmin")]
+        [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
         public ActionResult Index()
         {
             return View(_companyMapper.CompanyToListCompanyViewModel());
@@ -29,6 +29,7 @@ namespace WebSiteMjr.Controllers
         //
         // GET: /Company/Details/5
 
+        [FlexAuthorize(Roles = "MjrAdmin, MjrUser, User")]
         public ActionResult Details(int id)
         {
             var company = _companyService.FindCompany(id);
@@ -37,7 +38,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // GET: /Company/Create
-        [FlexAuthorize(Roles = "MjrAdmin")]
+        [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
         public ActionResult Create()
         {
             return View();
@@ -45,7 +46,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // POST: /Company/Create
-        [FlexAuthorize(Roles = "MjrAdmin")]
+        [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
         [HttpPost]
         public ActionResult Create(Company company)
         {
@@ -65,7 +66,7 @@ namespace WebSiteMjr.Controllers
                 return View();
             }
         }
-        [FlexAuthorize(Roles = "MjrAdmin")]
+        [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
         public ActionResult SendLogin(int idCompany)
         {
             try
@@ -80,7 +81,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // GET: /Company/Edit/5
-        [FlexAuthorize(Roles = "MjrAdmin")]
+        [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
         public ActionResult Edit(int id)
         {
             var edtiCompanyViewModel = _companyMapper.CompanyToEditCompanyViewModel(_companyService.FindCompany(id));
@@ -89,7 +90,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // POST: /Company/Edit/5
-        [FlexAuthorize(Roles = "MjrAdmin")]
+        [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
         [HttpPost]
         public ActionResult Edit(int id, EditCompanyViewModel editCompanyViewModel)
         {
@@ -112,7 +113,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // GET: /Company/Delete/5
-        [FlexAuthorize(Roles = "MjrAdmin")]
+        [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
         public ActionResult Delete(int id)
         {
             var company = _companyService.FindCompany(id);
@@ -121,7 +122,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // POST: /Company/Delete/5
-        [FlexAuthorize(Roles = "MjrAdmin")]
+        [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
         [HttpPost]
         public ActionResult Delete(Company company)
         {

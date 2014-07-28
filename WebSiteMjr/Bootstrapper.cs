@@ -18,6 +18,7 @@ using WebSiteMjr.EfData.UnitOfWork;
 using WebSiteMjr.EfStuffData.DataRepository;
 using WebSiteMjr.EfStuffData.UnitOfWork;
 using WebSiteMjr.Models;
+using WebSiteMjr.Notifications.Email.MjrEmailNotification;
 
 namespace WebSiteMjr
 {
@@ -61,7 +62,7 @@ namespace WebSiteMjr
             var roleServiceInstance = new MjrAppRoleService(new FlexRoleProvider(new RoleRepository<MjrAppRole,User>(personUow)));
             var membershipServiceInstance = new MembershipService(new FlexMembershipProvider(new MembershipRepository(personUow), new AspnetEnvironment(), personUow), roleServiceInstance);
             var companyServiceInstance = new CompanyService(new CompanyRepository(personUow), personUow);
-            var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), membershipServiceInstance, personUow);
+            var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), membershipServiceInstance, new EmailService(), personUow);
             var toolServiceInstance = new ToolService(new ToolRepository(stuffUnow), stuffUnow);
             var companyAreaServiceInstance = new CompanyAreasService(new CompanyAreaRepository(personUow), personUow);
 

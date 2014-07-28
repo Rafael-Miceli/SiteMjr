@@ -19,6 +19,7 @@ namespace WebSiteMjr.EFConfigurationMigrationDataTest
         }
 
         [TestMethod]
+        [Ignore]
         public void Should_Seed_Membership_Succefully()
         {
             var mjrSolutionContext = new MjrSolutionContext();

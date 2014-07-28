@@ -108,6 +108,7 @@
     <Compile Include="Interfaces\Services\IHolderService.cs" />
     <Compile Include="Interfaces\Services\IMembershipService.cs" />
     <Compile Include="Interfaces\Services\IUserService.cs" />
+    <Compile Include="Interfaces\Services\IEmailService.cs" />
     <Compile Include="services\Membership\MembershipService.cs" />
     <Compile Include="services\Membership\UserService.cs" />
     <Compile Include="Interfaces\Services\IRoleService.cs" />

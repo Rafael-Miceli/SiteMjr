@@ -6,7 +6,7 @@ using WebSiteMjr.Filters;
 
 namespace WebSiteMjr.Controllers
 {
-    [FlexAuthorize(Roles = "MjrAdmin")]
+    [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
     public class CompanyAreaController : Controller
     {
         private readonly CompanyAreasService _companyAreasService;

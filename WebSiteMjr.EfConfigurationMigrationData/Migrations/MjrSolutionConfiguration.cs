@@ -69,6 +69,11 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
                 Name = "User"
             });
 
+            context.Roles.AddOrUpdate(r => r.Name, new MjrAppRole
+            {
+                Name = "MjrUser"
+            });
+
             context.SaveChanges();
         }
 
@@ -97,8 +102,8 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
             }
             else
             {
-                if (firstUser.Roles == null)
-                    firstUser.Roles = context.Roles.Where(r => r.Name == "User").ToList();    
+                if (firstUser.Roles == null || firstUser.Roles.Count == 0)
+                    firstUser.Roles = context.Roles.Where(r => r.Name == "MjrAdmin").ToList();    
 
                 firstUser.Employee = firstEmployee;
                 firstUser.Salt = salt;

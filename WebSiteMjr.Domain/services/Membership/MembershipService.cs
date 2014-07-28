@@ -45,6 +45,9 @@ namespace WebSiteMjr.Domain.services.Membership
                 Password = password,
                 Employee = employee
             };
+            
+            if (employee.Company.IsMjrCompany())
+                user.Roles = _roleService.GetRole_MjrUser_ForEmployee();
 
             CreateAccount(user);
 

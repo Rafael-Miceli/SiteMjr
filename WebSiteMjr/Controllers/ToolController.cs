@@ -10,7 +10,7 @@ using WebSiteMjr.ViewModels;
 
 namespace WebSiteMjr.Controllers
 {
-    [FlexAuthorize(Roles = "MjrAdmin")] 
+    [FlexAuthorize(Roles = "MjrAdmin, MjrUser")] 
     public class ToolController : Controller
     {
         private readonly IToolService _toolService;

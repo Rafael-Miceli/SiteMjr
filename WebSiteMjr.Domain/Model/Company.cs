@@ -38,5 +38,10 @@ namespace WebSiteMjr.Domain.Model
             }
         }
 
+        public bool IsMjrCompany()
+        {
+            return Name.Equals("Mjr Equipamentos eletrônicos LTDA");
+        }
+
     }
 }

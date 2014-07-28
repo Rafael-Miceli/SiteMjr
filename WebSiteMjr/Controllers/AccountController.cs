@@ -7,6 +7,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model.Membership;
+using WebSiteMjr.Filters;
 using WebSiteMjr.Models;
 
 namespace WebSiteMjr.Controllers
@@ -159,7 +160,7 @@ namespace WebSiteMjr.Controllers
 
         //
         // GET: /Account/Manage
-
+        //[FlexAuthorize(Roles = "MjrAdmin, MjrUser, User")]
         public ActionResult Manage(ManageMessageId? message)
         {
             return View();
@@ -170,6 +171,7 @@ namespace WebSiteMjr.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //[FlexAuthorize(Roles = "MjrAdmin, MjrUser, User")]
         public ActionResult Manage(LocalPasswordModel model)
         {
             return View(model);

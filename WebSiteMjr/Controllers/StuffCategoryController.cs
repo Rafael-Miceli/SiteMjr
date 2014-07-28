@@ -5,7 +5,7 @@ using WebSiteMjr.Filters;
 
 namespace WebSiteMjr.Controllers
 {
-    [FlexAuthorize(Roles = "MjrAdmin")]
+    [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
     public class StuffCategoryController : Controller
     {
         private readonly StuffCategoryService _stuffCategoryService;
