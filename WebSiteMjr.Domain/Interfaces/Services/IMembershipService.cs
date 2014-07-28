@@ -1,4 +1,5 @@
 ﻿using WebSiteMjr.Domain.Interfaces.Membership;
+using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.Model.Membership;
 
 namespace WebSiteMjr.Domain.Interfaces.Services
@@ -12,6 +13,7 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         bool ChangePassword(string username, string oldPassword, string newPassword);
         void SetLocalPassword(string username, string newPassword);
         User GetLoggedUser(string name);
-        Domain.Model.Roles.Role GetUserRole(string userName);
+        Domain.Model.Roles.MjrAppRole GetUserRole(string userName);
+        string CreateNewUserEmployeeAccount(Employee employee);
     }
 }

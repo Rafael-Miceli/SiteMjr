@@ -11,7 +11,7 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         void DeleteUser(object user);
         IEnumerable<User> ListUser();
         User GetLoggedUser(string userName);
-        Domain.Model.Roles.Role GetUserRole(string userName);
+        Domain.Model.Roles.MjrAppRole GetUserRole(string userName);
         Company GetUserCompany(string userName);
         User FindUser(object iduser);
     }

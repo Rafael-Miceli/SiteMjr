@@ -28,7 +28,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 IsLocal = true,
                 StatusUser = StatusUser.Active,
                 Username = "Administrator",
-                Roles = new List<Role>
+                Roles = new List<MjrAppRole>
                 {
                     RoleDummies.ReturnMjrAdminRole()
                 },
@@ -48,7 +48,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 Salt = "/eYHK+MXIeHmZOgbffphWQ==",
                 StatusUser = StatusUser.Unactive,
                 Username = "Administrator",
-                Roles = new List<Role>
+                Roles = new List<MjrAppRole>
                 {
                     RoleDummies.ReturnMjrAdminRole()
                 }

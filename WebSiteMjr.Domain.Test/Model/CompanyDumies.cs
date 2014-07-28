@@ -17,7 +17,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 City = "Rio de Janeiro",
                 Email = "adm@portoverano.com",
                 Id = 6,
-                Phone = "2455-3100"
+                Phone = "(21) 2455-3100"
             };
         }
 
@@ -30,7 +30,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 City = "Rio de Janeiro",
                 Email = "mjr@mjr.com.br",
                 Id = 1,
-                Phone = "2455-3100"
+                Phone = "(21) 2455-3100"
             };
         }
 
@@ -43,7 +43,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 City = "Rio de Janeiro",
                 Email = "adm@portoverano.com",
                 Id = 1,
-                Phone = "2455-3100",
+                Phone = "(21) 2455-3100",
                 CompanyAreas = new List<SelectListItem>
                 {
                     new SelectListItem
@@ -65,7 +65,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 City = "Rio de Janeiro",
                 Email = "adm@portoverano.com",
                 Id = 1,
-                Phone = "2455-3100",
+                Phone = "(21) 2455-3100",
                 CompanyAreas = new List<SelectListItem>
                 {
                     new SelectListItem
@@ -87,7 +87,7 @@ namespace WebSiteMjr.Domain.Test.Model
                 City = "Rio de Janeiro",
                 Email = "adm@portoverano.com",
                 Id = 1,
-                Phone = "2455-3100"
+                Phone = "(21) 2455-3100"
             };
         }
 
@@ -119,7 +119,7 @@ namespace WebSiteMjr.Domain.Test.Model
                     City = "Rio de Janeiro",
                     Email = "adm@portoverano.com",
                     Id = 2,
-                    Phone = "2455-3100",
+                    Phone = "(21) 2455-3100",
                     IsDeleted = false
                 },
                 new Company
@@ -129,7 +129,7 @@ namespace WebSiteMjr.Domain.Test.Model
                     City = "Rio de Janeiro",
                     Email = "adm@Portomare.com",
                     Id = 3,
-                    Phone = "2455-3101",
+                    Phone = "(21) 2455-3101",
                     IsDeleted = false
                 },
                 new Company
@@ -139,7 +139,7 @@ namespace WebSiteMjr.Domain.Test.Model
                     City = "Rio de Janeiro",
                     Email = "adm@Portofelice.com",
                     Id = 4,
-                    Phone = "2455-3102",
+                    Phone = "(21) 2455-3102",
                     IsDeleted = false
                 },
                 new Company
@@ -149,7 +149,7 @@ namespace WebSiteMjr.Domain.Test.Model
                     City = "Rio de Janeiro",
                     Email = "adm@Borbouns.com",
                     Id = 5,
-                    Phone = "2455-3103",
+                    Phone = "(21) 2455-3103",
                     IsDeleted = true
                 }
             };

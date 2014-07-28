@@ -1,5 +1,7 @@
 using System.Web.Mvc;
+using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
+using WebSiteMjr.Domain.services.Roles;
 using WebSiteMjr.Domain.services.Stuffs;
 using WebSiteMjr.Filters;
 

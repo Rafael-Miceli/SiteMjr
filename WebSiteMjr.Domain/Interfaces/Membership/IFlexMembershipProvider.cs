@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using WebSiteMjr.Domain.Model.Membership;
 
 namespace WebSiteMjr.Domain.Interfaces.Membership
@@ -27,13 +28,13 @@ namespace WebSiteMjr.Domain.Interfaces.Membership
         ///   Creates an account.
         /// </summary>
         /// <param name="user"> The user. </param>
-        void CreateAccount(IFlexMembershipUser user);
+        void CreateAccount(User user);
 
         /// <summary>
         ///   Updates the account.
         /// </summary>
         /// <param name="user"> The user. </param>
-        void UpdateAccount(IFlexMembershipUser user);
+        void UpdateAccount(User user);
 
         /// <summary>
         ///   Determines whether the specific <paramref name="username" /> has a
@@ -83,7 +84,9 @@ namespace WebSiteMjr.Domain.Interfaces.Membership
         /// <returns> </returns>
         bool ResetPassword(string passwordResetToken, string newPassword);
 
-        Domain.Model.Roles.Role GetUserRole(string userName);
+        Domain.Model.Roles.MjrAppRole GetUserRole(string userName);
+
         User GetUser(string userName);
+        string GenerateNewPassword();
     }
 }

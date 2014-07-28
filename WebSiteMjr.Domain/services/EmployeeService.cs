@@ -9,18 +9,31 @@ namespace WebSiteMjr.Domain.services
     public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IMembershipService _membershipService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public EmployeeService(IEmployeeRepository employeeRepository, IUnitOfWork unitOfWork)
+        public EmployeeService(IEmployeeRepository employeeRepository, IMembershipService membershipService, IUnitOfWork unitOfWork)
         {
             _employeeRepository = employeeRepository;
+            _membershipService = membershipService;
             _unitOfWork = unitOfWork;
         }
 
+        
         public void CreateEmployee(Employee employee)
         {
             _employeeRepository.Add(employee);
             _unitOfWork.Save();
+        }
+
+        public void CreateEmployeeAndLogin(Employee employee)
+        {
+            _employeeRepository.Add(employee);
+            var password = _membershipService.CreateNewUserEmployeeAccount(employee);
+
+            _unitOfWork.Save();
+
+            //SendEmailToNewUser(password);
         }
 
         public void UpdateEmployee(Employee employee)

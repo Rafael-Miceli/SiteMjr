@@ -8,6 +8,7 @@ using WebSiteMjr.Controllers;
 using WebSiteMjr.Domain.Interfaces.Membership;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.services.Membership;
+using WebSiteMjr.Domain.Test;
 using WebSiteMjr.Domain.Test.Model;
 using WebSiteMjr.Models;
 
@@ -35,7 +36,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers
             _urlHelperMock = new UrlHelper(requestContextMock);
 
             _membershipService =
-                new MembershipService(new FlexMembershipProvider(_flexMembershipRepository.Object, _applicationEnvironment.Object));
+                new MembershipService(new FlexMembershipProvider(_flexMembershipRepository.Object, _applicationEnvironment.Object, new StubUnitOfWork()), null);
 
             _accountController = new AccountController(_membershipService, _cacheServiceMock.Object) { Url = _urlHelperMock };
         }

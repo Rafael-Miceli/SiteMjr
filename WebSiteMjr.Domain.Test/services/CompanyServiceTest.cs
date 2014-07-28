@@ -36,9 +36,9 @@ namespace WebSiteMjr.Domain.Test.services
                 Password = "123",
                 PasswordResetToken = "123",
                 PasswordResetTokenExpiration = DateTime.UtcNow.ConvertToTimeZone(),
-                Roles = new List<Role>
+                Roles = new List<MjrAppRole>
                         {
-                            new Role
+                            new MjrAppRole
                                 {
                                     Id = 1,
                                     Name = "User",

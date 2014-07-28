@@ -1,44 +1,34 @@
-﻿using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using WebSiteMjr.Domain.Interfaces.Membership;
+﻿using WebSiteMjr.Domain.Interfaces.Membership;
+using WebSiteMjr.Domain.Model.Membership;
+using WebSiteMjr.EfBaseData.UnitOfWork;
+using WebSiteMjr.EfData.Context;
+using WebSiteMjr.EfData.DataRepository.GenericRepositorys;
 
 namespace WebSiteMjr.EfData.DataRepository
 {
-    public class MembershipRepository<TUser> : IFlexMembershipRepository where TUser : class, IFlexMembershipUser, new() 
+    public class MembershipRepository : GenericPersonRepository<User>, IFlexMembershipRepository
     {
-        private readonly DbContext _context;
-        
-        public MembershipRepository(DbContext context)
-        {
-            _context = context;
-        }
 
-        public IFlexMembershipUser Add(IFlexMembershipUser user)
+        public MembershipRepository(UnitOfWork<PersonsContext> uow) : base(uow)
+        {}
+
+        public User Save(User user)
         {
-            _context.Set<TUser>().Add((TUser)user);
-            _context.SaveChanges();
+            Update(user);
             return user;
         }
 
-        public IFlexMembershipUser Save(IFlexMembershipUser user)
-        {
-            _context.Entry(user).State = EntityState.Modified;
-            _context.SaveChanges();
-            return user;
-        }
-
-        public IFlexMembershipUser CreateOAuthAccount(string provider, string providerUserId, IFlexMembershipUser user)
+        public User CreateOAuthAccount(string provider, string providerUserId, IFlexMembershipUser user)
         {
             throw new System.NotImplementedException();
         }
 
-        public IFlexMembershipUser GetUserByUsername(string username)
+        public User GetUserByUsername(string userName)
         {
-            return _context.Set<TUser>().SingleOrDefault(u => u.Username == username);
+            return  Get(u => u.Username == userName);
         }
 
-        public IFlexMembershipUser GetUserByOAuthProvider(string provider, string providerUserId)
+        public User GetUserByOAuthProvider(string provider, string providerUserId)
         {
             throw new System.NotImplementedException();
         }
@@ -48,10 +38,11 @@ namespace WebSiteMjr.EfData.DataRepository
             throw new System.NotImplementedException();
         }
 
-        public IFlexMembershipUser GetUserByPasswordResetToken(string passwordResetToken)
+        public User GetUserByPasswordResetToken(string passwordResetToken)
         {
-            var user = _context.Set<TUser>().SingleOrDefault(u => u.PasswordResetToken == passwordResetToken);
-            return user;
+            //var user = _context.Set<TUser>().SingleOrDefault(u => u.PasswordResetToken == passwordResetToken);
+            //return user;
+            return null;
         }
     }
 }

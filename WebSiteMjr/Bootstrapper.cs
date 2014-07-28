@@ -11,8 +11,8 @@ using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
 using WebSiteMjr.Domain.services;
 using WebSiteMjr.Domain.services.Membership;
+using WebSiteMjr.Domain.services.Roles;
 using WebSiteMjr.Domain.services.Stuffs;
-using WebSiteMjr.EfData.Context;
 using WebSiteMjr.EfData.DataRepository;
 using WebSiteMjr.EfData.UnitOfWork;
 using WebSiteMjr.EfStuffData.DataRepository;
@@ -43,6 +43,7 @@ namespace WebSiteMjr
 
             //Services Instances
             container.RegisterType<IFlexRoleProvider, FlexRoleProvider>();
+            container.RegisterType<IRoleService, MjrAppRoleService>();
             container.RegisterType<IStuffCategoryService, StuffCategoryService>();
             container.RegisterType<IStuffService, StuffService>();
             container.RegisterType<IToolService, ToolService>();
@@ -57,8 +58,10 @@ namespace WebSiteMjr
             container.RegisterType<ICacheService, CacheService>();
 
             //Repositories Instances
+            var roleServiceInstance = new MjrAppRoleService(new FlexRoleProvider(new RoleRepository<MjrAppRole,User>(personUow)));
+            var membershipServiceInstance = new MembershipService(new FlexMembershipProvider(new MembershipRepository(personUow), new AspnetEnvironment(), personUow), roleServiceInstance);
             var companyServiceInstance = new CompanyService(new CompanyRepository(personUow), personUow);
-            var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), personUow);
+            var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), membershipServiceInstance, personUow);
             var toolServiceInstance = new ToolService(new ToolRepository(stuffUnow), stuffUnow);
             var companyAreaServiceInstance = new CompanyAreasService(new CompanyAreaRepository(personUow), personUow);
 
@@ -71,9 +74,8 @@ namespace WebSiteMjr
             container.RegisterInstance(new StuffCategoryService(new StuffCategoryRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(new StuffManufactureService(new StuffManufactureRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(companyServiceInstance);
+            container.RegisterInstance(membershipServiceInstance);
             container.RegisterInstance(employeeServiceInstance);
-            container.RegisterInstance(new FlexRoleProvider(new RoleRepository<Role, User>(new PersonsContext())));
-            container.RegisterInstance(new MembershipService(new FlexMembershipProvider(new MembershipRepository<User>(new PersonsContext()), new AspnetEnvironment())));
 
             return container;
         }

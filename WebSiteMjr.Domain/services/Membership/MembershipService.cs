@@ -1,5 +1,6 @@
 ﻿using WebSiteMjr.Domain.Interfaces.Membership;
 using WebSiteMjr.Domain.Interfaces.Services;
+using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
 
@@ -8,10 +9,12 @@ namespace WebSiteMjr.Domain.services.Membership
     public class MembershipService : IMembershipService
     {
         private readonly IFlexMembershipProvider _membershipProvider;
+        private readonly IRoleService _roleService;
 
-        public MembershipService(IFlexMembershipProvider membershipProvider)
+        public MembershipService(IFlexMembershipProvider membershipProvider, IRoleService roleService)
         {
             _membershipProvider = membershipProvider;
+            _roleService = roleService;
         }
 
         public bool Login(string username, string password, bool rememberMe = false)
@@ -29,6 +32,25 @@ namespace WebSiteMjr.Domain.services.Membership
             _membershipProvider.CreateAccount(user);
         }
 
+        public string CreateNewUserEmployeeAccount(Employee employee)
+        {
+            var password = _membershipProvider.GenerateNewPassword();
+
+            var user = new User
+            {
+                IsLocal = true,
+                Username = employee.Email,
+                Roles = _roleService.GetRole_User_ForEmployee(),
+                StatusUser = StatusUser.Active,
+                Password = password,
+                Employee = employee
+            };
+
+            CreateAccount(user);
+
+            return password;
+        }
+
         public bool HasLocalAccount(string username)
         {
             return _membershipProvider.HasLocalAccount(username);
@@ -44,7 +66,7 @@ namespace WebSiteMjr.Domain.services.Membership
             _membershipProvider.SetLocalPassword(username, newPassword);
         }
 
-        public Role GetUserRole(string userName)
+        public MjrAppRole GetUserRole(string userName)
         {
             return _membershipProvider.GetUserRole(userName);
         }

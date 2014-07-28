@@ -6,6 +6,7 @@ using System.Web;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebSiteMjr.Domain.Interfaces.Membership;
+using WebSiteMjr.Domain.Interfaces.Uow;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
 
@@ -20,6 +21,7 @@ namespace FlexProviders.Membership
             new Dictionary<string, AuthenticationClientData>(StringComparer.OrdinalIgnoreCase);
 
         private readonly IApplicationEnvironment _applicationEnvironment;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ISecurityEncoder _encoder;
         private readonly IFlexMembershipRepository _membershipRepository;
 
@@ -28,10 +30,11 @@ namespace FlexProviders.Membership
         /// </summary>
         /// <param name="membershipRepository">The user store.</param>
         /// <param name="applicationEnvironment">The application environment.</param>
-        public FlexMembershipProvider(IFlexMembershipRepository membershipRepository, IApplicationEnvironment applicationEnvironment)
+        public FlexMembershipProvider(IFlexMembershipRepository membershipRepository, IApplicationEnvironment applicationEnvironment, IUnitOfWork unitOfWork)
         {
             _membershipRepository = membershipRepository;
             _applicationEnvironment = applicationEnvironment;
+            _unitOfWork = unitOfWork;
             _encoder = new DefaultSecurityEncoder();
         }
 
@@ -79,7 +82,7 @@ namespace FlexProviders.Membership
         ///   Creates an account.
         /// </summary>
         /// <param name="user"> The user. </param>
-        public void CreateAccount(IFlexMembershipUser user)
+        public void CreateAccount(User user)
         {
             IFlexMembershipUser existingUser = _membershipRepository.GetUserByUsername(user.Username);
             if (existingUser != null)
@@ -96,7 +99,7 @@ namespace FlexProviders.Membership
         ///   Updates the account.
         /// </summary>
         /// <param name="user"> The user. </param>
-        public void UpdateAccount(IFlexMembershipUser user)
+        public void UpdateAccount(User user)
         {
             _membershipRepository.Save(user);
         }
@@ -128,7 +131,7 @@ namespace FlexProviders.Membership
         /// <returns> </returns>
         public bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            IFlexMembershipUser user = _membershipRepository.GetUserByUsername(username);
+            var user = _membershipRepository.GetUserByUsername(username);
             string encodedPassword = _encoder.Encode(oldPassword, user.Salt);
             if (!encodedPassword.Equals(user.Password))
             {
@@ -147,7 +150,7 @@ namespace FlexProviders.Membership
         /// <param name="newPassword"> The new password. </param>
         public void SetLocalPassword(string username, string newPassword)
         {
-            IFlexMembershipUser user = _membershipRepository.GetUserByUsername(username);
+            var user = _membershipRepository.GetUserByUsername(username);
             if (!String.IsNullOrEmpty(user.Password))
             {
                 throw new FlexMembershipException("SetLocalPassword can only be used on accounts that currently don't have a local password.");
@@ -166,7 +169,7 @@ namespace FlexProviders.Membership
         /// <returns> </returns>
         public string GeneratePasswordResetToken(string username, int tokenExpirationInMinutesFromNow = 1440)
         {
-            IFlexMembershipUser user = _membershipRepository.GetUserByUsername(username);
+            var user = _membershipRepository.GetUserByUsername(username);
             if (user == null)
             {
                 throw new FlexMembershipException(FlexMembershipStatus.InvalidUserName);
@@ -189,7 +192,7 @@ namespace FlexProviders.Membership
         /// <returns> </returns>
         public bool ResetPassword(string passwordResetToken, string newPassword)
         {
-            IFlexMembershipUser user = _membershipRepository.GetUserByPasswordResetToken(passwordResetToken);
+            var user = _membershipRepository.GetUserByPasswordResetToken(passwordResetToken);
             if (user == null)
             {
                 return false;
@@ -205,7 +208,7 @@ namespace FlexProviders.Membership
             return true;
         }
 
-        public Role GetUserRole(string userName)
+        public MjrAppRole GetUserRole(string userName)
         {
             var user = _membershipRepository.GetUserByUsername(userName);
             return user != null ? user.Roles.FirstOrDefault() : null;
@@ -214,6 +217,11 @@ namespace FlexProviders.Membership
         public User GetUser(string userName)
         {
             return (User) _membershipRepository.GetUserByUsername(userName);
+        }
+
+        public string GenerateNewPassword()
+        {
+            return System.Web.Security.Membership.GeneratePassword(10, 2);
         }
 
         #endregion
@@ -226,9 +234,9 @@ namespace FlexProviders.Membership
         /// <param name="provider"> The provider. </param>
         /// <param name="providerUserId"> The provider user id. </param>
         /// <param name="user"> The user. </param>
-        public void CreateOAuthAccount(string provider, string providerUserId, IFlexMembershipUser user)
+        public void CreateOAuthAccount(string provider, string providerUserId, User user)
         {
-            IFlexMembershipUser existingUser = _membershipRepository.GetUserByUsername(user.Username);
+            var existingUser = _membershipRepository.GetUserByUsername(user.Username);
             if (existingUser == null)
             {
                 _membershipRepository.Add(user);
@@ -386,11 +394,11 @@ namespace FlexProviders.Membership
         /// <param name="client">The client.</param>
         /// <param name="displayName">The display name.</param>
         /// <param name="extraData">The extra data.</param>
-        public static void RegisterClient(IAuthenticationClient client,
-                                          string displayName, IDictionary<string, object> extraData)
-        {
-            var clientData = new AuthenticationClientData(client, displayName, extraData);
-            AuthenticationClients.Add(client.ProviderName, clientData);
-        }
+        //public static void RegisterClient(IAuthenticationClient client,
+        //                                  string displayName, IDictionary<string, object> extraData)
+        //{
+        //    var clientData = new AuthenticationClientData(client, displayName, extraData);
+        //    AuthenticationClients.Add(client.ProviderName, clientData);
+        //}
     }
 }

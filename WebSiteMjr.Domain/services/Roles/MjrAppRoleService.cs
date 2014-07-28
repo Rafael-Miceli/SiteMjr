@@ -1,12 +1,16 @@
-﻿using WebSiteMjr.Domain.Interfaces.Role;
+﻿using System.Collections.Generic;
+using System.Linq;
+using WebSiteMjr.Domain.Interfaces.Role;
+using WebSiteMjr.Domain.Interfaces.Services;
+using WebSiteMjr.Domain.Model.Roles;
 
 namespace WebSiteMjr.Domain.services.Roles
 {
-    public class RoleService
+    public class MjrAppRoleService : IRoleService
     {
         private readonly IFlexRoleProvider _roleProvider;
 
-        public RoleService(IFlexRoleProvider roleProvider)
+        public MjrAppRoleService(IFlexRoleProvider roleProvider)
         {
             _roleProvider = roleProvider;
         }
@@ -54,9 +58,14 @@ namespace WebSiteMjr.Domain.services.Roles
             return _roleProvider.GetUsersInRole(roleName);
         }
 
-        public string[] GetAllRoles()
+        public IEnumerable<MjrAppRole> GetAllRoles()
         {
             return _roleProvider.GetAllRoles();
+        }
+
+        public ICollection<MjrAppRole> GetRole_User_ForEmployee()
+        {
+            return _roleProvider.GetAllRoles().Where(r => r.Name == "User").ToList();
         }
     }
 }

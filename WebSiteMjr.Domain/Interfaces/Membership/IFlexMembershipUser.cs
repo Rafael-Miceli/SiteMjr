@@ -11,6 +11,6 @@ namespace WebSiteMjr.Domain.Interfaces.Membership
         string PasswordResetToken { get; set; }
         DateTime PasswordResetTokenExpiration { get; set; }  
         StatusUser StatusUser { get; set; }
-        ICollection<Domain.Model.Roles.Role> Roles { get; set; }
+        ICollection<Domain.Model.Roles.MjrAppRole> Roles { get; set; }
     }
 }

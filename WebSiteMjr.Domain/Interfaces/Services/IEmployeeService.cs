@@ -13,5 +13,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         Employee FindEmployeeByName(string employeeName);
         IEnumerable<Employee> ListEmployeesNotDeleted();
         IEnumerable<Employee> ListEmployeesFromCompanyNotDeleted(int companyId);
+        void CreateEmployeeAndLogin(Employee createEmployeeViewModelToEmployee);
     }
 }
