@@ -10,6 +10,7 @@ using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Role;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
+using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.services;
 using WebSiteMjr.Domain.services.Membership;
@@ -67,15 +68,22 @@ namespace WebSiteMjr.Tests.Integration.Controllers
                 GenerateLogin = true
             };
 
-            _membershipServiceMock.Setup(x => x.GetLoggedUser("teste")).Returns(UserDummies.ReturnOneMjrActiveUser());
             _cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>())).Returns(UserDummies.ReturnOneMjrActiveUser());
-
             _flexRoleStoreMock.Setup(x => x.GetAllRoles()).Returns(RoleDummies.ReturnAllRoles());
+            _emailServiceMock.Setup(x => x.SendFirstLoginToEmployee(It.IsAny<string>(), createEmployeeViewModel.Email, createEmployeeViewModel.Name, createEmployeeViewModel.LastName));
+            _employeeRepositoryMock.Setup(x => x.Add(It.IsAny<Employee>()));
+            _flexMembershipRepositoryMock.Setup(x => x.Add(It.IsAny<User>()));
 
             var result = _employeeController.Create(createEmployeeViewModel) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
             Assert.AreEqual("Index", result.RouteValues["action"]);
+            
+            _cacheServiceMock.VerifyAll();
+            _flexRoleStoreMock.VerifyAll();
+            _emailServiceMock.VerifyAll();
+            _employeeRepositoryMock.VerifyAll();
+            _flexMembershipRepositoryMock.VerifyAll();
         }
 
         [TestMethod]

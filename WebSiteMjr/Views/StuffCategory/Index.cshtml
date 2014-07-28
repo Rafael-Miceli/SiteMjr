@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebSiteMjr.Domain.Model.StuffCategory>
+﻿@model System.Collections.Generic.IEnumerable<WebSiteMjr.Domain.Model.StuffCategory>
 
 
 @{
@@ -30,8 +30,8 @@
                     @Html.ActionLink(item.Name, "Edit", new { id = item.Id })
                 </td>
                 <td>
-                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-pencil-square-o" })
                     @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "fa fa-square-o" })
+                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-pencil-square-o" })
                     @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash-o" })
                 </td>
             </tr>

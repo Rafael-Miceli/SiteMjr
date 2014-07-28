@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebSiteMjr.Domain.Model.Employee>
+﻿@model System.Collections.Generic.IEnumerable<WebSiteMjr.Domain.Model.Employee>
 
 @{
     ViewBag.Title = "Lista de Funcionários";
@@ -35,10 +35,11 @@
                     @Html.DisplayFor(modelItem => item.Phone)
                 </td>
                 <td>
-                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-pencil-square-o" })
+                    
                     @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "fa fa-square-o" })
                     @if (item.Email != "mjrtelecom@hotmail.com")
                     {
+                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-pencil-square-o" })
                         @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash-o" })
                     }
                 </td>
