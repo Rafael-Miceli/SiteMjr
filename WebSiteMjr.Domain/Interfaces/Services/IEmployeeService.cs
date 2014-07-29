@@ -14,5 +14,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         IEnumerable<Employee> ListEmployeesNotDeleted();
         IEnumerable<Employee> ListEmployeesFromCompanyNotDeleted(int companyId);
         void CreateEmployeeAndLogin(Employee createEmployeeViewModelToEmployee);
+        Employee FindEmployeeByEmail(string email);
     }
 }

@@ -48,6 +48,7 @@
             @Html.LabelFor(model => model.Email, "E-Mail")
         </div>
         <div class="editor-field">
+            @Html.ValidationMessage("EmailExists")
             @Html.EditorFor(model => model.Email)
             @Html.ValidationMessageFor(model => model.Email)
         </div>
