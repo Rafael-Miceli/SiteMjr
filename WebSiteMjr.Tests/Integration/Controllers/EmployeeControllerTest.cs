@@ -1,10 +1,14 @@
-﻿using FlexProviders.Membership;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using FlexProviders.Membership;
 using FlexProviders.Roles;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Web.Mvc;
 using WebSiteMjr.Controllers;
+using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Membership;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Role;
@@ -87,15 +91,44 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         }
 
         [TestMethod]
+        public void Given_An_Employee_With_Same_Email_Data_Of_Another_When_Creting_Employee_With_Login_Should_Return_Message_Error()
+        {
+            var createEmployeeViewModel = new CreateEmployeeViewModel
+            {
+                Name = "Quezia",
+                LastName = "Mello",
+                Email = "rafael.miceli@hotmail.com",
+                GenerateLogin = true
+            };
+
+            _cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>())).Returns(UserDummies.ReturnOneMjrActiveUser());
+            _emailServiceMock.Setup(x => x.SendFirstLoginToEmployee(It.IsAny<string>(), createEmployeeViewModel.Email, createEmployeeViewModel.Name, createEmployeeViewModel.LastName));
+            _employeeRepositoryMock.Setup(x => x.GetEmployeeByEmail(createEmployeeViewModel.Email)).Returns(EmployeeDummies.CreateListOfEmployees().First());
+
+            var result = _employeeController.Create(createEmployeeViewModel);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Este E-mail já existe para outro funcionário", _employeeController.ModelState["EmailExists"].Errors[0].ErrorMessage);
+
+            _cacheServiceMock.VerifyAll();
+            _employeeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
         public void Given_A_Request_To_List_All_Active_Users_From_The_Company_Who_Is_Requesting_When_Requesting_Then_Should_Return_All_Active_Users_From_That_Company()
         {
             //TODO Need to create unit test to return of employees from on company
 
-            //_cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>)).Returns((Func<User>) UserDummies.ReturnOneMjrActiveUser);
+            _cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>())).Returns(UserDummies.ReturnOneMjrActiveUser());
+            _employeeRepositoryMock.Setup(x => x.GetAll()).Returns(EmployeeDummies.CreateListOfEmployees());
 
-            //var result = _employeeController.Index();
+            var result = _employeeController.Index() as ViewResult;
 
-            //Assert.IsNotNull(result);
+
+            Assert.IsNotNull(result);
+            Assert.IsFalse(((IEnumerable<Employee>)result.Model).Any(em => em.Company.Id != UserDummies.ReturnOneMjrActiveUser().Employee.Company.Id));
         }
     }
+
+    //public class FakeEmployeeRepository
 }

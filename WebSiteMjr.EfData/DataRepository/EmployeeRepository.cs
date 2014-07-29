@@ -25,7 +25,13 @@ namespace WebSiteMjr.EfData.DataRepository
 
         public IEnumerable<Employee> GetAllEmployeesFromCompanyNotDeleted(int companyId)
         {
-            return GetAll().Where(e => !e.IsDeleted && e.Company.Id == companyId);
+            var all = GetAll();
+            return all.Where(e => !e.IsDeleted && e.Company.Id == companyId);
+        }
+
+        public Employee GetEmployeeByEmail(string email)
+        {
+            return Get(n => n.Email.ToLower() == email.ToLower());
         }
     }
 }

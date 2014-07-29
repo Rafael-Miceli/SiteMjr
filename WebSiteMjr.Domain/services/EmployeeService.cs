@@ -38,6 +38,11 @@ namespace WebSiteMjr.Domain.services
             SendLoginViaEmailToEmployee(password, employee);
         }
 
+        public Employee FindEmployeeByEmail(string email)
+        {
+            return _employeeRepository.GetEmployeeByEmail(email);
+        }
+
         private void SendLoginViaEmailToEmployee(string password, Employee employee)
         {
             _emailService.SendFirstLoginToEmployee(password, employee.Email, employee.Name, employee.LastName);

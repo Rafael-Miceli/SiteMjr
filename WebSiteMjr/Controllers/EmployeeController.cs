@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using WebSiteMjr.Assembler;
+using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Filters;
@@ -22,7 +23,7 @@ namespace WebSiteMjr.Controllers
             _employeeService = employeeService;
             _cacheService = cacheService;
             _membershipService = membershipService;
-            _employeeMapper = new EmployeeMapper();
+            _employeeMapper = new EmployeeMapper(employeeService);
         }
 
         //
@@ -73,6 +74,7 @@ namespace WebSiteMjr.Controllers
                             ModelState.AddModelError("", "Para criar um login para o funcionário, preencha o E-mail do mesmo.");
                             return View(employee);
                         }
+
                         _employeeService.CreateEmployeeAndLogin(_employeeMapper.CreateEmployeeViewModelToEmployee(employee, employeeCompany));
                     }
                     else
@@ -81,6 +83,11 @@ namespace WebSiteMjr.Controllers
                     return RedirectToAction("Index");
                 }
 
+                return View(employee);
+            }
+            catch (EmployeeWithExistentEmailException ex)
+            {
+                ModelState.AddModelError("EmailExists", ex.Message);
                 return View(employee);
             }
             catch
