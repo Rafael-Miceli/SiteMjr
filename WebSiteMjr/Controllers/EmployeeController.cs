@@ -166,5 +166,19 @@ namespace WebSiteMjr.Controllers
                 return View();
             }
         }
+
+        [HttpPost]
+        public ActionResult CreateLoginForExistentEmployee(Employee employee)
+        {
+            if (String.IsNullOrEmpty(employee.Email))
+            {
+                
+
+            }
+
+            _membershipService.CreateNewUserEmployeeAccount(employee);
+
+            return RedirectToAction("Index");
+        }
     }
 }

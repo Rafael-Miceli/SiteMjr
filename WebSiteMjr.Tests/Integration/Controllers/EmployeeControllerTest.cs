@@ -62,7 +62,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         }
 
         [TestMethod]
-        public void Given_A_Valid_Employee_Data_When_Creting_Employee_With_Login_Should_Create_Both_In_Database_And_Send_An_Email_To_Created_Employee()
+        public void Given_A_Valid_Employee_Data_When_Creating_Employee_With_Login_Should_Create_Both_In_Database_And_Send_An_Email_To_Created_Employee()
         {
             var createEmployeeViewModel = new CreateEmployeeViewModel
             {
@@ -91,7 +91,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         }
 
         [TestMethod]
-        public void Given_An_Employee_With_Same_Email_Data_Of_Another_When_Creting_Employee_With_Login_Should_Return_Message_Error()
+        public void Given_An_Employee_With_Same_Email_Data_Of_Another_When_Creating_Employee_With_Login_Should_Return_Message_Error()
         {
             var createEmployeeViewModel = new CreateEmployeeViewModel
             {
@@ -112,6 +112,32 @@ namespace WebSiteMjr.Tests.Integration.Controllers
 
             _cacheServiceMock.VerifyAll();
             _employeeRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void Given_A_Valid_Employee_Data_When_Creating_Login_For_Existent_Employee_Then_Should_Create_New_User_For_Employee_And_Send_An_Email_To_Created_Employee()
+        {
+            var employee = new Employee
+            {
+                Name = "Quezia",
+                LastName = "Mello",
+                Email = "rafael.miceli@hotmail.com"
+            };
+
+            _cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>())).Returns(UserDummies.ReturnOneMjrActiveUser());
+            _emailServiceMock.Setup(x => x.SendFirstLoginToEmployee(It.IsAny<string>(), employee.Email, employee.Name, employee.LastName));
+            _employeeRepositoryMock.Setup(x => x.GetEmployeeByEmail(employee.Email)).Returns((Employee) null);
+
+            var result = _employeeController.CreateLoginForExistentEmployee(employee) as RedirectToRouteResult;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+
+            _cacheServiceMock.VerifyAll();
+            _flexRoleStoreMock.VerifyAll();
+            _emailServiceMock.VerifyAll();
+            _employeeRepositoryMock.VerifyAll();
+            _flexMembershipRepositoryMock.VerifyAll();
         }
 
         [TestMethod]
