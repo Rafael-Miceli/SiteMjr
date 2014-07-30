@@ -59,10 +59,11 @@ namespace WebSiteMjr
             container.RegisterType<ICacheService, CacheService>();
 
             //Repositories Instances
+            var emailServiceInstance = new EmailService();
             var roleServiceInstance = new MjrAppRoleService(new FlexRoleProvider(new RoleRepository<MjrAppRole,User>(personUow)));
-            var membershipServiceInstance = new MembershipService(new FlexMembershipProvider(new MembershipRepository(personUow), new AspnetEnvironment(), personUow), roleServiceInstance);
+            var membershipServiceInstance = new MembershipService(new FlexMembershipProvider(new MembershipRepository(personUow), new AspnetEnvironment()), roleServiceInstance, emailServiceInstance, personUow);
             var companyServiceInstance = new CompanyService(new CompanyRepository(personUow), personUow);
-            var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), membershipServiceInstance, new EmailService(), personUow);
+            var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), membershipServiceInstance, emailServiceInstance, personUow);
             var toolServiceInstance = new ToolService(new ToolRepository(stuffUnow), stuffUnow);
             var companyAreaServiceInstance = new CompanyAreasService(new CompanyAreaRepository(personUow), personUow);
 

@@ -15,6 +15,7 @@ using WebSiteMjr.Domain.Model.Roles;
 using WebSiteMjr.Domain.services;
 using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.Domain.services.Roles;
+using WebSiteMjr.Domain.Test;
 using WebSiteMjr.Domain.Test.Model;
 using WebSiteMjr.EfData.Context;
 using WebSiteMjr.EfData.DataRepository;
@@ -50,7 +51,7 @@ namespace WebSiteMjr.Tests.Integration_To_Data_Layer.Controllers
             var personUoW = new PersonsUow(new PersonsContext());
 
             _roleService = new MjrAppRoleService(new FlexRoleProvider(new RoleRepository<MjrAppRole, User>(personUoW)));
-            _membershipService = new MembershipService(new FlexMembershipProvider(new MembershipRepository(personUoW), _applicationEnvironmentMock.Object, personUoW), _roleService);
+            _membershipService = new MembershipService(new FlexMembershipProvider(new MembershipRepository(personUoW), _applicationEnvironmentMock.Object), _roleService, null, new StubUnitOfWork());
             _employeeController = new EmployeeController(new EmployeeService(new EmployeeRepository(personUoW), _membershipService, new EmailService(), personUoW), _cacheServiceMock.Object, _membershipService);
         }
 
