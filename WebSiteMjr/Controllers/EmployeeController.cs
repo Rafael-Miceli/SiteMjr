@@ -176,7 +176,7 @@ namespace WebSiteMjr.Controllers
 
             }
 
-            _membershipService.CreateNewUserEmployeeAccount(employee);
+            _membershipService.CreateNewUserForExistentEmployeeAccount(employee);
 
             return RedirectToAction("Index");
         }

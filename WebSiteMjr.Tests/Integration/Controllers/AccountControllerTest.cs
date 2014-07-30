@@ -36,7 +36,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers
             _urlHelperMock = new UrlHelper(requestContextMock);
 
             _membershipService =
-                new MembershipService(new FlexMembershipProvider(_flexMembershipRepository.Object, _applicationEnvironment.Object, new StubUnitOfWork()), null);
+                new MembershipService(new FlexMembershipProvider(_flexMembershipRepository.Object, _applicationEnvironment.Object), null, null, new StubUnitOfWork());
 
             _accountController = new AccountController(_membershipService, _cacheServiceMock.Object) { Url = _urlHelperMock };
         }

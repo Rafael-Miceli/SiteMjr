@@ -6,7 +6,6 @@ using System.Web;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebSiteMjr.Domain.Interfaces.Membership;
-using WebSiteMjr.Domain.Interfaces.Uow;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
 
@@ -21,7 +20,6 @@ namespace FlexProviders.Membership
             new Dictionary<string, AuthenticationClientData>(StringComparer.OrdinalIgnoreCase);
 
         private readonly IApplicationEnvironment _applicationEnvironment;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ISecurityEncoder _encoder;
         private readonly IFlexMembershipRepository _membershipRepository;
 
@@ -30,11 +28,10 @@ namespace FlexProviders.Membership
         /// </summary>
         /// <param name="membershipRepository">The user store.</param>
         /// <param name="applicationEnvironment">The application environment.</param>
-        public FlexMembershipProvider(IFlexMembershipRepository membershipRepository, IApplicationEnvironment applicationEnvironment, IUnitOfWork unitOfWork)
+        public FlexMembershipProvider(IFlexMembershipRepository membershipRepository, IApplicationEnvironment applicationEnvironment)
         {
             _membershipRepository = membershipRepository;
             _applicationEnvironment = applicationEnvironment;
-            _unitOfWork = unitOfWork;
             _encoder = new DefaultSecurityEncoder();
         }
 
