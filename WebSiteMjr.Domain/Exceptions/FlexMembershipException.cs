@@ -2,7 +2,7 @@ using System;
 using System.Runtime.Serialization;
 using WebSiteMjr.Domain.Model.Membership;
 
-namespace FlexProviders.Membership
+namespace WebSiteMjr.Domain.Exceptions
 {
     [Serializable]
     public class FlexMembershipException : Exception

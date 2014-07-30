@@ -23,7 +23,7 @@ namespace WebSiteMjr.Controllers
             _employeeService = employeeService;
             _cacheService = cacheService;
             _membershipService = membershipService;
-            _employeeMapper = new EmployeeMapper(employeeService);
+            _employeeMapper = new EmployeeMapper();
         }
 
         //
@@ -115,7 +115,21 @@ namespace WebSiteMjr.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Employee employee)
+        public ActionResult Edit(Employee employee, string submitButton)
+        {
+            switch (submitButton)
+            {
+                case "Atualizar":
+                    return (UpdateEmployee(employee));
+                case "CriarLogin":
+                    return (CreateLoginForExistentEmployee(employee));
+                default:
+                    return View();
+            }
+            
+        }
+
+        public ActionResult UpdateEmployee(Employee employee)
         {
             try
             {
@@ -126,13 +140,39 @@ namespace WebSiteMjr.Controllers
                     return RedirectToAction("Index");
                 }
 
-                return View(employee);
+                return View("Edit", employee);
             }
             catch
             {
-                return View();
+                return View("Edit");
             }
-            
+        }
+
+        public ActionResult CreateLoginForExistentEmployee(Employee employee)
+        {
+            try
+            {
+                employee.Company = _cacheService.Get("User", () => _membershipService.GetLoggedUser(User.Identity.Name)).Employee.Company;
+
+                if (String.IsNullOrEmpty(employee.Email))
+                {
+                    ModelState.AddModelError("", "Para criar um login para o funcionário, preencha o E-mail do mesmo.");
+                    return View("Edit", employee);
+                }
+
+                _membershipService.CreateNewUserForExistentEmployeeAccount(employee);
+
+                return RedirectToAction("Index");
+            }
+            catch (EmployeeWithExistentEmailException ex)
+            {
+                ModelState.AddModelError("EmailExists", ex.Message);
+                return View("Edit", employee);
+            }
+            catch
+            {
+                return View("Edit");
+            }
         }
 
         //
@@ -167,18 +207,6 @@ namespace WebSiteMjr.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult CreateLoginForExistentEmployee(Employee employee)
-        {
-            if (String.IsNullOrEmpty(employee.Email))
-            {
-                
-
-            }
-
-            _membershipService.CreateNewUserForExistentEmployeeAccount(employee);
-
-            return RedirectToAction("Index");
-        }
+       
     }
 }

@@ -5,6 +5,7 @@ using DotNetOpenAuth.AspNet;
 using FlexProviders.Membership;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
+using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Filters;

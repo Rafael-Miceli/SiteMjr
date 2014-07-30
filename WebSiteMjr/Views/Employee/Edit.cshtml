@@ -43,11 +43,24 @@
         </div>
         
         @*// ==== Azeite no código ====*@
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email, "E-Mail")
+        </div>
+        <div class="editor-field">
+            @Html.ValidationMessage("EmailExists")
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
 
         @Html.HiddenFor(model => model.Id)
+        
+        <p>
+            <input type="submit" name="submitButton" value="CriarLogin" />
+        </p>
 
         <p>
-            <input type="submit" value="Atualizar" />
+            <input type="submit" name="submitButton" value="Atualizar" />
         </p>
     </fieldset>
 }

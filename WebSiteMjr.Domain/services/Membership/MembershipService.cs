@@ -1,4 +1,6 @@
-﻿using WebSiteMjr.Domain.Interfaces.Membership;
+﻿using System;
+using WebSiteMjr.Domain.Exceptions;
+using WebSiteMjr.Domain.Interfaces.Membership;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
 using WebSiteMjr.Domain.Model;
@@ -61,26 +63,34 @@ namespace WebSiteMjr.Domain.services.Membership
 
         public void CreateNewUserForExistentEmployeeAccount(Employee employee)
         {
-            var password = _membershipProvider.GenerateNewPassword();
-
-            var user = new User
+            try
             {
-                IsLocal = true,
-                Username = employee.Email,
-                Roles = _roleService.GetRole_User_ForEmployee(),
-                StatusUser = StatusUser.Active,
-                Password = password,
-                Employee = employee
-            };
+                var password = _membershipProvider.GenerateNewPassword();
 
-            if (employee.Company.IsMjrCompany())
-                user.Roles = _roleService.GetRole_MjrUser_ForEmployee();
+                var user = new User
+                {
+                    IsLocal = true,
+                    Username = employee.Email,
+                    Roles = _roleService.GetRole_User_ForEmployee(),
+                    StatusUser = StatusUser.Active,
+                    Password = password,
+                    Employee = employee
+                };
 
-            CreateAccount(user);
+                if (employee.Company.IsMjrCompany())
+                    user.Roles = _roleService.GetRole_MjrUser_ForEmployee();
 
-            _unitOfWork.Save();
+                CreateAccount(user);
 
-            _emailService.SendFirstLoginToEmployee(password, employee.Email, employee.Name, employee.LastName);
+                _unitOfWork.Save();
+
+                _emailService.SendFirstLoginToEmployee(password, employee.Email, employee.Name, employee.LastName);
+            }
+            catch (FlexMembershipException)
+            {
+                throw new EmployeeWithExistentEmailException();
+            }
+            
         }
 
         public bool HasLocalAccount(string username)

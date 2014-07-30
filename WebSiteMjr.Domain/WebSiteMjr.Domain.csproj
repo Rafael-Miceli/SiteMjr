@@ -52,6 +52,7 @@
     <Compile Include="Exceptions\CheckinDateTimeInconsistencyException.cs" />
     <Compile Include="Exceptions\CheckinHolderTwiceThenException.cs" />
     <Compile Include="Exceptions\EmployeeWithExistentEmailException.cs" />
+    <Compile Include="Exceptions\FlexMembershipException.cs" />
     <Compile Include="Exceptions\ObjectNotExistsException.cs" />
     <Compile Include="Exceptions\ObjectExistsException.cs" />
     <Compile Include="Interfaces\Membership\IApplicationEnvironment.cs" />

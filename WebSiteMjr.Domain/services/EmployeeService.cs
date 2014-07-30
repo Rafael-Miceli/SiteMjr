@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -30,18 +32,26 @@ namespace WebSiteMjr.Domain.services
 
         public void CreateEmployeeAndLogin(Employee employee)
         {
-            _employeeRepository.Add(employee);
-            var password = _membershipService.CreateNewUserEmployeeAccount(employee);
+            try
+            {
+                _employeeRepository.Add(employee);
+                var password = _membershipService.CreateNewUserEmployeeAccount(employee);
 
-            _unitOfWork.Save();
+                _unitOfWork.Save();
 
-            SendLoginViaEmailToEmployee(password, employee);
+                SendLoginViaEmailToEmployee(password, employee);
+            }
+            catch (FlexMembershipException ex)
+            {
+                throw new EmployeeWithExistentEmailException();
+            }
+            
         }
 
-        public Employee FindEmployeeByEmail(string email)
-        {
-            return _employeeRepository.GetEmployeeByEmail(email);
-        }
+        //public Employee FindEmployeeByEmail(string email)
+        //{
+        //    return _employeeRepository.GetEmployeeByEmail(email);
+        //}
 
         private void SendLoginViaEmailToEmployee(string password, Employee employee)
         {

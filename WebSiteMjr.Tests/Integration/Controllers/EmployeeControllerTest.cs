@@ -103,7 +103,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers
 
             _cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>())).Returns(UserDummies.ReturnOneMjrActiveUser());
             _emailServiceMock.Setup(x => x.SendFirstLoginToEmployee(It.IsAny<string>(), createEmployeeViewModel.Email, createEmployeeViewModel.Name, createEmployeeViewModel.LastName));
-            _employeeRepositoryMock.Setup(x => x.GetEmployeeByEmail(createEmployeeViewModel.Email)).Returns(EmployeeDummies.CreateListOfEmployees().First());
+            _flexMembershipRepositoryMock.Setup(x => x.GetUserByUsername(createEmployeeViewModel.Email)).Returns(UserDummies.ReturnOneMjrActiveUser);
 
             var result = _employeeController.Create(createEmployeeViewModel);
 
@@ -111,30 +111,35 @@ namespace WebSiteMjr.Tests.Integration.Controllers
             Assert.AreEqual("Este E-mail já existe para outro funcionário", _employeeController.ModelState["EmailExists"].Errors[0].ErrorMessage);
 
             _cacheServiceMock.VerifyAll();
-            _employeeRepositoryMock.VerifyAll();
+            _flexMembershipRepositoryMock.VerifyAll();
         }
 
         [TestMethod]
         public void Given_A_Valid_Employee_Data_When_Creating_Login_For_Existent_Employee_Then_Should_Create_New_User_For_Employee_And_Send_An_Email_To_Created_Employee()
         {
+            _employeeController = new EmployeeController(new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object), _cacheServiceMock.Object, _membershipService);
+
             var employee = new Employee
             {
                 Name = "Quezia",
                 LastName = "Mello",
-                Email = "rafael.miceli@hotmail.com"
+                Email = "rafael.miceli@hotmail.com",
+                Company = CompanyDummies.CreateMjrCompany()
             };
 
+            _cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>())).Returns(UserDummies.ReturnOneMjrActiveUser());
             _emailServiceMock.Setup(x => x.SendFirstLoginToEmployee(It.IsAny<string>(), employee.Email, employee.Name, employee.LastName));
-            _employeeRepositoryMock.Setup(x => x.GetEmployeeByEmail(employee.Email)).Returns((Employee) null);
+            _flexMembershipRepositoryMock.Setup(x => x.GetUserByUsername(employee.Email)).Returns((User) null);
+            _flexMembershipRepositoryMock.Setup(x => x.Add(It.IsAny<User>()));
 
             var result = _employeeController.CreateLoginForExistentEmployee(employee) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
             Assert.AreEqual("Index", result.RouteValues["action"]);
 
+            _cacheServiceMock.VerifyAll();
             _flexRoleStoreMock.VerifyAll();
             _emailServiceMock.VerifyAll();
-            _employeeRepositoryMock.VerifyAll();
             _flexMembershipRepositoryMock.VerifyAll();
         }
 
