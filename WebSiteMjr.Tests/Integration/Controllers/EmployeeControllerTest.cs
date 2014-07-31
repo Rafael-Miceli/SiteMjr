@@ -126,9 +126,9 @@ namespace WebSiteMjr.Tests.Integration.Controllers
                 Email = "rafael.miceli@hotmail.com",
                 Company = CompanyDummies.CreateMjrCompany()
             };
-
-            _cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>())).Returns(UserDummies.ReturnOneMjrActiveUser());
+            
             _emailServiceMock.Setup(x => x.SendFirstLoginToEmployee(It.IsAny<string>(), employee.Email, employee.Name, employee.LastName));
+            _employeeRepositoryMock.Setup((x => x.GetById(It.IsAny<object>()))).Returns(employee);
             _flexMembershipRepositoryMock.Setup(x => x.GetUserByUsername(employee.Email)).Returns((User) null);
             _flexMembershipRepositoryMock.Setup(x => x.Add(It.IsAny<User>()));
 
@@ -137,7 +137,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers
             Assert.IsNotNull(result);
             Assert.AreEqual("Index", result.RouteValues["action"]);
 
-            _cacheServiceMock.VerifyAll();
+            _employeeRepositoryMock.VerifyAll();
             _flexRoleStoreMock.VerifyAll();
             _emailServiceMock.VerifyAll();
             _flexMembershipRepositoryMock.VerifyAll();
