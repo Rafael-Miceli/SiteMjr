@@ -152,15 +152,17 @@ namespace WebSiteMjr.Controllers
         {
             try
             {
-                employee.Company = _cacheService.Get("User", () => _membershipService.GetLoggedUser(User.Identity.Name)).Employee.Company;
-
                 if (String.IsNullOrEmpty(employee.Email))
                 {
                     ModelState.AddModelError("", "Para criar um login para o funcionário, preencha o E-mail do mesmo.");
                     return View("Edit", employee);
                 }
 
-                _membershipService.CreateNewUserForExistentEmployeeAccount(employee);
+                //TODO it should be great to try not need to go to the database get the instance of the user, but use the same instace it was used in the GET of this page
+                
+                var employeeInstance = _employeeService.FindEmployee(employee.Id);
+
+                _membershipService.CreateNewUserForExistentEmployeeAccount(employeeInstance);
 
                 return RedirectToAction("Index");
             }
