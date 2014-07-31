@@ -27,7 +27,7 @@ namespace WebSiteMjr.Notifications.Email.MjrEmailNotification
         private void InitializeFields()
         {
             _mailMessage.IsBodyHtml = true;
-            _smtpClient.Credentials = new NetworkCredential("mjr@mjr.com.br", "88023926");
+            _smtpClient.Credentials = new NetworkCredential("mjr@mjr.com.br", "");
             _smtpClient.Host = Host;
             _smtpClient.EnableSsl = true;
         }
