@@ -144,6 +144,49 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         }
 
         [TestMethod]
+        public void Given_A_Employee_Data_Without_Email_When_Creating_Login_For_Existent_Employee_Then_Should_Not_Create_New_User_For_Employee_And_Return_Error_Message()
+        {
+            _employeeController = new EmployeeController(new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object), _cacheServiceMock.Object, _membershipService);
+
+            var employee = new Employee
+            {
+                Name = "Quezia",
+                LastName = "Mello",
+                Company = CompanyDummies.CreateMjrCompany()
+            };
+
+            var result = _employeeController.CreateLoginForExistentEmployee(employee);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Para criar um login para o funcionário, preencha o E-mail do mesmo.", _employeeController.ModelState[""].Errors[0].ErrorMessage);
+        }
+
+        [TestMethod]
+        public void Given_A_Employee_Data_With_Email_Existent_When_Creating_Login_For_Existent_Employee_Then_Should_Not_Create_New_User_For_Employee_And_Return_Error_Message()
+        {
+            _employeeController = new EmployeeController(new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object), _cacheServiceMock.Object, _membershipService);
+
+            var employee = new Employee
+            {
+                Name = "Quezia",
+                LastName = "Mello",
+                Email = "rafael.miceli@hotmail.com",
+                Company = CompanyDummies.CreateMjrCompany()
+            };
+
+            _employeeRepositoryMock.Setup((x => x.GetById(It.IsAny<object>()))).Returns(employee);
+            _flexMembershipRepositoryMock.Setup(x => x.GetUserByUsername(employee.Email)).Returns(UserDummies.ReturnOneMjrActiveUser);
+
+            var result = _employeeController.CreateLoginForExistentEmployee(employee);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Este E-mail já existe para outro funcionário", _employeeController.ModelState["EmailExists"].Errors[0].ErrorMessage);
+
+            _employeeRepositoryMock.VerifyAll();
+            _flexRoleStoreMock.VerifyAll();
+        }
+
+        [TestMethod]
         public void Given_A_Request_To_List_All_Active_Users_From_The_Company_Who_Is_Requesting_When_Requesting_Then_Should_Return_All_Active_Users_From_That_Company()
         {
             //TODO Need to create unit test to return of employees from on company
