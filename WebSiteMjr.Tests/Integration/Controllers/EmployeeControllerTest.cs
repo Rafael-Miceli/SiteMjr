@@ -201,6 +201,4 @@ namespace WebSiteMjr.Tests.Integration.Controllers
             Assert.IsFalse(((IEnumerable<Employee>)result.Model).Any(em => em.Company.Id != UserDummies.ReturnOneMjrActiveUser().Employee.Company.Id));
         }
     }
-
-    //public class FakeEmployeeRepository
 }
