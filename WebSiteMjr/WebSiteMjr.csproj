@@ -199,6 +199,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Api\EmployeeApiController.cs" />
     <Compile Include="Controllers\Api\CompanyApiController.cs" />
     <Compile Include="Controllers\Api\ToolApiController.cs" />
     <Compile Include="Controllers\Api\HolderApiController.cs" />
@@ -345,6 +346,7 @@
     <Content Include="Scripts\CheckinTool\checkinTool.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\CheckinTool\Index.js" />
+    <Content Include="Scripts\Employee\Edit.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
     <Content Include="Scripts\jquery-migrate-1.2.1.js" />
