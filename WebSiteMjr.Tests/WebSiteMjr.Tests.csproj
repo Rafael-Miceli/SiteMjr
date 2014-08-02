@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Integration\Controllers\AccountControllerTest.cs" />
+    <Compile Include="Integration\Controllers\Api\EmployeeApiControllerTest.cs" />
     <Compile Include="Integration\Controllers\EmployeeControllerTest.cs" />
     <Compile Include="Unit\Controllers\Api\CompanyApiControllerTest.cs" />
     <Compile Include="Unit\Controllers\CompanyControllerTest.cs" />

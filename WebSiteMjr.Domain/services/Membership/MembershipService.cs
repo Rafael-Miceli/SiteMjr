@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Transactions;
 using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Membership;
 using WebSiteMjr.Domain.Interfaces.Services;
@@ -65,26 +66,33 @@ namespace WebSiteMjr.Domain.services.Membership
         {
             try
             {
-                var password = _membershipProvider.GenerateNewPassword();
-
-                var user = new User
+                using (var scope = new TransactionScope())
                 {
-                    IsLocal = true,
-                    Username = employee.Email,
-                    Roles = _roleService.GetRole_User_ForEmployee(),
-                    StatusUser = StatusUser.Active,
-                    Password = password,
-                    Employee = employee
-                };
 
-                if (employee.Company.IsMjrCompany())
-                    user.Roles = _roleService.GetRole_MjrUser_ForEmployee();
+                    var password = _membershipProvider.GenerateNewPassword();
+                    var email = employee.Email;
 
-                CreateAccount(user);
+                    var user = new User
+                    {
+                        IsLocal = true,
+                        Username = email,
+                        Roles = _roleService.GetRole_User_ForEmployee(),
+                        StatusUser = StatusUser.Active,
+                        Password = password,
+                        Employee = employee
+                    };
 
-                _unitOfWork.Save();
+                    if (employee.Company.IsMjrCompany())
+                        user.Roles = _roleService.GetRole_MjrUser_ForEmployee();
 
-                _emailService.SendFirstLoginToEmployee(password, employee.Email, employee.Name, employee.LastName);
+                    CreateAccount(user);
+
+                    _unitOfWork.Save();
+
+                    _emailService.SendFirstLoginToEmployee(password, email, employee.Name, employee.LastName);
+
+                    scope.Complete();
+                }
             }
             catch (FlexMembershipException)
             {

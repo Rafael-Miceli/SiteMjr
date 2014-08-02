@@ -162,6 +162,8 @@ namespace WebSiteMjr.Controllers
                 
                 var employeeInstance = _employeeService.FindEmployee(employee.Id);
 
+                _employeeService.UpdateEmployee(employee);
+
                 _membershipService.CreateNewUserForExistentEmployeeAccount(employeeInstance);
 
                 return RedirectToAction("Index");

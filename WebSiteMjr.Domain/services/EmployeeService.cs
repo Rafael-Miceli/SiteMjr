@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Transactions;
 using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Repository;
 using WebSiteMjr.Domain.Interfaces.Services;
@@ -34,12 +35,18 @@ namespace WebSiteMjr.Domain.services
         {
             try
             {
-                _employeeRepository.Add(employee);
-                var password = _membershipService.CreateNewUserEmployeeAccount(employee);
+                using (var scope = new TransactionScope())
+                {
+                    _employeeRepository.Add(employee);
+                    var password = _membershipService.CreateNewUserEmployeeAccount(employee);
 
-                _unitOfWork.Save();
+                    _unitOfWork.Save();
 
-                SendLoginViaEmailToEmployee(password, employee);
+                    SendLoginViaEmailToEmployee(password, employee);
+
+                    scope.Complete();
+                }
+                
             }
             catch (FlexMembershipException ex)
             {
