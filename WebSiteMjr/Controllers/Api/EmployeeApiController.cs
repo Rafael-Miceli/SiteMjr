@@ -21,7 +21,8 @@ namespace WebSiteMjr.Controllers.Api
         [AcceptVerbs("GET", "HEAD")]
         public User GetEmployeeUser(string employeeId)
         {
-            return  _membershipService.FindUserByEmployeeId(_employeeService.FindEmployee(employeeId).Id);
+            return null;
+            //return  _membershipService.FindUserByEmployeeId(_employeeService.FindEmployee(employeeId).Id);
         }
     }
 }

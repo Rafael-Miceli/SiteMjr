@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr", "WebSiteMjr\WebSiteMjr.csproj", "{3A08A35F-BDEA-4142-81B7-3BDFDAC8AE23}"
 EndProject
@@ -66,6 +66,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr.Notifications.Email.MjrEmailNotification", "WebSiteMjr.Notifications.Email.MjrEmailNotification\WebSiteMjr.Notifications.Email.MjrEmailNotification.csproj", "{41569D90-235E-4C8B-820B-030935D4FBD7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr.Notifications.Email.MjrEmailNotificationTest", "WebSiteMjr.Notifications.Email.MjrEmailNotificationTest\WebSiteMjr.Notifications.Email.MjrEmailNotificationTest.csproj", "{A8DE72ED-6A43-4D05-9997-DD21B63AFB5B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Facade", "Facade", "{25954A6A-69DE-4006-9C51-D49CA35C79EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr.Facade", "WebSiteMjr.Facade\WebSiteMjr.Facade.csproj", "{FAD889B9-165A-4068-9F41-30D0D0AFEDA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -149,6 +153,10 @@ Global
 		{A8DE72ED-6A43-4D05-9997-DD21B63AFB5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8DE72ED-6A43-4D05-9997-DD21B63AFB5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8DE72ED-6A43-4D05-9997-DD21B63AFB5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAD889B9-165A-4068-9F41-30D0D0AFEDA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAD889B9-165A-4068-9F41-30D0D0AFEDA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAD889B9-165A-4068-9F41-30D0D0AFEDA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAD889B9-165A-4068-9F41-30D0D0AFEDA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +189,7 @@ Global
 		{73B2A36F-7872-488C-B5F6-E6730045C899} = {68EBE693-31E5-4639-A80A-760EE3A24668}
 		{41569D90-235E-4C8B-820B-030935D4FBD7} = {73B2A36F-7872-488C-B5F6-E6730045C899}
 		{A8DE72ED-6A43-4D05-9997-DD21B63AFB5B} = {73B2A36F-7872-488C-B5F6-E6730045C899}
+		{FAD889B9-165A-4068-9F41-30D0D0AFEDA3} = {25954A6A-69DE-4006-9C51-D49CA35C79EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
