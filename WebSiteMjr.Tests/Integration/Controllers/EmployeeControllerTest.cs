@@ -21,6 +21,7 @@ using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.Domain.services.Roles;
 using WebSiteMjr.Domain.Test;
 using WebSiteMjr.Domain.Test.Model;
+using WebSiteMjr.Facade;
 using WebSiteMjr.Models;
 using WebSiteMjr.ViewModels;
 
@@ -58,7 +59,11 @@ namespace WebSiteMjr.Tests.Integration.Controllers
 
             _roleService = new MjrAppRoleService(new FlexRoleProvider(_flexRoleStoreMock.Object));
             _membershipService = new MembershipService(new FlexMembershipProvider(_flexMembershipRepositoryMock.Object, _applicationEnvironmentMock.Object), _roleService, _emailServiceMock.Object, new StubUnitOfWork());
-            _employeeController = new EmployeeController(new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object), _cacheServiceMock.Object, _membershipServiceMock.Object);
+            _employeeController = new EmployeeController(
+                new EmployeeLoginFacade(
+                    new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object)
+                    , _membershipServiceMock.Object, _emailServiceMock.Object, _unitOfWorkMock.Object),
+                    _cacheServiceMock.Object);
         }
 
         [TestMethod]
@@ -117,7 +122,13 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         [TestMethod]
         public void Given_A_Valid_Employee_Data_When_Creating_Login_For_Existent_Employee_Then_Should_Create_New_User_For_Employee_And_Send_An_Email_To_Created_Employee()
         {
-            _employeeController = new EmployeeController(new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object), _cacheServiceMock.Object, _membershipService);
+            _employeeController = new EmployeeController(
+                new EmployeeLoginFacade(
+                    new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object)
+                    , _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object),
+                    _cacheServiceMock.Object);
+                
+                //new EmployeeController(new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object), _cacheServiceMock.Object, _membershipService);
 
             var employee = new Employee
             {
@@ -146,7 +157,12 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         [TestMethod]
         public void Given_A_Employee_Data_Without_Email_When_Creating_Login_For_Existent_Employee_Then_Should_Not_Create_New_User_For_Employee_And_Return_Error_Message()
         {
-            _employeeController = new EmployeeController(new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object), _cacheServiceMock.Object, _membershipService);
+            _employeeController = new EmployeeController(
+                new EmployeeLoginFacade(
+                    new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object)
+                    , _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object),
+                    _cacheServiceMock.Object);
+                //new EmployeeController(new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object), _cacheServiceMock.Object, _membershipService);
 
             var employee = new Employee
             {
@@ -164,7 +180,12 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         [TestMethod]
         public void Given_A_Employee_Data_With_Email_Existent_When_Creating_Login_For_Existent_Employee_Then_Should_Not_Create_New_User_For_Employee_And_Return_Error_Message()
         {
-            _employeeController = new EmployeeController(new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object), _cacheServiceMock.Object, _membershipService);
+            _employeeController = new EmployeeController(
+                new EmployeeLoginFacade(
+                    new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object)
+                    , _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object),
+                    _cacheServiceMock.Object); 
+              //new EmployeeController(new EmployeeService(_employeeRepositoryMock.Object, _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object), _cacheServiceMock.Object, _membershipService);
 
             var employee = new Employee
             {

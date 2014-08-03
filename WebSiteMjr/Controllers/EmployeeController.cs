@@ -4,6 +4,7 @@ using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
+using WebSiteMjr.Facade;
 using WebSiteMjr.Filters;
 using WebSiteMjr.Models;
 using WebSiteMjr.ViewModels;
@@ -13,16 +14,14 @@ namespace WebSiteMjr.Controllers
     [FlexAuthorize(Roles = "MjrAdmin, CompanyAdmin")]
     public class EmployeeController : Controller
     {
-        private readonly IEmployeeService _employeeService;
+        private readonly IEmployeeLoginFacade _employeeLoginFacade;
         private readonly ICacheService _cacheService;
-        private readonly IMembershipService _membershipService;
         private readonly EmployeeMapper _employeeMapper;
 
-        public EmployeeController(IEmployeeService employeeService, ICacheService cacheService, IMembershipService membershipService)
+        public EmployeeController(IEmployeeLoginFacade employeeLoginFacade, ICacheService cacheService)
         {
-            _employeeService = employeeService;
+            _employeeLoginFacade = employeeLoginFacade;
             _cacheService = cacheService;
-            _membershipService = membershipService;
             _employeeMapper = new EmployeeMapper();
         }
 
@@ -30,8 +29,8 @@ namespace WebSiteMjr.Controllers
         // GET: /Employee/
         public ActionResult Index()
         {
-            var employeeCompanyId = _cacheService.Get("User", () => _membershipService.GetLoggedUser(User.Identity.Name)).Employee.Company.Id;
-            return View(_employeeService.ListEmployeesFromCompanyNotDeleted(employeeCompanyId));
+            var employeeCompanyId = _cacheService.Get("User", () => _employeeLoginFacade.GetLoggedUser(User.Identity.Name)).Employee.Company.Id;
+            return View(_employeeLoginFacade.ListEmployeesFromCompanyNotDeleted(employeeCompanyId));
         }
 
         //
@@ -39,7 +38,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Details(int id)
         {
-            var employee = _employeeService.FindEmployee(id);
+            var employee = _employeeLoginFacade.FindEmployee(id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -65,7 +64,7 @@ namespace WebSiteMjr.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var employeeCompany = _cacheService.Get("User", () => _membershipService.GetLoggedUser(User.Identity.Name)).Employee.Company;
+                    var employeeCompany = _cacheService.Get("User", () => _employeeLoginFacade.GetLoggedUser(User.Identity.Name)).Employee.Company;
 
                     if (employee.GenerateLogin)
                     {
@@ -75,10 +74,10 @@ namespace WebSiteMjr.Controllers
                             return View(employee);
                         }
 
-                        _employeeService.CreateEmployeeAndLogin(_employeeMapper.CreateEmployeeViewModelToEmployee(employee, employeeCompany));
+                        _employeeLoginFacade.CreateEmployeeAndLogin(employee, employeeCompany);
                     }
                     else
-                        _employeeService.CreateEmployee(_employeeMapper.CreateEmployeeViewModelToEmployee(employee, employeeCompany));
+                        _employeeLoginFacade.CreateEmployee(employee, employeeCompany);
 
                     return RedirectToAction("Index");
                 }
@@ -102,7 +101,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Edit(int id)
         {
-            var employee = _employeeService.FindEmployee(id);
+            var employee = _employeeLoginFacade.FindEmployee(id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -135,7 +134,7 @@ namespace WebSiteMjr.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _employeeService.UpdateEmployee(employee);
+                    _employeeLoginFacade.UpdateEmployee(employee);
 
                     return RedirectToAction("Index");
                 }
@@ -160,11 +159,11 @@ namespace WebSiteMjr.Controllers
 
                 //TODO it should be great to try not need to go to the database get the instance of the user, but use the same instace it was used in the GET of this page
                 
-                var employeeInstance = _employeeService.FindEmployee(employee.Id);
+                var employeeInstance = _employeeLoginFacade.FindEmployee(employee.Id);
 
-                _employeeService.UpdateEmployee(employee);
+                _employeeLoginFacade.UpdateEmployee(employee);
 
-                _membershipService.CreateNewUserForExistentEmployeeAccount(employeeInstance);
+                _employeeLoginFacade.CreateNewUserForExistentEmployeeAccount(employeeInstance);
 
                 return RedirectToAction("Index");
             }
@@ -184,7 +183,7 @@ namespace WebSiteMjr.Controllers
 
         public ActionResult Delete(int id)
         {
-            var employee = _employeeService.FindEmployee(id);
+            var employee = _employeeLoginFacade.FindEmployee(id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -201,7 +200,7 @@ namespace WebSiteMjr.Controllers
         {
             try
             {
-                _employeeService.DeleteEmployee(employee.Id);
+                _employeeLoginFacade.DeleteEmployee(employee.Id);
 
                 return RedirectToAction("Index");
             }

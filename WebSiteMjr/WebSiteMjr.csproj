@@ -514,6 +514,10 @@
       <Project>{0C8D47BC-32EC-4073-89B3-2D3888593401}</Project>
       <Name>WebSiteMjr.EfStuffData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebSiteMjr.Facade\WebSiteMjr.Facade.csproj">
+      <Project>{FAD889B9-165A-4068-9F41-30D0D0AFEDA3}</Project>
+      <Name>WebSiteMjr.Facade</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr.Notifications.Email.MjrEmailNotification\WebSiteMjr.Notifications.Email.MjrEmailNotification.csproj">
       <Project>{41569D90-235E-4C8B-820B-030935D4FBD7}</Project>
       <Name>WebSiteMjr.Notifications.Email.MjrEmailNotification</Name>
