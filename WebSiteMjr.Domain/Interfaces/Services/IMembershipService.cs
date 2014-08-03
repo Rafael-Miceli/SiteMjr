@@ -16,5 +16,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         Domain.Model.Roles.MjrAppRole GetUserRole(string userName);
         string CreateNewUserEmployeeAccount(Employee employee);
         void CreateNewUserForExistentEmployeeAccount(Employee employee);
+        string CreateAccountAndReturnPassword(User user, bool isMjrCompany);
     }
 }

@@ -17,6 +17,7 @@ using WebSiteMjr.EfData.DataRepository;
 using WebSiteMjr.EfData.UnitOfWork;
 using WebSiteMjr.EfStuffData.DataRepository;
 using WebSiteMjr.EfStuffData.UnitOfWork;
+using WebSiteMjr.Facade;
 using WebSiteMjr.Models;
 using WebSiteMjr.Notifications.Email.MjrEmailNotification;
 
@@ -58,6 +59,9 @@ namespace WebSiteMjr
             container.RegisterType<IMembershipService, MembershipService>();
             container.RegisterType<ICacheService, CacheService>();
 
+            //Facade Instances
+            container.RegisterType<IEmployeeLoginFacade, EmployeeLoginFacade>();
+
             //Repositories Instances
             var emailServiceInstance = new EmailService();
             var roleServiceInstance = new MjrAppRoleService(new FlexRoleProvider(new RoleRepository<MjrAppRole,User>(personUow)));
@@ -66,6 +70,8 @@ namespace WebSiteMjr
             var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), membershipServiceInstance, emailServiceInstance, personUow);
             var toolServiceInstance = new ToolService(new ToolRepository(stuffUnow), stuffUnow);
             var companyAreaServiceInstance = new CompanyAreasService(new CompanyAreaRepository(personUow), personUow);
+            var employeeLoginFacadeInstance = new EmployeeLoginFacade(employeeServiceInstance, membershipServiceInstance,
+                emailServiceInstance, personUow);
 
             container.RegisterInstance(new HolderService(new HolderRepository(personUow)));
             container.RegisterInstance(new UserService(new UserRepository(personUow), companyServiceInstance, personUow));
@@ -78,6 +84,7 @@ namespace WebSiteMjr
             container.RegisterInstance(companyServiceInstance);
             container.RegisterInstance(membershipServiceInstance);
             container.RegisterInstance(employeeServiceInstance);
+            container.RegisterInstance(employeeLoginFacadeInstance);
 
             return container;
         }

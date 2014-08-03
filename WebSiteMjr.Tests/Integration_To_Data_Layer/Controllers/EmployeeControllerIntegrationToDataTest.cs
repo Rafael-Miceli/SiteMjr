@@ -20,6 +20,7 @@ using WebSiteMjr.Domain.Test.Model;
 using WebSiteMjr.EfData.Context;
 using WebSiteMjr.EfData.DataRepository;
 using WebSiteMjr.EfData.UnitOfWork;
+using WebSiteMjr.Facade;
 using WebSiteMjr.Models;
 using WebSiteMjr.Notifications.Email.MjrEmailNotification;
 using WebSiteMjr.ViewModels;
@@ -52,7 +53,12 @@ namespace WebSiteMjr.Tests.Integration_To_Data_Layer.Controllers
 
             _roleService = new MjrAppRoleService(new FlexRoleProvider(new RoleRepository<MjrAppRole, User>(personUoW)));
             _membershipService = new MembershipService(new FlexMembershipProvider(new MembershipRepository(personUoW), _applicationEnvironmentMock.Object), _roleService, null, new StubUnitOfWork());
-            _employeeController = new EmployeeController(new EmployeeService(new EmployeeRepository(personUoW), _membershipService, new EmailService(), personUoW), _cacheServiceMock.Object, _membershipService);
+            _employeeController = new EmployeeController(
+                new EmployeeLoginFacade(
+                    new EmployeeService(new EmployeeRepository(personUoW), _membershipService, new EmailService(), personUoW)
+                    , _membershipService, new EmailService(), personUoW),
+                    _cacheServiceMock.Object);
+                //new EmployeeController(new EmployeeService(new EmployeeRepository(personUoW), _membershipService, new EmailService(), personUoW), _cacheServiceMock.Object, _membershipService);
         }
 
         [TestMethod]

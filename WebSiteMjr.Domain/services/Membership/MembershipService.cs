@@ -40,6 +40,31 @@ namespace WebSiteMjr.Domain.services.Membership
             _membershipProvider.CreateAccount(user);
         }
 
+        public string CreateAccountAndReturnPassword(User user, bool isMjrCompany)
+        {
+            var password = CreateAccountPassword(user);
+
+            DefineAccountRole(user, isMjrCompany);
+
+            _membershipProvider.CreateAccount(user);
+
+            return password;
+        }
+
+        private void DefineAccountRole(User user, bool isMjrCompany)
+        {
+            user.Roles = isMjrCompany ? _roleService.GetRole_MjrUser_ForEmployee() : _roleService.GetRole_User_ForEmployee();
+        }
+
+        private string CreateAccountPassword(User user)
+        {
+            var password = _membershipProvider.GenerateNewPassword();
+
+            user.Password = password;
+
+            return password;
+        }
+
         public string CreateNewUserEmployeeAccount(Employee employee)
         {
             var password = _membershipProvider.GenerateNewPassword();
