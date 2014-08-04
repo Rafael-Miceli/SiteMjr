@@ -11,5 +11,6 @@ namespace WebSiteMjr.Domain.Interfaces.Membership
         User GetUserByOAuthProvider(string provider, string providerUserId);        
         bool DeleteOAuthAccount(string provider, string providerUserId);
         User GetUserByPasswordResetToken(string passwordResetToken);
+        User GetUserByEmployeeId(int id);
     }    
 }

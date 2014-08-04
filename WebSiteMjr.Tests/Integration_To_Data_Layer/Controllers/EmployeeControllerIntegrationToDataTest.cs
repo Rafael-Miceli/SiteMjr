@@ -52,10 +52,10 @@ namespace WebSiteMjr.Tests.Integration_To_Data_Layer.Controllers
             var personUoW = new PersonsUow(new PersonsContext());
 
             _roleService = new MjrAppRoleService(new FlexRoleProvider(new RoleRepository<MjrAppRole, User>(personUoW)));
-            _membershipService = new MembershipService(new FlexMembershipProvider(new MembershipRepository(personUoW), _applicationEnvironmentMock.Object), _roleService, null, new StubUnitOfWork());
+            _membershipService = new MembershipService(new FlexMembershipProvider(new MembershipRepository(personUoW), _applicationEnvironmentMock.Object), _roleService, new StubUnitOfWork());
             _employeeController = new EmployeeController(
                 new EmployeeLoginFacade(
-                    new EmployeeService(new EmployeeRepository(personUoW), _membershipService, new EmailService(), personUoW)
+                    new EmployeeService(new EmployeeRepository(personUoW), personUoW)
                     , _membershipService, new EmailService(), personUoW),
                     _cacheServiceMock.Object);
                 //new EmployeeController(new EmployeeService(new EmployeeRepository(personUoW), _membershipService, new EmailService(), personUoW), _cacheServiceMock.Object, _membershipService);

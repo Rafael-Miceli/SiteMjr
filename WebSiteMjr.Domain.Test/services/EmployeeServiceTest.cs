@@ -18,7 +18,7 @@ namespace WebSiteMjr.Domain.Test.services
             var employeeRepositoryMock = new Mock<IEmployeeRepository>();
             employeeRepositoryMock.Setup(x => x.GetAllEmployeesNotDeleted()).Returns(employeesNotDeleted);
 
-            var employeeService = new EmployeeService(employeeRepositoryMock.Object, null, null, new StubUnitOfWork());
+            var employeeService = new EmployeeService(employeeRepositoryMock.Object, new StubUnitOfWork());
 
             //Act
             var employees = employeeService.ListEmployeesNotDeleted();
@@ -36,7 +36,7 @@ namespace WebSiteMjr.Domain.Test.services
             var employeeRepositoryMock = new Mock<IEmployeeRepository>();
             employeeRepositoryMock.Setup(x => x.GetAll()).Returns(employeesList);
 
-            var employeeService = new EmployeeService(employeeRepositoryMock.Object, null, null, new StubUnitOfWork());
+            var employeeService = new EmployeeService(employeeRepositoryMock.Object, new StubUnitOfWork());
 
             //Act
             var employees = employeeService.ListEmployee();
@@ -57,7 +57,7 @@ namespace WebSiteMjr.Domain.Test.services
 
             employeeRepositoryMock.Setup(x => x.GetAllEmployeesFromCompanyNotDeleted(companyRequesting.Id)).Returns(employeesNotDeletedFromCompany);
 
-            var employeeService = new EmployeeService(employeeRepositoryMock.Object, null, null, new StubUnitOfWork());
+            var employeeService = new EmployeeService(employeeRepositoryMock.Object, new StubUnitOfWork());
 
             //Act
             var employees = employeeService.ListEmployeesFromCompanyNotDeleted(companyRequesting.Id);

@@ -44,5 +44,10 @@ namespace WebSiteMjr.EfData.DataRepository
             //return user;
             return null;
         }
+
+        public User GetUserByEmployeeId(int id)
+        {
+            return Get(u => u.Employee.Id == id);
+        }
     }
 }

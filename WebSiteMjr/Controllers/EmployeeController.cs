@@ -16,13 +16,11 @@ namespace WebSiteMjr.Controllers
     {
         private readonly IEmployeeLoginFacade _employeeLoginFacade;
         private readonly ICacheService _cacheService;
-        private readonly EmployeeMapper _employeeMapper;
 
         public EmployeeController(IEmployeeLoginFacade employeeLoginFacade, ICacheService cacheService)
         {
             _employeeLoginFacade = employeeLoginFacade;
             _cacheService = cacheService;
-            _employeeMapper = new EmployeeMapper();
         }
 
         //
@@ -158,12 +156,8 @@ namespace WebSiteMjr.Controllers
                 }
 
                 //TODO it should be great to try not need to go to the database get the instance of the user, but use the same instace it was used in the GET of this page
-                
-                var employeeInstance = _employeeLoginFacade.FindEmployee(employee.Id);
 
-                _employeeLoginFacade.UpdateEmployee(employee);
-
-                _employeeLoginFacade.CreateNewUserForExistentEmployeeAccount(employeeInstance);
+                _employeeLoginFacade.CreateNewUserForExistentEmployeeAccount(employee);
 
                 return RedirectToAction("Index");
             }

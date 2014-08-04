@@ -14,7 +14,42 @@ using WebSiteMjr.ViewModels;
 
 namespace WebSiteMjr.Facade
 {
-    public class EmployeeLoginFacade : IEmployeeLoginFacade
+    public abstract class CreateOrUpdateEmployeeTemplate
+    {
+        public virtual void CreateOrUpdateEmployee_CreateLogin(Employee employee, Func<Employee, string> createOrUpdateFunc)
+        {
+            try
+            {
+                using (var scope = new TransactionScope())
+                {
+                    CreateOrUpdateEmployee(employee, createOrUpdateFunc);
+
+                    var password = CreateAccount(employee);
+
+                    Commit();
+
+                    SendLoginViaEmailToEmployee(password, employee);
+
+                    scope.Complete();
+                }
+
+            }
+            catch (FlexMembershipException ex)
+            {
+                throw new EmployeeWithExistentEmailException();
+            }
+        }
+
+        protected abstract void SendLoginViaEmailToEmployee(string password, Employee employee);
+
+        protected abstract string CreateAccount(Employee employee);
+
+        protected abstract void Commit();
+
+        protected abstract void CreateOrUpdateEmployee(Employee employee, Func<Employee, string> createOrUpdateFunc);
+    }
+
+    public class EmployeeLoginFacade : CreateOrUpdateEmployeeTemplate, IEmployeeLoginFacade
     {
         private readonly IEmployeeService _employeeService;
         private readonly IMembershipService _membershipService;
@@ -34,27 +69,9 @@ namespace WebSiteMjr.Facade
 
         public void CreateEmployeeAndLogin(CreateEmployeeViewModel employeeViewModel, Company employeeCompany)
         {
-            try
-            {
-                var employee = _employeeMapper.CreateEmployeeViewModelToEmployee(employeeViewModel, employeeCompany);
+            var employee = _employeeMapper.CreateEmployeeViewModelToEmployee(employeeViewModel, employeeCompany);
 
-                using (var scope = new TransactionScope())
-                {
-                    _employeeService.CreateEmployee(employee);
-                    var password = _membershipService.CreateAccountAndReturnPassword(CreateNewUserEmployeeAccount(employee), employee.Company.IsMjrCompany());
-
-                    _unitOfWork.Save();
-
-                    SendLoginViaEmailToEmployee(password, employee);
-
-                    scope.Complete();
-                }
-
-            }
-            catch (FlexMembershipException ex)
-            {
-                throw new EmployeeWithExistentEmailException();
-            }
+            CreateOrUpdateEmployee_CreateLogin(employee, CreateEmployee);
         }
 
         private User CreateNewUserEmployeeAccount(Employee employee)
@@ -75,7 +92,9 @@ namespace WebSiteMjr.Facade
 
         public void CreateNewUserForExistentEmployeeAccount(Employee employee)
         {
-            throw new NotImplementedException();
+            var employeeInstance = _employeeService.FindEmployee(employee.Id);
+
+            CreateOrUpdateEmployee_CreateLogin(employeeInstance, UpdateEmployee);
         }
 
         public IEnumerable<Employee> ListEmployeesFromCompanyNotDeleted(int companyId)
@@ -88,9 +107,10 @@ namespace WebSiteMjr.Facade
             _employeeService.CreateEmployee(_employeeMapper.CreateEmployeeViewModelToEmployee(employee, employeeCompany));
         }
 
-        public void UpdateEmployee(Employee employee)
+        public string UpdateEmployee(Employee employee)
         {
             _employeeService.UpdateEmployee(employee);
+            return null;
         }
 
         public Employee FindEmployee(object idemployee)
@@ -103,9 +123,30 @@ namespace WebSiteMjr.Facade
             _employeeService.DeleteEmployee(employeeId);
         }
 
-        private void SendLoginViaEmailToEmployee(string password, Employee employee)
+        protected override void SendLoginViaEmailToEmployee(string password, Employee employee)
         {
             _emailService.SendFirstLoginToEmployee(password, employee.Email, employee.Name, employee.LastName);
+        }
+
+        protected override string CreateAccount(Employee employee)
+        {
+            return _membershipService.CreateAccountAndReturnPassword(CreateNewUserEmployeeAccount(employee), employee.Company.IsMjrCompany());
+        }
+
+        protected override void Commit()
+        {
+            _unitOfWork.Save();
+        }
+
+        protected override void CreateOrUpdateEmployee(Employee employee, Func<Employee, string> createOrUpdateFunc)
+        {
+            createOrUpdateFunc(employee);
+        }
+
+        private string CreateEmployee(Employee employee)
+        {
+            _employeeService.CreateEmployee(employee);
+            return null;
         }
     }
 }
