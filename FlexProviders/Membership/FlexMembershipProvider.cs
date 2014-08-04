@@ -222,6 +222,11 @@ namespace FlexProviders.Membership
             return System.Web.Security.Membership.GeneratePassword(10, 2);
         }
 
+        public User FindUserByEmployeeId(int id)
+        {
+            return _membershipRepository.GetUserByEmployeeId(id);
+        }
+
         #endregion
 
         #region IFlexOAuthProvider Members

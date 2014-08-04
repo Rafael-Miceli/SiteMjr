@@ -14,14 +14,12 @@ namespace WebSiteMjr.Domain.services.Membership
     {
         private readonly IFlexMembershipProvider _membershipProvider;
         private readonly IRoleService _roleService;
-        private readonly IEmailService _emailService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public MembershipService(IFlexMembershipProvider membershipProvider, IRoleService roleService, IEmailService emailService, IUnitOfWork unitOfWork)
+        public MembershipService(IFlexMembershipProvider membershipProvider, IRoleService roleService, IUnitOfWork unitOfWork)
         {
             _membershipProvider = membershipProvider;
             _roleService = roleService;
-            _emailService = emailService;
             _unitOfWork = unitOfWork;
         }
 
@@ -43,12 +41,14 @@ namespace WebSiteMjr.Domain.services.Membership
         public string CreateAccountAndReturnPassword(User user, bool isMjrCompany)
         {
             var password = CreateAccountPassword(user);
-
             DefineAccountRole(user, isMjrCompany);
-
             _membershipProvider.CreateAccount(user);
-
             return password;
+        }
+
+        public User FindUserByEmployeeId(int id)
+        {
+            return _membershipProvider.FindUserByEmployeeId(id);
         }
 
         private void DefineAccountRole(User user, bool isMjrCompany)
@@ -59,71 +59,8 @@ namespace WebSiteMjr.Domain.services.Membership
         private string CreateAccountPassword(User user)
         {
             var password = _membershipProvider.GenerateNewPassword();
-
             user.Password = password;
-
             return password;
-        }
-
-        public string CreateNewUserEmployeeAccount(Employee employee)
-        {
-            var password = _membershipProvider.GenerateNewPassword();
-
-            var user = new User
-            {
-                IsLocal = true,
-                Username = employee.Email,
-                Roles = _roleService.GetRole_User_ForEmployee(),
-                StatusUser = StatusUser.Active,
-                Password = password,
-                Employee = employee
-            };
-            
-            if (employee.Company.IsMjrCompany())
-                user.Roles = _roleService.GetRole_MjrUser_ForEmployee();
-
-            CreateAccount(user);
-
-            return password;
-        }
-
-        public void CreateNewUserForExistentEmployeeAccount(Employee employee)
-        {
-            try
-            {
-                using (var scope = new TransactionScope())
-                {
-
-                    var password = _membershipProvider.GenerateNewPassword();
-                    var email = employee.Email;
-
-                    var user = new User
-                    {
-                        IsLocal = true,
-                        Username = email,
-                        Roles = _roleService.GetRole_User_ForEmployee(),
-                        StatusUser = StatusUser.Active,
-                        Password = password,
-                        Employee = employee
-                    };
-
-                    if (employee.Company.IsMjrCompany())
-                        user.Roles = _roleService.GetRole_MjrUser_ForEmployee();
-
-                    CreateAccount(user);
-
-                    _unitOfWork.Save();
-
-                    _emailService.SendFirstLoginToEmployee(password, email, employee.Name, employee.LastName);
-
-                    scope.Complete();
-                }
-            }
-            catch (FlexMembershipException)
-            {
-                throw new EmployeeWithExistentEmailException();
-            }
-            
         }
 
         public bool HasLocalAccount(string username)

@@ -12,57 +12,18 @@ namespace WebSiteMjr.Domain.services
     public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
-        private readonly IMembershipService _membershipService;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IEmailService _emailService;
 
-        public EmployeeService(IEmployeeRepository employeeRepository, IMembershipService membershipService, IEmailService emailService, IUnitOfWork unitOfWork)
+        public EmployeeService(IEmployeeRepository employeeRepository, IUnitOfWork unitOfWork)
         {
             _employeeRepository = employeeRepository;
-            _membershipService = membershipService;
             _unitOfWork = unitOfWork;
-            _emailService = emailService;
         }
-
         
         public void CreateEmployee(Employee employee)
         {
             _employeeRepository.Add(employee);
             _unitOfWork.Save();
-        }
-
-        public void CreateEmployeeAndLogin(Employee employee)
-        {
-            try
-            {
-                using (var scope = new TransactionScope())
-                {
-                    _employeeRepository.Add(employee);
-                    var password = _membershipService.CreateNewUserEmployeeAccount(employee);
-
-                    _unitOfWork.Save();
-
-                    SendLoginViaEmailToEmployee(password, employee);
-
-                    scope.Complete();
-                }
-                
-            }
-            catch (FlexMembershipException ex)
-            {
-                throw new EmployeeWithExistentEmailException();
-            }
-            
-        }
-
-        //public Employee FindEmployeeByEmail(string email)
-        //{
-        //    return _employeeRepository.GetEmployeeByEmail(email);
-        //}
-
-        private void SendLoginViaEmailToEmployee(string password, Employee employee)
-        {
-            _emailService.SendFirstLoginToEmployee(password, employee.Email, employee.Name, employee.LastName);
         }
 
         public void UpdateEmployee(Employee employee)

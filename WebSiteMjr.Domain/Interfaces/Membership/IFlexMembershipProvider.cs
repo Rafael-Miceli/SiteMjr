@@ -88,5 +88,6 @@ namespace WebSiteMjr.Domain.Interfaces.Membership
 
         User GetUser(string userName);
         string GenerateNewPassword();
+        User FindUserByEmployeeId(int id);
     }
 }

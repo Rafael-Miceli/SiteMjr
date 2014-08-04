@@ -12,7 +12,7 @@ namespace WebSiteMjr.Facade
         void CreateNewUserForExistentEmployeeAccount(Employee employee);
         IEnumerable<Employee> ListEmployeesFromCompanyNotDeleted(int companyId);
         void CreateEmployee(CreateEmployeeViewModel employee, Company employeeCompany);
-        void UpdateEmployee(Employee employee);
+        string UpdateEmployee(Employee employee);
         Employee FindEmployee(object idemployee);
         void DeleteEmployee(object employee);
     }
