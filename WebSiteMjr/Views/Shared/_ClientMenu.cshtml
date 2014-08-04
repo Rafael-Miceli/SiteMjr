@@ -5,7 +5,7 @@
     @*<li>@Html.ActionLink("Chamados", "Index", "Task")</li>*@
     @if (Model != null && (Model.Name == "MjrAdmin" || Model.Name == "MjrUser"))
     {
-        <li>@Html.ActionLink("Meu Perfil", "Details", "Company")</li>
+        @*<li>@Html.ActionLink("Meu Perfil", "Details", "Company")</li>*@
 
         if (!Model.Name.Equals("MjrUser"))
         {
@@ -36,7 +36,7 @@
     }
     else
     {
-        <li>@Html.ActionLink("Meu Perfil", "Details", "Company")</li>
+        @*<li>@Html.ActionLink("Meu Perfil", "Details", "Company")</li>*@
         
         if (Model != null && !Model.Name.Equals("User"))
         {

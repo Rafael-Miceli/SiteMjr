@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using WebSiteMjr.Domain.Interfaces.Services;
@@ -19,10 +20,9 @@ namespace WebSiteMjr.Controllers.Api
 
         //[HttpGet]
         [AcceptVerbs("GET", "HEAD")]
-        public User GetEmployeeUser(string employeeId)
+        public bool GetEmployeeUser(string employeeId)
         {
-            return null;
-            //return _membershipService.FindUserByEmployeeId(_employeeService.FindEmployee(employeeId).Id);
+            return _membershipService.FindUserByEmployeeId(int.Parse(employeeId)) != null;
         }
     }
 }

@@ -40,8 +40,6 @@ namespace WebSiteMjr.EfData.DataRepository
 
         public User GetUserByPasswordResetToken(string passwordResetToken)
         {
-            //var user = _context.Set<TUser>().SingleOrDefault(u => u.PasswordResetToken == passwordResetToken);
-            //return user;
             return null;
         }
 

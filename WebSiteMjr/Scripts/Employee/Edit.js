@@ -1,5 +1,5 @@
 ﻿$(function () {
-    var employeeLogin,
+    var doesEmployeeHasLogin,
         employeeVerifyLoginCall;
 
     //Set Ajax call
@@ -18,10 +18,10 @@
 
 
     function employeeVerifyLoginCallSucceded(data) {
-        employeeLogin = data;
+        doesEmployeeHasLogin = data;
 
-        if (employeeLogin != 'undefined' || employeeLogin != null) {
-            alert('Suma com o botão');
+        if (doesEmployeeHasLogin) {
+            $('#btnCriarLogin').css('visibility', 'hidden');
         }
     }
 
