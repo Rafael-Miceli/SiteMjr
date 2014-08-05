@@ -6,10 +6,10 @@
     <li>@Html.ActionLink("Contatos", "Contact", "Home")</li>
     @if (Model != null && (Model.Name == "MjrAdmin" || Model.Name == "MjrUser"))
     {
-        <li>@Html.ActionLink("Administrar", "Manage", "Account")</li>
+        <li>@Html.ActionLink("Administrar", "MyProfile", "Account")</li>
     }
     else if (Model != null && (Model.Name == "CompanyAdmin" || Model.Name == "User"))
     {
-        <li>@Html.ActionLink("Meu Espaço", "Manage", "Account")</li>
+        <li>@Html.ActionLink("Meu Espaço", "MyProfile", "Account")</li>
     }
 </ul>

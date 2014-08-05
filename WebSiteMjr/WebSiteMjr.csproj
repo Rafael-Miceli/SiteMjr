@@ -474,6 +474,7 @@
     <Content Include="Views\CompanyArea\Edit.cshtml" />
     <Content Include="Views\CompanyArea\Index.cshtml" />
     <Content Include="Views\Tool\CheckinTab.cshtml" />
+    <Content Include="Views\Account\MyProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

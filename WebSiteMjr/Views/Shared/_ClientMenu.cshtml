@@ -3,9 +3,11 @@
 <ul id="menuleft" role="navigation" class="nav">
     @*<li>@Html.ActionLink("Home", "Index", "ClientHome")</li>*@
     @*<li>@Html.ActionLink("Chamados", "Index", "Task")</li>*@
+    
+    <li>@Html.ActionLink("Meu Perfil", "MyProfile", "Account")</li>
+
     @if (Model != null && (Model.Name == "MjrAdmin" || Model.Name == "MjrUser"))
     {
-        @*<li>@Html.ActionLink("Meu Perfil", "Details", "Company")</li>*@
 
         if (!Model.Name.Equals("MjrUser"))
         {
@@ -36,12 +38,9 @@
     }
     else
     {
-        @*<li>@Html.ActionLink("Meu Perfil", "Details", "Company")</li>*@
-        
         if (Model != null && !Model.Name.Equals("User"))
         {
             <li>@Html.ActionLink("Funcionários", "Index", "Employee")</li>
         }
     }
-    @*<li>@Html.ActionLink("Meu Perfil", "About", "Home")</li>*@
 </ul>

@@ -2,14 +2,14 @@
 using System.Transactions;
 using System.Web.Mvc;
 using DotNetOpenAuth.AspNet;
-using FlexProviders.Membership;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model.Membership;
-using WebSiteMjr.Filters;
 using WebSiteMjr.Models;
+using WebSiteMjr.ViewModels;
+using RegisterModel = WebSiteMjr.Models.RegisterModel;
 
 namespace WebSiteMjr.Controllers
 {
@@ -24,6 +24,15 @@ namespace WebSiteMjr.Controllers
         {
             _membershipProvider = membership;
             _cacheService = cacheService;
+        }
+
+        public ActionResult MyProfile()
+        {
+            return View(new MyProfile
+            {
+                CompanyName = "Mjr",
+                MyName = "Eu"
+            });
         }
 
         [ChildActionOnly]
@@ -369,5 +378,10 @@ namespace WebSiteMjr.Controllers
             }
         }
         #endregion
+
+        public ActionResult ChangePassword(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
