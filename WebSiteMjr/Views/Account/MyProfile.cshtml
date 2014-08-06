@@ -7,11 +7,11 @@
 
 <h2>@ViewBag.Title @Model.MyName</h2>
 
-<span>Aqui segue um pouco sobre você</span>
+<h3>Aqui segue um pouco sobre você</h3>
 <br />
 <br />
 
-<span>Você pertence a empresa @Model.CompanyName</span>
+<span>Você pertence a empresa <b>@Model.CompanyName</b></span>
 <br />
 
 @if (@Model.MyPhone == null)
@@ -20,8 +20,9 @@
 }
 else
 {
-    <span>E podemos entrar em contato com você pelo número @Model.MyPhone</span>    
+    <span>E podemos entrar em contato com você pelo número <b>@Model.MyPhone</b></span>    
 }
 <br />
+<br />
 
-<span>Caso queira @Html.ActionLink("trocar sua senha, clique aqui", "ChangePassword", new {id = Model.UserId})</span>
+<span>Caso queira @Html.ActionLink("trocar sua senha, clique aqui", "ChangePassword")</span>

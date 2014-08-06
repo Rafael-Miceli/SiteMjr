@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Transactions;
 using System.Web.Mvc;
 using DotNetOpenAuth.AspNet;
@@ -17,22 +18,28 @@ namespace WebSiteMjr.Controllers
     public class AccountController : Controller
     {
 
-        private readonly IMembershipService _membershipProvider;
+        private readonly IMembershipService _membershipService;
         private readonly ICacheService _cacheService;
 
         public AccountController(IMembershipService membership, ICacheService cacheService)
         {
-            _membershipProvider = membership;
+            _membershipService = membership;
             _cacheService = cacheService;
         }
 
         public ActionResult MyProfile()
         {
-            return View(new MyProfile
+            var user = _cacheService.Get("User", () => _membershipService.GetLoggedUser(User.Identity.Name));
+
+            var profile = new MyProfile
             {
-                CompanyName = "Mjr",
-                MyName = "Eu"
-            });
+                CompanyName = user.Employee.Company.Name,
+                MyName = user.Employee.Name,
+                MyPhone = user.Employee.Phone,
+                UserId = user.Id
+            };
+
+            return View(profile);
         }
 
         [ChildActionOnly]
@@ -40,7 +47,7 @@ namespace WebSiteMjr.Controllers
         public ActionResult UserInformations()
         {
 
-            var user = _cacheService.Get("User", () => _membershipProvider.GetLoggedUser(User.Identity.Name));
+            var user = _cacheService.Get("User", () => _membershipService.GetLoggedUser(User.Identity.Name));
             return PartialView("_LoginPartial", user);
         }
 
@@ -48,7 +55,7 @@ namespace WebSiteMjr.Controllers
         [AllowAnonymous]
         public ActionResult Menu()
         {
-            var role = _membershipProvider.GetUserRole(User.Identity.Name);
+            var role = _membershipService.GetUserRole(User.Identity.Name);
 
             return PartialView("_Menu", role);
         }
@@ -57,7 +64,7 @@ namespace WebSiteMjr.Controllers
         [AllowAnonymous]
         public ActionResult ClientMenu()
         {
-            var role = _membershipProvider.GetUserRole(User.Identity.Name);
+            var role = _membershipService.GetUserRole(User.Identity.Name);
 
             return PartialView("_ClientMenu", role);
         }
@@ -80,7 +87,7 @@ namespace WebSiteMjr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && _membershipProvider.Login(model.UserName, model.Password, model.RememberMe))
+            if (ModelState.IsValid && _membershipService.Login(model.UserName, model.Password, model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
             }
@@ -98,7 +105,7 @@ namespace WebSiteMjr.Controllers
         public ActionResult LogOff()
         {
             _cacheService.Remove("User");
-            _membershipProvider.Logout();
+            _membershipService.Logout();
 
             return RedirectToAction("Index", "Home");
         }
@@ -125,7 +132,7 @@ namespace WebSiteMjr.Controllers
                 // Attempt to register the user
                 try
                 {
-                    _membershipProvider.CreateAccount(new User { Username = model.UserName, Password = model.Password });
+                    _membershipService.CreateAccount(new User { Username = model.UserName, Password = model.Password });
                     //_membershipProvider.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }
@@ -305,6 +312,37 @@ namespace WebSiteMjr.Controllers
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
         }
 
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(LocalPasswordModel passwordModel)
+        {
+            try
+            {
+                var passwordChanged = _membershipService.ChangePassword(User.Identity.Name, passwordModel.OldPassword, passwordModel.NewPassword);
+
+                if (passwordChanged) return RedirectToAction("MyProfile");
+
+                ModelState.AddModelError("", "A senha antiga digitada parece estar incorreta.");
+                return View();
+            }
+            catch (FlexMembershipException)
+            {
+                ModelState.AddModelError("", "Problemas ao trocar a senha.");
+                return View();
+            }   
+            catch (Exception)
+            {
+                return View();
+            }
+        }
+
+
+
+
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)
         {
@@ -365,7 +403,7 @@ namespace WebSiteMjr.Controllers
                     return "The password retrieval question provided is invalid. Please check the value and try again.";
 
                 case FlexMembershipStatus.InvalidUserName:
-                    return "The user name provided is invalid. Please check the value and try again.";
+                    return "Usuário não existente.";
 
                 case FlexMembershipStatus.ProviderError:
                     return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
@@ -379,9 +417,5 @@ namespace WebSiteMjr.Controllers
         }
         #endregion
 
-        public ActionResult ChangePassword(int id)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

@@ -130,6 +130,7 @@ namespace FlexProviders.Membership
         public bool ChangePassword(string username, string oldPassword, string newPassword)
         {
             var user = _membershipRepository.GetUserByUsername(username);
+            if (user == null) throw new FlexMembershipException(FlexMembershipStatus.InvalidUserName);
             string encodedPassword = _encoder.Encode(oldPassword, user.Salt);
             if (!encodedPassword.Equals(user.Password))
             {
