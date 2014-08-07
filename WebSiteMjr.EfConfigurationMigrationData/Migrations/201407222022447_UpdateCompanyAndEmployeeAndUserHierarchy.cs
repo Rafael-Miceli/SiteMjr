@@ -6,6 +6,9 @@ namespace WebSiteMjr.EfConfigurationMigrationData.Migrations
     {
         public override void Up()
         {
+            //TODO Verify error in azure Sql: Tables without a clustered index are not supported in this version of SQL Server. Please create a clustered index and try again.
+            
+
             Sql("CREATE TABLE Migration ( IdHolder int, EmailHolder char(100) ) Insert Into Migration (IdHolder, EmailHolder) Select Id, Email From Companies ");
 
             AddColumn("dbo.Users", "Employee_Id", c => c.Int());
