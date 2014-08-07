@@ -8,6 +8,7 @@ using Moq;
 using WebSiteMjr.Controllers;
 using WebSiteMjr.Domain.Interfaces.Membership;
 using WebSiteMjr.Domain.Interfaces.Services;
+using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.Domain.Test;
 using WebSiteMjr.Domain.Test.Model;
@@ -153,6 +154,41 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         [TestMethod]
         public void Given_A_Valid_Password_And_A_Valid_New_Password_When_Changing_Password_Then_Change_To_New_Password()
         {
+            var salt = "/eYHK+MXIeHmZOgbffphWQ==";
+            var oldPassword = new DefaultSecurityEncoder().Encode("senha", salt);
+
+            _flexMembershipRepository.Setup(x => x.GetUserByUsername(It.IsAny<string>())).Returns(new User
+            {
+                Password = oldPassword,
+                Salt = salt
+            });
+            _principalMock.Setup(x => x.Identity.Name).Returns("teste");
+
+            _accountController.ControllerContext = _controllerContextMock.Object;
+
+            var localPasswordModel = new LocalPasswordModel
+            {
+                OldPassword = "senha",
+                NewPassword = "teste"
+            };
+
+            var result = _accountController.ChangePassword(localPasswordModel) as RedirectToRouteResult;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("MyProfile", result.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void Given_A_InValid_Password_And_A_Valid_New_Password_When_Changing_Password_Then_Return_Error_Message()
+        {
+            var salt = "/eYHK+MXIeHmZOgbffphWQ==";
+            string oldPassword = new DefaultSecurityEncoder().Encode("senha", salt);
+
+            _flexMembershipRepository.Setup(x => x.GetUserByUsername(It.IsAny<string>())).Returns(new User
+            {
+                Password = oldPassword,
+                Salt = salt
+            });
             _principalMock.Setup(x => x.Identity.Name).Returns("teste");
 
             _accountController.ControllerContext = _controllerContextMock.Object;
@@ -163,10 +199,32 @@ namespace WebSiteMjr.Tests.Integration.Controllers
                 NewPassword = ""
             };
 
-            var result = _accountController.ChangePassword(localPasswordModel) as RedirectToRouteResult;
+            var result = _accountController.ChangePassword(localPasswordModel);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("MyProfile", result.RouteValues["action"]);
+            Assert.AreEqual("A senha antiga digitada parece estar incorreta.", _accountController.ModelState[""].Errors[0].ErrorMessage);
+        }
+
+        [TestMethod]
+        public void Given_A_Valid_Password_And_A_Valid_New_Password_And_A_Inexisting_User_When_Changing_Password_Then_Return_Error_Message()
+        {
+            var salt = "/eYHK+MXIeHmZOgbffphWQ==";
+            string oldPassword = new DefaultSecurityEncoder().Encode("senha", salt);
+
+            _principalMock.Setup(x => x.Identity.Name).Returns("teste");
+
+            _accountController.ControllerContext = _controllerContextMock.Object;
+
+            var localPasswordModel = new LocalPasswordModel
+            {
+                OldPassword = "",
+                NewPassword = ""
+            };
+
+            var result = _accountController.ChangePassword(localPasswordModel);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Problemas ao trocar a senha.", _accountController.ModelState[""].Errors[0].ErrorMessage);
         }
     }
 }
