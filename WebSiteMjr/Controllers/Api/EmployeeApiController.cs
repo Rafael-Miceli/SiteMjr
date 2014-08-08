@@ -22,7 +22,7 @@ namespace WebSiteMjr.Controllers.Api
         [AcceptVerbs("GET", "HEAD")]
         public bool GetEmployeeUser(string employeeId)
         {
-            return _membershipService.FindUserByEmployeeId(int.Parse(employeeId)) != null;
+            return _membershipService.FindActiveUserByEmployeeId(int.Parse(employeeId)) != null;
         }
     }
 }

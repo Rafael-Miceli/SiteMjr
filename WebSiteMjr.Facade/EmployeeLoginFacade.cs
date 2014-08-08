@@ -120,7 +120,18 @@ namespace WebSiteMjr.Facade
 
         public void DeleteEmployee(object employeeId)
         {
-            _employeeService.DeleteEmployee(employeeId);
+            using (var scope = new TransactionScope())
+            {
+                _employeeService.DeleteEmployee(employeeId);
+
+                var user = _membershipService.FindActiveUserByEmployeeId((int) employeeId);
+
+                _membershipService.InactiveUser(user);
+
+                Commit();
+
+                scope.Complete();
+            }
         }
 
         protected override void SendLoginViaEmailToEmployee(string password, Employee employee)

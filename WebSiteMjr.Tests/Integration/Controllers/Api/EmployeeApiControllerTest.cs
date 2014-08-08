@@ -50,7 +50,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers.Api
                 Id = 1
             });
 
-            _flexMembershipRepositoryMock.Setup(x => x.GetUserByEmployeeId(1)).Returns(new User
+            _flexMembershipRepositoryMock.Setup(x => x.GetActiveUserByEmployeeId(1)).Returns(new User
             {
                 Id = 1,
                 Username = "Rafael"

@@ -46,9 +46,15 @@ namespace WebSiteMjr.Domain.services.Membership
             return password;
         }
 
-        public User FindUserByEmployeeId(int id)
+        public User FindActiveUserByEmployeeId(int id)
         {
-            return _membershipProvider.FindUserByEmployeeId(id);
+            return _membershipProvider.FindActiveUserByEmployeeId(id);
+        }
+
+        public void InactiveUser(User user)
+        {
+            user.StatusUser = StatusUser.Unactive;
+            _membershipProvider.UpdateAccount(user);
         }
 
         private void DefineAccountRole(User user, bool isMjrCompany)

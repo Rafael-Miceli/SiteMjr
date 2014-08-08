@@ -198,5 +198,22 @@ namespace WebSiteMjr.Tests.Integration.Controllers
             Assert.IsNotNull(result);
             Assert.IsFalse(((IEnumerable<Employee>)result.Model).Any(em => em.Company.Id != UserDummies.ReturnOneMjrActiveUser().Employee.Company.Id));
         }
+
+        [TestMethod]
+        public void Given_A_Request_To_Delete_An_Employee_When_Deleting_Employee_Then_Delete_Inactive_Employee_And_Inactive_User_Associated_To_Employee()
+        {
+            var user = UserDummies.ReturnOneMjrActiveUser();
+
+            _flexMembershipRepositoryMock.Setup(x => x.GetActiveUserByEmployeeId(It.IsAny<int>())).Returns(user);
+            _flexMembershipRepositoryMock.Setup(x => x.Save(It.IsAny<User>()));
+
+            var result = _employeeController.DeleteConfirmed(EmployeeDummies.CreateListOfEmployees().First()) as RedirectToRouteResult;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+
+            _flexMembershipRepositoryMock.VerifyAll();
+        }
+
     }
 }

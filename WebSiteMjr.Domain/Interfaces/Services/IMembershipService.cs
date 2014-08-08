@@ -16,6 +16,7 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         User GetLoggedUser(string name);
         MjrAppRole GetUserRole(string userName);
         string CreateAccountAndReturnPassword(User user, bool isMjrCompany);
-        User FindUserByEmployeeId(int id);
+        User FindActiveUserByEmployeeId(int id);
+        void InactiveUser(User user);
     }
 }

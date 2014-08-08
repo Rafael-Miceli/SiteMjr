@@ -83,7 +83,7 @@ namespace FlexProviders.Membership
         public void CreateAccount(User user)
         {
             IFlexMembershipUser existingUser = _membershipRepository.GetUserByUsername(user.Username);
-            if (existingUser != null)
+            if (existingUser != null && existingUser.StatusUser == StatusUser.Active)
             {
                 throw new FlexMembershipException(FlexMembershipStatus.DuplicateUserName);
             }
@@ -223,9 +223,9 @@ namespace FlexProviders.Membership
             return System.Web.Security.Membership.GeneratePassword(10, 2);
         }
 
-        public User FindUserByEmployeeId(int id)
+        public User FindActiveUserByEmployeeId(int id)
         {
-            return _membershipRepository.GetUserByEmployeeId(id);
+            return _membershipRepository.GetActiveUserByEmployeeId(id);
         }
 
         #endregion
