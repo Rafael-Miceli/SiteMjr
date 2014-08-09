@@ -94,7 +94,17 @@ namespace WebSiteMjr.Facade
         {
             var employeeInstance = _employeeService.FindEmployee(employee.Id);
 
+            UpdateEmployeeFields(employee, employeeInstance);
+
             CreateOrUpdateEmployee_CreateLogin(employeeInstance, UpdateEmployee);
+        }
+
+        private void UpdateEmployeeFields(Employee employeeViewModel, Employee employeeInstance)
+        {
+            employeeInstance.Email = employeeViewModel.Email;
+            employeeInstance.Name = employeeViewModel.Name;
+            employeeInstance.LastName = employeeViewModel.LastName;
+            employeeInstance.Phone = employeeViewModel.Phone;
         }
 
         public IEnumerable<Employee> ListEmployeesFromCompanyNotDeleted(int companyId)

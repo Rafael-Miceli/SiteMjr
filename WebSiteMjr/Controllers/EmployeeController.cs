@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
-using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Exceptions;
-using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Facade;
 using WebSiteMjr.Filters;
