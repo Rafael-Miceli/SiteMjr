@@ -118,7 +118,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         }
 
         [TestMethod]
-        public void Given_A_Valid_Employee_Data_When_Creating_Login_For_Existent_Employee_Then_Should_Create_New_User_For_Employee_And_Send_An_Email_To_Created_Employee()
+        public void Given_A_Valid_Employee_Data_When_Creating_Login_For_Existent_Employee_Then_Should_Create_New_User_For_Employee_And_Send_An_Email_To_Updated_Employee()
         {
 
             var employee = new Employee
@@ -143,6 +143,86 @@ namespace WebSiteMjr.Tests.Integration.Controllers
             _flexRoleStoreMock.VerifyAll();
             _emailServiceMock.VerifyAll();
             _flexMembershipRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void Given_A_Valid_Employee_Data_When_Creating_Login_For_Existent_Employee_That_Had_No_Email_Then_Should_Update_Employee_Email_And_Create_New_User_For_Employee_And_Send_An_Email_To_Updated_Employee()
+        {
+
+            var employee = new Employee
+            {
+                Name = "Quezia",
+                LastName = "Mello",
+                Email = "rafael.miceli@hotmail.com",
+                Company = CompanyDummies.CreateMjrCompany()
+            };
+
+            var employeeInDb = new Employee
+            {
+                Name = "Quezia",
+                LastName = "Mello",
+                Company = CompanyDummies.CreateMjrCompany()
+            };
+
+            _emailServiceMock.Setup(x => x.SendFirstLoginToEmployee(It.IsAny<string>(), employee.Email, employee.Name, employee.LastName));
+            _employeeRepositoryMock.Setup((x => x.GetById(It.IsAny<object>()))).Returns(employeeInDb);
+            _flexMembershipRepositoryMock.Setup(x => x.GetUserByUsername(employee.Email)).Returns((User)null);
+            _flexMembershipRepositoryMock.Setup(x => x.Add(It.IsAny<User>()));
+
+            var result = _employeeController.CreateLoginForExistentEmployee(employee) as RedirectToRouteResult;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+            AssertUpdatedEmployeeFields(employee, employeeInDb);
+
+            _employeeRepositoryMock.VerifyAll();
+            _flexRoleStoreMock.VerifyAll();
+            _emailServiceMock.VerifyAll();
+            _flexMembershipRepositoryMock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void Given_A_Valid_Employee_Data_When_Creating_Login_For_Existent_Employee_Then_Should_Update_Employee_Datas_And_Create_New_User_For_Employee_And_Send_An_Email_To_Updated_Employee()
+        {
+
+            var employee = new Employee
+            {
+                Name = "Quezia",
+                LastName = "Miceli",
+                Email = "rafael.miceli@hotmail.com",
+                Phone = "(21) 98802-3922"
+            };
+
+            var employeeInDb = new Employee
+            {
+                Name = "Quezia",
+                LastName = "Mello",
+                Company = CompanyDummies.CreateMjrCompany()
+            };
+
+            _emailServiceMock.Setup(x => x.SendFirstLoginToEmployee(It.IsAny<string>(), employee.Email, employee.Name, employee.LastName));
+            _employeeRepositoryMock.Setup((x => x.GetById(It.IsAny<object>()))).Returns(employeeInDb);
+            _flexMembershipRepositoryMock.Setup(x => x.GetUserByUsername(employee.Email)).Returns((User)null);
+            _flexMembershipRepositoryMock.Setup(x => x.Add(It.IsAny<User>()));
+
+            var result = _employeeController.CreateLoginForExistentEmployee(employee) as RedirectToRouteResult;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+            AssertUpdatedEmployeeFields(employee, employeeInDb);
+
+            _employeeRepositoryMock.VerifyAll();
+            _flexRoleStoreMock.VerifyAll();
+            _emailServiceMock.VerifyAll();
+            _flexMembershipRepositoryMock.VerifyAll();
+        }
+
+        private void AssertUpdatedEmployeeFields(Employee employee, Employee employeeInDb)
+        {
+            Assert.AreEqual(employee.Phone, employeeInDb.Phone);
+            Assert.AreEqual(employee.Name, employeeInDb.Name);
+            Assert.AreEqual(employee.LastName, employeeInDb.LastName);
+            Assert.AreEqual(employee.Email, employeeInDb.Email);
         }
 
         [TestMethod]
