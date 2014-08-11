@@ -57,6 +57,12 @@ namespace WebSiteMjr.Domain.services.Membership
             _membershipProvider.UpdateAccount(user);
         }
 
+        public void DeleteAccount(object userId)
+        {
+            _membershipProvider.DeleteAccount(userId);
+            _unitOfWork.Save();
+        }
+
         private void DefineAccountRole(User user, bool isMjrCompany)
         {
             user.Roles = isMjrCompany ? _roleService.GetRole_MjrUser_ForEmployee() : _roleService.GetRole_User_ForEmployee();
@@ -76,7 +82,12 @@ namespace WebSiteMjr.Domain.services.Membership
 
         public bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            return _membershipProvider.ChangePassword(username, oldPassword, newPassword);
+            var changed = _membershipProvider.ChangePassword(username, oldPassword, newPassword);
+
+            if (changed)
+                _unitOfWork.Save();
+
+            return changed;
         }
 
         public void SetLocalPassword(string username, string newPassword)

@@ -18,5 +18,6 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         string CreateAccountAndReturnPassword(User user, bool isMjrCompany);
         User FindActiveUserByEmployeeId(int id);
         void InactiveUser(User user);
+        void DeleteAccount(object userId); 
     }
 }

@@ -228,6 +228,11 @@ namespace FlexProviders.Membership
             return _membershipRepository.GetActiveUserByEmployeeId(id);
         }
 
+        public void DeleteAccount(object userId)
+        {
+            _membershipRepository.Remove(userId);
+        }
+
         #endregion
 
         #region IFlexOAuthProvider Members

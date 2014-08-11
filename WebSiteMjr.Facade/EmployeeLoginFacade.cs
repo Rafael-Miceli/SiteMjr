@@ -136,7 +136,7 @@ namespace WebSiteMjr.Facade
 
                 var user = _membershipService.FindActiveUserByEmployeeId((int) employeeId);
 
-                _membershipService.InactiveUser(user);
+                _membershipService.DeleteAccount(user.Id);
 
                 Commit();
 
