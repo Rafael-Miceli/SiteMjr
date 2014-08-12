@@ -57,7 +57,6 @@ namespace WebSiteMjr
             container.RegisterType<IHolderService, HolderService>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IMembershipService, MembershipService>();
-            container.RegisterType<ICacheService, CacheService>();
 
             //Facade Instances
             container.RegisterType<IEmployeeLoginFacade, EmployeeLoginFacade>();

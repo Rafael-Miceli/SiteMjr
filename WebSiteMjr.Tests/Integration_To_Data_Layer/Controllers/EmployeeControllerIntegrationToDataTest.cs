@@ -56,8 +56,7 @@ namespace WebSiteMjr.Tests.Integration_To_Data_Layer.Controllers
             _employeeController = new EmployeeController(
                 new EmployeeLoginFacade(
                     new EmployeeService(new EmployeeRepository(personUoW), personUoW)
-                    , _membershipService, new EmailService(), personUoW),
-                    _cacheServiceMock.Object);
+                    , _membershipService, new EmailService(), personUoW));
                 //new EmployeeController(new EmployeeService(new EmployeeRepository(personUoW), _membershipService, new EmailService(), personUoW), _cacheServiceMock.Object, _membershipService);
         }
 
@@ -75,7 +74,6 @@ namespace WebSiteMjr.Tests.Integration_To_Data_Layer.Controllers
             };
 
             _membershipServiceMock.Setup(x => x.GetLoggedUser("teste")).Returns(UserDummies.ReturnOneMjrActiveUser());
-            _cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>())).Returns(UserDummies.ReturnOneMjrActiveUser());
 
             _flexRoleStoreMock.Setup(x => x.GetAllRoles()).Returns(RoleDummies.ReturnAllRoles());
 

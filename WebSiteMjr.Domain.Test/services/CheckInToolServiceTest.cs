@@ -32,7 +32,7 @@ namespace WebSiteMjr.Domain.Test.services
 
             _companyServiceMock = new Mock<ICompanyService>();
             _companyServiceMock.Setup(x => x.ExistsCheckinOfToolInCompany(It.IsIn(4, 6)))
-                .Returns(() => company)
+                .Returns(company)
                 .Callback(() => new Company
                 {
                     Id = 6,

@@ -13,19 +13,18 @@ namespace WebSiteMjr.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeLoginFacade _employeeLoginFacade;
-        private readonly ICacheService _cacheService;
 
-        public EmployeeController(IEmployeeLoginFacade employeeLoginFacade, ICacheService cacheService)
+        public EmployeeController(IEmployeeLoginFacade employeeLoginFacade)
         {
             _employeeLoginFacade = employeeLoginFacade;
-            _cacheService = cacheService;
         }
 
         //
         // GET: /Employee/
         public ActionResult Index()
         {
-            var employeeCompanyId = _cacheService.Get("User", () => _employeeLoginFacade.GetLoggedUser(User.Identity.Name)).Employee.Company.Id;
+            var employeeCompanyId = _employeeLoginFacade.GetLoggedUser(User.Identity.Name).Employee.Company.Id;
+
             return View(_employeeLoginFacade.ListEmployeesFromCompanyNotDeleted(employeeCompanyId));
         }
 
@@ -60,7 +59,7 @@ namespace WebSiteMjr.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var employeeCompany = _cacheService.Get("User", () => _employeeLoginFacade.GetLoggedUser(User.Identity.Name)).Employee.Company;
+                    var employeeCompany = _employeeLoginFacade.GetLoggedUser(User.Identity.Name).Employee.Company;
 
                     if (employee.GenerateLogin)
                     {

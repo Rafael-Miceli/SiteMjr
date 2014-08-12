@@ -19,17 +19,18 @@ namespace WebSiteMjr.Controllers
     {
 
         private readonly IMembershipService _membershipService;
-        private readonly ICacheService _cacheService;
 
-        public AccountController(IMembershipService membership, ICacheService cacheService)
+        public AccountController(IMembershipService membership)
         {
             _membershipService = membership;
-            _cacheService = cacheService;
         }
 
         public ActionResult MyProfile()
         {
-            var user = _cacheService.Get("User", () => _membershipService.GetLoggedUser(User.Identity.Name));
+            var user = _membershipService.GetLoggedUser(User.Identity.Name);
+
+            if (user == null)
+                return LogOff();
 
             var profile = new MyProfile
             {
@@ -46,8 +47,11 @@ namespace WebSiteMjr.Controllers
         [AllowAnonymous]
         public ActionResult UserInformations()
         {
+            var user = _membershipService.GetLoggedUser(User.Identity.Name);
 
-            var user = _cacheService.Get("User", () => _membershipService.GetLoggedUser(User.Identity.Name));
+            if (user == null)
+                _membershipService.Logout();
+            
             return PartialView("_LoginPartial", user);
         }
 
@@ -104,7 +108,6 @@ namespace WebSiteMjr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            _cacheService.Remove("User");
             _membershipService.Logout();
 
             return RedirectToAction("Index", "Home");
@@ -188,7 +191,6 @@ namespace WebSiteMjr.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[FlexAuthorize(Roles = "MjrAdmin, MjrUser, User")]
         public ActionResult Manage(LocalPasswordModel model)
         {
             return View(model);
@@ -235,50 +237,6 @@ namespace WebSiteMjr.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });
         }
-
-        //
-        // POST: /Account/ExternalLoginConfirmation
-
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
-        //{
-        //    string provider;
-        //    string providerUserId;
-
-        //    if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
-        //    {
-        //        return RedirectToAction("Manage");
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Insert a new user into the database
-        //        using (var db = new UsersContext())
-        //        {
-        //            UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-        //            // Check if user already exists
-        //            if (user == null)
-        //            {
-        //                // Insert name into the profile table
-        //                db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
-        //                db.SaveChanges();
-
-        //                OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
-        //                OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
-
-        //                return RedirectToLocal(returnUrl);
-        //            }
-
-        //            ModelState.AddModelError("UserName", "Este login já existe. por favor verifique se este login não ja está vinculado a outra empresa.");
-        //        }
-        //    }
-
-        //    ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
-        //    ViewBag.ReturnUrl = returnUrl;
-        //    return View(model);
-        //}
 
         //
         // GET: /Account/ExternalLoginFailure

@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Principal;
+using System.Web;
+using System.Web.Routing;
 using FlexProviders.Membership;
 using FlexProviders.Roles;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -32,7 +35,6 @@ namespace WebSiteMjr.Tests.Integration.Controllers
     {
         private Mock<IEmployeeRepository> _employeeRepositoryMock;
         private Mock<IUnitOfWork> _unitOfWorkMock;
-        private Mock<ICacheService> _cacheServiceMock;
         private EmployeeController _employeeController;
         private IMembershipService _membershipService;
         private Mock<IApplicationEnvironment> _applicationEnvironmentMock;
@@ -41,12 +43,16 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         private MjrAppRoleService _roleService;
         private Mock<IEmailService> _emailServiceMock;
 
+        private UrlHelper _urlHelperMock;
+        private Mock<IPrincipal> _principalMock;
+        private Mock<ControllerContext> _controllerContextMock;
+
         [TestInitialize]
         public void Initialize()
         {
+
             _employeeRepositoryMock = new Mock<IEmployeeRepository>();
             _unitOfWorkMock = new Mock<IUnitOfWork>();
-            _cacheServiceMock = new Mock<ICacheService>();
 
             _flexMembershipRepositoryMock = new Mock<IFlexMembershipRepository>();
             _applicationEnvironmentMock = new Mock<IApplicationEnvironment>();
@@ -57,11 +63,23 @@ namespace WebSiteMjr.Tests.Integration.Controllers
 
             _roleService = new MjrAppRoleService(new FlexRoleProvider(_flexRoleStoreMock.Object));
             _membershipService = new MembershipService(new FlexMembershipProvider(_flexMembershipRepositoryMock.Object, _applicationEnvironmentMock.Object), _roleService, new StubUnitOfWork());
+
+            _principalMock = new Mock<IPrincipal>();
+
+            var httpContextBaseMock = new Mock<HttpContextBase>();
+            httpContextBaseMock.Setup(x => x.User).Returns(_principalMock.Object);
+
+            _controllerContextMock = new Mock<ControllerContext>();
+            _controllerContextMock.Setup(x => x.HttpContext).Returns(httpContextBaseMock.Object);
+
+            var requestContextMock = new RequestContext { HttpContext = httpContextBaseMock.Object };
+            _urlHelperMock = new UrlHelper(requestContextMock);
+
             _employeeController = new EmployeeController(
                 new EmployeeLoginFacade(
                     new EmployeeService(_employeeRepositoryMock.Object, _unitOfWorkMock.Object)
-                    , _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object),
-                    _cacheServiceMock.Object);
+                    , _membershipService, _emailServiceMock.Object, _unitOfWorkMock.Object)) { Url = _urlHelperMock };
+            _employeeController.Url = _urlHelperMock;
         }
 
         [TestMethod]
@@ -75,18 +93,23 @@ namespace WebSiteMjr.Tests.Integration.Controllers
                 GenerateLogin = true
             };
 
-            _cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>())).Returns(UserDummies.ReturnOneMjrActiveUser());
             _flexRoleStoreMock.Setup(x => x.GetAllRoles()).Returns(RoleDummies.ReturnAllRoles());
             _emailServiceMock.Setup(x => x.SendFirstLoginToEmployee(It.IsAny<string>(), createEmployeeViewModel.Email, createEmployeeViewModel.Name, createEmployeeViewModel.LastName));
             _employeeRepositoryMock.Setup(x => x.Add(It.IsAny<Employee>()));
             _flexMembershipRepositoryMock.Setup(x => x.Add(It.IsAny<User>()));
+            _flexMembershipRepositoryMock.SetupSequence(x => x.GetUserByUsername(It.IsAny<string>()))
+                .Returns(UserDummies.ReturnOneMjrActiveUser())
+                .Returns(null);
+
+            _principalMock.Setup(x => x.Identity.Name).Returns(createEmployeeViewModel.Email);
+
+            _employeeController.ControllerContext = _controllerContextMock.Object;
 
             var result = _employeeController.Create(createEmployeeViewModel) as RedirectToRouteResult;
 
             Assert.IsNotNull(result);
             Assert.AreEqual("Index", result.RouteValues["action"]);
             
-            _cacheServiceMock.VerifyAll();
             _flexRoleStoreMock.VerifyAll();
             _emailServiceMock.VerifyAll();
             _employeeRepositoryMock.VerifyAll();
@@ -104,16 +127,18 @@ namespace WebSiteMjr.Tests.Integration.Controllers
                 GenerateLogin = true
             };
 
-            _cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>())).Returns(UserDummies.ReturnOneMjrActiveUser());
             _emailServiceMock.Setup(x => x.SendFirstLoginToEmployee(It.IsAny<string>(), createEmployeeViewModel.Email, createEmployeeViewModel.Name, createEmployeeViewModel.LastName));
-            _flexMembershipRepositoryMock.Setup(x => x.GetUserByUsername(createEmployeeViewModel.Email)).Returns(UserDummies.ReturnOneMjrActiveUser);
+            _flexMembershipRepositoryMock.Setup(x => x.GetUserByUsername(It.IsAny<string>())).Returns(UserDummies.ReturnOneMjrActiveUser);
+
+            _principalMock.Setup(x => x.Identity.Name).Returns(createEmployeeViewModel.Email);
+
+            _employeeController.ControllerContext = _controllerContextMock.Object;
 
             var result = _employeeController.Create(createEmployeeViewModel);
 
             Assert.IsNotNull(result);
             Assert.AreEqual("Este E-mail já existe para outro funcionário", _employeeController.ModelState["EmailExists"].Errors[0].ErrorMessage);
 
-            _cacheServiceMock.VerifyAll();
             _flexMembershipRepositoryMock.VerifyAll();
         }
 
@@ -267,16 +292,25 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         [TestMethod]
         public void Given_A_Request_To_List_All_Active_Users_From_The_Company_Who_Is_Requesting_When_Requesting_Then_Should_Return_All_Active_Users_From_That_Company()
         {
-            //TODO Need to create unit test to return of employees from on company
+            _employeeRepositoryMock.Setup(x => x.GetAllEmployeesFromCompanyNotDeleted(It.IsAny<int>())).Returns(_employeeRepositoryMock.Object.GetAll());
+            _flexMembershipRepositoryMock.Setup(x => x.GetUserByUsername(It.IsAny<string>())).Returns(UserDummies.ReturnOneMjrActiveUser);
 
-            _cacheServiceMock.Setup(x => x.Get("User", It.IsAny<Func<User>>())).Returns(UserDummies.ReturnOneMjrActiveUser());
-            _employeeRepositoryMock.Setup(x => x.GetAll()).Returns(EmployeeDummies.CreateListOfEmployees());
+            _principalMock.Setup(x => x.Identity.Name).Returns("teste");
+
+            _employeeController.ControllerContext = _controllerContextMock.Object;
 
             var result = _employeeController.Index() as ViewResult;
 
 
             Assert.IsNotNull(result);
-            Assert.IsFalse(((IEnumerable<Employee>)result.Model).Any(em => em.Company.Id != UserDummies.ReturnOneMjrActiveUser().Employee.Company.Id));
+            Assert.IsFalse(IsAnyEmployeeNotFromTheSameCompany(result));
+            _flexMembershipRepositoryMock.VerifyAll();
+            _employeeRepositoryMock.VerifyAll();
+        }
+
+        private static bool IsAnyEmployeeNotFromTheSameCompany(ViewResult result)
+        {
+            return ((IEnumerable<Employee>)result.Model).Any(em => em.Company.Id != UserDummies.ReturnOneMjrActiveUser().Employee.Company.Id);
         }
 
         [TestMethod]

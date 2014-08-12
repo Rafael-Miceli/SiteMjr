@@ -22,7 +22,6 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         private IMembershipService _membershipService;
         private Mock<IFlexMembershipRepository> _flexMembershipRepository;
         private Mock<IApplicationEnvironment> _applicationEnvironment;
-        private Mock<ICacheService> _cacheServiceMock;
         private UrlHelper _urlHelperMock;
         private AccountController _accountController;
         private Mock<IPrincipal> _principalMock;
@@ -35,7 +34,6 @@ namespace WebSiteMjr.Tests.Integration.Controllers
 
             _flexMembershipRepository = new Mock<IFlexMembershipRepository>();
             _applicationEnvironment = new Mock<IApplicationEnvironment>();
-            _cacheServiceMock = new Mock<ICacheService>();
 
             var httpContextBaseMock = new Mock<HttpContextBase>();
             httpContextBaseMock.Setup(x => x.User).Returns(_principalMock.Object);
@@ -49,7 +47,7 @@ namespace WebSiteMjr.Tests.Integration.Controllers
             _membershipService =
                 new MembershipService(new FlexMembershipProvider(_flexMembershipRepository.Object, _applicationEnvironment.Object), null, new StubUnitOfWork());
 
-            _accountController = new AccountController(_membershipService, _cacheServiceMock.Object) { Url = _urlHelperMock };
+            _accountController = new AccountController(_membershipService) { Url = _urlHelperMock };
         }
 
         [TestMethod]
@@ -208,9 +206,6 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         [TestMethod]
         public void Given_A_Valid_Password_And_A_Valid_New_Password_And_A_Inexisting_User_When_Changing_Password_Then_Return_Error_Message()
         {
-            var salt = "/eYHK+MXIeHmZOgbffphWQ==";
-            string oldPassword = new DefaultSecurityEncoder().Encode("senha", salt);
-
             _principalMock.Setup(x => x.Identity.Name).Returns("teste");
 
             _accountController.ControllerContext = _controllerContextMock.Object;
