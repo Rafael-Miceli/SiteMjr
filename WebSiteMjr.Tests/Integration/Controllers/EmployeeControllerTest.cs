@@ -280,12 +280,12 @@ namespace WebSiteMjr.Tests.Integration.Controllers
         }
 
         [TestMethod]
-        public void Given_A_Request_To_Delete_An_Employee_When_Deleting_Employee_Then_Delete_Inactive_Employee_And_Inactive_User_Associated_To_Employee()
+        public void Given_A_Request_To_Delete_An_Employee_When_Deleting_Employee_Then_Inactive_Employee_And_Delete_User_Associated_To_Employee()
         {
             var user = UserDummies.ReturnOneMjrActiveUser();
 
             _flexMembershipRepositoryMock.Setup(x => x.GetActiveUserByEmployeeId(It.IsAny<int>())).Returns(user);
-            _flexMembershipRepositoryMock.Setup(x => x.Save(It.IsAny<User>()));
+            _flexMembershipRepositoryMock.Setup(x => x.Remove(It.IsAny<int>()));
 
             var result = _employeeController.DeleteConfirmed(EmployeeDummies.CreateListOfEmployees().First()) as RedirectToRouteResult;
 
