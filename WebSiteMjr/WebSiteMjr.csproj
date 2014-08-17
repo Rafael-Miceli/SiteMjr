@@ -199,6 +199,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\CustomerService\CustomerServiceAreaRegistration.cs" />
     <Compile Include="Controllers\Api\EmployeeApiController.cs" />
     <Compile Include="Controllers\Api\CompanyApiController.cs" />
     <Compile Include="Controllers\Api\ToolApiController.cs" />
@@ -329,6 +330,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Areas\CustomerService\Views\Web.config" />
     <None Include="Properties\PublishProfiles\mjr %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - FTP %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - FTP.pubxml" />
@@ -479,6 +481,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\CustomerService\Controllers\" />
+    <Folder Include="Areas\CustomerService\Models\" />
+    <Folder Include="Areas\CustomerService\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
