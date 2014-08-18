@@ -24,10 +24,10 @@
                 </div>
                 <div class="float-right">
                     <section id="login">
-                        @Html.Action("UserInformations", "Account")
+                        @Html.Action("UserInformations", "Account", new { area = "" })
                     </section>
                     <nav>
-                        @Html.Action("Menu", "Account")
+                        @Html.Action("Menu", "Account", new { area = "" })
                     </nav>
                 </div>
             </div>
