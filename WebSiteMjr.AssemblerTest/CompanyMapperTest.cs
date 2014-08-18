@@ -63,7 +63,7 @@ namespace WebSiteMjr.AssemblerTest
             //Arrange
             var companyServiceMock = new Mock<ICompanyService>();
             var CompanyAreaServiceMock = new Mock<ICompanyAreasService>();
-            var dummieCompany = CompanyDummies.CreateOneCompanyWithCompanyArea();
+            var dummieCompany = CompanyDummies.CreatePortoveranoWithCompanyArea();
             var dummieToolsLocaliations = CompanyAreasDummies.CreateListOfCompanyAreas();
 
             companyServiceMock.Setup(x => x.FindCompany(It.IsAny<Company>())).Returns(dummieCompany);

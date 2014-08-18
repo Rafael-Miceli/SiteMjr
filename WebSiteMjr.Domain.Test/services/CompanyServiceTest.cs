@@ -84,7 +84,7 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_List_CompanyAreas_From_Selected_Company()
         {
             //Arrange
-            var company = CompanyDummies.CreateOneCompanyWithCompanyArea();
+            var company = CompanyDummies.CreatePortoveranoWithCompanyArea();
 
             var companyRepositoryMock = new Mock<ICompanyRepository>();
             companyRepositoryMock.Setup(x => x.GetCompanyByName(company.Name)).Returns(company);
@@ -103,7 +103,7 @@ namespace WebSiteMjr.Domain.Test.services
         public void Should_Return_Nothing_When_Dont_Exists_CompanyAreas_From_Selected_Company()
         {
             //Arrange
-            var company = CompanyDummies.CreateOneCompanyWithCompanyArea();
+            var company = CompanyDummies.CreatePortoveranoWithCompanyArea();
 
             var companyRepositoryMock = new Mock<ICompanyRepository>();
             companyRepositoryMock.Setup(x => x.GetCompanyByName(company.Name)).Returns(company);

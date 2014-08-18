@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebSiteMjr.Domain.Model.CustomerService;
 
 namespace WebSiteMjr.Domain.Model
 {
@@ -10,8 +11,8 @@ namespace WebSiteMjr.Domain.Model
         
         public virtual string Address { get; set; }
         public virtual string City { get; set; }
-        [RegularExpression(@"^(\([0-9][0-9]\) [0-9]{4}-[0-9]{4})|(\(1[2-9]\) [5-9][0-9]{3}-[0-9]{4})|(\([2-9][1-9]\) [5-9][0-9]{3}-[0-9]{4})$",
-                           ErrorMessage = "Telefone Inválido")]
+
+        [RegularExpression(@"^(\([0-9][0-9]\) [0-9]{4}-[0-9]{4})|(\(1[2-9]\) [5-9][0-9]{3}-[0-9]{4})|(\([2-9][1-9]\) [5-9][0-9]{3}-[0-9]{4})$", ErrorMessage = "Telefone Inválido")]
         public virtual string Phone { get; set; }
 
         private ICollection<CompanyArea> _companyAreas;
@@ -28,6 +29,8 @@ namespace WebSiteMjr.Domain.Model
         }
 
         public virtual ICollection<Employee> Employees { get; set; }
+
+        public ICollection<ServiceType> ServiceTypes { get; set; }
 
         [NotMapped]
         public override string ObjectName

@@ -91,7 +91,7 @@ namespace WebSiteMjr.Domain.Test.Model
             };
         }
 
-        public static Company CreateOneCompanyWithCompanyArea()
+        public static Company CreatePortoveranoWithCompanyArea()
         {
             return new Company
             {

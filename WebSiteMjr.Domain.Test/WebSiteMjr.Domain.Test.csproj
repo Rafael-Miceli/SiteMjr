@@ -84,6 +84,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CustomerService\CallTests.cs" />
     <Compile Include="Model\CheckinToolDummies.cs" />
     <Compile Include="Model\CompanyDumies.cs" />
     <Compile Include="Model\CompanyAreasDummies.cs" />
