@@ -15,7 +15,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
             var portoverano = CompanyDummies.CreatePortoveranoWithCompanyArea();
             var companyAreasWithProblem = portoverano.CompanyAreas.Take(2);
             var dateOfTheCall = new DateTime(2014, 08, 02, 14, 25, 00);
-            var problemType = ProblemTypeDummies.CreateProblemWithCameras();
+            var problemType = ServiceTypeDummies.CreateProblemWithCameras();
 
 
             var call = new Call
@@ -30,7 +30,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
         }
     }
 
-    public static class ProblemTypeDummies
+    public static class ServiceTypeDummies
     {
         public static ServiceType CreateProblemWithCameras()
         {
