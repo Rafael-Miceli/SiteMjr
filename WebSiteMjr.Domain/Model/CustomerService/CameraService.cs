@@ -1,7 +1,8 @@
 ﻿namespace WebSiteMjr.Domain.Model.CustomerService
 {
-    public class Camera : ServiceType
+    public class CameraService : ServiceType
     {
         public override string Details { get; set; }
+
     }
 }

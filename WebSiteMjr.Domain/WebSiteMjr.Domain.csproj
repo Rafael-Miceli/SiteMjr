@@ -87,7 +87,7 @@
     <Compile Include="Interfaces\Model\IMjrException.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\CustomerService\Call.cs" />
-    <Compile Include="Model\CustomerService\Camera.cs" />
+    <Compile Include="Model\CustomerService\CameraService.cs" />
     <Compile Include="Model\CustomerService\ServiceType.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Holder.cs" />

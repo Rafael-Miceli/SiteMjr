@@ -34,7 +34,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
     {
         public static ServiceType CreateProblemWithCameras()
         {
-            return new Camera
+            return new CameraService
             {
                 Details = "Cameras"
             };
