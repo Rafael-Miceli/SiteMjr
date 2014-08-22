@@ -14,16 +14,15 @@ namespace WebSiteMjr.Domain.Test.CustomerService
         {
             var portoverano = CompanyDummies.CreatePortoveranoWithCompanyArea();
             var companyAreasWithProblem = portoverano.CompanyAreas.Take(2);
-            var dateOfTheCall = new DateTime(2014, 08, 02, 14, 25, 00);
             var serviceType = ServiceTypeDummies.CreateProblemWithCameras();
 
 
             var call = new Call(portoverano, companyAreasWithProblem, "Problema com cameras nesses lugares", 
                 "Problema em cameras", serviceType) ;
 
-            var callService = new CallService(_callRepositoryMock.Object, new StubUnitOfWork());
+            //var callService = new CallService(_callRepositoryMock.Object, new StubUnitOfWork());
 
-
+            
         }
     }
 

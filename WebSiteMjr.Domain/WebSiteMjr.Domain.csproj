@@ -86,9 +86,10 @@
     <Compile Include="Model\CheckinTool.cs" />
     <Compile Include="Interfaces\Model\IMjrException.cs" />
     <Compile Include="Model\Company.cs" />
-    <Compile Include="Model\CustomerService\Call.cs" />
-    <Compile Include="Model\CustomerService\CameraService.cs" />
-    <Compile Include="Model\CustomerService\ServiceType.cs" />
+    <Compile Include="CustomerService\Model\Call.cs" />
+    <Compile Include="CustomerService\Services\CallService.cs" />
+    <Compile Include="CustomerService\Model\CameraServiceModel.cs" />
+    <Compile Include="CustomerService\Model\ServiceType.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Holder.cs" />
     <Compile Include="Model\NullObjects\NullCompanyArea.cs" />
