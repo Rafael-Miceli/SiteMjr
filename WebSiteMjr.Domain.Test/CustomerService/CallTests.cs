@@ -15,18 +15,15 @@ namespace WebSiteMjr.Domain.Test.CustomerService
             var portoverano = CompanyDummies.CreatePortoveranoWithCompanyArea();
             var companyAreasWithProblem = portoverano.CompanyAreas.Take(2);
             var dateOfTheCall = new DateTime(2014, 08, 02, 14, 25, 00);
-            var problemType = ServiceTypeDummies.CreateProblemWithCameras();
+            var serviceType = ServiceTypeDummies.CreateProblemWithCameras();
 
 
-            var call = new Call
-            {
-                Company = portoverano,
-                CompanyAreas = companyAreasWithProblem,
-                Description = "Problema com cameras nesses lugares",
-                Title = "Problema em cameras",
-                DateCreated = dateOfTheCall,
-                ProblemType = problemType
-            };
+            var call = new Call(portoverano, companyAreasWithProblem, "Problema com cameras nesses lugares", 
+                "Problema em cameras", serviceType) ;
+
+            var callService = new CallService(_callRepositoryMock.Object, new StubUnitOfWork());
+
+
         }
     }
 
@@ -34,7 +31,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
     {
         public static ServiceType CreateProblemWithCameras()
         {
-            return new CameraService
+            return new CameraServiceModel
             {
                 Details = "Cameras"
             };

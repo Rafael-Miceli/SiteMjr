@@ -13,9 +13,22 @@ namespace WebSiteMjr.Domain.Model.CustomerService
         public string Description { get; set; }
         public string Title { get; set; }
         public IEnumerable<Employee> EmployeeToResolve { get; set; }
-        public CallStatus Type { get; set; }
+        public CallStatus CallStatus { get; set; }
         public DateTime DateCreated { get; set; }
-        public ServiceType ProblemType { get; set; }
+        public ServiceType ServiceType { get; set; }
+
+        public Call(Company company, IEnumerable<CompanyArea> companyAreas, string description,
+            string title, ServiceType serviceType)
+        {
+            Company = company;
+            CompanyAreas = companyAreas;
+            Description = description;
+            Title = title;
+            ServiceType = serviceType;
+
+            CallStatus = CallStatus.Open;
+            DateCreated = DateTime.Now;
+        }
     }
 
     public enum CallStatus
