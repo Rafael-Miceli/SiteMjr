@@ -56,6 +56,7 @@
     <Compile Include="Exceptions\FlexMembershipException.cs" />
     <Compile Include="Exceptions\ObjectNotExistsException.cs" />
     <Compile Include="Exceptions\ObjectExistsException.cs" />
+    <Compile Include="Interfaces\CustomerService\ICallRepository.cs" />
     <Compile Include="Interfaces\Membership\IApplicationEnvironment.cs" />
     <Compile Include="Interfaces\Membership\IFlexMembershipProvider.cs" />
     <Compile Include="Interfaces\Membership\IFlexMembershipUser.cs" />

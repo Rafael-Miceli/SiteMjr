@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using WebSiteMjr.Domain.Model.CustomerService;
+using WebSiteMjr.Domain.CustomerService.Model;
 
 namespace WebSiteMjr.Domain.Model
 {

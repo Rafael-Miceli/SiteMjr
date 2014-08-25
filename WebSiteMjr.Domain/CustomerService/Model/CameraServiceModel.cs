@@ -1,4 +1,4 @@
-﻿namespace WebSiteMjr.Domain.Model.CustomerService
+﻿namespace WebSiteMjr.Domain.CustomerService.Model
 {
     public class CameraServiceModel : ServiceType
     {

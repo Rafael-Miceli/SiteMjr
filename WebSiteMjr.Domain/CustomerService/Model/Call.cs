@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WebSiteMjr.Domain.Model;
 
-namespace WebSiteMjr.Domain.Model.CustomerService
+namespace WebSiteMjr.Domain.CustomerService.Model
 {
     public class Call
     {
-        public Company Company { get; set; }
-        public IEnumerable<CompanyArea> CompanyAreas { get; set; }
-        public string Description { get; set; }
-        public string Title { get; set; }
-        public IEnumerable<Employee> EmployeeToResolve { get; set; }
-        public CallStatus CallStatus { get; set; }
-        public DateTime DateCreated { get; set; }
-        public ServiceType ServiceType { get; set; }
+        public Company Company { get; private set; }
+        public IEnumerable<CompanyArea> CompanyAreas { get; private set; }
+        public string Description { get; private set; }
+        public string Title { get; private set; }
+        public IEnumerable<Employee> EmployeeToResolve { get; private set; }
+        public CallStatus CallStatus { get; private set; }
+        public DateTime DateCreated { get; private set; }
+        public ServiceType ServiceType { get; private set; }
 
         public Call(Company company, IEnumerable<CompanyArea> companyAreas, string description,
             string title, ServiceType serviceType)
