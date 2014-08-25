@@ -498,6 +498,10 @@
       <Project>{29947E45-7425-4CCE-90C1-2F2D7EF802E1}</Project>
       <Name>Mjr.Extensions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedKernel\SharedKernel.csproj">
+      <Project>{5B1C4599-E5C8-4B98-8205-585F53AB4B2D}</Project>
+      <Name>SharedKernel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr.Assembler\WebSiteMjr.Assembler.csproj">
       <Project>{F1165A12-1F75-4644-8336-A9BDBEBBAF6C}</Project>
       <Name>WebSiteMjr.Assembler</Name>

@@ -4,6 +4,7 @@ using FlexProviders.Aspnet;
 using FlexProviders.Membership;
 using FlexProviders.Roles;
 using Microsoft.Practices.Unity;
+using SharedKernel;
 using Unity.Mvc3;
 using WebSiteMjr.Domain.Interfaces.Role;
 using WebSiteMjr.Domain.Interfaces.Services;
@@ -31,6 +32,7 @@ namespace WebSiteMjr
 
             GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            DomainEvents.Container = container;
         }
 
         private static IUnityContainer BuildUnityContainer()

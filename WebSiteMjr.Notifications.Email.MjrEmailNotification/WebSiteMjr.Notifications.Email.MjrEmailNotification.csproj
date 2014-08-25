@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CallAddedHandler.cs" />
     <Compile Include="EmailService.cs" />
     <Compile Include="EmailTemplates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
