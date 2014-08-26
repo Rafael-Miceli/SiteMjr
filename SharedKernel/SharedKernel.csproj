@@ -48,6 +48,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebSiteMjr.Domain">
+      <HintPath>..\WebSiteMjr\Bin\WebSiteMjr.Domain.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DomainEvents.cs" />
