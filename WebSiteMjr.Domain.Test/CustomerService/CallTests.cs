@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -29,8 +30,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
         {
             var container = new UnityContainer();
 
-            container.RegisterType<IHandle<CallAddedEvent>, CallAddedHandler>();
-            container.RegisterInstance(typeof(IHandle<CallAddedEvent>), new CallAddedHandler());
+            container.RegisterType<IHandle<CallAddedEvent>, CallAddedHandler>("CallAddedEventHandler");
 
             DomainEvents.Container = container;
 
@@ -44,7 +44,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
             var call = new Call(portoverano, companyAreasWithProblem, "Problema com cameras nesses lugares", 
                 "Problema em cameras", serviceType);
 
-            DomainEvents.Register<CallAddedEvent>(c => Console.WriteLine("Teste"));
+            DomainEvents.Register<CallAddedEvent>(null);
 
             var callService = new CallService(_callRepositoryMock.Object, new StubUnitOfWork());
 
