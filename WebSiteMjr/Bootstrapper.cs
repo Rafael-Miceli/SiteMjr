@@ -5,7 +5,9 @@ using FlexProviders.Membership;
 using FlexProviders.Roles;
 using Microsoft.Practices.Unity;
 using SharedKernel;
+using SharedKernel.Interfaces;
 using Unity.Mvc3;
+using WebSiteMjr.Domain.CustomerService.Events;
 using WebSiteMjr.Domain.Interfaces.Role;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model.Membership;
@@ -87,7 +89,14 @@ namespace WebSiteMjr
             container.RegisterInstance(employeeServiceInstance);
             container.RegisterInstance(employeeLoginFacadeInstance);
 
+            RegisterHandlersType(container);
+
             return container;
+        }
+
+        private static void RegisterHandlersType(UnityContainer container)
+        {
+            container.RegisterType<IHandle<CallAddedEvent>, CallAddedHandler>("CallAddedEventHandler");
         }
     }
 }
