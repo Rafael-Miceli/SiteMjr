@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SharedKernel.Interfaces;
 using WebSiteMjr.Domain.CustomerService.Model;
 
 namespace WebSiteMjr.Domain.CustomerService.Events
 {
-    public class CallAddedEvent
+    public class CallAddedEvent : IDomainEvent
     {
         public CallAddedEvent(Call call) : this()
         {

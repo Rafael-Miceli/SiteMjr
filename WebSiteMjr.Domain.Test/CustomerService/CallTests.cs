@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using SharedKernel;
+using SharedKernel.Interfaces;
+using WebSiteMjr.Domain.CustomerService.Events;
 using WebSiteMjr.Domain.CustomerService.Model;
 using WebSiteMjr.Domain.Interfaces.CustomerService;
 using WebSiteMjr.Domain.Test.Model;
+using WebSiteMjr.Notifications.Email.MjrEmailNotification;
 
 namespace WebSiteMjr.Domain.Test.CustomerService
 {
@@ -22,6 +27,13 @@ namespace WebSiteMjr.Domain.Test.CustomerService
         [TestMethod]
         public void Given_A_Valid_Call_When_Client_Called_And_Im_Creating_A_New_Call_Then_Create_In_Database()
         {
+            var container = new UnityContainer();
+
+            container.RegisterType<IHandle<CallAddedEvent>, CallAddedHandler>();
+            container.RegisterInstance(typeof(IHandle<CallAddedEvent>), new CallAddedHandler());
+
+            DomainEvents.Container = container;
+
             _callRepositoryMock.Setup(x => x.Add(It.IsAny<Call>()));
 
             var portoverano = CompanyDummies.CreatePortoveranoWithCompanyArea();
@@ -30,7 +42,9 @@ namespace WebSiteMjr.Domain.Test.CustomerService
 
 
             var call = new Call(portoverano, companyAreasWithProblem, "Problema com cameras nesses lugares", 
-                "Problema em cameras", serviceType) ;
+                "Problema em cameras", serviceType);
+
+            DomainEvents.Register<CallAddedEvent>(c => Console.WriteLine("Teste"));
 
             var callService = new CallService(_callRepositoryMock.Object, new StubUnitOfWork());
 

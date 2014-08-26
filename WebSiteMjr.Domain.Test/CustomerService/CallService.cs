@@ -1,4 +1,5 @@
 ﻿using System;
+using SharedKernel;
 using WebSiteMjr.Domain.CustomerService.Events;
 using WebSiteMjr.Domain.CustomerService.Model;
 using WebSiteMjr.Domain.Interfaces.CustomerService;
@@ -22,7 +23,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
             _callRepository.Add(call);
             _unitOfWork.Save();
 
-            var callAddedEvent = new CallAddedEvent(call);
+            DomainEvents.Raise(new CallAddedEvent(call));
         }
     }
 }
