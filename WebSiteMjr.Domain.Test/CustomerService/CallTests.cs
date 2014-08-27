@@ -8,6 +8,7 @@ using SharedKernel;
 using SharedKernel.Interfaces;
 using WebSiteMjr.Domain.CustomerService.Events;
 using WebSiteMjr.Domain.CustomerService.Model;
+using WebSiteMjr.Domain.CustomerService.Services;
 using WebSiteMjr.Domain.Interfaces.CustomerService;
 using WebSiteMjr.Domain.Test.Model;
 using WebSiteMjr.Notifications.Email.MjrEmailNotification;
