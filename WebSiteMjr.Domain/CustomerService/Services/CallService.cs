@@ -2,6 +2,7 @@
 using WebSiteMjr.Domain.CustomerService.Events;
 using WebSiteMjr.Domain.CustomerService.Model;
 using WebSiteMjr.Domain.Interfaces.CustomerService;
+using WebSiteMjr.Domain.Interfaces.CustomerService.Repository;
 using WebSiteMjr.Domain.Interfaces.Uow;
 
 namespace WebSiteMjr.Domain.CustomerService.Services

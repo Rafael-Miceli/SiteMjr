@@ -142,6 +142,10 @@
       <Project>{41569D90-235E-4C8B-820B-030935D4FBD7}</Project>
       <Name>WebSiteMjr.Notifications.Email.MjrEmailNotification</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebSiteMjr.Notifications.SignalR\WebSiteMjr.Notifications.SignalR.csproj">
+      <Project>{8b1b714d-a70f-466a-8348-ab7e09fd7c55}</Project>
+      <Name>WebSiteMjr.Notifications.SignalR</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr.ViewModels\WebSiteMjr.ViewModels.csproj">
       <Project>{E9694197-221B-4013-8B69-9D2943FD9513}</Project>
       <Name>WebSiteMjr.ViewModels</Name>

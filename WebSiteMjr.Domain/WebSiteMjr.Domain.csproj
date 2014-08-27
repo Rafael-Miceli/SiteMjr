@@ -58,7 +58,7 @@
     <Compile Include="Exceptions\FlexMembershipException.cs" />
     <Compile Include="Exceptions\ObjectNotExistsException.cs" />
     <Compile Include="Exceptions\ObjectExistsException.cs" />
-    <Compile Include="Interfaces\CustomerService\ICallRepository.cs" />
+    <Compile Include="Interfaces\CustomerService\Repository\ICallRepository.cs" />
     <Compile Include="Interfaces\Membership\IApplicationEnvironment.cs" />
     <Compile Include="Interfaces\Membership\IFlexMembershipProvider.cs" />
     <Compile Include="Interfaces\Membership\IFlexMembershipUser.cs" />
@@ -95,9 +95,9 @@
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Holder.cs" />
     <Compile Include="Model\NullObjects\NullCompanyArea.cs" />
+    <Compile Include="Model\Person\IntId.cs" />
     <Compile Include="Model\Stuff.cs" />
     <Compile Include="Model\Membership\FlexMembershipStatus.cs" />
-    <Compile Include="Model\Person\IntId.cs" />
     <Compile Include="Interfaces\Model\IObjectWithState.cs" />
     <Compile Include="Model\Phone.cs" />
     <Compile Include="Model\Membership\User.cs" />

@@ -17,4 +17,11 @@ namespace WebSiteMjr.Domain.Model.Person
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
     }
+
+    public class Key<T>
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public virtual T Id { get; set; }
+    }
 }

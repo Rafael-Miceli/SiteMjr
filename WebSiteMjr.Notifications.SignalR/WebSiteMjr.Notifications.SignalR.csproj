@@ -39,8 +39,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="CallAddedHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharedKernel\SharedKernel.csproj">
+      <Project>{5B1C4599-E5C8-4B98-8205-585F53AB4B2D}</Project>
+      <Name>SharedKernel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebSiteMjr.Domain\WebSiteMjr.Domain.csproj">
+      <Project>{1219ECD0-3C8E-435F-88E1-01DE06D01E74}</Project>
+      <Name>WebSiteMjr.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
