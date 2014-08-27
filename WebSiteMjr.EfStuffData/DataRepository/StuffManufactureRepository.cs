@@ -5,7 +5,7 @@ using WebSiteMjr.EfStuffData.Context;
 
 namespace WebSiteMjr.EfStuffData.DataRepository
 {
-    public class StuffManufactureRepository: GenericStuffRepository<StuffManufacture>, IStuffManufactureRepository
+    public class StuffManufactureRepository: GenericStuffRepository<StuffManufacture, int>, IStuffManufactureRepository
     {
         public StuffManufactureRepository(UnitOfWork<StuffContext> uow): base(uow)
         {}

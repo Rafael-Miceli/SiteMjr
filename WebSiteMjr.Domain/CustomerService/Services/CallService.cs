@@ -18,12 +18,12 @@ namespace WebSiteMjr.Domain.CustomerService.Services
             _unitOfWork = unitOfWork;
         }
 
-        public void CreateCall(Call call)
-        {
-            _callRepository.Add(call);
-            _unitOfWork.Save();
+        //public void CreateCall(Call call)
+        //{
+        //    _callRepository.Add(call);
+        //    _unitOfWork.Save();
 
-            DomainEvents.Raise(new CallAddedEvent(call));
-        }
+        //    DomainEvents.Raise(new CallAddedEvent(call));
+        //}
     }
 }

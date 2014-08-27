@@ -5,7 +5,7 @@ using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model
 {
-    public class StuffManufacture: IntId, IMjrException, IObjectWithState
+    public class StuffManufacture : Key<int>, IMjrException, IObjectWithState
     {
         [Required(ErrorMessage = "Nome é um campo obrigatório")]
         public string Name { get; set; }

@@ -8,7 +8,7 @@ using WebSiteMjr.EfData.DataRepository.GenericRepositorys;
 
 namespace WebSiteMjr.EfData.DataRepository
 {
-    public class HolderRepository : GenericPersonRepository<Holder>, IHolderRepository
+    public class HolderRepository : GenericPersonRepository<Holder, int>, IHolderRepository
     {
         public HolderRepository(UnitOfWork<PersonsContext> uow)
             : base(uow)

@@ -9,7 +9,7 @@ using WebSiteMjr.EfStuffData.Context;
 
 namespace WebSiteMjr.EfStuffData.DataRepository
 {
-    public class ToolRepository: GenericStuffRepository<Tool>, IToolRepository
+    public class ToolRepository: GenericStuffRepository<Tool, int>, IToolRepository
     {
         public ToolRepository(UnitOfWork<StuffContext> uow) : base(uow){}
 

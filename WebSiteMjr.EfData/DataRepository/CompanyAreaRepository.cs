@@ -6,7 +6,7 @@ using WebSiteMjr.EfData.DataRepository.GenericRepositorys;
 
 namespace WebSiteMjr.EfData.DataRepository
 {
-    public class CompanyAreaRepository : GenericPersonRepository<CompanyArea>, ICompanyAreaRepository
+    public class CompanyAreaRepository : GenericPersonRepository<CompanyArea, int>, ICompanyAreaRepository
     {
         public CompanyAreaRepository(UnitOfWork<PersonsContext> uow) : base(uow)
         {}

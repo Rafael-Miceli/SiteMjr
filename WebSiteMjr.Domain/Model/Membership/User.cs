@@ -6,7 +6,7 @@ using WebSiteMjr.Domain.Model.Roles;
 
 namespace WebSiteMjr.Domain.Model.Membership
 {
-    public class User : IntId, IFlexMembershipUser 
+    public class User : Key<int>, IFlexMembershipUser 
     {
         public User()
         {

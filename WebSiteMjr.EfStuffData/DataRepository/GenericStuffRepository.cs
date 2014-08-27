@@ -5,7 +5,7 @@ using WebSiteMjr.EfStuffData.Context;
 
 namespace WebSiteMjr.EfStuffData.DataRepository
 {
-    public abstract class GenericStuffRepository<TEntity>: GenericRepository<TEntity, StuffContext> where TEntity: IntId 
+    public abstract class GenericStuffRepository<TEntity, TId>: GenericRepository<TEntity, StuffContext, TId> where TEntity: Key<TId>
     {
         protected GenericStuffRepository(UnitOfWork<StuffContext> uow)
         {

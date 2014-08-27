@@ -4,7 +4,7 @@ using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model
 {
-    public class Stuff: IntId, IObjectWithState
+    public class Stuff : Key<int>, IObjectWithState
     {
         public string Name { get; set; }
         public string Description { get; set; }

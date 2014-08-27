@@ -6,7 +6,7 @@ namespace Mjr.Extensions
 {
     public static class Extensions
     {
-        public static int? IfEntitieIsNotNullReturnId<T>(this T entitie) where T : IntId
+        public static int? IfEntitieIsNotNullReturnId<T>(this T entitie) where T : Key<int>
         {
             if (entitie != null)
                 return entitie.Id;

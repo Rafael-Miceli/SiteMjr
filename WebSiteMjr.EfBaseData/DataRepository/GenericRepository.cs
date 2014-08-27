@@ -9,8 +9,8 @@ using WebSiteMjr.EfBaseData.Context;
 
 namespace WebSiteMjr.EfBaseData.DataRepository
 {
-    public abstract class GenericRepository<TEntity, TContext> : IGenericRepository<TEntity>, IDisposable
-        where TEntity : IntId
+    public abstract class GenericRepository<TEntity, TContext, TId> : IGenericRepository<TEntity>, IDisposable
+        where TEntity : Key<TId>
         where TContext : BaseContext<TContext>
     {
         protected TContext Context;

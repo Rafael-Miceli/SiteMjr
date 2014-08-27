@@ -8,7 +8,7 @@ namespace WebSiteMjr.Notifications.Email.MjrEmailNotification
     {
         public void Handle(CallAddedEvent args)
         {
-            Console.WriteLine("Handled Call, Sending Email To Admin: {0} ", args.CallAdded.Title);
+            //Console.WriteLine("Handled Call, Sending Email To Admin: {0} ", args.CallAdded.Title);
         }
     }
 }
