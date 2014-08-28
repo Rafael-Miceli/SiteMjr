@@ -48,7 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\CustomerServiceContext.cs" />
+    <Compile Include="DataRepository\CallRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitOfWork\CustomerServiceUow.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebSiteMjr.Domain\WebSiteMjr.Domain.csproj">
@@ -60,10 +62,7 @@
       <Name>WebSiteMjr.EfBaseData</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataRepository\" />
-    <Folder Include="UnitOfWork\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

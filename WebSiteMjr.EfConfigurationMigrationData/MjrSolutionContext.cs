@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using WebSiteMjr.Domain.CustomerService.Model;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Domain.Model.Roles;
@@ -19,6 +20,9 @@ namespace WebSiteMjr.EfConfigurationMigrationData
         public DbSet<CheckinTool> CheckinTools { get; set; }
         public DbSet<StuffCategory> StuffCategories { get; set; }
         public DbSet<StuffManufacture> StuffManufactures { get; set; }
+        public DbSet<Call> Calls { get; set; }
+        public DbSet<ServiceType> ServiceTypes { get; set; }
+        public DbSet<CameraServiceModel> CameraServices { get; set; }
 
         static MjrSolutionContext()
         {
@@ -34,6 +38,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData
             modelBuilder.Entity<Company>().ToTable("Companies");
             modelBuilder.Entity<CompanyArea>().ToTable("ToolLocalizations");
             modelBuilder.Entity<MjrAppRole>().ToTable("Roles");
+            modelBuilder.Entity<CameraServiceModel>().ToTable("CameraServices");
 
             modelBuilder.Entity<CompanyArea>()
             .HasMany(i => i.Companies)

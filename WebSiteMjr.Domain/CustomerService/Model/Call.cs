@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using WebSiteMjr.Domain.Model;
+using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.CustomerService.Model
 {
-    public class Call
+    public class Call: Key<Guid>
     {
         public Company Company { get; private set; }
         public IEnumerable<CompanyArea> CompanyAreas { get; private set; }
