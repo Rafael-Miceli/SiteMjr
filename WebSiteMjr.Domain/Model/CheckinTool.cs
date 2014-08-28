@@ -4,7 +4,7 @@ using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model
 {
-    public class CheckinTool: IntId, IMjrException
+    public class CheckinTool : Key<int>, IMjrException
     {
         public virtual int EmployeeCompanyHolderId { get; set; }
         public virtual Tool Tool { get; set; }
