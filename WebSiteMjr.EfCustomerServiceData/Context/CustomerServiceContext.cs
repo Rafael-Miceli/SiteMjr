@@ -4,7 +4,7 @@ using WebSiteMjr.EfBaseData.Context;
 
 namespace WebSiteMjr.EfCustomerServiceData.Context
 {
-    public class CustomerServiceContext: BaseContext<CustomerServiceContext>
+    public class CustomerServiceContext : BaseContext<CustomerServiceContext>
     {
         public DbSet<Call> Calls { get; set; }
         public DbSet<ServiceType> ServiceTypes { get; set; }

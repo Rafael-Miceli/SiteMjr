@@ -12,7 +12,7 @@ using WebSiteMjr.EfData.UnitOfWork;
 
 namespace WebSiteMjr.EfData.DataRepository
 {
-    public class RoleRepository<TRole, TUser> : GenericPersonRepository<MjrAppRole>, IFlexRoleStore
+    public class RoleRepository<TRole, TUser> : GenericPersonRepository<MjrAppRole, int>, IFlexRoleStore
         where TRole : class, IFlexRole<TUser>, new()
         where TUser : class, IFlexMembershipUser
     {

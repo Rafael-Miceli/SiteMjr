@@ -1,4 +1,5 @@
-﻿using WebSiteMjr.Domain.Interfaces.Membership;
+﻿using System;
+using WebSiteMjr.Domain.Interfaces.Membership;
 using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.EfBaseData.UnitOfWork;
 using WebSiteMjr.EfData.Context;
@@ -6,7 +7,7 @@ using WebSiteMjr.EfData.DataRepository.GenericRepositorys;
 
 namespace WebSiteMjr.EfData.DataRepository
 {
-    public class MembershipRepository : GenericPersonRepository<User>, IFlexMembershipRepository
+    public class MembershipRepository : GenericPersonRepository<User, int>, IFlexMembershipRepository
     {
 
         public MembershipRepository(UnitOfWork<PersonsContext> uow) : base(uow)

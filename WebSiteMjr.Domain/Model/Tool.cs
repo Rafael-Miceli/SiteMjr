@@ -4,7 +4,7 @@ using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model
 {
-    public class Tool : IntId, IObjectWithState, IMjrException, INotDeletable
+    public class Tool : Key<int>, IObjectWithState, IMjrException, INotDeletable
     {
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
