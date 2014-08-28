@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="CustomerService\Events\CallAddedEvent.cs" />
     <Compile Include="CustomerService\Services\CallService.cs" />
+    <Compile Include="Interfaces\CustomerService\ICallService.cs" />
     <Compile Include="Exceptions\CheckinCompanyToCompanyException.cs" />
     <Compile Include="Exceptions\CheckinDateTimeInconsistencyException.cs" />
     <Compile Include="Exceptions\CheckinHolderTwiceThenException.cs" />

@@ -1,4 +1,5 @@
-﻿using SharedKernel;
+﻿using System.Collections.Generic;
+using SharedKernel;
 using WebSiteMjr.Domain.CustomerService.Events;
 using WebSiteMjr.Domain.CustomerService.Model;
 using WebSiteMjr.Domain.Interfaces.CustomerService;
@@ -7,7 +8,7 @@ using WebSiteMjr.Domain.Interfaces.Uow;
 
 namespace WebSiteMjr.Domain.CustomerService.Services
 {
-    public class CallService
+    public class CallService : ICallService
     {
         private readonly ICallRepository _callRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -24,6 +25,11 @@ namespace WebSiteMjr.Domain.CustomerService.Services
             _unitOfWork.Save();
 
             DomainEvents.Raise(new CallAddedEvent(call));
+        }
+
+        public IEnumerable<Call> ListCalls()
+        {
+            return _callRepository.GetAll();
         }
     }
 }

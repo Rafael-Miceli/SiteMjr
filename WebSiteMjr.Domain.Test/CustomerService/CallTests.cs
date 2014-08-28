@@ -22,6 +22,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
     {
         private Mock<ICallRepository> _callRepositoryMock;
         private IUnityContainer _container;
+        private ICallService _callService;
 
         [TestInitialize]
         public void Initialize()
@@ -33,6 +34,8 @@ namespace WebSiteMjr.Domain.Test.CustomerService
             _container.RegisterType<IHandle<CallAddedEvent>, SignalRHandler.CallAddedHandler>("CallAddedSignalREventHandler");
 
             DomainEvents.Container = _container;
+
+            _callService = new CallService(_callRepositoryMock.Object, new StubUnitOfWork());
         }
 
         [TestMethod]
@@ -44,15 +47,12 @@ namespace WebSiteMjr.Domain.Test.CustomerService
             var companyAreasWithProblem = portoverano.CompanyAreas.Take(2);
             var serviceType = ServiceTypeDummies.CreateProblemWithCameras();
 
-
-            var call = new Call(portoverano, companyAreasWithProblem, "Problema com cameras nesses lugares", 
-                "Problema em cameras", serviceType);
+            var call = new Call(portoverano, companyAreasWithProblem, 
+                "Problema em cameras", serviceType, false);
 
             DomainEvents.Register<CallAddedEvent>(null);
 
-            var callService = new CallService(_callRepositoryMock.Object, new StubUnitOfWork());
-
-            callService.CreateCall(call);
+            _callService.CreateCall(call);
 
             _callRepositoryMock.VerifyAll();
         }
@@ -64,7 +64,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
         {
             return new CameraServiceModel
             {
-                Details = "Cameras"
+                Details = "Problema com cameras nesses lugares"
             };
         }
     }

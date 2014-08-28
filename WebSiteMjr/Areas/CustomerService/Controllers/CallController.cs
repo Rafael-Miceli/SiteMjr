@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebSiteMjr.Assembler.CustomerService;
+using WebSiteMjr.Domain.Interfaces.CustomerService;
 
 namespace WebSiteMjr.Areas.CustomerService.Controllers
 {
     public class CallController : Controller
     {
+        private readonly CallMapper _callMapper;
+
+        public CallController(ICallService callService)
+        {
+            _callMapper = new CallMapper(callService);
+        }
+
         //
         // GET: /CustomerService/Call/
 
         public ActionResult Index()
         {
-            return View();
+            return View(_callMapper.GetIndexViewModel());
         }
 
         //
