@@ -10,8 +10,7 @@ namespace WebSiteMjr.Domain.CustomerService.Events
 {
     public class CallAddedEvent : IDomainEvent
     {
-        public CallAddedEvent(Call call)
-            : this()
+        public CallAddedEvent(Call call) : this()
         {
             CallAdded = call;
         }

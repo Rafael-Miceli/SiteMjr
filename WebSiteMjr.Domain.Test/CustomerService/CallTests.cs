@@ -45,7 +45,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
             var serviceType = ServiceTypeDummies.CreateProblemWithCameras();
 
 
-            var call = new Call(portoverano, companyAreasWithProblem, "Problema com cameras nesses lugares",
+            var call = new Call(portoverano, companyAreasWithProblem, "Problema com cameras nesses lugares", 
                 "Problema em cameras", serviceType);
 
             DomainEvents.Register<CallAddedEvent>(null);

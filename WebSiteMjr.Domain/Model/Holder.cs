@@ -6,7 +6,7 @@ using WebSiteMjr.Domain.Model.Person;
 
 namespace WebSiteMjr.Domain.Model
 {
-    public class Holder : Key<int>, IMjrException, INotDeletable
+    public class Holder : IntId, IMjrException, INotDeletable
     {
         [Required(ErrorMessage = "Nome é um campo obrigatório")]
         public virtual string Name { get; set; }
