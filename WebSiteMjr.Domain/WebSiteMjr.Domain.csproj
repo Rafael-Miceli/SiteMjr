@@ -95,7 +95,7 @@
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Holder.cs" />
     <Compile Include="Model\NullObjects\NullCompanyArea.cs" />
-    <Compile Include="Model\Person\IntId.cs" />
+    <Compile Include="Model\Person\Key.cs" />
     <Compile Include="Model\Stuff.cs" />
     <Compile Include="Model\Membership\FlexMembershipStatus.cs" />
     <Compile Include="Interfaces\Model\IObjectWithState.cs" />

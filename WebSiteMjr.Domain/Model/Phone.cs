@@ -2,7 +2,7 @@
 
 namespace WebSiteMjr.Domain.Model
 {
-    public class Phone: IntId
+    public class Phone : Key<int>
     {
         public virtual string PhoneNumber { get; set; }
     }

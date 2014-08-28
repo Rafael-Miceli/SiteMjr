@@ -4,17 +4,17 @@ using WebSiteMjr.EfBaseData.Context;
 
 namespace WebSiteMjr.EfCustomerServiceData.Context
 {
-    //public class CustomerServiceContext: BaseContext<CustomerServiceContext>
-    //{
-    //    public DbSet<Call> Calls { get; set; }
-    //    public DbSet<ServiceType> ServiceTypes { get; set; }
-    //    public DbSet<CameraServiceModel> CameraServices { get; set; }
+    public class CustomerServiceContext : BaseContext<CustomerServiceContext>
+    {
+        public DbSet<Call> Calls { get; set; }
+        public DbSet<ServiceType> ServiceTypes { get; set; }
+        public DbSet<CameraServiceModel> CameraServices { get; set; }
 
-    //    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    //    {
-    //        base.OnModelCreating(modelBuilder);
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-    //        modelBuilder.Entity<CameraServiceModel>().ToTable("CameraServices");
-    //    }
-    //}
+            modelBuilder.Entity<CameraServiceModel>().ToTable("CameraServices");
+        }
+    }
 }

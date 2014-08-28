@@ -2,7 +2,7 @@
 
 namespace WebSiteMjr.Domain.Model
 {
-    public class Address: IntId
+    public class Address: Key<int>
     {
         public virtual string AddressName { get; set; }
         public virtual string City { get; set; }

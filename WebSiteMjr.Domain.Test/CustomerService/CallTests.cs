@@ -38,23 +38,23 @@ namespace WebSiteMjr.Domain.Test.CustomerService
         [TestMethod]
         public void Given_A_Valid_Call_When_Client_Called_And_Im_Creating_A_New_Call_Then_Create_In_Database()
         {
-            //_callRepositoryMock.Setup(x => x.Add(It.IsAny<Call>()));
+            _callRepositoryMock.Setup(x => x.Add(It.IsAny<Call>()));
 
-            //var portoverano = CompanyDummies.CreatePortoveranoWithCompanyArea();
-            //var companyAreasWithProblem = portoverano.CompanyAreas.Take(2);
-            //var serviceType = ServiceTypeDummies.CreateProblemWithCameras();
+            var portoverano = CompanyDummies.CreatePortoveranoWithCompanyArea();
+            var companyAreasWithProblem = portoverano.CompanyAreas.Take(2);
+            var serviceType = ServiceTypeDummies.CreateProblemWithCameras();
 
 
-            //var call = new Call(portoverano, companyAreasWithProblem, "Problema com cameras nesses lugares", 
-            //    "Problema em cameras", serviceType);
+            var call = new Call(portoverano, companyAreasWithProblem, "Problema com cameras nesses lugares",
+                "Problema em cameras", serviceType);
 
-            //DomainEvents.Register<CallAddedEvent>(null);
+            DomainEvents.Register<CallAddedEvent>(null);
 
-            //var callService = new CallService(_callRepositoryMock.Object, new StubUnitOfWork());
+            var callService = new CallService(_callRepositoryMock.Object, new StubUnitOfWork());
 
-            //callService.CreateCall(call);
+            callService.CreateCall(call);
 
-            //_callRepositoryMock.VerifyAll();
+            _callRepositoryMock.VerifyAll();
         }
     }
 

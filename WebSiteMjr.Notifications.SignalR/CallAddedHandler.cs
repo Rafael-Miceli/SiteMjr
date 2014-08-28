@@ -12,7 +12,7 @@ namespace WebSiteMjr.Notifications.SignalR
     {
         public void Handle(CallAddedEvent args)
         {
-            //Console.WriteLine("Handling Event in SignalR: {0}", args.CallAdded.Title);
+            Console.WriteLine("Handling Event in SignalR: {0}", args.CallAdded.Title);
         }
     }
 }

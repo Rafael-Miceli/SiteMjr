@@ -30,7 +30,7 @@ namespace WebSiteMjr.Domain.Model
 
         public virtual ICollection<Employee> Employees { get; set; }
 
-        //public ICollection<ServiceType> ServiceTypes { get; set; }
+        public ICollection<ServiceType> ServiceTypes { get; set; }
 
         [NotMapped]
         public override string ObjectName
