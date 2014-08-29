@@ -2,8 +2,8 @@
 
 namespace WebSiteMjr.Domain.CustomerService.Model
 {
-    public abstract class ServiceType: Key<int>
+    public class ServiceType: Key<int>
     {
-        public abstract string Details { get; set; }
+        public virtual string Details { get; set; }
     }
 }

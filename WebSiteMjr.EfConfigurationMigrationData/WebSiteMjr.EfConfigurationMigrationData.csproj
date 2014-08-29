@@ -78,10 +78,6 @@
     <Compile Include="Migrations\201407271806589_UsersAndRolesUpdate.Designer.cs">
       <DependentUpon>201407271806589_UsersAndRolesUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201408282228008_CustomerServiceModel.cs" />
-    <Compile Include="Migrations\201408282228008_CustomerServiceModel.Designer.cs">
-      <DependentUpon>201408282228008_CustomerServiceModel.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\MjrSolutionConfiguration.cs" />
     <Compile Include="MjrSolutionContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,9 +128,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407271806589_UsersAndRolesUpdate.resx">
       <DependentUpon>201407271806589_UsersAndRolesUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201408282228008_CustomerServiceModel.resx">
-      <DependentUpon>201408282228008_CustomerServiceModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
