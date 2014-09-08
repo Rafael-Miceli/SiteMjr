@@ -32,13 +32,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -77,6 +80,10 @@
     <Compile Include="Migrations\201407271806589_UsersAndRolesUpdate.cs" />
     <Compile Include="Migrations\201407271806589_UsersAndRolesUpdate.Designer.cs">
       <DependentUpon>201407271806589_UsersAndRolesUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409081716026_ServiceTypeAndCall.cs" />
+    <Compile Include="Migrations\201409081716026_ServiceTypeAndCall.Designer.cs">
+      <DependentUpon>201409081716026_ServiceTypeAndCall.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MjrSolutionConfiguration.cs" />
     <Compile Include="MjrSolutionContext.cs" />
@@ -128,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407271806589_UsersAndRolesUpdate.resx">
       <DependentUpon>201407271806589_UsersAndRolesUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409081716026_ServiceTypeAndCall.resx">
+      <DependentUpon>201409081716026_ServiceTypeAndCall.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

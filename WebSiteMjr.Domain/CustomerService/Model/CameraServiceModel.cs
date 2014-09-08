@@ -6,13 +6,26 @@ namespace WebSiteMjr.Domain.CustomerService.Model
     {
         public class CameraServer
         {
+            public class Channel
+            {
+                public enum ChannelStatus
+                {
+                    Ok,
+                    Out,
+                    Interference
+                }
+
+                public int Id { get; set; }
+                public string ChannelName { get; set; }
+                public ChannelStatus Status { get; set; }
+            }
+
             public int Id { get; set; }
             public string Name { get; set; }
-            public int Channels { get; set; }
+            public IEnumerable<Channel> Channels { get; set; }
         }
 
         public IEnumerable<CameraServer> CameraServers { get; set; }
-
-
     }
+   
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using WebSiteMjr.Domain.Interfaces.Model;
 using WebSiteMjr.Domain.Interfaces.Repository.GenericRepository;
