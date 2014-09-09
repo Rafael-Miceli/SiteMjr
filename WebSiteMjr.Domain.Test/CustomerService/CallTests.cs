@@ -45,7 +45,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
 
             var portoverano = CompanyDummies.CreatePortoveranoWithCompanyArea();
             var companyAreasWithProblem = portoverano.CompanyAreas.Take(2);
-            var serviceType = ServiceTypeDummies.CreateProblemWithCameras();
+            var serviceType = ServiceTypeDummies.CreateGenericProblem();
 
             var call = new Call(portoverano, companyAreasWithProblem, 
                 "Problema em cameras", serviceType, false);
@@ -63,6 +63,14 @@ namespace WebSiteMjr.Domain.Test.CustomerService
         public static ServiceType CreateProblemWithCameras()
         {
             return new CameraServiceType
+            {
+                Details = "Problema com cameras nesses lugares"
+            };
+        }
+
+        public static ServiceType CreateGenericProblem()
+        {
+            return new ServiceType
             {
                 Details = "Problema com cameras nesses lugares"
             };

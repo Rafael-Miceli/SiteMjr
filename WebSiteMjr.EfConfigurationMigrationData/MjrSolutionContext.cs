@@ -23,8 +23,6 @@ namespace WebSiteMjr.EfConfigurationMigrationData
         public DbSet<Call> Calls { get; set; }
         public DbSet<ServiceType> ServiceTypes { get; set; }
         public DbSet<CameraServiceType> CameraServices { get; set; }
-        public DbSet<CameraServiceType.CameraServer> CameraServers { get; set; }
-        public DbSet<CameraServiceType.CameraServer.Channel> Channels { get; set; }
 
         static MjrSolutionContext()
         {
