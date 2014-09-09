@@ -62,7 +62,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
     {
         public static ServiceType CreateProblemWithCameras()
         {
-            return new CameraServiceModel
+            return new CameraServiceType
             {
                 Details = "Problema com cameras nesses lugares"
             };

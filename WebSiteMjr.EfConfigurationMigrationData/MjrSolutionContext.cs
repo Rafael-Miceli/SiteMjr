@@ -22,9 +22,9 @@ namespace WebSiteMjr.EfConfigurationMigrationData
         public DbSet<StuffManufacture> StuffManufactures { get; set; }
         public DbSet<Call> Calls { get; set; }
         public DbSet<ServiceType> ServiceTypes { get; set; }
-        public DbSet<CameraServiceModel> CameraServices { get; set; }
-        public DbSet<CameraServiceModel.CameraServer> CameraServers { get; set; }
-        public DbSet<CameraServiceModel.CameraServer.Channel> Channels { get; set; }
+        public DbSet<CameraServiceType> CameraServices { get; set; }
+        public DbSet<CameraServiceType.CameraServer> CameraServers { get; set; }
+        public DbSet<CameraServiceType.CameraServer.Channel> Channels { get; set; }
 
         static MjrSolutionContext()
         {
@@ -40,7 +40,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData
             modelBuilder.Entity<Company>().ToTable("Companies");
             modelBuilder.Entity<CompanyArea>().ToTable("ToolLocalizations");
             modelBuilder.Entity<MjrAppRole>().ToTable("Roles");
-            modelBuilder.Entity<CameraServiceModel>().ToTable("CameraServices");
+            modelBuilder.Entity<CameraServiceType>().ToTable("CameraServices");
 
             modelBuilder.Entity<CompanyArea>()
             .HasMany(i => i.Companies)

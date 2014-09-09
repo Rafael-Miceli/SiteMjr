@@ -2,30 +2,30 @@
 
 namespace WebSiteMjr.Domain.CustomerService.Model
 {
-    public class CameraServiceModel : ServiceType
+    public class CameraServiceType : ServiceType
     {
-        public class CameraServer
-        {
-            public class Channel
-            {
-                public enum ChannelStatus
-                {
-                    Ok,
-                    Out,
-                    Interference
-                }
-
-                public int Id { get; set; }
-                public string ChannelName { get; set; }
-                public ChannelStatus Status { get; set; }
-            }
-
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public IEnumerable<Channel> Channels { get; set; }
-        }
-
         public IEnumerable<CameraServer> CameraServers { get; set; }
     }
-   
+
+    public class Channel
+    {
+        public enum ChannelStatus
+        {
+            Ok,
+            Out,
+            Interference,
+            NoCamera
+        }
+
+        public int Id { get; set; }
+        public string ChannelName { get; set; }
+        public CameraServer CameraServer { get; set; }
+        public ChannelStatus Status { get; set; }
+    }
+
+    public class CameraServer
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
 }
