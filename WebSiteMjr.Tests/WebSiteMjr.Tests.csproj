@@ -130,6 +130,7 @@
     <Compile Include="Integration\Controllers\AccountControllerTest.cs" />
     <Compile Include="Integration\Controllers\Api\EmployeeApiControllerTest.cs" />
     <Compile Include="Integration\Controllers\EmployeeControllerTest.cs" />
+    <Compile Include="Integration\CustomerService\Controllers\CallControllerTest.cs" />
     <Compile Include="Unit\Controllers\Api\CompanyApiControllerTest.cs" />
     <Compile Include="Unit\Controllers\CompanyControllerTest.cs" />
     <Compile Include="Unit\Controllers\StuffControllerTest.cs" />
