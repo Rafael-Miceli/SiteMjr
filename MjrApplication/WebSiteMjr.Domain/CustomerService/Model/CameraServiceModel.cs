@@ -4,7 +4,7 @@ namespace WebSiteMjr.Domain.CustomerService.Model
 {
     public class CameraServiceType : ServiceType
     {
-        public IEnumerable<CameraServer> CameraServers { get; set; }
+        public ICollection<CameraServer> CameraServers { get; set; }
     }
 
     public class Channel

@@ -8,15 +8,15 @@ namespace WebSiteMjr.Domain.CustomerService.Model
     public class Call: Key<Guid>
     {
         public Company Company { get; private set; }
-        public IEnumerable<CompanyArea> CompanyAreas { get; private set; }
+        public ICollection<CompanyArea> CompanyAreas { get; private set; }
         public string Title { get; private set; }
-        public IEnumerable<Employee> EmployeeToResolve { get; private set; }
+        public ICollection<Employee> EmployeeToResolve { get; private set; }
         public CallStatus CallStatus { get; private set; }
         public bool IsMostUrgent { get; private set; }
         public DateTime DateCreated { get; private set; }
         public ServiceType ServiceType { get; private set; }
 
-        public Call(Company company, IEnumerable<CompanyArea> companyAreas,
+        public Call(Company company, ICollection<CompanyArea> companyAreas,
             string title, ServiceType serviceType, bool isMostUrgent)
         {
             Company = company;

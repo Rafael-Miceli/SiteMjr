@@ -44,7 +44,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
             _callRepositoryMock.Setup(x => x.Add(It.IsAny<Call>()));
 
             var portoverano = CompanyDummies.CreatePortoveranoWithCompanyArea();
-            var companyAreasWithProblem = portoverano.CompanyAreas.Take(2);
+            var companyAreasWithProblem = portoverano.CompanyAreas.Take(2).ToList();
             var serviceType = ServiceTypeDummies.CreateGenericProblem();
 
             var call = new Call(portoverano, companyAreasWithProblem, 
