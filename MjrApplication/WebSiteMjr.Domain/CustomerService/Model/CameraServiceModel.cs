@@ -2,10 +2,10 @@
 
 namespace WebSiteMjr.Domain.CustomerService.Model
 {
-    public class CameraServiceType : ServiceType
-    {
-        public ICollection<CameraServer> CameraServers { get; set; }
-    }
+    //public class CameraServiceType : ServiceType
+    //{
+    //    public ICollection<CameraServer> CameraServers { get; set; }
+    //}
 
     public class Channel
     {

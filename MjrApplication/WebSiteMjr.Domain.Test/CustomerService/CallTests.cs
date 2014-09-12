@@ -60,17 +60,17 @@ namespace WebSiteMjr.Domain.Test.CustomerService
 
     public static class ServiceTypeDummies
     {
-        public static ServiceType CreateProblemWithCameras()
-        {
-            return new CameraServiceType
-            {
-                Details = "Problema com cameras nesses lugares"
-            };
-        }
+        //public static ServiceDetails CreateProblemWithCameras()
+        //{
+        //    return new CameraServic
+        //    {
+        //        Details = "Problema com cameras nesses lugares"
+        //    };
+        //}
 
-        public static ServiceType CreateGenericProblem()
+        public static ServiceDetails CreateGenericProblem()
         {
-            return new ServiceType
+            return new ServiceDetails
             {
                 Details = "Problema com cameras nesses lugares"
             };

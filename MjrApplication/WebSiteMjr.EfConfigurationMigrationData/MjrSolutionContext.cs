@@ -20,9 +20,9 @@ namespace WebSiteMjr.EfConfigurationMigrationData
         public DbSet<CheckinTool> CheckinTools { get; set; }
         public DbSet<StuffCategory> StuffCategories { get; set; }
         public DbSet<StuffManufacture> StuffManufactures { get; set; }
+
         public DbSet<Call> Calls { get; set; }
-        public DbSet<ServiceType> ServiceTypes { get; set; }
-        public DbSet<CameraServiceType> CameraServices { get; set; }
+        public DbSet<ServiceDetails> ServiceTypes { get; set; }
 
         static MjrSolutionContext()
         {
@@ -38,7 +38,7 @@ namespace WebSiteMjr.EfConfigurationMigrationData
             modelBuilder.Entity<Company>().ToTable("Companies");
             modelBuilder.Entity<CompanyArea>().ToTable("ToolLocalizations");
             modelBuilder.Entity<MjrAppRole>().ToTable("Roles");
-            modelBuilder.Entity<CameraServiceType>().ToTable("CameraServices");
+
 
             modelBuilder.Entity<CompanyArea>()
             .HasMany(i => i.Companies)

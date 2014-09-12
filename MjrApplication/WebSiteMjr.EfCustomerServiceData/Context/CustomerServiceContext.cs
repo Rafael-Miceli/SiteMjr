@@ -7,15 +7,6 @@ namespace WebSiteMjr.EfCustomerServiceData.Context
     public class CustomerServiceContext : BaseContext<CustomerServiceContext>
     {
         public DbSet<Call> Calls { get; set; }
-        public DbSet<ServiceType> ServiceTypes { get; set; }
-        public DbSet<CameraServiceType> CameraServices { get; set; }
-
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<CameraServiceType>().ToTable("CameraServices");
-        }
+        public DbSet<ServiceDetails> ServiceTypes { get; set; }
     }
 }
