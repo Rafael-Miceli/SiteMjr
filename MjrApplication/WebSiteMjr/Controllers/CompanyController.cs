@@ -3,7 +3,7 @@ using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
 using WebSiteMjr.Filters;
-using WebSiteMjr.ViewModels.Company;
+using WebSiteMjr.ViewModels.CompaniesModel;
 
 namespace WebSiteMjr.Controllers
 {

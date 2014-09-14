@@ -44,11 +44,10 @@ namespace WebSiteMjr.Domain.Test.CustomerService
             _callRepositoryMock.Setup(x => x.Add(It.IsAny<Call>()));
 
             var portoverano = CompanyDummies.CreatePortoveranoWithCompanyArea();
-            var companyAreasWithProblem = portoverano.CompanyAreas.Take(2).ToList();
             var serviceType = ServiceTypeDummies.CreateGenericProblem();
+            var lorenaId = EmployeeDummies.CreateListOfEmployees().FirstOrDefault(em => em.Id == 3).Id;
 
-            var call = new Call(portoverano, companyAreasWithProblem, 
-                "Problema em cameras", serviceType, false);
+            var call = new Call(portoverano, "Problema em cameras", serviceType, false, lorenaId);
 
             DomainEvents.Register<CallAddedEvent>(null);
 

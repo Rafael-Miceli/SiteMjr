@@ -14,26 +14,14 @@ namespace WebSiteMjr.Domain.CustomerService.Model
         public bool IsMostUrgent { get; private set; }
         public DateTime DateCreated { get; private set; }
         public ServiceDetails ServiceType { get; private set; }
+        public int EmployeeThatCreatedId { get; private set; }
 
-
-        private ICollection<CompanyArea> _companyAreas;
-        public virtual ICollection<CompanyArea> CompanyAreas
-        {
-            get
-            {
-                return _companyAreas ?? (_companyAreas = new Collection<CompanyArea>());
-            }
-            private set
-            {
-                _companyAreas = value;
-            }
-        }
-
+        
         private ICollection<Employee> _employeesToResolve;
         public virtual ICollection<Employee> EmployeesToResolve
         {
             get
-            {
+            {   
                 return _employeesToResolve ?? (_employeesToResolve = new Collection<Employee>());
             }
             private set
@@ -42,15 +30,14 @@ namespace WebSiteMjr.Domain.CustomerService.Model
             }
         }
 
-        public Call(Company company, ICollection<CompanyArea> companyAreas,
-            string title, ServiceDetails serviceType, bool isMostUrgent)
+        public Call(Company company, string title, ServiceDetails serviceType, bool isMostUrgent, int employeeThatCreated)
         {
             base.Id = Guid.NewGuid();
             Company = company;
-            CompanyAreas = companyAreas;
             Title = title;
             ServiceType = serviceType;
             IsMostUrgent = isMostUrgent;
+            EmployeeThatCreatedId = employeeThatCreated;
 
             CallStatus = CallStatus.Open;
             DateCreated = DateTime.Now;

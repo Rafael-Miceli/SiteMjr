@@ -5,7 +5,7 @@ using Moq;
 using WebSiteMjr.Controllers;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Test.Model;
-using WebSiteMjr.ViewModels.Company;
+using WebSiteMjr.ViewModels.CompaniesModel;
 
 namespace WebSiteMjr.Tests.Controllers
 {

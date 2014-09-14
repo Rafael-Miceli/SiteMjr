@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace WebSiteMjr.ViewModels.Company
+namespace WebSiteMjr.ViewModels.CompaniesModel
 {
     public class ListCompanyViewModel
     {

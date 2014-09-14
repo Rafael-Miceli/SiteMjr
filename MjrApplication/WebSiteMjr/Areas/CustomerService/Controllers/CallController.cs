@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebSiteMjr.Assembler.CustomerService;
 using WebSiteMjr.Domain.Interfaces.CustomerService;
+using WebSiteMjr.ViewModels.CustomerService.Calls;
 
 namespace WebSiteMjr.Areas.CustomerService.Controllers
 {
@@ -45,7 +46,7 @@ namespace WebSiteMjr.Areas.CustomerService.Controllers
         // POST: /CustomerService/Call/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(CreateCallViewModel collection)
         {
             try
             {

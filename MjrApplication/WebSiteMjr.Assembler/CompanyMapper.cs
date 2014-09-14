@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
-using WebSiteMjr.ViewModels.Company;
+using WebSiteMjr.ViewModels.CompaniesModel;
 
 namespace WebSiteMjr.Assembler
 {

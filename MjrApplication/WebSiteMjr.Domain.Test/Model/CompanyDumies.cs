@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Web.Mvc;
 using WebSiteMjr.Domain.Model;
-using WebSiteMjr.ViewModels.Company;
+using WebSiteMjr.ViewModels.CompaniesModel;
 
 namespace WebSiteMjr.Domain.Test.Model
 {
