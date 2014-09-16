@@ -1,0 +1,18 @@
+﻿@using System.Web.UI.WebControls
+@model WebSiteMjr.ViewModels.CustomerService.Calls.CreateCallViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+
+<h2>Novo chamado</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    <div>@Html.EditorFor(model => model.Title, new {placeholder = "Título"})</div>
+}

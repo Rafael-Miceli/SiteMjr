@@ -335,6 +335,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Areas\CustomerService\Views\Web.config" />
     <Content Include="Areas\CustomerService\Views\Call\Index.cshtml" />
+    <Content Include="Areas\CustomerService\Views\Call\Create.cshtml" />
     <None Include="Properties\PublishProfiles\mjr %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - FTP %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\mjr - FTP.pubxml" />
