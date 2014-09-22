@@ -30,6 +30,9 @@ namespace WebSiteMjr.Domain.CustomerService.Model
             }
         }
 
+        public Call()
+        {}
+
         public Call(Company company, string title, ServiceDetails serviceType, bool isMostUrgent, int employeeThatCreated)
         {
             base.Id = Guid.NewGuid();

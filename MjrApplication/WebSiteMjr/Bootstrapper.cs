@@ -8,6 +8,8 @@ using SharedKernel;
 using SharedKernel.Interfaces;
 using Unity.Mvc3;
 using WebSiteMjr.Domain.CustomerService.Events;
+using WebSiteMjr.Domain.CustomerService.Services;
+using WebSiteMjr.Domain.Interfaces.CustomerService;
 using WebSiteMjr.Domain.Interfaces.Role;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model.Membership;
@@ -16,6 +18,8 @@ using WebSiteMjr.Domain.services;
 using WebSiteMjr.Domain.services.Membership;
 using WebSiteMjr.Domain.services.Roles;
 using WebSiteMjr.Domain.services.Stuffs;
+using WebSiteMjr.EfCustomerServiceData.DataRepository;
+using WebSiteMjr.EfCustomerServiceData.UnitOfWork;
 using WebSiteMjr.EfData.DataRepository;
 using WebSiteMjr.EfData.UnitOfWork;
 using WebSiteMjr.EfStuffData.DataRepository;
@@ -46,6 +50,7 @@ namespace WebSiteMjr
 
             var personUow = new PersonsUow();
             var stuffUnow = new StuffUow();
+            var customerServiceUow = new CustomerServiceUow();
 
             //Services Instances
             container.RegisterType<IFlexRoleProvider, FlexRoleProvider>();
@@ -61,6 +66,7 @@ namespace WebSiteMjr
             container.RegisterType<IHolderService, HolderService>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IMembershipService, MembershipService>();
+            container.RegisterType<ICallService, CallService>();
 
             //Facade Instances
             container.RegisterType<IEmployeeLoginFacade, EmployeeLoginFacade>();
@@ -75,6 +81,7 @@ namespace WebSiteMjr
             var companyAreaServiceInstance = new CompanyAreasService(new CompanyAreaRepository(personUow), personUow);
             var employeeLoginFacadeInstance = new EmployeeLoginFacade(employeeServiceInstance, membershipServiceInstance,
                 emailServiceInstance, personUow);
+            var callServiceInstance = new CallService(new CallRepository(customerServiceUow), customerServiceUow);
 
             container.RegisterInstance(new HolderService(new HolderRepository(personUow)));
             container.RegisterInstance(new UserService(new UserRepository(personUow), companyServiceInstance, personUow));
@@ -88,6 +95,7 @@ namespace WebSiteMjr
             container.RegisterInstance(membershipServiceInstance);
             container.RegisterInstance(employeeServiceInstance);
             container.RegisterInstance(employeeLoginFacadeInstance);
+            container.RegisterInstance(callServiceInstance);
 
             RegisterHandlersType(container);
 

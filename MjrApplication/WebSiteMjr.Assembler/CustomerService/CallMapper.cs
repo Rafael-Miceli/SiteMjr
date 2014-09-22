@@ -34,12 +34,8 @@ namespace WebSiteMjr.Assembler.CustomerService
 
         private IEnumerable<Call> GetCallsForIndex()
         {
-            return
-                _callService.ListCalls()
-                    .Where(
-                        c =>
-                            c.CallStatus == CallStatus.Open || c.CallStatus == CallStatus.Attending ||
-                            c.CallStatus == CallStatus.Pendent);
+            return _callService.ListCalls()
+                    .Where(c => c.CallStatus == CallStatus.Open || c.CallStatus == CallStatus.Attending || c.CallStatus == CallStatus.Pendent);
         }
     }
 }

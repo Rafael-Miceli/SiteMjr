@@ -521,6 +521,10 @@
       <Project>{c5310985-aa81-4397-97d7-f6cdbcca54b8}</Project>
       <Name>WebSiteMjr.EfConfigurationMigrationData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebSiteMjr.EfCustomerServiceData\WebSiteMjr.EfCustomerServiceData.csproj">
+      <Project>{BC0CD28C-044A-467B-8440-7F262F5B81A3}</Project>
+      <Name>WebSiteMjr.EfCustomerServiceData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebSiteMjr.EfData\WebSiteMjr.EfPersonData.csproj">
       <Project>{1D5058F1-5CA9-4978-AC8C-A508C430E7B0}</Project>
       <Name>WebSiteMjr.EfPersonData</Name>
