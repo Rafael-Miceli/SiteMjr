@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebSiteMjr.Domain.CustomerService.Model;
-using WebSiteMjr.Domain.Model;
 
 namespace WebSiteMjr.ViewModels.CustomerService.Calls
 {
@@ -16,6 +16,7 @@ namespace WebSiteMjr.ViewModels.CustomerService.Calls
 
     public class CreateCallViewModel
     {
+        [Display(Prompt = "Título")]
         public string Title { get; set; }
         public ServiceDetails Details { get; set; }
         public IEnumerable<CompanyNameAndId> Companies { get; set; }

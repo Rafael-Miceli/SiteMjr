@@ -1,5 +1,4 @@
-﻿@using System.Web.UI.WebControls
-@model WebSiteMjr.ViewModels.CustomerService.Calls.CreateCallViewModel
+﻿@model WebSiteMjr.ViewModels.CustomerService.Calls.CreateCallViewModel
 
 @{
     ViewBag.Title = "title";
@@ -14,5 +13,6 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     
-    <div>@Html.EditorFor(model => model.Title)</div>
+    @*<div>@Html.EditorFor(model => model.Title)</div>*@
+    <div>@Html.TextBoxFor(model => model.Title, new { placeholder = "Título" })</div>
 }

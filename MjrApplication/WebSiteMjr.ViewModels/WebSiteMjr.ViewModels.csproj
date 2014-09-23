@@ -45,6 +45,7 @@
     <Compile Include="CompaniesModel\CompanyViewModel.cs" />
     <Compile Include="CustomerService\Calls\CallViewModel.cs" />
     <Compile Include="EmployeeViewModel.cs" />
+    <Compile Include="MetaDatasAware\PlaceHolderAttribute.cs" />
     <Compile Include="MyProfile.cs" />
     <Compile Include="RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
