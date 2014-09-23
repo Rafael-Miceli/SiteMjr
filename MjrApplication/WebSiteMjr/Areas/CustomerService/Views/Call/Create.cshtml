@@ -13,6 +13,5 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     
-    @*<div>@Html.EditorFor(model => model.Title)</div>*@
-    <div>@Html.TextBoxFor(model => model.Title, new { placeholder = "Título" })</div>
+    <div>@Html.EditorFor(model => model.Title)</div>
 }

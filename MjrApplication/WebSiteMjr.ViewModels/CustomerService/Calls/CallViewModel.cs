@@ -16,7 +16,7 @@ namespace WebSiteMjr.ViewModels.CustomerService.Calls
 
     public class CreateCallViewModel
     {
-        [Display(Prompt = "Título")]
+        [Display(Prompt = "Título do chamado")]
         public string Title { get; set; }
         public ServiceDetails Details { get; set; }
         public IEnumerable<CompanyNameAndId> Companies { get; set; }
