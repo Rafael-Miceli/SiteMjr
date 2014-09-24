@@ -353,6 +353,7 @@
     <Content Include="Scripts\CheckinTool\checkinTool.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\CheckinTool\Index.js" />
+    <Content Include="Scripts\CustomerService\Call\CreateCall.js" />
     <Content Include="Scripts\Employee\Edit.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />

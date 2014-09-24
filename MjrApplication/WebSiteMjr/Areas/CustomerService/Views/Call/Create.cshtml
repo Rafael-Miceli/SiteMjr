@@ -23,7 +23,13 @@
             @Html.LabelFor(model => model.SelectedCompanyId, "Condominio/Empresa")
         </div>
         <div>
-            <!--Colocar drop downlist com Auto Complete do JQueryUi-->
+            @Html.DropDownList("SelectedCompanyId", ViewBag.Companies as SelectList, "Selecione...", new {id = "SelectCompany"})
         </div>
     </fieldset>
 }
+
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/CustomerService/Call/CreateCall.js")"></script>
+}
+

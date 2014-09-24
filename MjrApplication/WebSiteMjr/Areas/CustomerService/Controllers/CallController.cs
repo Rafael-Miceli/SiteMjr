@@ -5,16 +5,19 @@ using System.Web;
 using System.Web.Mvc;
 using WebSiteMjr.Assembler.CustomerService;
 using WebSiteMjr.Domain.Interfaces.CustomerService;
+using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.ViewModels.CustomerService.Calls;
 
 namespace WebSiteMjr.Areas.CustomerService.Controllers
 {
     public class CallController : Controller
     {
+        private readonly ICompanyService _companyService;
         private readonly CallMapper _callMapper;
 
-        public CallController(ICallService callService)
+        public CallController(ICallService callService, ICompanyService companyService)
         {
+            _companyService = companyService;
             _callMapper = new CallMapper(callService);
         }
 
@@ -39,7 +42,35 @@ namespace WebSiteMjr.Areas.CustomerService.Controllers
 
         public ActionResult Create()
         {
+            SetCompanyViewBag();
             return View();
+        }
+
+        private void SetCompanyViewBag(int? SelectedCompanyId = null)
+        {
+            var createCallViewModel = new CreateCallViewModel();
+
+            var listCompanyNameAndIds = new List<CompanyNameAndId>();
+
+            foreach (var company in _companyService.ListCompaniesNotDeleted())
+            {
+                listCompanyNameAndIds.Add(new CompanyNameAndId
+                {
+                    CompanyName = company.Name,
+                    Id = company.Id
+                });
+            }
+
+            createCallViewModel.Companies = listCompanyNameAndIds;
+            
+            if (SelectedCompanyId == null)
+            {
+                ViewBag.Companies = new SelectList(createCallViewModel.Companies, "Id", "CompanyName");
+            }
+            else
+                ViewBag.Companies = new SelectList(createCallViewModel.Companies, "Id", "CompanyName");
+
+
         }
 
         //
