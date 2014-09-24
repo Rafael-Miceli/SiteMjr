@@ -14,4 +14,16 @@
     @Html.ValidationSummary(true)
     
     <div>@Html.EditorFor(model => model.Title)</div>
+    <hr/>
+    
+    <fieldset>
+        <div><label>@Html.EditorFor(model => model.IsMostUrgent) Urgente</label></div>
+        <br/>
+        <div>
+            @Html.LabelFor(model => model.SelectedCompanyId, "Condominio/Empresa")
+        </div>
+        <div>
+            <!--Colocar drop downlist com Auto Complete do JQueryUi-->
+        </div>
+    </fieldset>
 }
