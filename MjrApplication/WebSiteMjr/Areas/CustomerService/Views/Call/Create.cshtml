@@ -25,6 +25,12 @@
         <div>
             @Html.DropDownList("SelectedCompanyId", ViewBag.Companies as SelectList, "Selecione...", new {id = "SelectCompany"})
         </div>
+        <div>
+            @Html.LabelFor(model => model.Details.Details, "Detalhes")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.Details.Details)
+        </div>
     </fieldset>
 }
 
