@@ -29,7 +29,14 @@
             @Html.LabelFor(model => model.Details.Details, "Detalhes")
         </div>
         <div>
-            @Html.EditorFor(model => model.Details.Details)
+            @Html.TextAreaFor(model => model.Details.Details)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.SelectedEmployeesToResolveId, "Técnicos para resolver")
+        </div>
+        <div>
+            @** Must create my own CheckListBox *@
+            @Html.ListBox("SelectedEmployees", ViewBag.Employees as MultiSelectList)
         </div>
     </fieldset>
 }

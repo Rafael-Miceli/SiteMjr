@@ -13,11 +13,13 @@ namespace WebSiteMjr.Areas.CustomerService.Controllers
     public class CallController : Controller
     {
         private readonly ICompanyService _companyService;
+        private readonly IEmployeeService _employeeService;
         private readonly CallMapper _callMapper;
 
-        public CallController(ICallService callService, ICompanyService companyService)
+        public CallController(ICallService callService, ICompanyService companyService, IEmployeeService employeeService)
         {
             _companyService = companyService;
+            _employeeService = employeeService;
             _callMapper = new CallMapper(callService);
         }
 
@@ -42,15 +44,17 @@ namespace WebSiteMjr.Areas.CustomerService.Controllers
 
         public ActionResult Create()
         {
-            SetCompanyViewBag();
+            SetCompanyAndEmployeesViewBag();
             return View();
         }
 
-        private void SetCompanyViewBag(int? SelectedCompanyId = null)
+
+        private void SetCompanyAndEmployeesViewBag(int? SelectedCompanyId = null, IEnumerable<int> SelectedEmployeesId = null)
         {
             var createCallViewModel = new CreateCallViewModel();
 
             var listCompanyNameAndIds = new List<CompanyNameAndId>();
+            var listEmployeesToResolve = new List<EmployeeNameAndId>();
 
             foreach (var company in _companyService.ListCompaniesNotDeleted())
             {
@@ -61,14 +65,25 @@ namespace WebSiteMjr.Areas.CustomerService.Controllers
                 });
             }
 
-            createCallViewModel.Companies = listCompanyNameAndIds;
+            foreach (var employee in _employeeService.ListEmployeesNotDeleted())
+            {
+                listEmployeesToResolve.Add(new EmployeeNameAndId
+                {
+                    EmployeeName = employee.Name,
+                    Id = employee.Id
+                });
+            }
+            
+            createCallViewModel.Companies = listCompanyNameAndIds.OrderBy(c => c.CompanyName);
+            createCallViewModel.EmployeesToResolve = listEmployeesToResolve.OrderBy(e => e.EmployeeName);
             
             if (SelectedCompanyId == null)
-            {
                 ViewBag.Companies = new SelectList(createCallViewModel.Companies, "Id", "CompanyName");
-            }
             else
                 ViewBag.Companies = new SelectList(createCallViewModel.Companies, "Id", "CompanyName");
+
+            if (SelectedEmployeesId == null)
+                ViewBag.Employees = new MultiSelectList(createCallViewModel.EmployeesToResolve, "Id", "EmployeeName");
 
 
         }
