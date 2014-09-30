@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebSiteMjr.Domain.CustomerService.Model;
 using WebSiteMjr.Domain.Interfaces.CustomerService;
+using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.ViewModels.CustomerService.Calls;
 
 namespace WebSiteMjr.Assembler.CustomerService
@@ -12,10 +13,14 @@ namespace WebSiteMjr.Assembler.CustomerService
     public class CallMapper
     {
         private readonly ICallService _callService;
+        private readonly ICompanyService _companyService;
+        private readonly IEmployeeService _employeeService;
 
-        public CallMapper(ICallService callService)
+        public CallMapper(ICallService callService, ICompanyService companyService, IEmployeeService employeeService)
         {
             _callService = callService;
+            _companyService = companyService;
+            _employeeService = employeeService;
         }
 
         public IndexCallViewModel GetIndexViewModel()
@@ -36,6 +41,15 @@ namespace WebSiteMjr.Assembler.CustomerService
         {
             return _callService.ListCalls()
                     .Where(c => c.CallStatus == CallStatus.Open || c.CallStatus == CallStatus.Attending || c.CallStatus == CallStatus.Pendent);
+        }
+
+        public Call FromCallViewModelToCall(CreateCallViewModel createCallViewModel)
+        {
+            var company = _companyService.FindCompany(createCallViewModel.SelectedCompanyId);
+            var employeesToResolve = _employeeService.ListEmployee()
+                                    .Where(c => createCallViewModel.SelectedEmployeesToResolveId.Contains(c.Id)).ToList();
+
+            return new Call(company, createCallViewModel.Title, createCallViewModel.Details, createCallViewModel.IsMostUrgent, 1, employeesToResolve);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace WebSiteMjr.Areas.CustomerService.Controllers
         {
             _companyService = companyService;
             _employeeService = employeeService;
-            _callMapper = new CallMapper(callService);
+            _callMapper = new CallMapper(callService, companyService, employeeService);
         }
 
         //

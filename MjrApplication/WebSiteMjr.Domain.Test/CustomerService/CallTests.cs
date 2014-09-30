@@ -47,7 +47,7 @@ namespace WebSiteMjr.Domain.Test.CustomerService
             var serviceType = ServiceTypeDummies.CreateGenericProblem();
             var lorenaId = EmployeeDummies.CreateListOfEmployees().FirstOrDefault(em => em.Id == 3).Id;
 
-            var call = new Call(portoverano, "Problema em cameras", serviceType, false, lorenaId);
+            var call = new Call(portoverano, "Problema em cameras", serviceType, false, lorenaId, null);
 
             DomainEvents.Register<CallAddedEvent>(null);
 

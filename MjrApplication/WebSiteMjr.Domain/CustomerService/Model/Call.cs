@@ -8,6 +8,7 @@ namespace WebSiteMjr.Domain.CustomerService.Model
 {
     public class Call: Key<Guid>
     {
+        public string Protocol { get; set; }
         public Company Company { get; private set; }
         public string Title { get; private set; }
         public CallStatus CallStatus { get; private set; }
@@ -33,7 +34,7 @@ namespace WebSiteMjr.Domain.CustomerService.Model
         public Call()
         {}
 
-        public Call(Company company, string title, ServiceDetails serviceType, bool isMostUrgent, int employeeThatCreated)
+        public Call(Company company, string title, ServiceDetails serviceType, bool isMostUrgent, int employeeThatCreated, ICollection<Employee> employeesToResolve)
         {
             base.Id = Guid.NewGuid();
             Company = company;
@@ -41,6 +42,7 @@ namespace WebSiteMjr.Domain.CustomerService.Model
             ServiceType = serviceType;
             IsMostUrgent = isMostUrgent;
             EmployeeThatCreatedId = employeeThatCreated;
+            EmployeesToResolve = employeesToResolve;
 
             CallStatus = CallStatus.Open;
             DateCreated = DateTime.Now;

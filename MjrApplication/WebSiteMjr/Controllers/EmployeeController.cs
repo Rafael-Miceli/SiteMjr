@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Model;
+using WebSiteMjr.Domain.Model.Membership;
 using WebSiteMjr.Facade;
 using WebSiteMjr.Filters;
 using WebSiteMjr.Models;
@@ -23,9 +24,14 @@ namespace WebSiteMjr.Controllers
         // GET: /Employee/
         public ActionResult Index()
         {
-            var employeeCompanyId = _employeeLoginFacade.GetLoggedUser(User.Identity.Name).Employee.Company.Id;
+            var employeeCompanyId = GetLoggedUser().Employee.Company.Id;
 
             return View(_employeeLoginFacade.ListEmployeesFromCompanyNotDeleted(employeeCompanyId));
+        }
+
+        private User GetLoggedUser()
+        {
+            return _employeeLoginFacade.GetLoggedUser(User.Identity.Name);
         }
 
         //
