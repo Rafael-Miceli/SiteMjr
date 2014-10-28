@@ -35,7 +35,7 @@
             @Html.LabelFor(model => model.SelectedEmployeesToResolveId, "Técnicos para resolver")
         </div>
         <div>
-            @** Must create my own CheckListBox *@
+            @** Must create my own CheckListBox to select multiple employees  *@
             @Html.ListBox("SelectedEmployees", ViewBag.Employees as MultiSelectList)
         </div>
         <div>
