@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompanyAdminUserFacade.cs" />
     <Compile Include="EmployeeLoginFacade.cs" />
     <Compile Include="IEmployeeLoginFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -104,5 +104,10 @@ namespace WebSiteMjr.Domain.services.Membership
         {
             return _membershipProvider.GetUser(userName);
         }
+
+        public void CreateCompanyAdminAccount(User user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

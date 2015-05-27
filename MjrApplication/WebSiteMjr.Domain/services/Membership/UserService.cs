@@ -9,6 +9,7 @@ using WebSiteMjr.Domain.Model.Roles;
 
 namespace WebSiteMjr.Domain.services.Membership
 {
+    /// Not being used! Need to securely remove class
     public class UserService : IUserService
     {
         private readonly IUserRepository _user;

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Mail;
 using WebSiteMjr.Domain.Interfaces.Services;
 
@@ -47,6 +48,11 @@ namespace WebSiteMjr.Notifications.Email.MjrEmailNotification
         private string MountEmailBody(string password, string name, string lastName)
         {
             return _templates.FirstLoginTemplate(password, name, lastName);
+        }
+
+        public void SendCreatePasswordRequest(string name, string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }

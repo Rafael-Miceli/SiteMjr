@@ -15,6 +15,8 @@ namespace WebSiteMjr.Domain.Model
         [RegularExpression(@"^(\([0-9][0-9]\) [0-9]{4}-[0-9]{4})|(\(1[2-9]\) [5-9][0-9]{3}-[0-9]{4})|(\([2-9][1-9]\) [5-9][0-9]{3}-[0-9]{4})$", ErrorMessage = "Telefone Inválido")]
         public virtual string Phone { get; set; }
 
+        public string GuidInSena { get; set; }
+
         private ICollection<CompanyArea> _companyAreas;
         public virtual ICollection<CompanyArea> CompanyAreas
         {

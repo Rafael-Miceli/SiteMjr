@@ -64,7 +64,7 @@ namespace WebSiteMjr
             container.RegisterType<ICompanyService, CompanyService>();
             container.RegisterType<IEmployeeService, EmployeeService>();
             container.RegisterType<IHolderService, HolderService>();
-            container.RegisterType<IUserService, UserService>();
+            //container.RegisterType<IUserService, UserService>();
             container.RegisterType<IMembershipService, MembershipService>();
             container.RegisterType<ICallService, CallService>();
 
@@ -84,7 +84,7 @@ namespace WebSiteMjr
             var callServiceInstance = new CallService(new CallRepository(customerServiceUow), customerServiceUow);
 
             container.RegisterInstance(new HolderService(new HolderRepository(personUow)));
-            container.RegisterInstance(new UserService(new UserRepository(personUow), companyServiceInstance, personUow));
+            //container.RegisterInstance(new UserService(new UserRepository(personUow), companyServiceInstance, personUow));
             container.RegisterInstance(new StuffService(new StuffRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(toolServiceInstance);
             container.RegisterInstance(companyAreaServiceInstance);

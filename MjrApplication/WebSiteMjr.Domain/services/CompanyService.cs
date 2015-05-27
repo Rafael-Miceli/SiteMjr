@@ -82,5 +82,18 @@ namespace WebSiteMjr.Domain.services
 
         }
 
+        public void CreateAdminUserForCompany(int companyId)
+        {
+            //Get this company data to create the new admin user
+            Company company = FindCompany(companyId);
+
+            //Insert a new user without password from this Company(Client) in Azure Mobile Table
+
+
+            //Get the new user GUID
+            //Insert a new user in MjrSqlTable
+            //Create a "Create new password request" for the user
+        }
+
     }
 }
