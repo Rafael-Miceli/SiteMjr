@@ -75,6 +75,7 @@
     <Compile Include="Interfaces\Repository\IStuffRepository.cs" />
     <Compile Include="Interfaces\Repository\IUserRepository.cs" />
     <Compile Include="Interfaces\Repository\Sena\ISenaClientRepository.cs" />
+    <Compile Include="Interfaces\Repository\Sena\ISenaUserRepository.cs" />
     <Compile Include="Interfaces\Role\IFlexRole.cs" />
     <Compile Include="Interfaces\Role\IFlexRoleProvider.cs" />
     <Compile Include="Interfaces\Role\IFlexRoleStore.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Interfaces\Services\IStuffService.cs" />
     <Compile Include="Interfaces\Services\IToolService.cs" />
     <Compile Include="services\Sena\SenaClientService.cs" />
+    <Compile Include="services\Sena\SenaUserService.cs" />
     <Compile Include="services\Stuffs\CheckinToolService.cs" />
     <Compile Include="Interfaces\Repository\IToolLocalizationRepository.cs" />
     <Compile Include="Interfaces\Services\ICompanyAreasService.cs" />

@@ -107,7 +107,8 @@ namespace WebSiteMjr.Domain.services.Membership
 
         public void CreateCompanyAdminAccount(User user)
         {
-            throw new NotImplementedException();
+            DefineAccountRole(user, false);
+            _membershipProvider.CreateAccount(user);
         }
     }
 }

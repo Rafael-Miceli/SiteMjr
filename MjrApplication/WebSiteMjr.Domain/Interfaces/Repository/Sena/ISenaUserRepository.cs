@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WebSiteMjr.Domain.Interfaces.Repository.Sena
 {
-    public interface ISenaClientRepository
+    public interface ISenaUserRepository
     {
-        void Add(string name);
-        string GetClientGuidByName(string name);
+        void Add(string email, string companyName);
+        string GetGuidByEmail(string email);
     }
 }

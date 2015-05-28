@@ -49,10 +49,12 @@ namespace WebSiteMjr.Facade
                 _employeeService.CreateEmployee(newEmployee);
 
                 //Insert a new user without password from this Company(Client) in Azure Mobile Table
-                _senaUserService.Add(company.Email, company.Name);
+                //Will not insert user here anymore, as will be a default administrator user
+                //Will add only in the crate password moment
+                //_senaUserService.Create(company.Email, company.Name);
 
                 //Get the new user GUID
-                string userGuid = _senaUserService.FindByEmail(company.Email);
+                //string userGuid = _senaUserService.FindByEmail(company.Email);
 
                 //Insert a new user in MjrSqlTable            
                 //Create a "Create new password request" for the user

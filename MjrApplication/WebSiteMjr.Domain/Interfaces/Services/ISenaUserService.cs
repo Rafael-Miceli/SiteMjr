@@ -8,7 +8,7 @@ namespace WebSiteMjr.Domain.Interfaces.Services
 {
     public interface ISenaUserService
     {
-        void Add(string email, string name);
+        void Create(string email, string companyName);
         string FindByEmail(string email);
     }
 }

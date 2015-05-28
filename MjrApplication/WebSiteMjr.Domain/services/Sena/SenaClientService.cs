@@ -19,12 +19,15 @@ namespace WebSiteMjr.Domain.services.Sena
 
         public void Create(string name)
         {
+            if (!string.IsNullOrEmpty(FindByName(name)))
+                throw new Exception("Cliente ja existente");
+
             _senaClientRepository.Add(name);
         }
 
         public string FindByName(string name)
         {
-            return _senaClientRepository.GetByName(name);
+            return _senaClientRepository.GetClientGuidByName(name);
         }
     }
 }
