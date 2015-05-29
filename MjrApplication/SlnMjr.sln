@@ -85,6 +85,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureData", "AzureData", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr.SenaData", "WebSiteMjr.SenaData\WebSiteMjr.SenaData.csproj", "{7E6BC07A-045F-4155-A0F1-AE2D6C76B7E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteMjr.FacadeTests", "WebSiteMjr.FacadeTests\WebSiteMjr.FacadeTests.csproj", "{6450FA02-49E0-46C8-A96E-4EAADEEC7084}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -187,6 +189,10 @@ Global
 		{7E6BC07A-045F-4155-A0F1-AE2D6C76B7E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E6BC07A-045F-4155-A0F1-AE2D6C76B7E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E6BC07A-045F-4155-A0F1-AE2D6C76B7E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6450FA02-49E0-46C8-A96E-4EAADEEC7084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6450FA02-49E0-46C8-A96E-4EAADEEC7084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6450FA02-49E0-46C8-A96E-4EAADEEC7084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6450FA02-49E0-46C8-A96E-4EAADEEC7084}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -227,6 +233,7 @@ Global
 		{8B1B714D-A70F-466A-8348-AB7E09FD7C55} = {955A9CC7-976F-43BA-8F6B-949D428C79E1}
 		{5BBC0A3A-95BB-46B0-A408-307E30F5AE3D} = {60469222-1592-45F3-B958-B2EEA2A65565}
 		{7E6BC07A-045F-4155-A0F1-AE2D6C76B7E0} = {5BBC0A3A-95BB-46B0-A408-307E30F5AE3D}
+		{6450FA02-49E0-46C8-A96E-4EAADEEC7084} = {25954A6A-69DE-4006-9C51-D49CA35C79EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35

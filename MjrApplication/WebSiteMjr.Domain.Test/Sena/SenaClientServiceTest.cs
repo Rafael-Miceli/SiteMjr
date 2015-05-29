@@ -9,6 +9,7 @@ namespace WebSiteMjr.Domain.Test.Sena
     public class SenaClientServiceTest
     {
         [TestMethod]
+        [Ignore]
         public void When_Creating_A_Client_Validate_If_Already_Exists()
         {
             SenaClientRepository senaClientRepository = new SenaClientRepository();

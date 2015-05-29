@@ -9,20 +9,18 @@ using WebSiteMjr.Domain.Model.Membership;
 
 namespace WebSiteMjr.Facade
 {
-    public class CompanyAdminUserFacade
+    public class CompanyAdminUserFacade : ICompanyAdminUserFacade
     {
         private readonly ICompanyService _companyService;
         private readonly IMembershipService _membershipService;
-        private readonly ISenaUserService _senaUserService;
         private readonly ISenaClientService _senaClientService;
         private readonly IEmployeeService _employeeService;
         private readonly IEmailService _emailService;
 
         public CompanyAdminUserFacade(ICompanyService companyService, IMembershipService membershipService, IEmployeeService employeeService,
-            IEmailService emailService, ISenaUserService senaUserService, ISenaClientService senaClientService)
+            IEmailService emailService, ISenaClientService senaClientService)
         {
             _companyService = companyService;
-            _senaUserService = senaUserService;
             _membershipService = membershipService;
             _senaClientService = senaClientService;
             _employeeService = employeeService;
@@ -61,8 +59,10 @@ namespace WebSiteMjr.Facade
                 User user = new User { Employee = newEmployee, Username = company.Email, WantToResetPassword = true };
                 _membershipService.CreateCompanyAdminAccount(user);
 
+                var userRegistered = _membershipService.GetLoggedUser(user.Username);
+
                 //Send Email to new User
-                _emailService.SendCreatePasswordRequest(newEmployee.Name, newEmployee.Email);
+                _emailService.SendCreatePasswordRequest(newEmployee.Name, newEmployee.Email, userRegistered.Id);
 
             }
             catch (Exception)
@@ -71,7 +71,6 @@ namespace WebSiteMjr.Facade
                 throw;
             }
         }
-
-        //WindowsAzure.MobileServices 
+        
     }
 }

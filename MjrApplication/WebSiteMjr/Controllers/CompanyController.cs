@@ -2,6 +2,7 @@
 using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
+using WebSiteMjr.Facade;
 using WebSiteMjr.Filters;
 using WebSiteMjr.ViewModels.CompaniesModel;
 
@@ -10,11 +11,13 @@ namespace WebSiteMjr.Controllers
     public class CompanyController : Controller
     {
         private readonly ICompanyService _companyService;
+        private readonly ICompanyAdminUserFacade _companyAdminUserFacade;
         private readonly CompanyMapper _companyMapper;
 
-        public CompanyController(ICompanyService companyService, ICompanyAreasService companyAreasService)
+        public CompanyController(ICompanyService companyService, ICompanyAreasService companyAreasService, ICompanyAdminUserFacade companyAdminUserFacade)
         {
             _companyService = companyService;
+            _companyAdminUserFacade = companyAdminUserFacade;
             _companyMapper = new CompanyMapper(_companyService, companyAreasService);
         }
 
@@ -71,6 +74,7 @@ namespace WebSiteMjr.Controllers
         {
             try
             {
+                _companyAdminUserFacade.CreateAdminUserForCompany(idCompany);
                 return RedirectToAction("Index");
             }
             catch

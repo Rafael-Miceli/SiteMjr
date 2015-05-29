@@ -27,7 +27,7 @@ namespace WebSiteMjr.Tests.Controllers
             CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
                 .Returns(dummieToolsLocaliations);
 
-            var companyController = new CompanyController(companyServiceMock.Object, CompanyAreaServiceMock.Object);
+            var companyController = new CompanyController(companyServiceMock.Object, CompanyAreaServiceMock.Object, null);
 
             //Act
             var model = (companyController.Edit(dummieEditCompanyViewModel.Id) as ViewResult).Model;
@@ -53,7 +53,7 @@ namespace WebSiteMjr.Tests.Controllers
             CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
                 .Returns(dummieToolsLocaliations);
 
-            var companyController = new CompanyController(companyServiceMock.Object, CompanyAreaServiceMock.Object);
+            var companyController = new CompanyController(companyServiceMock.Object, CompanyAreaServiceMock.Object, null);
 
             //Act
             var model = (companyController.Edit(dummieEditCompanyViewModel.Id) as ViewResult).Model;
@@ -80,7 +80,7 @@ namespace WebSiteMjr.Tests.Controllers
             CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
                 .Returns(dummieToolsLocaliations);
 
-            var companyController = new CompanyController(companyServiceMock.Object, CompanyAreaServiceMock.Object);
+            var companyController = new CompanyController(companyServiceMock.Object, CompanyAreaServiceMock.Object, null);
 
             //Act
             companyController.Edit(dummieEditCompanyViewModel.Id, dummieEditCompanyViewModel);
@@ -107,7 +107,7 @@ namespace WebSiteMjr.Tests.Controllers
             CompanyAreaServiceMock.Setup(x => x.ListCompanyAreas())
                 .Returns(dummieToolsLocaliations);
 
-            var companyController = new CompanyController(companyServiceMock.Object, CompanyAreaServiceMock.Object);
+            var companyController = new CompanyController(companyServiceMock.Object, CompanyAreaServiceMock.Object, null);
 
             //Act
             companyController.Edit(dummieEditCompanyViewModel.Id, dummieEditCompanyViewModel);

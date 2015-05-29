@@ -23,7 +23,7 @@ namespace WebSiteMjr.Domain.Model.Membership
         public string PasswordResetToken { get; set; }
         public DateTime PasswordResetTokenExpiration { get; set; }
         public bool IsLocal { get; set; }
-        public bool? WantToResetPassword { get; set; }
+        public virtual bool WantToResetPassword { get; set; }
         public virtual ICollection<MjrAppRole> Roles { get; set; }
         
     }

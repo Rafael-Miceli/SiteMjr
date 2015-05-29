@@ -14,6 +14,7 @@ namespace WebSiteMjr.Notifications.Email.MjrEmailNotification
         private const string Host = "smtp.gmail.com"; //"smtp.gmail.com" "smtp.live.com"
 
         private const string FirstLoginSubject = "Bem vindo - ";
+        private const string AdminFirstLoginSubject = "Bem vindo ao S.E.N.A. - ";
 
         public EmailService()
         {
@@ -35,24 +36,26 @@ namespace WebSiteMjr.Notifications.Email.MjrEmailNotification
 
         public void SendFirstLoginToEmployee(string password, string email, string name, string lastName)
         {
-            var body = MountEmailBody(password, name, lastName);
-            
+            var body = _templates.FirstLoginTemplate(password, name, lastName);
+
             _mailMessage.From = _mjrMailAddress;
             _mailMessage.To.Add(email);
             _mailMessage.Subject = FirstLoginSubject + name;
             _mailMessage.Body = body;
 
             _smtpClient.Send(_mailMessage);
-        }
+        }        
 
-        private string MountEmailBody(string password, string name, string lastName)
+        public void SendCreatePasswordRequest(string name, string email, int userId)
         {
-            return _templates.FirstLoginTemplate(password, name, lastName);
-        }
+            var body = _templates.RequestAdminCreatePassword(name, userId); 
 
-        public void SendCreatePasswordRequest(string name, string email)
-        {
-            throw new NotImplementedException();
+            _mailMessage.From = _mjrMailAddress;
+            _mailMessage.To.Add(email);
+            _mailMessage.Subject = FirstLoginSubject + name;
+            _mailMessage.Body = body;
+
+            _smtpClient.Send(_mailMessage);
         }
     }
 }

@@ -27,6 +27,8 @@ using WebSiteMjr.EfStuffData.UnitOfWork;
 using WebSiteMjr.Facade;
 using WebSiteMjr.Models;
 using WebSiteMjr.Notifications.Email.MjrEmailNotification;
+using WebSiteMjr.Domain.services.Sena;
+using WebSiteMjr.SenaData;
 
 namespace WebSiteMjr
 {
@@ -64,12 +66,16 @@ namespace WebSiteMjr
             container.RegisterType<ICompanyService, CompanyService>();
             container.RegisterType<IEmployeeService, EmployeeService>();
             container.RegisterType<IHolderService, HolderService>();
-            //container.RegisterType<IUserService, UserService>();
             container.RegisterType<IMembershipService, MembershipService>();
             container.RegisterType<ICallService, CallService>();
 
             //Facade Instances
             container.RegisterType<IEmployeeLoginFacade, EmployeeLoginFacade>();
+            container.RegisterType<ICompanyAdminUserFacade, CompanyAdminUserFacade>();
+
+            //Sena Services
+            container.RegisterType<ISenaClientService, SenaClientService>();
+
 
             //Repositories Instances
             var emailServiceInstance = new EmailService();
@@ -78,13 +84,20 @@ namespace WebSiteMjr
             var companyServiceInstance = new CompanyService(new CompanyRepository(personUow), personUow);
             var employeeServiceInstance = new EmployeeService(new EmployeeRepository(personUow), personUow);
             var toolServiceInstance = new ToolService(new ToolRepository(stuffUnow), stuffUnow);
-            var companyAreaServiceInstance = new CompanyAreasService(new CompanyAreaRepository(personUow), personUow);
-            var employeeLoginFacadeInstance = new EmployeeLoginFacade(employeeServiceInstance, membershipServiceInstance,
-                emailServiceInstance, personUow);
+            var companyAreaServiceInstance = new CompanyAreasService(new CompanyAreaRepository(personUow), personUow);            
             var callServiceInstance = new CallService(new CallRepository(customerServiceUow), customerServiceUow);
 
+            //Sena Repos
+            var senaClientServiceInstance = new SenaClientService(new SenaClientRepository());
+
+            //Facades Repos
+            var employeeLoginFacadeInstance = new EmployeeLoginFacade(employeeServiceInstance, membershipServiceInstance,
+                emailServiceInstance, personUow);
+            var companyAdminUserFacadeInstance = new CompanyAdminUserFacade(companyServiceInstance, membershipServiceInstance,
+                employeeServiceInstance, emailServiceInstance, senaClientServiceInstance);
+
+
             container.RegisterInstance(new HolderService(new HolderRepository(personUow)));
-            //container.RegisterInstance(new UserService(new UserRepository(personUow), companyServiceInstance, personUow));
             container.RegisterInstance(new StuffService(new StuffRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(toolServiceInstance);
             container.RegisterInstance(companyAreaServiceInstance);
@@ -93,9 +106,12 @@ namespace WebSiteMjr
             container.RegisterInstance(new StuffManufactureService(new StuffManufactureRepository(stuffUnow), stuffUnow));
             container.RegisterInstance(companyServiceInstance);
             container.RegisterInstance(membershipServiceInstance);
-            container.RegisterInstance(employeeServiceInstance);
-            container.RegisterInstance(employeeLoginFacadeInstance);
+            container.RegisterInstance(employeeServiceInstance);            
             container.RegisterInstance(callServiceInstance);
+
+            //Facades
+            container.RegisterInstance(employeeLoginFacadeInstance);
+            container.RegisterInstance(companyAdminUserFacadeInstance);
 
             RegisterHandlersType(container);
 
