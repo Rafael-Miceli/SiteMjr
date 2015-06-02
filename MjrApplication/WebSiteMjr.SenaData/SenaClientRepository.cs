@@ -1,10 +1,6 @@
-﻿using Microsoft.WindowsAzure.MobileServices;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.MobileServices;
 using WebSiteMjr.Domain.Interfaces.Repository.Sena;
 
 namespace WebSiteMjr.SenaData
@@ -18,20 +14,17 @@ namespace WebSiteMjr.SenaData
             MobileService = new MobileServiceClient("https://arduinoapp.azure-mobile.net/", "QkTMsFHSEaNGuiKVsywYYHpHnIHMUB64");
         }
 
-        public void Add(string name)
+        public async Task Add(string name)
         {
-            Clients clients = new Clients { Name = name };          
-            MobileService.GetTable<Clients>().InsertAsync(clients).Wait();
+            var clients = new Clients { Name = name };          
+            await MobileService.GetTable<Clients>().InsertAsync(clients);
         }
 
-        public string GetClientGuidByName(string name)
+        public async Task<string> GetClientGuidByName(string name)
         {
-            var client = MobileService.GetTable<Clients>().Where(x => x.Name == name).ToListAsync().Result;
+            var client = await MobileService.GetTable<Clients>().Where(c => c.Name == name).ToListAsync();
 
-            if (client.Count == 0)
-                return null;
-            else
-                return client.First().Id;
+            return client.Count == 0 ? null : client.First().Id;
         }
     }
 

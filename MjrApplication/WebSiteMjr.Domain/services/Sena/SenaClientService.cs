@@ -17,17 +17,17 @@ namespace WebSiteMjr.Domain.services.Sena
             _senaClientRepository = senaClientRepository;
         }
 
-        public void Create(string name)
+        public async Task Create(string name)
         {
-            if (!string.IsNullOrEmpty(FindByName(name)))
+            if (!string.IsNullOrEmpty(await FindByName(name)))
                 throw new Exception("Cliente ja existente");
 
-            _senaClientRepository.Add(name);
+            await _senaClientRepository.Add(name);
         }
 
-        public string FindByName(string name)
+        public async Task<string> FindByName(string name)
         {
-            return _senaClientRepository.GetClientGuidByName(name);
+            return await _senaClientRepository.GetClientGuidByName(name);
         }
     }
 }

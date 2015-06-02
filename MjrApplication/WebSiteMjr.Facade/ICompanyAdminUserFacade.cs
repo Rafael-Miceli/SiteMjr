@@ -1,7 +1,9 @@
-﻿namespace WebSiteMjr.Facade
+﻿using System.Threading.Tasks;
+
+namespace WebSiteMjr.Facade
 {
     public interface ICompanyAdminUserFacade
     {
-        void CreateAdminUserForCompany(int companyId);
+        Task CreateAdminUserForCompany(int companyId);
     }
 }

@@ -94,7 +94,7 @@ namespace WebSiteMjr
             var employeeLoginFacadeInstance = new EmployeeLoginFacade(employeeServiceInstance, membershipServiceInstance,
                 emailServiceInstance, personUow);
             var companyAdminUserFacadeInstance = new CompanyAdminUserFacade(companyServiceInstance, membershipServiceInstance,
-                employeeServiceInstance, emailServiceInstance, senaClientServiceInstance);
+                employeeServiceInstance, emailServiceInstance, senaClientServiceInstance, personUow);
 
 
             container.RegisterInstance(new HolderService(new HolderRepository(personUow)));

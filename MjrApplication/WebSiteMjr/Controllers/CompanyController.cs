@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
 using WebSiteMjr.Assembler;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Model;
@@ -70,11 +71,11 @@ namespace WebSiteMjr.Controllers
             }
         }
         [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
-        public ActionResult SendLogin(int idCompany)
+        public async Task<ActionResult> SendLogin(int idCompany)
         {
             try
             {
-                _companyAdminUserFacade.CreateAdminUserForCompany(idCompany);
+                await _companyAdminUserFacade.CreateAdminUserForCompany(idCompany);
                 return RedirectToAction("Index");
             }
             catch

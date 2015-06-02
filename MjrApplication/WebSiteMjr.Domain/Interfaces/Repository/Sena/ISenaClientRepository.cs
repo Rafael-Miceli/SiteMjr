@@ -8,7 +8,7 @@ namespace WebSiteMjr.Domain.Interfaces.Repository.Sena
 {
     public interface ISenaClientRepository
     {
-        void Add(string name);
-        string GetClientGuidByName(string name);
+        Task Add(string name);
+        Task<string> GetClientGuidByName(string name);
     }
 }

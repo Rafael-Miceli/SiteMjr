@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
-using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebSiteMjr.Domain.Exceptions;
 using WebSiteMjr.Domain.Interfaces.Membership;
@@ -89,6 +88,10 @@ namespace FlexProviders.Membership
             }
 
             user.Salt = user.Salt ?? _encoder.GenerateSalt();
+
+            if (user.Password == null)
+                user.Password = "Default";
+
             user.Password = _encoder.Encode(user.Password, user.Salt);
             _membershipRepository.Add(user);
         }
@@ -111,7 +114,7 @@ namespace FlexProviders.Membership
         public bool HasLocalAccount(string userName)
         {
             IFlexMembershipUser user = _membershipRepository.GetUserByUsername(userName);
-            return user != null && !String.IsNullOrEmpty(user.Password);
+            return !string.IsNullOrEmpty(user?.Password);
         }
 
         public bool Exists(string userName)
@@ -210,12 +213,12 @@ namespace FlexProviders.Membership
         public MjrAppRole GetUserRole(string userName)
         {
             var user = _membershipRepository.GetUserByUsername(userName);
-            return user != null ? user.Roles.FirstOrDefault() : null;
+            return user?.Roles.FirstOrDefault();
         }
 
         public User GetUser(string userName)
         {
-            return (User) _membershipRepository.GetUserByUsername(userName);
+            return _membershipRepository.GetUserByUsername(userName);
         }
 
         public string GenerateNewPassword()
@@ -293,10 +296,7 @@ namespace FlexProviders.Membership
         /// <value>
         /// The registered client data.
         /// </value>
-        public ICollection<AuthenticationClientData> RegisteredClientData
-        {
-            get { return AuthenticationClients.Values; }
-        }
+        public ICollection<AuthenticationClientData> RegisteredClientData => AuthenticationClients.Values;
 
         /// <summary>
         ///   Gets the name of the OAuth accounts for a user.

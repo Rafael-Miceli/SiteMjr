@@ -34,10 +34,11 @@
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -93,13 +94,21 @@
     <Compile Include="Migrations\201412030155035_MigrationForTicketFeature.Designer.cs">
       <DependentUpon>201412030155035_MigrationForTicketFeature.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505292018415_RequestFirstLoginAdmin.cs" />
+    <Compile Include="Migrations\201505292018415_RequestFirstLoginAdmin.Designer.cs">
+      <DependentUpon>201505292018415_RequestFirstLoginAdmin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MjrSolutionConfiguration.cs" />
     <Compile Include="MjrSolutionContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlexProviders\FlexProviders.csproj">
@@ -152,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412030155035_MigrationForTicketFeature.resx">
       <DependentUpon>201412030155035_MigrationForTicketFeature.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505292018415_RequestFirstLoginAdmin.resx">
+      <DependentUpon>201505292018415_RequestFirstLoginAdmin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,7 +8,7 @@ namespace WebSiteMjr.Domain.Interfaces.Services
 {
     public interface ISenaClientService
     {
-        void Create(string name);
-        string FindByName(string name);
+        Task Create(string name);
+        Task<string> FindByName(string name);
     }
 }
