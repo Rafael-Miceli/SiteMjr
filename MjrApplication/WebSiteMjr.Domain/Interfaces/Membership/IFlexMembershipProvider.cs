@@ -90,5 +90,7 @@ namespace WebSiteMjr.Domain.Interfaces.Membership
         string GenerateNewPassword();
         User FindActiveUserByEmployeeId(int id);
         void DeleteAccount(object userId);
+        User GetUserById(object id);
+        void SetAdminPasswordAndSenaId(string username, string newPassword, string senaId);
     }
 }

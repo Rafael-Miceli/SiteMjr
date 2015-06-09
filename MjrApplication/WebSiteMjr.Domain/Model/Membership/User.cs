@@ -24,6 +24,7 @@ namespace WebSiteMjr.Domain.Model.Membership
         public DateTime PasswordResetTokenExpiration { get; set; }
         public bool IsLocal { get; set; }
         public virtual bool WantToResetPassword { get; set; }
+        public virtual string UserSenaId { get; set; }
         public virtual ICollection<MjrAppRole> Roles { get; set; }
         
     }

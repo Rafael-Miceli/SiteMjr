@@ -152,6 +152,12 @@ namespace FlexProviders.Membership
         /// <param name="newPassword"> The new password. </param>
         public void SetLocalPassword(string username, string newPassword)
         {
+            var user = UpdatePassword(username, newPassword);
+            _membershipRepository.Save(user);
+        }
+
+        private User UpdatePassword(string username, string newPassword)
+        {
             var user = _membershipRepository.GetUserByUsername(username);
             if (!String.IsNullOrEmpty(user.Password))
             {
@@ -160,7 +166,8 @@ namespace FlexProviders.Membership
 
             user.Salt = _encoder.GenerateSalt();
             user.Password = _encoder.Encode(newPassword, user.Salt);
-            _membershipRepository.Save(user);
+
+            return user;
         }
 
         /// <summary>
@@ -234,6 +241,18 @@ namespace FlexProviders.Membership
         public void DeleteAccount(object userId)
         {
             _membershipRepository.Remove(userId);
+        }
+
+        public User GetUserById(object id)
+        {
+            return _membershipRepository.GetById(id);
+        }
+
+        public void SetAdminPasswordAndSenaId(string username, string newPassword, string senaId)
+        {
+            var user = UpdatePassword(username, newPassword);
+            user.UserSenaId = senaId;
+            _membershipRepository.Save(user);
         }
 
         #endregion

@@ -17,8 +17,10 @@ namespace WebSiteMjr.Domain.Interfaces.Services
         MjrAppRole GetUserRole(string userName);
         string CreateAccountAndReturnPassword(User user, bool isMjrCompany);
         User FindActiveUserByEmployeeId(int id);
+        User FindActiveUserById(int id);
         void InactiveUser(User user);
         void DeleteAccount(object userId);
         void CreateCompanyAdminAccount(User user);
+        void CreateNewPassword(string userName, string newPassword, string senaId);
     }
 }

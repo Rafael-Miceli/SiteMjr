@@ -51,6 +51,11 @@ namespace WebSiteMjr.Domain.services.Membership
             return _membershipProvider.FindActiveUserByEmployeeId(id);
         }
 
+        public User FindActiveUserById(int idUser)
+        {
+            return _membershipProvider.GetUserById(idUser);
+        }
+
         public void InactiveUser(User user)
         {
             user.StatusUser = StatusUser.Unactive;
@@ -109,6 +114,11 @@ namespace WebSiteMjr.Domain.services.Membership
         {
             DefineAccountRole(user, false);
             _membershipProvider.CreateAccount(user);
+        }
+
+        public void CreateNewPassword(string username, string newPassword, string senaId)
+        {
+            _membershipProvider.SetAdminPasswordAndSenaId(username, newPassword, senaId);
         }
     }
 }

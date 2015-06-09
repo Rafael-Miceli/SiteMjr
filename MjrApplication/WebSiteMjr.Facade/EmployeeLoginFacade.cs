@@ -34,7 +34,7 @@ namespace WebSiteMjr.Facade
                 }
 
             }
-            catch (FlexMembershipException ex)
+            catch (FlexMembershipException)
             {
                 throw new EmployeeWithExistentEmailException();
             }
