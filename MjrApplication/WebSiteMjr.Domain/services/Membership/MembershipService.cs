@@ -119,6 +119,7 @@ namespace WebSiteMjr.Domain.services.Membership
         public void CreateNewPassword(string username, string newPassword, string senaId)
         {
             _membershipProvider.SetAdminPasswordAndSenaId(username, newPassword, senaId);
+            _unitOfWork.Save();
         }
     }
 }

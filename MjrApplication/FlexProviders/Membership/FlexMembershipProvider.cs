@@ -156,13 +156,17 @@ namespace FlexProviders.Membership
             _membershipRepository.Save(user);
         }
 
+        public void SetAdminPasswordAndSenaId(string username, string newPassword, string senaId)
+        {
+            var user = UpdatePassword(username, newPassword);
+            user.UserSenaId = senaId;
+            user.WantToResetPassword = false;
+            _membershipRepository.Save(user);
+        }
+
         private User UpdatePassword(string username, string newPassword)
         {
             var user = _membershipRepository.GetUserByUsername(username);
-            if (!String.IsNullOrEmpty(user.Password))
-            {
-                throw new FlexMembershipException("SetLocalPassword can only be used on accounts that currently don't have a local password.");
-            }
 
             user.Salt = _encoder.GenerateSalt();
             user.Password = _encoder.Encode(newPassword, user.Salt);
@@ -248,13 +252,7 @@ namespace FlexProviders.Membership
             return _membershipRepository.GetById(id);
         }
 
-        public void SetAdminPasswordAndSenaId(string username, string newPassword, string senaId)
-        {
-            var user = UpdatePassword(username, newPassword);
-            user.UserSenaId = senaId;
-            _membershipRepository.Save(user);
-        }
-
+        
         #endregion
 
         #region IFlexOAuthProvider Members

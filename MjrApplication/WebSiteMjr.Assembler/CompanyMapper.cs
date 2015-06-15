@@ -51,6 +51,7 @@ namespace WebSiteMjr.Assembler
                 Email = company.Email,
                 Name = company.Name,
                 Phone = company.Phone,
+                IsInSena = company.GuidInSena != null,
                 CompanyAreas = MapCompanyAreasInCompanyToView(company.CompanyAreas)
             };
             return editCompanyViewModel;

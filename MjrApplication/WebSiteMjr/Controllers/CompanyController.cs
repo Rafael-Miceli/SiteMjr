@@ -70,12 +70,31 @@ namespace WebSiteMjr.Controllers
                 return View();
             }
         }
+
         [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
         public async Task<ActionResult> SendLogin(int idCompany)
         {
             try
             {
-                await _companyAdminUserFacade.CreateAdminUserForCompany(idCompany);
+                var company = _companyService.FindCompany(idCompany);
+
+                _companyAdminUserFacade.CreateAdminUserForCompanyInSena(company);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("Edit");
+            }
+        }
+
+        [FlexAuthorize(Roles = "MjrAdmin, MjrUser")]
+        public async Task<ActionResult> CreateCompanyInSena(int idCompany)
+        {
+            try
+            {
+                var company = _companyService.FindCompany(idCompany);
+
+                await _companyAdminUserFacade.CreateCompanyInSena(company);
                 return RedirectToAction("Index");
             }
             catch
@@ -90,6 +109,7 @@ namespace WebSiteMjr.Controllers
         public ActionResult Edit(int id)
         {
             var edtiCompanyViewModel = _companyMapper.CompanyToEditCompanyViewModel(_companyService.FindCompany(id));
+            
             return View(edtiCompanyViewModel);
         }
 

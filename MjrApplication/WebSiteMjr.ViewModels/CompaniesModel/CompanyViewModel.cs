@@ -11,6 +11,7 @@ namespace WebSiteMjr.ViewModels.CompaniesModel
 
     public class EditCompanyViewModel
     {
+        [Required]
         [RegularExpression(@"^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", ErrorMessage = "E-mail inválido")]
         public string Email { get; set; }
         public string Name { get; set; }
@@ -22,5 +23,6 @@ namespace WebSiteMjr.ViewModels.CompaniesModel
         public string Phone { get; set; }
         public IList<SelectListItem> CompanyAreas { get; set; }
         public int Id { get; set; }
+        public bool IsInSena { get; set; }
     }
 }

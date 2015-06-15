@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WebSiteMjr.Domain.Interfaces.Services;
 using WebSiteMjr.Domain.Interfaces.Uow;
@@ -35,15 +36,38 @@ namespace WebSiteMjr.Facade
             //Get this company data to create the new admin user
             Company company = _companyService.FindCompany(companyId);
 
+            await CreateCompanyInSena(company);
+
+            CreateAdminUserForCompanyInSena(company);
+        }
+
+        public async Task CreateCompanyInSena(Company company)
+        {
             //Create the company in Sena
-            await _senaClientService.Create(company.Name);
-            string clientGuid = await _senaClientService.FindByName(company.Name);
+            var companyName = RemoveSpecialCharacters(company.Name); 
+            await _senaClientService.Create(companyName);
+            string clientGuid = await _senaClientService.FindByName(companyName);
             //Update GuidInSena with new company in Sena guid
             company.GuidInSena = clientGuid;
             _companyService.UpdateCompany(company);
+            _unitOfWork.Save();
+        }
 
+        public static string RemoveSpecialCharacters(string str)
+        {
+            return Regex.Replace(str, "[^a-zA-Z0-9_]+", "", RegexOptions.Compiled);
+        }
+
+        public void CreateAdminUserForCompanyInSena(Company company)
+        {
             //Create a new Employee for company
-            var newEmployee = new Employee { Name = "Administrador", LastName = "Empresa", Email = company.Email, Company = company };
+            var newEmployee = new Employee
+            {
+                Name = "Administrador",
+                LastName = "Empresa",
+                Email = company.Email,
+                Company = company
+            };
             _employeeService.CreateEmployee(newEmployee);
 
             //Insert a new user without password from this Company(Client) in Azure Mobile Table
@@ -56,7 +80,7 @@ namespace WebSiteMjr.Facade
 
             //Insert a new user in MjrSqlTable            
             //Create a "Create new password request" for the user
-            User user = new User { Employee = newEmployee, Username = company.Email, WantToResetPassword = true };
+            User user = new User {Employee = newEmployee, Username = company.Email, WantToResetPassword = true};
             _membershipService.CreateCompanyAdminAccount(user);
             _unitOfWork.Save();
 

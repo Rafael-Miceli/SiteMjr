@@ -9,7 +9,7 @@
 
         public string RequestAdminCreatePassword(string name, int adminId)
         {
-            return "Caro " + name + ",<br />Para ter seu acesso ao aplicativo S.E.N.A. crie sua senha no link:<br/>http://sena.com.br/usuario/" + adminId;
+            return @"Caro " + name + ",<br />Para ter seu acesso ao aplicativo S.E.N.A. crie sua senha no link:<br/>http://senamobile.azurewebsites.net/#/user/" + adminId;
         }
     }
 }

@@ -27,7 +27,7 @@
             @Html.LabelFor(model => model.Email, "E-mail")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
+            @Html.EditorFor(model => model.Email, new { required = true })
             @Html.ValidationMessageFor(model => model.Email)
         </div>
 
@@ -103,13 +103,23 @@
         </div>
 
         <p>
-            <input type="submit" value="Atualizar" />
+            <input type="submit" value="Atualizar"/>
         </p>
 
-        <p>
-            @Html.ActionLink("Criar login para administrador", "SendLogin", new { idCompany = Model.Id })
-        </p>     
-           
+        @if (Model.IsInSena)
+        {
+            <p>
+                @Html.ActionLink("Solicitar login para administrador no S.E.N.A.", "SendLogin", new { idCompany = Model.Id })
+            </p>
+        }
+        else
+        {
+            <p>
+                @Html.ActionLink("Criar cliente no S.E.N.A.", "CreateCompanyInSena", new { idCompany = Model.Id })
+            </p>
+        }
+
+   
     </fieldset>
 }
 
