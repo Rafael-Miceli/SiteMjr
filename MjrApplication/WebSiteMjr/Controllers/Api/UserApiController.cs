@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using WebSiteMjr.Domain.Interfaces.Services;
@@ -30,11 +31,16 @@ namespace WebSiteMjr.Controllers.Api
             {
                 CreateNewPassword = user.WantToResetPassword,
                 UserId = user.Id,
-                CompanyName = user.Employee.Company.Name,
+                CompanyName = RemoveSpecialCharacters(user.Employee.Company.Name),
                 Username = user.Username
             };
 
             return userViewModel;
+        }
+
+        public static string RemoveSpecialCharacters(string str)
+        {
+            return Regex.Replace(str, "[^a-zA-Z0-9_]+", "", RegexOptions.Compiled);
         }
 
         [AcceptVerbs("POST")]

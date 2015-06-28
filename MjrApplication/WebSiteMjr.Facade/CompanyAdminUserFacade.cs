@@ -44,7 +44,8 @@ namespace WebSiteMjr.Facade
         public async Task CreateCompanyInSena(Company company)
         {
             //Create the company in Sena
-            var companyName = RemoveSpecialCharacters(company.Name); 
+            var companyNameToSena = company.Name;
+            var companyName = RemoveSpecialCharacters(companyNameToSena); 
             await _senaClientService.Create(companyName);
             string clientGuid = await _senaClientService.FindByName(companyName);
             //Update GuidInSena with new company in Sena guid
